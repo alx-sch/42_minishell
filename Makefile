@@ -6,7 +6,7 @@
 #    By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/04/08 11:14:10 by aschenk           #+#    #+#              #
-#    Updated: 2024/05/07 16:09:24 by aschenk          ###   ########.fr        #
+#    Updated: 2024/05/07 17:17:26 by aschenk          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,11 +19,12 @@ OBJS_DIR :=		obj
 OBJS :=			$(SRCS:$(SRCS_DIR)/%.c=$(OBJS_DIR)/%.o)
 
 HDRS_DIR :=		include
-HDRS := 		$(HDRS_DIR)/minishell.h
+HDRS := 		$(HDRS_DIR)/minishell.h \
+				$(HDRS_DIR)/settings.h
 
 # LIBFT
 LIBFT_DIR :=	libft
-LIBFT_FLAGS :=	-L$(LIBFT_DIR) -lft
+LIBFT_FLAGS :=	-L$(LIBFT_DIR) -lft -lreadline -lhistory
 LIBFT :=		$(LIBFT_DIR)/libft.a
 
 # OTHER LIBS
@@ -151,7 +152,7 @@ fclean:	clean
 # and then rebuild the program.
 re:	fclean all
 
-# xx_all: also remove/recompile libft
+# x_all: also removes/recompiles libft
 clean_all: clean
 	@make -s -C $(LIBFT_DIR) clean
 
