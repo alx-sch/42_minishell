@@ -1,32 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main_test.c                                        :+:      :+:    :+:   */
+/*   settings.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/05/06 12:05:14 by aschenk           #+#    #+#             */
-/*   Updated: 2024/05/07 17:20:17 by aschenk          ###   ########.fr       */
+/*   Created: 2024/05/07 16:54:03 by aschenk           #+#    #+#             */
+/*   Updated: 2024/05/07 17:20:45 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#ifndef SETTINGS_H
+# define SETTINGS_H
 
-/*
-main is first of all a loop that runs the shell taking inputs from the user
-and executing them until the user decides to exit it.
-*/
-int	main(int argc, char **argv)
-{
-	char	*input;
+# define PROMPT		"minishell🌈$ "
 
-	argc = 0;
-	argv = NULL;
-	while (1)
-	{
-		input = readline(PROMPT); // Display prompt and read input
-		// Process input (this will be implemented later)
-		free(input);
-	}
-	exit(EXIT_SUCCESS);
-}
+#endif
