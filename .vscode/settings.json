@@ -1,0 +1,11 @@
+{
+	"files.associations": {
+		"readline.h": "c",
+		"types.h": "c",
+		"errno.h": "c",
+		"string.h": "c",
+		"stdlib.h": "c",
+		"unistd.h": "c",
+		"cstdlib": "c"
+	}
+}
