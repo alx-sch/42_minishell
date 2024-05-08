@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main_test.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
+/*   By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/06 12:05:14 by aschenk           #+#    #+#             */
-/*   Updated: 2024/05/07 17:20:17 by aschenk          ###   ########.fr       */
+/*   Updated: 2024/05/08 17:30:22 by nholbroo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,8 @@ int	main(int argc, char **argv)
 	{
 		input = readline(PROMPT); // Display prompt and read input
 		// Process input (this will be implemented later)
+		if (input) // Checking if input is not NULL.
+			add_history(input); // Adding to input-history.
 		free(input);
 	}
 	exit(EXIT_SUCCESS);
