@@ -875,6 +875,481 @@ int main() {
 ```
 echo $?
 ```
+# Here are the functions allowed in the project:
+
+### Handling input:
+
+**readline**
+
+`char *readline(const char *prompt);`
+
+- Reads a line from the terminal and returns it.
+- Basically waiting for input (something written in the terminal), and then returning it.
+- Prompt is what is being output in the terminal, and the char * return is what is being input from the terminal.
+
+**rl_clear_history**
+
+`void rl_clear_history(void);`
+
+- Used to clear the history of previously entered command lines stored by the Readline library.
+
+**rl_on_new_line**
+
+`void rl_on_new_line(void);`
+
+- Used to notify the Readline library that the cursor has moved to a new line.
+- In interactive command-line programs, the cursor position is important for proper line editing and display. This function ensures that Readline is aware of the cursor's position when a new line is started.
+
+**rl_replace_line**
+
+`int rl_replace_line(const char *text, int clear_undo);`
+
+- Replaces the current input line in the Readline library's line buffer with a new line.
+- It allows you to update or modify the current input line being edited by Readline, providing flexibility for interactive command-line interfaces.
+- No return value.
+- For instance: Autocompletion of a command by pressing tab.
+
+**rl_redisplay**
+
+`void rl_redisplay(void);`
+
+- Displays the new line from rl_replace_line.
+- No return value.
+
+**add_history**
+
+`void add_history(const char *line);`
+
+- Takes a string as an argument and adds it to the history list of input lines.
+- So when you go up and down with the arrows, you can see the history of inputs.
+
+### Handling file descriptors:
+
+**access**
+
+`int access(const char *pathname, int mode);`
+
+- Checks if the file is accessible.
+- `F_OK`: tests for the existence of the file.
+- `R_OK`: tests for read permission.
+- `W_OK`: tests for write permission.
+- `X_OK`: tests for execute (search) permission.
+
+**open**
+
+`int open(const char *pathname, int flags, mode_t mode);`
+
+The `flags` argument in the `open` function controls how the file should be accessed. Here are some commonly used flags:
+
+- `O_RDONLY`: Open for reading only.
+- `O_WRONLY`: Open for writing only.
+- `O_RDWR`: Open for reading and writing.
+- `O_CREAT`: Create file if it does not exist.
+- `O_TRUNC`: Truncate file to zero length.
+- `O_APPEND`: If set, the file offset shall be set to the end of the file prior to each write.
+
+These flags can be combined using the bitwise OR operator.
+
+The `mode` argument is only used when the `O_CREAT` flag is used, and it specifies the permissions to use in case a new 
+file is created. This is a number, typically specified in octal. For example, a mode of `0644` stands for owner read/write, group and others read only.
+
+**read**
+
+`ssize_t read(int fd, void *buf, size_t count);`
+
+The `read` function is a system call in Unix-like operating systems that reads 
+data from a file descriptor into a buffer. Here's a brief explanation of its parameters:
+
+- `int fd`: This is the file descriptor from which to read. It's usually obtained from the `open` system call.
+- `void *buf`: This is a pointer to the buffer where the read data will be stored.
+- `size_t count`: This is the number of bytes to read.
+
+The function returns the number of bytes read on success, 0 on end of file, and -1 on error.
+
+**close**
+
+`int close(int fd);`
+
+The `close` function is a system call used to close a file descriptor. Here's a brief explanation of its parameter:
+
+- `int fd`: This is the file descriptor to be closed. It's usually obtained from the `open` system call.
+
+The function returns 0 on success and -1 on error. After a file descriptor has been closed, it can no longer be used to read or write data. The system resources associated with the file descriptor are freed.
+
+### Handling processes:
+
+**fork**
+
+`pid_t fork(void);`
+
+The `fork` function is a system call used to create a new process. 
+
+When a process calls `fork`, it creates a new process called a **child process**. 
+
+—> The child process is an exact copy of the    calling process, known as the parent process, 
+except for a few values that get changed, such as the process ID.
+
+Here's a brief explanation of its usage:
+
+- The function doesn't take any parameters.
+- It returns the process ID of the child process if you’re in the parent process.
+- It returns 0 if you’re inside a child process.
+- If the fork fails, it returns -1.
+
+Remember, after a `fork`, both the parent and child processes will execute the next instruction following the `fork` call. So, you'll often see a check for the fork's return value to differentiate the code executed by the parent and the child.
+
+**wait**
+
+`pid_t wait(int *status);`
+
+- This function makes the parent process wait until one of its child processes exits.
+- The exit status of the child is stored in the integer pointed to by `status`.
+- If `status` is NULL, no status information is saved.
+- The function returns the process ID of the 
+child that exited, or -1 if an error occurred.
+
+**waitpid**
+
+`pid_t waitpid(pid_t pid, int *status, int options);`
+
+- This function is a more flexible version of `wait`.
+- It waits for a specific child process to exit, as specified by `pid`.
+- The `options` parameter can modify the behavior of `waitpid`.
+- For example, setting options to `WNOHANG` causes `waitpid` to return immediately instead of waiting, if no child specified by `pid` has exited yet.
+- Like `wait`, `waitpid` saves the exit status of the child in `status` and returns the process ID of the child that exited, or -1 if an error occurred.
+
+**wait3**
+
+`pid_t wait3(int *status, int options, struct rusage *rusage);`
+
+- This function waits for a child process to stop or terminate.
+- It also returns resource usage statistics for the child in a `struct rusage` that's passed as an argument.
+
+**wait4**
+
+`pid_t wait4(pid_t pid, int *status, int options, struct rusage *rusage);`
+
+- This function is similar to `wait3`, but it allows you to wait for a specific child process to stop or terminate.
+
+<aside>
+💡 The `struct rusage` is a structure used to return resource usage statistics.
+
+It's defined in the `sys/resource.h` header file in Unix-like operating systems. 
+
+This structure includes information such as the amount of CPU time used, the amount of shared and unshared memory used, the number of page faults, and so on.
+
+Each `struct timeval` itself is a structure that represents time, with fields for seconds and microseconds.
+
+</aside>
+
+### Handling signals:
+
+**signal**
+
+`int signal(int signum, sighandler_t handler);`
+
+- This function sets a function to handle a signal.
+- `signum` is the signal number and `handler` is a pointer to the function that will handle the signal.
+- The function returns 0 on success and -1 on error.
+
+**sigaction**
+
+`int sigaction(int signum, const struct sigaction *act, struct sigaction *oldact);`
+
+- This function is used to change the action taken by a process on receipt of a specific signal.
+- `signum` specifies the signal and `act` specifies the new action for the signal.
+- `oldact` is used to save the previous action.
+
+**sigemptyset**
+
+`int sigemptyset(sigset_t *set);`
+
+- This function initializes a signal set to empty.
+- `set` is a pointer to the signal set to initialize.
+- The function returns 0 on success and -1 on error.
+
+**sigaddset**
+
+`int sigaddset(sigset_t *set, int signum);`
+
+- This function adds a signal to a signal set.
+- `set` is a pointer to the signal set and `signum` is the signal to add.
+- The function returns 0 on success and -1 on error.
+
+**kill**
+
+`int kill(pid_t pid, int sig);`
+
+- This function sends a signal to a process or a group of processes.
+- `pid` is the process ID and `sig` is the signal to send.
+- The function returns 0 on success and -1 on error.
+
+**exit**
+
+`exit(int status)`
+
+- This function terminates the calling process immediately.
+- Any open file descriptors belonging to the process are closed and any children of the process are inherited by process 1, init, and the process's parent is sent a SIGCHLD signal.
+
+### Handling directories:
+
+**getcwd**
+
+`getcwd(char *buf, size_t size)`
+
+- This function gets the current working directory of the process and puts it in `buf`.
+- The `size` argument specifies the size of the `buf` array.
+- **Works like pwd-command.**
+
+**chdir**
+
+`chdir(const char *path)`
+
+- This function changes the current working directory of the calling process to the directory specified in `path`.
+- **Works like cd-command.**
+
+**opendir**
+
+`opendir(const char *name)`
+
+- This function opens a directory stream corresponding to the directory 
+name, and returns a pointer to the directory stream.
+- The stream is positioned at the first entry in the directory.
+
+**readdir**
+
+`readdir(DIR *dirp)`
+
+- This function returns a pointer to a dirent structure representing the 
+next directory entry in the directory stream pointed to by `dirp`.
+- It returns NULL on reaching the end of the directory stream or if an error occurred.
+
+**closedir**
+
+`closedir(DIR *dirp)`
+
+- This function closes the directory stream associated with `dirp`.
+- A successful call to `closedir()` also closes the underlying file descriptor associated with `dirp`.
+
+### Handling files:
+
+**stat**
+
+`stat(const char *restrict path, struct stat *restrict buf)`
+
+- This function returns information about a file.
+- `path` points to the pathname of the file.
+- `buf` is a pointer to a `stat` structure where status information about the file is stored.
+- **You could use this function to retrieve information about a file, such as its size, permissions, and modification time.**
+
+**lstat**
+
+`lstat(const char *restrict path, struct stat *restrict buf)`
+
+- Similar to `stat()`, but if `path` is a symbolic link, then it returns information about the link itself, not the file that it refers to.
+- **This could be useful for implementing commands that need to handle symbolic links differently from regular files.**
+
+**fstat**
+
+`fstat(int fd, struct stat *buf)`
+
+- Similar to `stat()`, but takes a file descriptor `fd` instead of a path.
+- It returns information about the file that is currently opened by `fd`.
+- **This could be useful for commands that work with file 
+descriptors, such as redirection operators (`>`, `<`, `>>`, etc.).**
+
+**unlink**
+
+`unlink(const char *pathname)`
+
+- This function deletes a name from the filesystem.
+- If that name was the last link to a file and no processes have the file open, the file is deleted and the space it was using is made available for reuse.
+
+### Handling piping, redirection and execution:
+
+**execve**
+
+`execve(const char *filename, char *const argv[], char *const envp[])`
+
+- This function replaces the current process image with a new process image specified by `filename`.
+- The `argv` is an array of argument strings passed to the new program.
+- `envp` is an array of strings, conventionally of the form `key=value`, which are passed as environment to the new program.
+- **Essentially running one of the standard commands which are stored as executables in the computer’s file system.**
+
+**dup**
+
+`dup(int oldfd)`
+
+- This function creates a copy of the file descriptor `oldfd`.
+- The new file descriptor returned by the function is the lowest-numbered file descriptor not currently open for the process.
+
+**dup2**
+
+`dup2(int oldfd, int newfd)`
+
+- This function also creates a copy of the file descriptor `oldfd`, but it uses the descriptor number specified by `newfd`.
+- If `newfd` was previously open, it is silently closed before being reused.
+
+**pipe**
+
+`pipe(int pipefd[2])`
+
+- This function creates a pipe, a unidirectional data channel that can be used for interprocess communication.
+- The array `pipefd` is used to return two file descriptors referring to the ends of the pipe.
+- `pipefd[0]` refers to the read end, `pipefd[1]` to the write end.
+
+### Handling errors:
+
+**strerror**
+`char *strerror(int errnum);`
+
+- This function returns a pointer to a string that describes the error code passed in the argument.
+- The integer you pass to `strerror`is typically an error number that you've received from a previous system or library call that failed.
+- In C, this is often obtained from the global variable `errno`. When a system call fails, it usually sets `errno` to a value that indicates what the error was.
+- You can then pass this value to `strerror` to get a human-readable string that describes the error.
+
+**perror**
+`void perror(const char *str);`
+
+- This function produces a message on the standard error output, 
+describing the last error encountered during a call to a system or 
+library function.
+- In the case of `perror`, the `str` argument points to a string that you would like to be output before the error message itself.
+- This can be useful for specifying where in your code the error occurred.
+
+### Handling terminal/environment:
+
+**isatty**
+`int isatty(int fd);`
+
+- This function is used to determine if a file descriptor refers to a 
+terminal. It returns 1 if the descriptor is a terminal, otherwise it 
+returns 0.
+- For example, you might use this to check if your program's 
+output is being redirected to a file or if it's being displayed on the 
+terminal.
+
+**ttyname**
+`char *ttyname(int fd);`
+
+- This function returns the name of the terminal associated with a given 
+file descriptor.
+- For example, it might return "/dev/tty1" if your program is running in the first virtual console.
+
+**ttyslot**
+`int ttyslot(void);`
+
+- This function is used to find the terminal slot number for the current user.
+- This is a somewhat outdated concept from the days of multi-user mainframe computers, and isn't commonly used in modern programming.
+
+**ioctl**
+`int ioctl(int fd, unsigned long request, ...);`
+
+- This is a very general function used for device-specific input/output 
+controls.
+- It's used for a wide variety of tasks, such as setting the 
+baud rate for a serial port, or controlling the brightness of a display.
+- The exact parameters and behavior depend on the device you're 
+controlling.
+
+**getenv**
+`char *getenv(const char *name);`
+
+- This function searches the environment list to find the environment variable which matches the string pointed to by `name`, and returns a pointer to the corresponding value string.
+
+**tcsetattr**
+
+`int tcsetattr(int fd, int optional_actions, const struct termios *termios_p);`
+
+- This function is used to set the terminal attributes for the terminal 
+referred to by the given file descriptor.
+- In a shell, you might use this to change terminal settings like echo mode or canonical mode.
+- In a terminal, "echo mode" and "canonical mode" are settings that control how input and output are handled.
+- **Echo mode** determines whether the characters you type are displayed on the terminal.
+    
+    —> When echo mode is on, anything you type will be displayed.
+    
+    —> When it's off, nothing is displayed when you type. 
+    
+    —> This is useful, for example, when a program is asking for a password and you don't want the password to be displayed on the screen.
+    
+- **Canonical mode**, also known as "cooked" mode, allows the terminal to process input line by line.
+    
+    —> When canonical mode is on, the terminal will buffer the characters you type until you press Enter, at which point 
+    the entire line is sent to the program. 
+    
+    —> When canonical mode is off, also known as "raw" mode, characters are sent to the program as soon as they're typed. This is useful for programs that need to handle interactive input, like a text editor. **And also for the auto-completion maybe, when you press tab, and it auto-finishes the command or path?**
+    
+
+**In a shell program, you might use `tcsetattr` to switch 
+between these modes depending on what the program is doing. For example,you might turn off echo mode when asking for a password, or switch to raw mode when running a text editor.**
+
+**tcgetattr**
+
+`int tcgetattr(int fd, struct termios *termios_p);`
+
+- This function gets the current terminal attributes for the terminal 
+referred to by the given file descriptor.
+- In a shell, you might use this to save the current terminal settings so you can restore them later.
+
+**tcgetent**
+
+`int tgetent(char *bp, const char *name);`
+
+- This function is used to get an entry for terminal name in buffer bp 
+from the termcap database.
+- In a shell, you might use this to get information about the capabilities of the terminal.
+
+**tgetflag**
+
+`int tgetflag(char *id);`
+
+- This function gets the boolean entry for id from the termcap database.
+- In a shell, you might use this to check if the terminal supports a 
+certain feature.
+
+**tgetnum**
+
+`int tgetnum(char *id);`
+
+- This function gets the numeric entry for id from the termcap database.
+- In a shell, you might use this to get numeric information about the 
+terminal, like its size.
+
+**tgetstr**
+
+`char *tgetstr(char *id, char **area);`
+
+- This function gets the string entry for id from the termcap database.
+- In a shell, you might use this to get string information about the 
+terminal, like the sequence to clear the screen.
+
+**tgoto**
+
+`char *tgoto(const char *cap, int col, int row);` 
+
+- This function decodes a cursor motion string.
+- In a shell, you might use this to move the cursor around the screen.
+
+**tputs**
+
+`int tputs(const char *str, int affcnt, int (*putc)(int));`
+
+- This function applies padding information to a string and outputs it.
+- In a shell, you might use this to output control sequences to the 
+terminal.
+
+<aside>
+💡 **What is a “token” in programming?**
+
+Imagine building something with Lego bricks. Each brick is like a token in programming. There are five types of these "bricks":
+
+- Constants: These are like the fixed pieces, never changing.
+- Identifiers: They're like names you give to certain things, like labeling your Lego creations.
+- Operators: These are like the tools you use to manipulate the bricks, like adding or subtracting.
+- Separators: They're like the spaces or borders between different parts of your Lego creation.
+- Reserved Words: These are special words that have specific meanings in the programming language you're using, kind of like special instructions.
+</aside>
 
 ## links
 The Bash reference manual:  
