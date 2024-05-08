@@ -6,7 +6,7 @@
 #    By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/04/08 11:14:10 by aschenk           #+#    #+#              #
-#    Updated: 2024/05/07 17:17:26 by aschenk          ###   ########.fr        #
+#    Updated: 2024/05/08 19:48:48 by aschenk          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,7 +20,7 @@ OBJS :=			$(SRCS:$(SRCS_DIR)/%.c=$(OBJS_DIR)/%.o)
 
 HDRS_DIR :=		include
 HDRS := 		$(HDRS_DIR)/minishell.h \
-				$(HDRS_DIR)/settings.h
+				$(HDRS_DIR)/config.h
 
 # LIBFT
 LIBFT_DIR :=	libft
@@ -167,7 +167,8 @@ re_all:	fclean_all all
 
 NAME_TEST :=	$(NAME)_test
 TEST_DIR :=		src_test
-TEST_SRCS :=	$(TEST_DIR)/main_test.c
+TEST_SRCS :=	$(TEST_DIR)/main.c \
+				$(TEST_DIR)/0_parser/parser_main.c
 TEST_OBJS :=	$(TEST_SRCS:$(TEST_DIR)/%.c=$(OBJS_DIR)/%.o)
 
 $(NAME_TEST):	$(TEST_OBJS) $(LIBFT)

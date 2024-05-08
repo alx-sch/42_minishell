@@ -6,14 +6,14 @@
 /*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/06 12:08:35 by aschenk           #+#    #+#             */
-/*   Updated: 2024/05/07 16:55:31 by aschenk          ###   ########.fr       */
+/*   Updated: 2024/05/08 17:55:44 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
 
-# include "settings.h" // prompt, etc.
+# include "config.h" // prompt, etc.
 # include "libft.h" // libft
 
 # include <stdlib.h> // malloc, free, exit
@@ -31,10 +31,5 @@
 # include <dirent.h> // opendir, readdir, closedir
 # include <termios.h> // tcsetattr, tcgetattr
 # include <curses.h> // tgetent, tgetflag, tgetnum, tgetstr, tgoto, tputs
-
-// History: Override macros when invoking 'make:
-// 'make C#endifFLAGS+="-DHIST_FILE='new_path' -DHIST_SIZE=42"
-# define HIST_PATH	"/.minishell_history"
-# define HIST_SIZE	1000
 
 #endif
