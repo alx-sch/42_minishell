@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
+/*   By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/06 12:08:35 by aschenk           #+#    #+#             */
-/*   Updated: 2024/05/07 16:55:31 by aschenk          ###   ########.fr       */
+/*   Updated: 2024/05/13 14:55:21 by nholbroo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,5 +36,15 @@
 // 'make C#endifFLAGS+="-DHIST_FILE='new_path' -DHIST_SIZE=42"
 # define HIST_PATH	"/.minishell_history"
 # define HIST_SIZE	1000
+
+// Parsing:
+void	parsing(char *input);
+
+// Builtins:
+void	cd(char *input);
+void	pwd(char *input);
+
+// Errors:
+void	print_error(int error_code);
 
 #endif

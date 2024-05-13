@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+         #
+#    By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/04/08 11:14:10 by aschenk           #+#    #+#              #
-#    Updated: 2024/05/07 17:17:26 by aschenk          ###   ########.fr        #
+#    Updated: 2024/05/13 14:55:49 by nholbroo         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -167,7 +167,11 @@ re_all:	fclean_all all
 
 NAME_TEST :=	$(NAME)_test
 TEST_DIR :=		src_test
-TEST_SRCS :=	$(TEST_DIR)/main_test.c
+TEST_SRCS :=	$(TEST_DIR)/main_test.c \
+				$(TEST_DIR)/parsing/parsing.c \
+				$(TEST_DIR)/builtins/cd.c \
+				$(TEST_DIR)/builtins/pwd.c \
+				$(TEST_DIR)/errors/print_error.c
 TEST_OBJS :=	$(TEST_SRCS:$(TEST_DIR)/%.c=$(OBJS_DIR)/%.o)
 
 $(NAME_TEST):	$(TEST_OBJS) $(LIBFT)
