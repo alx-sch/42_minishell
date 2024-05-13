@@ -6,7 +6,7 @@
 /*   By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/13 14:41:46 by nholbroo          #+#    #+#             */
-/*   Updated: 2024/05/13 15:34:21 by nholbroo         ###   ########.fr       */
+/*   Updated: 2024/05/13 16:46:14 by nholbroo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,5 +20,5 @@ void	pwd(char *input)
 	if (getcwd(cwd, sizeof(cwd))) // Checking that getcwd-function works. It is used to find current working directory.
 		printf("%s\n", cwd); // Printing the current working directory.
 	else
-		print_error(1); // If getcwd fails, this function will print and error.
+		print_error(2); // If getcwd fails, this function will print an error.
 }

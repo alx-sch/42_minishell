@@ -1,0 +1,10 @@
+NOTES ABOUT CD-command:
+
+1. If the command is "cd" and whitespaces, it should still behave as only
+"cd". E.g. "cd       ".
+2. Figure out how to deal with '/' properly when changing directories through
+relative paths.
+3. Figure out how to deal with absolute paths.
+4. Figure out how to make "tab"-key autofill all the files within a directory,
+when it's clicked several times.
+5. Figure out how to exclude files from the "cd"-command.
