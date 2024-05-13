@@ -6,7 +6,7 @@
 /*   By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/13 13:51:10 by nholbroo          #+#    #+#             */
-/*   Updated: 2024/05/13 17:18:17 by nholbroo         ###   ########.fr       */
+/*   Updated: 2024/05/13 18:33:23 by nholbroo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,9 @@ static void	cd_one_down(char *cwd)
 		new_directory[i] = cwd[i]; // Copying over the path to the new directory.
 		i++;
 	}
+	new_directory[i] = '\0';
 	chdir(new_directory); // Changing directory to newly defined directory.
+	free(new_directory);
 }
 
 static void	cd_to_home_user(char **envp)
@@ -73,36 +75,39 @@ static void	cd_to_home_user(char **envp)
 	}
 	username += 5; // I move the username-pointer to skip "USER=" and go directly to the name itself.
 	new_path = ft_strjoin("/home/", username); // Setting the new path to include the username.
+	free(username - 5);
 	if (!new_path) // Protecting the malloc.
 	{
 		print_error(1);
 		return ;
 	}
 	chdir(new_path); // Changing the current working directory to "/home/<username>".
+	free(new_path);
 }
 
 void	cd_one_up(char *input, char *cwd)
 {
 	char	*new_path;
 
-	input += 3;
-	if (chdir(input) == 0)
+	input += 3; // Moves past the "cd "-part of the command.
+	if (chdir(input) == 0) // If it is an absolute path, then return.
 		return ;
-	input = ft_strjoin("/", input);
-	if (!input)
+	input = ft_strjoin("/", input); // Add a '/' in front of the input directory, to make it valid.
+	if (!input) // Protecting the malloc.
 	{
 		print_error(1);
 		return ;
 	}
-	new_path = ft_strjoin(cwd, input);
-	if (!new_path)
+	new_path = ft_strjoin(cwd, input); // Creating the new path by concatening the input directory to the current one.
+	if (!new_path) // Protecting the malloc.
 	{
 		print_error(1);
 		return ;
 	}
-	printf("%s\n", new_path);
-	if (chdir(new_path) == -1)
+	if (chdir(new_path) == -1) // Changing to the new directory.
 		printf("%s\n", strerror(errno));
+	free(input);
+	free(new_path);
 }
 
 void	cd(char *input, char **envp)
@@ -113,11 +118,15 @@ void	cd(char *input, char **envp)
 		print_error(2);
 	if (!ft_strcmp(input, "cd")) // If "cd" is the only input, without any arguments.
 		cd_to_home_user(envp); // Changing directory to /home/user.
-	else if (!ft_strcmp(input, "cd /")) // If "cd" is the only input, without any arguments.
-		chdir("/");
+	else if (!ft_strcmp(input, "cd /")) // If "cd /" is the only input.
+		chdir("/"); // Changing directory to root.
+	else if (!ft_strcmp(input, "cd -")) // If "cd -" is the only input.
+	{
+		chdir("/"); // Changing directory to root.
+		printf("%c\n", '/'); // Printing out '/'.
+	}
 	else if (!ft_strcmp(input, "cd ..")) // If "cd .." is the only input.
 		cd_one_down(cwd); // Changes the working directory to one level down.
 	else if (ft_strcmp(input, "cd") > 0) // If "cd" is followed by a path, 
 		cd_one_up(input, cwd);
-	printf ("%s\n", input);
 }

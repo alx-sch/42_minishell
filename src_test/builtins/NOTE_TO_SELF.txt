@@ -8,3 +8,4 @@ relative paths.
 4. Figure out how to make "tab"-key autofill all the files within a directory,
 when it's clicked several times.
 5. Figure out how to exclude files from the "cd"-command.
+6. Handle "cd -". It should go to root and also output '/'.
