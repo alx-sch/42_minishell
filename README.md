@@ -2,6 +2,8 @@
 
 This project is about creating a simple shell. 
 
+A shell is a special-purpose program designed to read commands typed by a user and execute appropriate programs in response to those commands. Such a program is also know as 'command interpreter'.
+
 We will be inspired by Bash. Bash is an acronym for ‘Bourne-Again SHell’.  Below are some exerpts from the bash manual.
 
 ### allowed functions
