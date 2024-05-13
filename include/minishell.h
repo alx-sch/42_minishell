@@ -6,7 +6,7 @@
 /*   By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/06 12:08:35 by aschenk           #+#    #+#             */
-/*   Updated: 2024/05/13 14:55:21 by nholbroo         ###   ########.fr       */
+/*   Updated: 2024/05/13 15:42:52 by nholbroo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,10 +38,10 @@
 # define HIST_SIZE	1000
 
 // Parsing:
-void	parsing(char *input);
+void	parsing(char *input, char **envp);
 
 // Builtins:
-void	cd(char *input);
+void	cd(char *input, char **envp);
 void	pwd(char *input);
 
 // Errors:

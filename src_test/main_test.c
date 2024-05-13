@@ -6,7 +6,7 @@
 /*   By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/06 12:05:14 by aschenk           #+#    #+#             */
-/*   Updated: 2024/05/13 14:51:52 by nholbroo         ###   ########.fr       */
+/*   Updated: 2024/05/13 15:42:25 by nholbroo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,14 +22,13 @@ int	main(int argc, char **argv, char **envp)
 
 	argc = 0;
 	argv = NULL;
-	envp = NULL;
 	while (1)
 	{
 		input = readline(PROMPT); // Display prompt and read input
 		// Process input (this will be implemented later)
 		if (input) // Checking if input is not NULL.
 			add_history(input); // Adding to input-history.
-		parsing(input);
+		parsing(input, envp);
 		free(input);
 	}
 	exit(EXIT_SUCCESS);
