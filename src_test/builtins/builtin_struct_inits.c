@@ -1,23 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pwd.c                                              :+:      :+:    :+:   */
+/*   builtin_struct_inits.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/05/13 14:41:46 by nholbroo          #+#    #+#             */
-/*   Updated: 2024/05/14 17:05:06 by nholbroo         ###   ########.fr       */
+/*   Created: 2024/05/14 16:28:08 by nholbroo          #+#    #+#             */
+/*   Updated: 2024/05/14 17:20:31 by nholbroo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
-void	pwd(void)
+void	init_cd_struct(t_cd **cd, char *input)
 {
-	char	cwd[4096]; // It is hardset to 4096, as it is the max amount of characters allowed in a path, as far as I've understood.
-
-	if (getcwd(cwd, sizeof(cwd))) // Checking that getcwd-function works. It is used to find current working directory.
-		printf("%s\n", cwd); // Printing the current working directory.
-	else
-		printf("pwd: %s\n", strerror(errno)); // If getcwd fails, this function will print an error.
+	*cd = malloc(sizeof(t_cd));
+	if (!(*cd))
+		print_error_cd(1, cd);
+	(*cd)->component = ft_split(input, ' ');
+	if (!(*cd)->component)
+		print_error_cd(1, cd);
+	(*cd)->home_user = NULL;
+	(*cd)->parentdirectory = NULL;
+	(*cd)->subdirectory = NULL;
+	(*cd)->username = NULL;
 }

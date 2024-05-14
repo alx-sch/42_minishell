@@ -6,7 +6,7 @@
 /*   By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/13 14:43:40 by nholbroo          #+#    #+#             */
-/*   Updated: 2024/05/13 17:38:47 by nholbroo         ###   ########.fr       */
+/*   Updated: 2024/05/14 18:49:59 by nholbroo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,15 +16,22 @@
 // I implemented "error_code" as an argument, as it has to be an argument,
 // although it is not being used properly yet.
 
-void	print_error(int error_code)
+void	print_error_cd(int error_code, t_cd **cd)
 {
 	if (error_code == 1) // Memory allocation failure
 	{
+		free_cd_struct(cd);
 		errno = ENOMEM;
 		printf("%s\n", strerror(errno));
+		exit(1);
 	}
 	else if (error_code == 2) // Failure with cd-command.
 		printf("cd: %s\n", strerror(errno));
 	else if (error_code == 3)
-		strerror(errno);
+	{
+		write(2, "test\n", 5);
+		free_cd_struct(cd);
+	}
 }
+
+// Maybe make a struct that contains all the error messages?

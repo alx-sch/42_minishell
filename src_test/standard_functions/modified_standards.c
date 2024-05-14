@@ -1,23 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pwd.c                                              :+:      :+:    :+:   */
+/*   modified_standards.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/05/13 14:41:46 by nholbroo          #+#    #+#             */
-/*   Updated: 2024/05/14 17:05:06 by nholbroo         ###   ########.fr       */
+/*   Created: 2024/05/14 17:16:54 by nholbroo          #+#    #+#             */
+/*   Updated: 2024/05/14 17:20:08 by nholbroo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
-void	pwd(void)
-{
-	char	cwd[4096]; // It is hardset to 4096, as it is the max amount of characters allowed in a path, as far as I've understood.
+// This first function works exactly as ft_strrchr except for this:
+// The return value is an int instead of a pointer.
 
-	if (getcwd(cwd, sizeof(cwd))) // Checking that getcwd-function works. It is used to find current working directory.
-		printf("%s\n", cwd); // Printing the current working directory.
-	else
-		printf("pwd: %s\n", strerror(errno)); // If getcwd fails, this function will print an error.
+int	ft_strrchr_index(const char *s, int c)
+{
+	char	char_c;
+	int		i;
+
+	char_c = (char) c;
+	i = ft_strlen(s);
+	s += i;
+	while (i >= 0)
+	{
+		if (*s == char_c)
+			return (i);
+		i--;
+		s--;
+	}
+	return (-1);
 }

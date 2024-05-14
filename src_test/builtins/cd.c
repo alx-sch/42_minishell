@@ -6,127 +6,101 @@
 /*   By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/13 13:51:10 by nholbroo          #+#    #+#             */
-/*   Updated: 2024/05/13 18:33:23 by nholbroo         ###   ########.fr       */
+/*   Updated: 2024/05/14 18:50:39 by nholbroo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/minishell.h"
 
-static int	ft_strrchr_index(const char *s, int c)
+static void	cd_one_up(t_cd **cd, char *cwd)
 {
-	// This function works exactly as ft_strrchr except for this:
-	// The return value is an int instead of a pointer, to get the exact
-	// location of the last '/', indicating the directory below the current one.
-	char	char_c;
-	int		i;
-
-	char_c = (char) c;
-	i = ft_strlen(s);
-	s += i;
-	while (i >= 0)
-	{
-		if (*s == char_c && (size_t)i != ft_strlen(s)) // Also adding a check to skip the last '/', if any.
-			return (i);
-		i--;
-		s--;
-	}
-	return (-1);
-}
-
-static void	cd_one_down(char *cwd)
-{
-	char	*new_directory;
-	int		eol;
+	int		eol; // Stands for "end of line".
 	int		i;
 
 	i = 0;
-	eol = ft_strrchr_index(cwd, '/'); // Locating the end of line, meaning where we want the path of the new directory to end.
-	new_directory = malloc(eol + 1); // Allocating memory for the new directory.
-	if (!new_directory) // Protecting the malloc
-		print_error(1); // Prints an error if allocation fails.
-	while (i < eol) // We iterate through the current working directory, until we have reached the path to our new directory.
+	eol = ft_strrchr_index(cwd, '/'); // Locating the end of line of parent directory.
+	(*cd)->parentdirectory = malloc(eol + 1); // Allocating memory for the parent directory.
+	if (!(*cd)->parentdirectory) // Protecting the malloc
+		print_error_cd(1, cd); // Prints an error and exits if allocation fails.
+	while (i < eol) // We iterate through the whole path to the current working directory, until we have reached the path to the parent directory.
 	{
-		new_directory[i] = cwd[i]; // Copying over the path to the new directory.
-		i++;
+		(*cd)->parentdirectory[i] = cwd[i]; // Copying over the path to the parent directory.
+		i++; // Iterating i.
 	}
-	new_directory[i] = '\0';
-	chdir(new_directory); // Changing directory to newly defined directory.
-	free(new_directory);
+	(*cd)->parentdirectory[i] = '\0'; // Null-terminating the new string containing the path to the parent directory.
+	chdir((*cd)->parentdirectory); // Changing directory to parent directory.
 }
 
-static void	cd_to_home_user(char **envp)
+static void	cd_to_home_user(t_cd **cd, char **envp)
 {
-	char	*username;
-	char	*new_path;
 	int		i;
 
 	i = 0;
-	while (envp[i]) // Going through all of envp, showing the environmental variables.
+	while (envp[i]) // Going through all of envp, which is showing the environmental variables.
 	{
 		if (!ft_strncmp(envp[i], "USER=", 5)) // When I find the "USER="-line, I break the loop, as I know that I will find the username.
 			break ;
 		i++;
 	}
-	username = ft_strdup(envp[i]); // I store the username in its own variable.
-	if (!username) // Protecting the malloc.
-	{
-		print_error(1);
-		return ;
-	}
-	username += 5; // I move the username-pointer to skip "USER=" and go directly to the name itself.
-	new_path = ft_strjoin("/home/", username); // Setting the new path to include the username.
-	free(username - 5);
-	if (!new_path) // Protecting the malloc.
-	{
-		print_error(1);
-		return ;
-	}
-	chdir(new_path); // Changing the current working directory to "/home/<username>".
-	free(new_path);
+	(*cd)->username = ft_strdup(envp[i]); // I store the username in its own variable.
+	if (!(*cd)->username) // Protecting the malloc.
+		print_error_cd(1, cd); // Prints an error and exits if allocation fails.
+	(*cd)->username += 5; // I move the username-pointer to skip "USER=" and go directly to the name itself.
+	(*cd)->home_user = ft_strjoin("/home/", (*cd)->username); // Setting the new path to include the username.
+	if (!(*cd)->home_user) // Protecting the malloc.
+		print_error_cd(1, cd); // Prints an error and exits if allocation fails.
+	chdir((*cd)->home_user); // Changing the current working directory to "/home/<username>".
 }
 
-void	cd_one_up(char *input, char *cwd)
+void	cd_one_down(t_cd **cd, char *cwd)
 {
-	char	*new_path;
+	char	*input;
 
-	input += 3; // Moves past the "cd "-part of the command.
-	if (chdir(input) == 0) // If it is an absolute path, then return.
+	if (chdir((*cd)->component[1]) == 0) // If it is an absolute path, then return.
 		return ;
-	input = ft_strjoin("/", input); // Add a '/' in front of the input directory, to make it valid.
+	input = ft_strjoin("/", (*cd)->component[1]); // Add a '/' in front of the input directory, to make it valid.
 	if (!input) // Protecting the malloc.
+		print_error_cd(1, cd);
+	(*cd)->subdirectory = ft_strjoin(cwd, input); // Creating the new path by concatening the input directory to the current one.
+	if (!(*cd)->subdirectory) // Protecting the malloc.
 	{
-		print_error(1);
-		return ;
+		free(input);
+		print_error_cd(1, cd);
 	}
-	new_path = ft_strjoin(cwd, input); // Creating the new path by concatening the input directory to the current one.
-	if (!new_path) // Protecting the malloc.
-	{
-		print_error(1);
-		return ;
-	}
-	if (chdir(new_path) == -1) // Changing to the new directory.
+	if (chdir((*cd)->subdirectory) == -1) // Changing to the new directory.
 		printf("%s\n", strerror(errno));
 	free(input);
-	free(new_path);
 }
 
 void	cd(char *input, char **envp)
 {
 	char	cwd[4096];
+	t_cd	*cd;
 
+	cd = NULL;
 	if (!getcwd(cwd, sizeof(cwd))) // Get the current working directory.
-		print_error(2);
-	if (!ft_strcmp(input, "cd")) // If "cd" is the only input, without any arguments.
-		cd_to_home_user(envp); // Changing directory to /home/user.
-	else if (!ft_strcmp(input, "cd /")) // If "cd /" is the only input.
+		print_error_cd(2, NULL);
+	init_cd_struct(&cd, input);
+	if (count_array_length(cd->component) > 2)
+	{
+		print_error_cd(3, &cd);
+		return ;
+	}
+	if (cd->component[1] == NULL) // If "cd" is the only input, without any components.
+		cd_to_home_user(&cd, envp); // Changing directory to /home/user.
+	else if (!ft_strcmp(cd->component[1], "/")) // If "cd /" is the only input.
 		chdir("/"); // Changing directory to root.
-	else if (!ft_strcmp(input, "cd -")) // If "cd -" is the only input.
+	else if (!ft_strcmp(cd->component[1], "-")) // If "cd -" is the only input.
 	{
 		chdir("/"); // Changing directory to root.
 		printf("%c\n", '/'); // Printing out '/'.
 	}
-	else if (!ft_strcmp(input, "cd ..")) // If "cd .." is the only input.
-		cd_one_down(cwd); // Changes the working directory to one level down.
-	else if (ft_strcmp(input, "cd") > 0) // If "cd" is followed by a path, 
-		cd_one_up(input, cwd);
+	else if (!ft_strcmp(cd->component[1], "..")) // If "cd .." is the only input.
+		cd_one_up(&cd, cwd); // Changes the working directory to its parent directory.
+	else if (ft_strlen(cd->component[1]) > 2) // If "cd" is followed by a path, change to that relative or absolute path.
+		cd_one_down(&cd, cwd); // Changes the working directory to a subdirectory.
+	free_cd_struct(&cd); // Freeing the struct.
 }
+
+// If there are too many arguments, print an error message.
+// Implement something to handle several '///////'!!

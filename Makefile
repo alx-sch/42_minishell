@@ -6,7 +6,7 @@
 #    By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/04/08 11:14:10 by aschenk           #+#    #+#              #
-#    Updated: 2024/05/13 14:55:49 by nholbroo         ###   ########.fr        #
+#    Updated: 2024/05/14 17:41:18 by nholbroo         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -171,7 +171,11 @@ TEST_SRCS :=	$(TEST_DIR)/main_test.c \
 				$(TEST_DIR)/parsing/parsing.c \
 				$(TEST_DIR)/builtins/cd.c \
 				$(TEST_DIR)/builtins/pwd.c \
-				$(TEST_DIR)/errors/print_error.c
+				$(TEST_DIR)/errors/print_error.c \
+				$(TEST_DIR)/standard_functions/free_functions.c \
+				$(TEST_DIR)/standard_functions/modified_standards.c \
+				$(TEST_DIR)/standard_functions/count.c \
+				$(TEST_DIR)/builtins/builtin_struct_inits.c
 TEST_OBJS :=	$(TEST_SRCS:$(TEST_DIR)/%.c=$(OBJS_DIR)/%.o)
 
 $(NAME_TEST):	$(TEST_OBJS) $(LIBFT)

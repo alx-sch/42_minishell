@@ -9,3 +9,6 @@ relative paths.
 when it's clicked several times.
 5. Figure out how to exclude files from the "cd"-command.
 6. Handle "cd -". It should go to root and also output '/'.
+7. Add everything from src_test into src, to fix up the make-command as it's 
+saying 5/1 - 500 % right now. Remove the documentation when it is put into 
+src.
