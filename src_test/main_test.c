@@ -6,11 +6,35 @@
 /*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/06 12:05:14 by aschenk           #+#    #+#             */
-/*   Updated: 2024/05/07 17:20:17 by aschenk          ###   ########.fr       */
+/*   Updated: 2024/05/14 17:41:03 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+/*
+read-eval-print loop (REPL):
+The shell repeatedly prompts the user for input, reads the input, evaluates it
+(interprets and executes commands), and prints any output or results.
+*/
+static int	repl_loop(int argc, char **argv)
+{
+	char	*input;
+	char	**tokens;
+
+	(void)argc;
+	(void)argv;
+	input = readline(PROMPT);
+	if (ft_strcmp(input, "exit") == 0) // or other signals / cmds to exit
+	{
+		printf("exit\n");
+		free(input);
+		return (1);
+	}
+	tokens = parser(input);
+	free(input);
+	return (0);
+}
 
 /*
 main is first of all a loop that runs the shell taking inputs from the user
@@ -18,15 +42,10 @@ and executing them until the user decides to exit it.
 */
 int	main(int argc, char **argv)
 {
-	char	*input;
-
-	argc = 0;
-	argv = NULL;
 	while (1)
 	{
-		input = readline(PROMPT); // Display prompt and read input
-		// Process input (this will be implemented later)
-		free(input);
+		if (repl_loop(argc, argv))
+			break ;
 	}
 	exit(EXIT_SUCCESS);
 }
