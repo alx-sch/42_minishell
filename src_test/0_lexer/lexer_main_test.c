@@ -6,44 +6,11 @@
 /*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/08 17:49:28 by aschenk           #+#    #+#             */
-/*   Updated: 2024/05/14 17:40:22 by aschenk          ###   ########.fr       */
+/*   Updated: 2024/05/15 17:13:05 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-/*
-Checks if a character is a whitespace character:
-space, tab, newline, vertical tab, form feed, or carriage return.
-*/
-int	ft_isspace(int c)
-{
-	if (c == ' ' || (c >= 9 && c <= 13))
-		return (1);
-	else
-		return (0);
-}
-
-/*
-Checks if the input string represents an empty command, which can be:
-- An empty string ("").
-- Contains only whitespace characters.
-- Contains only a comment ('# COMMENT'), with optional preceding whitespace.
-*/
-int	is_input_empty(const char *input)
-{
-	int	i;
-
-	i = 0;
-
-	while (input[i])
-	{
-		if (!ft_isspace(input[i]))
-			return (0);
-		i++;
-	}
-	return (1);
-}
 
 /*
 // Checks if a character is an arithmetic operator.

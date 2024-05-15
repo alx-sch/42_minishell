@@ -6,7 +6,7 @@
 /*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/13 12:12:15 by aschenk           #+#    #+#             */
-/*   Updated: 2024/05/14 15:30:37 by aschenk          ###   ########.fr       */
+/*   Updated: 2024/05/15 19:43:46 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,4 +33,15 @@ void	free_str_arr(char ***array_ptr)
 	}
 	free(array);
 	*array_ptr = NULL;
+}
+
+void	del_token(void *content)
+{
+	t_token	*token;
+
+	token = (t_token *)content;
+	if (!token)
+		return ;
+	free(token->lexeme);
+	free(token);
 }

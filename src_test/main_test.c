@@ -6,7 +6,7 @@
 /*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/06 12:05:14 by aschenk           #+#    #+#             */
-/*   Updated: 2024/05/14 17:41:03 by aschenk          ###   ########.fr       */
+/*   Updated: 2024/05/15 19:39:10 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ The shell repeatedly prompts the user for input, reads the input, evaluates it
 static int	repl_loop(int argc, char **argv)
 {
 	char	*input;
-	char	**tokens;
+	t_list	*token_list;
 
 	(void)argc;
 	(void)argv;
@@ -31,7 +31,9 @@ static int	repl_loop(int argc, char **argv)
 		free(input);
 		return (1);
 	}
-	tokens = parser(input);
+	//tokens = parser(input);
+	token_list = get_tokens(input);
+	ft_lstclear(&token_list, del_token);
 	free(input);
 	return (0);
 }

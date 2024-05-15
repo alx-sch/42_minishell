@@ -6,7 +6,7 @@
 #    By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/04/08 11:14:10 by aschenk           #+#    #+#              #
-#    Updated: 2024/05/14 17:25:27 by aschenk          ###   ########.fr        #
+#    Updated: 2024/05/15 17:41:42 by aschenk          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -173,7 +173,8 @@ TEST_SRCS :=	$(TEST_DIR)/main_test.c \
 				$(TEST_DIR)/free_test.c \
 				$(TEST_DIR)/utils_test.c \
 				$(TEST_DIR)/0_lexer/scanner_test.c \
-				$(TEST_DIR)/0_lexer/lexer_main_test.c
+				$(TEST_DIR)/0_lexer/lexer_main_test.c \
+				$(TEST_DIR)/0_lexer/lexer_utils_test.c
 TEST_OBJS :=	$(TEST_SRCS:$(TEST_DIR)/%.c=$(OBJS_DIR)/%.o)
 
 # Used for progress bar

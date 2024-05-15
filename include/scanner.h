@@ -6,7 +6,7 @@
 /*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 16:36:37 by aschenk           #+#    #+#             */
-/*   Updated: 2024/05/14 17:24:56 by aschenk          ###   ########.fr       */
+/*   Updated: 2024/05/15 17:55:09 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,11 +24,15 @@ Defines lexical elements:
 -	APPEND_OUT:		'>>'
 -	HEREDOC:		'<<'
 -	HEREDOC_DELIM:	StringDelimiter as specified after HEREDOC input
+-	DOLLAR:			XXXX
+-	DOLLAR_QUEST:	Exit status of the most recently executed foreground pipeline
 -	EOF:			End-of-file token
 */
 typedef enum e_token_type
 {
 	CMD,
+	PATH,
+	BUILTIN,
 	ARG,
 	PIPE,
 	REDIRECT_IN,
@@ -36,6 +40,8 @@ typedef enum e_token_type
 	APPEND_OUT,
 	HEREDOC,
 	HEREDOC_DELIM,
+	DOLLAR,
+	DOLLAR_QUEST,
 	EOF
 }		t_token_type;
 
