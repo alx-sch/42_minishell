@@ -6,7 +6,7 @@
 /*   By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 17:16:54 by nholbroo          #+#    #+#             */
-/*   Updated: 2024/05/14 17:20:08 by nholbroo         ###   ########.fr       */
+/*   Updated: 2024/05/15 13:27:03 by nholbroo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,4 +31,18 @@ int	ft_strrchr_index(const char *s, int c)
 		s--;
 	}
 	return (-1);
+}
+
+bool	is_only_duplicates(char *s, char c)
+{
+	int	i;
+
+	i = 0;
+	while (s[i] != '\0')
+	{
+		if (s[i] != c)
+			return (false);
+		i++;
+	}
+	return (true);
 }

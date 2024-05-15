@@ -6,7 +6,7 @@
 /*   By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/06 12:08:35 by aschenk           #+#    #+#             */
-/*   Updated: 2024/05/14 17:38:30 by nholbroo         ###   ########.fr       */
+/*   Updated: 2024/05/15 16:56:24 by nholbroo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,7 @@ void	pwd(void);
 
 // Modified standard functions:
 int		ft_strrchr_index(const char *s, int c);
+bool	is_only_duplicates(char *s, char c);
 
 // Counting-functions:
 int		count_array_length(char **array);

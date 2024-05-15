@@ -6,7 +6,7 @@
 /*   By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/13 13:51:10 by nholbroo          #+#    #+#             */
-/*   Updated: 2024/05/14 18:50:39 by nholbroo         ###   ########.fr       */
+/*   Updated: 2024/05/15 16:57:05 by nholbroo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,27 +74,24 @@ void	cd_one_down(t_cd **cd, char *cwd)
 
 void	cd(char *input, char **envp)
 {
-	char	cwd[4096];
-	t_cd	*cd;
+	char		cwd[4096];
+	t_cd		*cd;
 
 	cd = NULL;
-	if (!getcwd(cwd, sizeof(cwd))) // Get the current working directory.
-		print_error_cd(2, NULL);
 	init_cd_struct(&cd, input);
 	if (count_array_length(cd->component) > 2)
 	{
 		print_error_cd(3, &cd);
 		return ;
 	}
+	if (!getcwd(cwd, sizeof(cwd))) // Get the current working directory.
+		print_error_cd(2, NULL); // Print an error message.
 	if (cd->component[1] == NULL) // If "cd" is the only input, without any components.
 		cd_to_home_user(&cd, envp); // Changing directory to /home/user.
-	else if (!ft_strcmp(cd->component[1], "/")) // If "cd /" is the only input.
+	else if (!ft_strcmp(cd->component[1], "~")) // If "cd ~" is the only input.
+		cd_to_home_user(&cd, envp); // Changing directory to /home/user.
+	else if (is_only_duplicates(cd->component[1], '/')) // If "cd /" is the only input.
 		chdir("/"); // Changing directory to root.
-	else if (!ft_strcmp(cd->component[1], "-")) // If "cd -" is the only input.
-	{
-		chdir("/"); // Changing directory to root.
-		printf("%c\n", '/'); // Printing out '/'.
-	}
 	else if (!ft_strcmp(cd->component[1], "..")) // If "cd .." is the only input.
 		cd_one_up(&cd, cwd); // Changes the working directory to its parent directory.
 	else if (ft_strlen(cd->component[1]) > 2) // If "cd" is followed by a path, change to that relative or absolute path.

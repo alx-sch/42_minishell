@@ -1,30 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   pwd.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/05/06 12:05:14 by aschenk           #+#    #+#             */
-/*   Updated: 2024/05/15 17:10:55 by nholbroo         ###   ########.fr       */
+/*   Created: 2024/05/13 14:41:46 by nholbroo          #+#    #+#             */
+/*   Updated: 2024/05/15 17:10:04 by nholbroo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/minishell.h"
+#include "../../include/minishell.h"
 
-int	main(int argc, char **argv, char **envp)
+void	pwd(void)
 {
-	char	*input;
+	char	cwd[4096];
 
-	argc = 0;
-	argv = NULL;
-	while (1)
-	{
-		input = readline(PROMPT);
-		if (input)
-			add_history(input);
-		parsing(input, envp);
-		free(input);
-	}
-	exit(EXIT_SUCCESS);
+	if (getcwd(cwd, sizeof(cwd)))
+		printf("%s\n", cwd);
+	else
+		printf("pwd: %s\n", strerror(errno));
 }
