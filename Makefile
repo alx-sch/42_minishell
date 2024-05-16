@@ -13,7 +13,8 @@
 NAME :=			minishell
 
 SRCS_DIR :=		src
-SRCS :=			$(SRCS_DIR)/main.c \
+SRCS :=	$(SRCS_DIR)/main.c \
+				$(SRCS_DIR)/free.c \
 				$(SRCS_DIR)/builtins/builtin_struct_inits.c \
 				$(SRCS_DIR)/builtins/cd.c \
 				$(SRCS_DIR)/builtins/pwd.c \
@@ -28,7 +29,8 @@ OBJS :=			$(SRCS:$(SRCS_DIR)/%.c=$(OBJS_DIR)/%.o)
 
 HDRS_DIR :=		include
 HDRS := 		$(HDRS_DIR)/minishell.h \
-				$(HDRS_DIR)/settings.h
+				$(HDRS_DIR)/config.h \
+				$(HDRS_DIR)/tokenizer.h
 
 # LIBFT
 LIBFT_DIR :=	libft
@@ -144,7 +146,7 @@ $(OBJS_DIR)/%.o:	$(SRCS_DIR)/%.c $(HDRS)
 	@if [ $(PERCENT) -eq 100 ]; then printf "$(GREEN)"; fi
 	@printf "%d/%d - " $(SRC_NUM) $(TOTAL_SRCS)
 	@printf "%d%% $(RESET)" $(PERCENT)
-	@$(CC) $(CFLAGS) -c -o $@ $<
+	@$(CC) $(CFLAGS) -D BUFFER_SIZE=$(BUFFER_SIZE) -D FD_SIZE=$(FD_SIZE) -c $< -o $@
 
 # Target to remove all generated files.
 clean:
@@ -176,6 +178,11 @@ re_all:	fclean_all all
 NAME_TEST :=	$(NAME)_test
 TEST_DIR :=		src_test
 TEST_SRCS :=	$(TEST_DIR)/main_test.c \
+  			$(TEST_DIR)/free_test.c \
+				$(TEST_DIR)/utils_test.c \
+				$(TEST_DIR)/0_tokenizer/scanner_test.c \
+				$(TEST_DIR)/0_tokenizer/lexer_main_test.c \
+				$(TEST_DIR)/0_tokenizer/lexer_utils_test.c
 				$(TEST_DIR)/builtins/builtin_struct_inits_test.c \
 				$(TEST_DIR)/builtins/cd_test.c \
 				$(TEST_DIR)/builtins/pwd_test.c \
@@ -184,7 +191,12 @@ TEST_SRCS :=	$(TEST_DIR)/main_test.c \
 				$(TEST_DIR)/standard_functions/count_test.c \
 				$(TEST_DIR)/standard_functions/free_functions_test.c \
 				$(TEST_DIR)/standard_functions/modified_standards_test.c
+
 TEST_OBJS :=	$(TEST_SRCS:$(TEST_DIR)/%.c=$(OBJS_DIR)/%.o)
+
+# Used for progress bar
+TEST_TOTAL_SRCS :=	$(words $(TEST_SRCS))
+SRC_NUM :=		0
 
 $(NAME_TEST):	$(TEST_OBJS) $(LIBFT)
 	@$(CC) $(CFLAGS) $(TEST_OBJS) $(LIB_FLAGS) -o $(NAME_TEST)
@@ -196,16 +208,16 @@ $(NAME_TEST):	$(TEST_OBJS) $(LIBFT)
 $(OBJS_DIR)/%.o:	$(TEST_DIR)/%.c $(HDRS)
 	@mkdir -p $(@D)
 	@$(eval SRC_NUM := $(shell expr $(SRC_NUM) + 1))
-	@$(eval PERCENT := $(shell printf "%.0f" $(shell echo "scale=4; $(SRC_NUM) / $(TOTAL_SRCS) * 100" | bc)))
-	@printf "$(BOLD)\rCompiling $(NAME_TEST): ["
+	@$(eval PERCENT := $(shell printf "%.0f" $(shell echo "scale=4; $(SRC_NUM) / $(TEST_TOTAL_SRCS) * 100" | bc)))
+	@printf "$(BOLD)\rCompiling $(NAME): ["
 	@$(eval PROGRESS := $(shell expr $(PERCENT) / 5))
 	@printf "$(GREEN)%0.s#$(RESET)$(BOLD)" $(shell seq 1 $(PROGRESS))
 	@if [ $(PERCENT) -lt 100 ]; then printf "%0.s-" $(shell seq 1 $(shell expr 20 - $(PROGRESS))); fi
 	@printf "] "
 	@if [ $(PERCENT) -eq 100 ]; then printf "$(GREEN)"; fi
-	@printf "%d/%d - " $(SRC_NUM) $(TOTAL_SRCS)
+	@printf "%d/%d - " $(SRC_NUM) $(TEST_TOTAL_SRCS)
 	@printf "%d%% $(RESET)" $(PERCENT)
-	@$(CC) $(CFLAGS) -c -o $@ $<
+	@$(CC) $(CFLAGS) -D BUFFER_SIZE=$(BUFFER_SIZE) -D FD_SIZE=$(FD_SIZE) -c $< -o $@
 
 test:	$(LIBFT) $(NAME_TEST)
 

@@ -1,18 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   settings.h                                         :+:      :+:    :+:   */
+/*   utils_test.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/05/07 16:54:03 by aschenk           #+#    #+#             */
-/*   Updated: 2024/05/07 17:20:45 by aschenk          ###   ########.fr       */
+/*   Created: 2024/05/10 16:51:05 by aschenk           #+#    #+#             */
+/*   Updated: 2024/05/14 16:22:28 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef SETTINGS_H
-# define SETTINGS_H
+#include "minishell.h"
 
-# define PROMPT		"minishell🌈$ "
+// FOR TESTING!!
+void	print_string_array(char **array)
+{
+	int	counter;
 
-#endif
+	counter = 1;
+	while (*array != NULL)
+	{
+		printf("token[%d]: %s\n", counter, *array);
+		counter++;
+		array++;
+	}
+}

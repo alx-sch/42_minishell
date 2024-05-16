@@ -13,8 +13,9 @@
 #ifndef MINISHELL_H
 # define MINISHELL_H
 
-# include "settings.h" // prompt, etc.
 # include "libft.h" // libft
+# include "config.h" // prompt, etc.
+# include "tokenizer.h" // prompt, etc.
 
 # include <stdlib.h> // malloc, free, exit
 # include <fcntl.h> // open, close, read, write, access, unlink
@@ -32,10 +33,35 @@
 # include <termios.h> // tcsetattr, tcgetattr
 # include <curses.h> // tgetent, tgetflag, tgetnum, tgetstr, tgoto, tputs
 
-// History: Override macros when invoking 'make:
-// 'make C#endifFLAGS+="-DHIST_FILE='new_path' -DHIST_SIZE=42"
-# define HIST_PATH	"/.minishell_history"
-# define HIST_SIZE	1000
+
+
+// utils.c
+
+// FOR TESTING!!
+void	print_string_array(char **array);
+
+// free.c
+void	free_str_arr(char ***array_ptr);
+
+// 0_lexer/lexer_main.c
+
+char	**parser(char *input);
+
+// lexer_utils.c
+
+void	print_token(const t_list *current);
+void	print_token_list(t_list *token_list);
+int		is_space(int c);
+int		is_input_empty(const char *input);
+int		is_delimiter(const char c);
+
+// 0_lexer/scanner.c
+
+t_list	*get_tokens(const char *input);
+
+// free.c
+
+void	del_token(void *content);
 
 typedef struct s_cd
 {
