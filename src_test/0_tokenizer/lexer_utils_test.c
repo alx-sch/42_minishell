@@ -6,7 +6,7 @@
 /*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 14:04:08 by aschenk           #+#    #+#             */
-/*   Updated: 2024/05/16 11:20:36 by aschenk          ###   ########.fr       */
+/*   Updated: 2024/05/16 16:04:35 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ variable expansion ($), or a null terminator ('\0').
 int	is_delimiter(const char c)
 {
 	if (is_space(c) || c == '>' || c == '<' || c == '|' || c == '$'
-		|| c == '\0')
+		|| c == '\n' || c == '\0')
 		return (1);
 	else
 		return (0);

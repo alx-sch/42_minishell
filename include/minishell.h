@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/06 12:08:35 by aschenk           #+#    #+#             */
-/*   Updated: 2024/05/15 16:56:24 by nholbroo         ###   ########.fr       */
+/*   Updated: 2024/05/16 17:31:39 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,8 @@
 # define MINISHELL_H
 
 # include "libft.h" // libft
-# include "config.h" // prompt, etc.
+# include "errors.h" // prompt, etc.
+# include "config.h" // error messages
 # include "tokenizer.h" // prompt, etc.
 
 # include <stdlib.h> // malloc, free, exit
@@ -33,9 +34,25 @@
 # include <termios.h> // tcsetattr, tcgetattr
 # include <curses.h> // tgetent, tgetflag, tgetnum, tgetstr, tgoto, tputs
 
+typedef struct s_cd
+{
+	char	*username;
+	char	*subdirectory;
+	char	*home_user;
+	char	*parentdirectory;
+	char	**component;
+}	t_cd;
+
+typedef struct s_data
+{
+	t_cd	cd_struct;
+}	t_data;
 
 
 // utils.c
+
+void	perror_and_exit(char *msg, t_data *data);
+void	msg_and_exit(char *msg, t_data *data);
 
 // FOR TESTING!!
 void	print_string_array(char **array);
@@ -62,15 +79,8 @@ t_list	*get_tokens(const char *input);
 // free.c
 
 void	del_token(void *content);
+void	free_data(t_data **data_struct);
 
-typedef struct s_cd
-{
-	char	*username;
-	char	*subdirectory;
-	char	*home_user;
-	char	*parentdirectory;
-	char	**component;
-}	t_cd;
 
 // Parsing:
 void	parsing(char *input, char **envp);

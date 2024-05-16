@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main_test.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/06 12:05:14 by aschenk           #+#    #+#             */
-/*   Updated: 2024/05/13 16:05:44 by nholbroo         ###   ########.fr       */
+/*   Updated: 2024/05/16 17:33:10 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,9 +56,9 @@ int	main(int argc, char **argv, char **envp)
 		if (input) // Checking if input is not NULL.
 			add_history(input); // Adding to input-history.
 		parsing(input, envp);
-    token_list = get_tokens(input);
+	token_list = get_tokens(input);
 		free(input);
-    ft_lstclear(&token_list, del_token);
+	ft_lstclear(&token_list, del_token);
 	}
 	exit(EXIT_SUCCESS);
 }

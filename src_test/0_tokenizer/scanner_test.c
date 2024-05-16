@@ -6,7 +6,7 @@
 /*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 16:59:48 by aschenk           #+#    #+#             */
-/*   Updated: 2024/05/15 19:38:38 by aschenk          ###   ########.fr       */
+/*   Updated: 2024/05/16 19:02:29 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,59 @@ t_list	*create_token(t_token_type type, const char *lexeme, int *i)
 }
 
 /*
+TBD
+*/
+static int	is_valid_operand(const char *input, int *i)
+{
+	int		j;
+
+	j = *i;
+
+	while (is_space(input[j])) // skipping whitespace
+		j++;
+	if (input[j] == '>' || input[j] == '<' || input[j] == '|'
+		|| input[j] == '\0')
+		return (0); // operand afer redirection is NOT valid
+	else
+		return (1); // operand afer redirection is NOT valid
+}
+
+static int	check_redirection_operand(const char *input, int *i, int *j)
+{
+	int	flag;
+
+	flag = 1;
+	if (!is_valid_operand(input, i))
+	{
+		flag = 0;
+		if (input[*j] == '>' && input[*j + 1] == '>')
+			printf("unexpected token after redirection '>>'\n");
+	}
+	return (flag);
+}
+
+/*
+TBD
+*/
+int	check_redirection_symbols(t_list **lst, const char *input, int *i)
+{
+	int	j;
+
+	j = *i;
+	if (input[*i] == '>' && input[*i + 1] == '>')
+		ft_lstadd_back(lst, create_token(APPEND_OUT, ">>", i));
+	else if (input[*i] == '>')
+		ft_lstadd_back(lst, create_token(REDIRECT_OUT, ">", i));
+	else if (input[*i] == '<' && input[*i + 1] == '<')
+		ft_lstadd_back(lst, create_token(HEREDOC, "<<", i));
+	else if (input[*i] == '<')
+		ft_lstadd_back(lst, create_token(REDIRECT_IN, "<", i));
+	if (j != *i) // if 'i' was incremented and is != j, it means that a redirection had been found
+		if (check_redirection_operand(input, i, &j))
+			return (1);
+	return (1);
+}
+/*
 Returns a token list which is a linked list of t_list type
 note: we dont need to action some of them but fir completeness I added
 as much as I could. for instance we do not action the last & on a command
@@ -67,9 +120,10 @@ t_list	*get_tokens(const char *input)
 	token_list = NULL;
 	while (input[i])
 	{
-		if (is_space(input[i]))
+		if (is_space(input[i])) // skips whitespace
 			i++;
-		else if (input[i] == '$' && input[i + 1]) // checks if the shell variable '$?' (exit status) is input
+		check_redirection_symbols(&token_list, input, &i);
+		if (input[i] == '$' && input[i + 1] == '?') // checks if the shell variable '$?' (exit status) is input
 			ft_lstadd_back(&token_list, create_token(DOLLAR_QUEST, "$?", &i));
 		else // all the rest is considered a COMMAND --> which is not true, could also be a pathfile -> '/' --> bash: /: Is a directory
 		{

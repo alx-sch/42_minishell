@@ -3,17 +3,17 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+         #
+#    By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/04/08 11:14:10 by aschenk           #+#    #+#              #
-#    Updated: 2024/05/15 17:07:35 by nholbroo         ###   ########.fr        #
+#    Updated: 2024/05/16 17:32:19 by aschenk          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME :=			minishell
 
 SRCS_DIR :=		src
-SRCS :=	$(SRCS_DIR)/main.c \
+SRCS :=			$(SRCS_DIR)/main.c \
 				$(SRCS_DIR)/free.c \
 				$(SRCS_DIR)/builtins/builtin_struct_inits.c \
 				$(SRCS_DIR)/builtins/cd.c \
@@ -30,7 +30,8 @@ OBJS :=			$(SRCS:$(SRCS_DIR)/%.c=$(OBJS_DIR)/%.o)
 HDRS_DIR :=		include
 HDRS := 		$(HDRS_DIR)/minishell.h \
 				$(HDRS_DIR)/config.h \
-				$(HDRS_DIR)/tokenizer.h
+				$(HDRS_DIR)/tokenizer.h \
+				$(HDRS_DIR)/errors.h
 
 # LIBFT
 LIBFT_DIR :=	libft
@@ -178,11 +179,11 @@ re_all:	fclean_all all
 NAME_TEST :=	$(NAME)_test
 TEST_DIR :=		src_test
 TEST_SRCS :=	$(TEST_DIR)/main_test.c \
-  			$(TEST_DIR)/free_test.c \
+  				$(TEST_DIR)/free_test.c \
 				$(TEST_DIR)/utils_test.c \
 				$(TEST_DIR)/0_tokenizer/scanner_test.c \
 				$(TEST_DIR)/0_tokenizer/lexer_main_test.c \
-				$(TEST_DIR)/0_tokenizer/lexer_utils_test.c
+				$(TEST_DIR)/0_tokenizer/lexer_utils_test.c \
 				$(TEST_DIR)/builtins/builtin_struct_inits_test.c \
 				$(TEST_DIR)/builtins/cd_test.c \
 				$(TEST_DIR)/builtins/pwd_test.c \
