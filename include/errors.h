@@ -6,7 +6,7 @@
 /*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/16 17:26:08 by aschenk           #+#    #+#             */
-/*   Updated: 2024/05/16 17:32:28 by aschenk          ###   ########.fr       */
+/*   Updated: 2024/05/16 19:57:53 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,6 @@
 # define ERRORS_H
 
 # define ERR_MALLOC			"ERROR: malloc() failed"
-# define ERR_REDIR_OPERAND	""
+# define ERR_REDIR_OPERAND	"syntax error after redirection "
 
 #endif

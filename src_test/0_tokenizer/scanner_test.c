@@ -6,7 +6,7 @@
 /*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 16:59:48 by aschenk           #+#    #+#             */
-/*   Updated: 2024/05/16 19:02:29 by aschenk          ###   ########.fr       */
+/*   Updated: 2024/05/16 20:15:43 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,39 +51,67 @@ t_list	*create_token(t_token_type type, const char *lexeme, int *i)
 /*
 TBD
 */
-static int	is_valid_operand(const char *input, int *i)
+static char	*is_valid_operand(const char *input, int *i)
 {
 	int		j;
+	char	*invalid_op;
+	char	char_str[2];
 
 	j = *i;
-
+	invalid_op = NULL;
 	while (is_space(input[j])) // skipping whitespace
 		j++;
 	if (input[j] == '>' || input[j] == '<' || input[j] == '|'
 		|| input[j] == '\0')
-		return (0); // operand afer redirection is NOT valid
+	{
+		if (input[j] == '\0')
+			invalid_op = ft_strdup("EOF");
+		else
+		{
+			char_str[0] = input[j];
+			char_str[1] = '\0';
+			invalid_op = ft_strdup(char_str);
+		}
+		return (invalid_op);
+	}
 	else
-		return (1); // operand afer redirection is NOT valid
+		return (NULL); // operand afer redirection is NOT valid
 }
 
+/*
+Custom error message
+*/
 static int	check_redirection_operand(const char *input, int *i, int *j)
 {
-	int	flag;
+	char	*invalid_op;
 
-	flag = 1;
-	if (!is_valid_operand(input, i))
+	invalid_op = is_valid_operand(input, i);
+	if (invalid_op)
 	{
-		flag = 0;
+		ft_putstr_fd(ERR_PREFIX, STDERR_FILENO);
+		ft_putstr_fd(ERR_REDIR_OPERAND, STDERR_FILENO);
 		if (input[*j] == '>' && input[*j + 1] == '>')
-			printf("unexpected token after redirection '>>'\n");
+			ft_putstr_fd("'>>': '", STDERR_FILENO);
+		else if (input[*j] == '>')
+			ft_putstr_fd("'>': '", STDERR_FILENO);
+		else if (input[*j] == '<' && input[*j + 1] == '<')
+			ft_putstr_fd("'<<': '", STDERR_FILENO);
+		else if (input[*j] == '<')
+			ft_putstr_fd("'<': '", STDERR_FILENO);
+		ft_putstr_fd(invalid_op, STDERR_FILENO);
+		ft_putstr_fd("'\n", STDERR_FILENO);
+		free(invalid_op);
+		printf("ERROR\n");
+		return (0);
 	}
-	return (flag);
+	printf("NO ERROR\n");
+	return (1);
 }
 
 /*
 TBD
 */
-int	check_redirection_symbols(t_list **lst, const char *input, int *i)
+int	is_redirection_symbol(t_list **lst, const char *input, int *i)
 {
 	int	j;
 
@@ -97,8 +125,9 @@ int	check_redirection_symbols(t_list **lst, const char *input, int *i)
 	else if (input[*i] == '<')
 		ft_lstadd_back(lst, create_token(REDIRECT_IN, "<", i));
 	if (j != *i) // if 'i' was incremented and is != j, it means that a redirection had been found
-		if (check_redirection_operand(input, i, &j))
-			return (1);
+		if (!check_redirection_operand(input, i, &j))
+			return (0);
+	printf("all good!\n");
 	return (1);
 }
 /*
@@ -122,7 +151,12 @@ t_list	*get_tokens(const char *input)
 	{
 		if (is_space(input[i])) // skips whitespace
 			i++;
-		check_redirection_symbols(&token_list, input, &i);
+		if (!is_redirection_symbol(&token_list, input, &i))
+		{
+			printf("I am stopping here!\n");
+			ft_lstclear(&token_list, del_token);
+			return (NULL);
+		}
 		if (input[i] == '$' && input[i + 1] == '?') // checks if the shell variable '$?' (exit status) is input
 			ft_lstadd_back(&token_list, create_token(DOLLAR_QUEST, "$?", &i));
 		else // all the rest is considered a COMMAND --> which is not true, could also be a pathfile -> '/' --> bash: /: Is a directory
