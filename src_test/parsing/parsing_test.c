@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parsing.c                                          :+:      :+:    :+:   */
+/*   parsing_test.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/13 14:51:02 by nholbroo          #+#    #+#             */
-/*   Updated: 2024/05/15 16:56:54 by nholbroo         ###   ########.fr       */
+/*   Updated: 2024/05/16 12:01:06 by nholbroo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 
 void	parsing(char *input, char **envp)
 {
-	if (!ft_strcmp(input, "pwd")) // Checking if the input is exactly "pwd".
+	if (!ft_strcmp(input, "pwd")) // Checking if the input is exactly "pwd". NB!! Handle spaces etc.
 		pwd(); // Calls the pwd-function that is working as the command.
 	else if (ft_strnstr(input, "cd", sizeof(input)) != NULL) // Checking if "cd" is present in the input.
 		cd(input, envp);
