@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
+/*   By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/06 12:08:35 by aschenk           #+#    #+#             */
-/*   Updated: 2024/05/07 16:55:31 by aschenk          ###   ########.fr       */
+/*   Updated: 2024/05/15 16:56:24 by nholbroo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,5 +36,36 @@
 // 'make C#endifFLAGS+="-DHIST_FILE='new_path' -DHIST_SIZE=42"
 # define HIST_PATH	"/.minishell_history"
 # define HIST_SIZE	1000
+
+typedef struct s_cd
+{
+	char	*username;
+	char	*subdirectory;
+	char	*home_user;
+	char	*parentdirectory;
+	char	**component;
+}	t_cd;
+
+// Parsing:
+void	parsing(char *input, char **envp);
+
+// Builtins:
+void	init_cd_struct(t_cd **cd, char *input);
+void	cd(char *input, char **envp);
+void	pwd(void);
+
+// Modified standard functions:
+int		ft_strrchr_index(const char *s, int c);
+bool	is_only_duplicates(char *s, char c);
+
+// Counting-functions:
+int		count_array_length(char **array);
+
+// Freeing allocated memory:
+int		ft_freearray(char **arr);
+void	free_cd_struct(t_cd **cd);
+
+// Errors:
+void	print_error_cd(int error_code, t_cd **cd);
 
 #endif
