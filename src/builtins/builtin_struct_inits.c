@@ -1,30 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   builtin_struct_inits.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/05/06 12:05:14 by aschenk           #+#    #+#             */
-/*   Updated: 2024/05/16 12:37:40 by nholbroo         ###   ########.fr       */
+/*   Created: 2024/05/14 16:28:08 by nholbroo          #+#    #+#             */
+/*   Updated: 2024/05/15 13:59:51 by nholbroo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/minishell.h"
+#include "../../include/minishell.h"
 
-int	main(int argc, char **argv, char **envp)
+void	init_cd_struct(t_cd **cd, char *input)
 {
-	char	*input;
-
-	argc = 0;
-	argv = NULL;
-	while (1)
-	{
-		input = readline(PROMPT);
-		if (input)
-			add_history(input);
-		parsing(input, envp);
-		free(input);
-	}
-	exit(EXIT_SUCCESS);
+	*cd = malloc(sizeof(t_cd));
+	if (!(*cd))
+		print_error_cd(1, cd);
+	(*cd)->component = ft_split(input, ' ');
+	if (!(*cd)->component)
+		print_error_cd(1, cd);
+	(*cd)->home_user = NULL;
+	(*cd)->parentdirectory = NULL;
+	(*cd)->subdirectory = NULL;
+	(*cd)->username = NULL;
 }
