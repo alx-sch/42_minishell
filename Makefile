@@ -6,7 +6,7 @@
 #    By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/04/08 11:14:10 by aschenk           #+#    #+#              #
-#    Updated: 2024/05/15 17:41:42 by aschenk          ###   ########.fr        #
+#    Updated: 2024/05/16 11:21:07 by aschenk          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,7 +22,7 @@ OBJS :=			$(SRCS:$(SRCS_DIR)/%.c=$(OBJS_DIR)/%.o)
 HDRS_DIR :=		include
 HDRS := 		$(HDRS_DIR)/minishell.h \
 				$(HDRS_DIR)/config.h \
-				$(HDRS_DIR)/scanner.h
+				$(HDRS_DIR)/tokenizer.h
 
 # LIBFT
 LIBFT_DIR :=	libft
@@ -172,9 +172,9 @@ TEST_DIR :=		src_test
 TEST_SRCS :=	$(TEST_DIR)/main_test.c \
 				$(TEST_DIR)/free_test.c \
 				$(TEST_DIR)/utils_test.c \
-				$(TEST_DIR)/0_lexer/scanner_test.c \
-				$(TEST_DIR)/0_lexer/lexer_main_test.c \
-				$(TEST_DIR)/0_lexer/lexer_utils_test.c
+				$(TEST_DIR)/0_tokenizer/scanner_test.c \
+				$(TEST_DIR)/0_tokenizer/lexer_main_test.c \
+				$(TEST_DIR)/0_tokenizer/lexer_utils_test.c
 TEST_OBJS :=	$(TEST_SRCS:$(TEST_DIR)/%.c=$(OBJS_DIR)/%.o)
 
 # Used for progress bar

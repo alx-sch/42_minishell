@@ -6,7 +6,7 @@
 /*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/06 12:08:35 by aschenk           #+#    #+#             */
-/*   Updated: 2024/05/15 19:38:56 by aschenk          ###   ########.fr       */
+/*   Updated: 2024/05/16 11:13:12 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 
 # include "libft.h" // libft
 # include "config.h" // prompt, etc.
-# include "scanner.h" // prompt, etc.
+# include "tokenizer.h" // prompt, etc.
 
 # include <stdlib.h> // malloc, free, exit
 # include <fcntl.h> // open, close, read, write, access, unlink

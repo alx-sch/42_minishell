@@ -6,7 +6,7 @@
 /*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 14:04:08 by aschenk           #+#    #+#             */
-/*   Updated: 2024/05/15 18:38:20 by aschenk          ###   ########.fr       */
+/*   Updated: 2024/05/16 11:20:36 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,6 +72,9 @@ void	print_token(const t_list *current)
 	return ;
 }
 
+/*
+FOR TESTING ONLY!!
+*/
 void	print_token_list(t_list *token_list)
 {
 	t_list	*current;

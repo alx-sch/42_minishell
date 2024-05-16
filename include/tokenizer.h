@@ -1,36 +1,55 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   scanner.h                                          :+:      :+:    :+:   */
+/*   tokenizer.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 16:36:37 by aschenk           #+#    #+#             */
-/*   Updated: 2024/05/15 17:55:09 by aschenk          ###   ########.fr       */
+/*   Updated: 2024/05/16 11:37:35 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef SCANNER_H
-# define SCANNER_H
+/*
+DESCRIPTION TBD
+*/
+
+#ifndef TOKENIZER_H
+# define TOKENIZER_H
 
 /*
-Datatype enum defines a set of constants via integer (starting with 0).
-Defines lexical elements:
--	CMD:			Command
--	ARG:			Arguments to command (file names, options, etc.)
+Data type 'enum' defines a set of constants via integer (starting with 0).
+Categorizes tokens / lexemes:
+-	CMD:			Command to be passed to execve()
+-	BI_ECHO:		Custom function (builtint) 'echo'
+-	BI_CD:			Custom function (builtint) 'cd'
+-	BI_PWD:			Custom function (builtint) 'pwd'
+-	BI_EXPORT:		Custom function (builtint) 'export'
+-	BI_UNSET:		Custom function (builtint) 'unset'
+-	BI_ENV:			Custom function (builtint) 'env'
+-	BI_EXIT:		Custom function (builtint) 'exit'
+-	PATH:			Path or file
+-	ARG:			Arguments to command (file names, options, etc.) // NOT SURE IF REALLY NEEDED?
 -	PIPE:			'|'
 -	REDIRECT_IN:	'<'
 -	REDIRECT_OUT:	'>'
 -	APPEND_OUT:		'>>'
 -	HEREDOC:		'<<'
--	HEREDOC_DELIM:	StringDelimiter as specified after HEREDOC input
--	DOLLAR:			XXXX
--	DOLLAR_QUEST:	Exit status of the most recently executed foreground pipeline
+-	HEREDOC_DELIM:	String delimiter as specified after HEREDOC input
+-	DOLLAR:			Parameter extension of variables
+-	DOLLAR_QUEST:	Exit status of the most recently executed pipeline
 -	EOF:			End-of-file token
 */
 typedef enum e_token_type
 {
 	CMD,
+	BI_ECHO,
+	BI_CD,
+	BI_PWD,
+	BI_EXPORT,
+	BI_UNSET,
+	BI_ENV,
+	BI_EXIT,
 	PATH,
 	BUILTIN,
 	ARG,
