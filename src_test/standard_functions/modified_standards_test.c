@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   modified_standards.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 17:16:54 by nholbroo          #+#    #+#             */
-/*   Updated: 2024/05/15 13:27:03 by nholbroo         ###   ########.fr       */
+/*   Updated: 2024/05/17 16:30:40 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../include/minishell.h"
+#include "minishell.h"
 
 // This first function works exactly as ft_strrchr except for this:
 // The return value is an int instead of a pointer.

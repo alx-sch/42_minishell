@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   free_functions.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 15:59:31 by nholbroo          #+#    #+#             */
-/*   Updated: 2024/05/15 13:50:18 by nholbroo         ###   ########.fr       */
+/*   Updated: 2024/05/17 16:30:45 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../include/minishell.h"
+#include "minishell.h"
 
 void	free_cd_struct(t_cd **cd)
 {

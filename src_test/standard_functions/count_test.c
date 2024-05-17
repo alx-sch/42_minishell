@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   count.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 17:36:17 by nholbroo          #+#    #+#             */
-/*   Updated: 2024/05/14 18:48:13 by nholbroo         ###   ########.fr       */
+/*   Updated: 2024/05/17 16:30:50 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../include/minishell.h"
+#include "minishell.h"
 
 int	count_array_length(char **array)
 {

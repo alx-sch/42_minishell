@@ -6,7 +6,7 @@
 /*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/06 12:08:35 by aschenk           #+#    #+#             */
-/*   Updated: 2024/05/16 17:31:39 by aschenk          ###   ########.fr       */
+/*   Updated: 2024/05/17 18:49:23 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,9 +43,14 @@ typedef struct s_cd
 	char	**component;
 }	t_cd;
 
+
 typedef struct s_data
 {
-	t_cd	cd_struct;
+	int		argc;
+	char	**argv;
+	char	**envp;
+	t_tok	tok;
+	t_cd	cd;
 }	t_data;
 
 
@@ -53,6 +58,14 @@ typedef struct s_data
 
 void	perror_and_exit(char *msg, t_data *data);
 void	msg_and_exit(char *msg, t_data *data);
+
+// 0_tokenizer/tokenizer_redirection.c
+
+int		is_redirection(t_list **lst, const char *input, int *i);
+
+// 0_tokenizer/scanner.c
+
+t_list	*create_token(t_token_type type, const char *lexeme, int *i);
 
 // FOR TESTING!!
 void	print_string_array(char **array);

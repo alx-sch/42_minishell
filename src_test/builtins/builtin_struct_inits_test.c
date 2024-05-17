@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_struct_inits.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 16:28:08 by nholbroo          #+#    #+#             */
-/*   Updated: 2024/05/15 13:59:51 by nholbroo         ###   ########.fr       */
+/*   Updated: 2024/05/17 16:31:09 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../include/minishell.h"
+#include "minishell.h"
 
 void	init_cd_struct(t_cd **cd, char *input)
 {

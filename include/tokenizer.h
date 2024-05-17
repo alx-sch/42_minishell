@@ -6,7 +6,7 @@
 /*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 16:36:37 by aschenk           #+#    #+#             */
-/*   Updated: 2024/05/16 11:37:35 by aschenk          ###   ########.fr       */
+/*   Updated: 2024/05/17 18:48:18 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,14 +75,19 @@ typedef struct s_token
 }	t_token;
 
 /*
-Data structure as used in scanner.c
+- char *input:		The input string containing the command line input.
+- int i:			Current index in the input string.
+- int j:			Local index to keep track of the initial position i.
+- char *tmp:		Store temporary string.
+- t_token *tok:		Token structure containing lexemic information.
+- t_list tok_lst:	Linked list of tokens / lexemes.
 */
-typedef struct s_scan_data
+typedef struct s_tok
 {
-	int		i;
+	char	*input;
 	char	*tmp;
-	t_list	**print_token_list;
-	t_list	*token;
-}	t_scan_data;
+	t_token	*tok;
+	t_list	*tok_lst;
+}	t_tok;
 
 #endif

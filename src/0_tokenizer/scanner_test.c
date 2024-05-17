@@ -6,7 +6,7 @@
 /*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 16:59:48 by aschenk           #+#    #+#             */
-/*   Updated: 2024/05/16 20:15:43 by aschenk          ###   ########.fr       */
+/*   Updated: 2024/05/17 13:03:58 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,88 +49,6 @@ t_list	*create_token(t_token_type type, const char *lexeme, int *i)
 }
 
 /*
-TBD
-*/
-static char	*is_valid_operand(const char *input, int *i)
-{
-	int		j;
-	char	*invalid_op;
-	char	char_str[2];
-
-	j = *i;
-	invalid_op = NULL;
-	while (is_space(input[j])) // skipping whitespace
-		j++;
-	if (input[j] == '>' || input[j] == '<' || input[j] == '|'
-		|| input[j] == '\0')
-	{
-		if (input[j] == '\0')
-			invalid_op = ft_strdup("EOF");
-		else
-		{
-			char_str[0] = input[j];
-			char_str[1] = '\0';
-			invalid_op = ft_strdup(char_str);
-		}
-		return (invalid_op);
-	}
-	else
-		return (NULL); // operand afer redirection is NOT valid
-}
-
-/*
-Custom error message
-*/
-static int	check_redirection_operand(const char *input, int *i, int *j)
-{
-	char	*invalid_op;
-
-	invalid_op = is_valid_operand(input, i);
-	if (invalid_op)
-	{
-		ft_putstr_fd(ERR_PREFIX, STDERR_FILENO);
-		ft_putstr_fd(ERR_REDIR_OPERAND, STDERR_FILENO);
-		if (input[*j] == '>' && input[*j + 1] == '>')
-			ft_putstr_fd("'>>': '", STDERR_FILENO);
-		else if (input[*j] == '>')
-			ft_putstr_fd("'>': '", STDERR_FILENO);
-		else if (input[*j] == '<' && input[*j + 1] == '<')
-			ft_putstr_fd("'<<': '", STDERR_FILENO);
-		else if (input[*j] == '<')
-			ft_putstr_fd("'<': '", STDERR_FILENO);
-		ft_putstr_fd(invalid_op, STDERR_FILENO);
-		ft_putstr_fd("'\n", STDERR_FILENO);
-		free(invalid_op);
-		printf("ERROR\n");
-		return (0);
-	}
-	printf("NO ERROR\n");
-	return (1);
-}
-
-/*
-TBD
-*/
-int	is_redirection_symbol(t_list **lst, const char *input, int *i)
-{
-	int	j;
-
-	j = *i;
-	if (input[*i] == '>' && input[*i + 1] == '>')
-		ft_lstadd_back(lst, create_token(APPEND_OUT, ">>", i));
-	else if (input[*i] == '>')
-		ft_lstadd_back(lst, create_token(REDIRECT_OUT, ">", i));
-	else if (input[*i] == '<' && input[*i + 1] == '<')
-		ft_lstadd_back(lst, create_token(HEREDOC, "<<", i));
-	else if (input[*i] == '<')
-		ft_lstadd_back(lst, create_token(REDIRECT_IN, "<", i));
-	if (j != *i) // if 'i' was incremented and is != j, it means that a redirection had been found
-		if (!check_redirection_operand(input, i, &j))
-			return (0);
-	printf("all good!\n");
-	return (1);
-}
-/*
 Returns a token list which is a linked list of t_list type
 note: we dont need to action some of them but fir completeness I added
 as much as I could. for instance we do not action the last & on a command
@@ -151,7 +69,7 @@ t_list	*get_tokens(const char *input)
 	{
 		if (is_space(input[i])) // skips whitespace
 			i++;
-		if (!is_redirection_symbol(&token_list, input, &i))
+		if (!is_redirection(&token_list, input, &i))
 		{
 			printf("I am stopping here!\n");
 			ft_lstclear(&token_list, del_token);

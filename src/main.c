@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/06 12:05:14 by aschenk           #+#    #+#             */
-/*   Updated: 2024/05/16 12:37:40 by nholbroo         ###   ########.fr       */
+/*   Updated: 2024/05/17 17:52:33 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 int	main(int argc, char **argv, char **envp)
 {
 	char	*input;
+	t_list	*token_list;
 
 	argc = 0;
 	argv = NULL;
@@ -25,6 +26,7 @@ int	main(int argc, char **argv, char **envp)
 			add_history(input);
 		parsing(input, envp);
 		free(input);
+		ft_lstclear(&token_list, del_token);
 	}
 	exit(EXIT_SUCCESS);
 }
