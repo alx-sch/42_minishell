@@ -6,7 +6,7 @@
 #    By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/04/08 11:14:10 by aschenk           #+#    #+#              #
-#    Updated: 2024/05/17 17:22:51 by aschenk          ###   ########.fr        #
+#    Updated: 2024/05/17 20:43:24 by aschenk          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -44,6 +44,7 @@ LIB_FLAGS :=	$(LIBFT_FLAGS)
 CC :=			cc
 CFLAGS :=		-Wall -Werror -Wextra -I$(HDRS_DIR) -I$(LIBFT_DIR)
 CFLAGS +=		-Wpedantic -g
+#CFLAGS +=		-fsanitize=address
 
 # Used for progress bar
 TOTAL_SRCS :=	$(words $(SRCS))

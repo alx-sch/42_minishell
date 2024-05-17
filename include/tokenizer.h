@@ -6,7 +6,7 @@
 /*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 16:36:37 by aschenk           #+#    #+#             */
-/*   Updated: 2024/05/17 18:56:20 by aschenk          ###   ########.fr       */
+/*   Updated: 2024/05/17 19:52:42 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,17 +75,17 @@ typedef struct s_token
 }	t_token;
 
 /*
-- char *input:		The input string containing the command line input.
 - int i:			Current index in the input string.
 - int j:			Local index to keep track of the initial position i.
 - char *tmp:		Store temporary string.
 - t_token *tok:		Token structure containing lexemic information.
+- t_list *new_node:	t_list node to be added to list via ft_lstadd_back().
 - t_list tok_lst:	Linked list of tokens / lexemes.
 */
 typedef struct s_tok
 {
-	char	*input;
 	t_token	*tok;
+	t_list	*new_node;
 	t_list	*tok_lst;
 }	t_tok;
 

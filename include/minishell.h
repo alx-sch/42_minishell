@@ -6,7 +6,7 @@
 /*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/06 12:08:35 by aschenk           #+#    #+#             */
-/*   Updated: 2024/05/17 18:49:23 by aschenk          ###   ########.fr       */
+/*   Updated: 2024/05/17 20:10:31 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,12 +43,16 @@ typedef struct s_cd
 	char	**component;
 }	t_cd;
 
-
+/*
+- char *input:		The input string containing the command line input.
+*/
 typedef struct s_data
 {
 	int		argc;
 	char	**argv;
 	char	**envp;
+	char	*input;
+	char	*tmp;
 	t_tok	tok;
 	t_cd	cd;
 }	t_data;
@@ -61,11 +65,12 @@ void	msg_and_exit(char *msg, t_data *data);
 
 // 0_tokenizer/tokenizer_redirection.c
 
-int		is_redirection(t_list **lst, const char *input, int *i);
+int		is_redirection(t_data *data, int *i);
 
 // 0_tokenizer/scanner.c
 
-t_list	*create_token(t_token_type type, const char *lexeme, int *i);
+t_list	*create_tok(t_data *data, t_token_type type, const char *lexeme,
+			int *i);
 
 // FOR TESTING!!
 void	print_string_array(char **array);
@@ -87,7 +92,7 @@ int		is_delimiter(const char c);
 
 // 0_lexer/scanner.c
 
-t_list	*get_tokens(const char *input);
+void	get_tokens(t_data	*data);
 
 // free.c
 
