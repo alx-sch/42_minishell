@@ -6,14 +6,15 @@
 /*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/07 16:54:03 by aschenk           #+#    #+#             */
-/*   Updated: 2024/05/08 17:55:57 by aschenk          ###   ########.fr       */
+/*   Updated: 2024/05/16 17:10:37 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef CONFIG_H
 # define CONFIG_H
 
-# define PROMPT		"minishell🌈$ "
+# define PROMPT			"minishell🌈$ "
+# define ERR_PREFIX		"minishell: "
 
 // History: Override macros when invoking 'make':
 // 'make CFLAGS+="-DHIST_FILE='new_path' -DHIST_SIZE=42"

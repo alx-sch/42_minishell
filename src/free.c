@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   free_test.c                                        :+:      :+:    :+:   */
+/*   free.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/13 12:12:15 by aschenk           #+#    #+#             */
-/*   Updated: 2024/05/14 15:30:37 by aschenk          ###   ########.fr       */
+/*   Updated: 2024/05/17 17:05:24 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,4 +33,21 @@ void	free_str_arr(char ***array_ptr)
 	}
 	free(array);
 	*array_ptr = NULL;
+}
+
+void	del_token(void *content)
+{
+	t_token	*token;
+
+	token = (t_token *)content;
+	if (!token)
+		return ;
+	free(token->lexeme);
+	free(token);
+}
+
+void	free_data(t_data **data_struct)
+{
+	data_struct = NULL;
+	return ;
 }

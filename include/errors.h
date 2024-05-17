@@ -1,23 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   count.c                                            :+:      :+:    :+:   */
+/*   errors.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/05/14 17:36:17 by nholbroo          #+#    #+#             */
-/*   Updated: 2024/05/17 16:30:50 by aschenk          ###   ########.fr       */
+/*   Created: 2024/05/16 17:26:08 by aschenk           #+#    #+#             */
+/*   Updated: 2024/05/17 20:49:27 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#ifndef ERRORS_H
+# define ERRORS_H
 
-int	count_array_length(char **array)
-{
-	int	i;
+# define ERR_MALLOC			"ERROR: malloc() failed\n"
+# define ERR_REDIR_OPERAND	"syntax error after redirection "
 
-	i = 0;
-	while (array[i])
-		i++;
-	return (i);
-}
+#endif

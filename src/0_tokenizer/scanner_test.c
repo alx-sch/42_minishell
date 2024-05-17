@@ -6,7 +6,7 @@
 /*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 16:59:48 by aschenk           #+#    #+#             */
-/*   Updated: 2024/05/15 19:38:38 by aschenk          ###   ########.fr       */
+/*   Updated: 2024/05/17 21:14:49 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,9 +67,15 @@ t_list	*get_tokens(const char *input)
 	token_list = NULL;
 	while (input[i])
 	{
-		if (is_space(input[i]))
+		if (is_space(input[i])) // skips whitespace
 			i++;
-		else if (input[i] == '$' && input[i + 1]) // checks if the shell variable '$?' (exit status) is input
+		if (!is_redirection(&token_list, input, &i))
+		{
+			printf("I am stopping here!\n");
+			ft_lstclear(&token_list, del_token);
+			return (NULL);
+		}
+		if (input[i] == '$' && input[i + 1] == '?') // checks if the shell variable '$?' (exit status) is input
 			ft_lstadd_back(&token_list, create_token(DOLLAR_QUEST, "$?", &i));
 		else // all the rest is considered a COMMAND --> which is not true, could also be a pathfile -> '/' --> bash: /: Is a directory
 		{

@@ -1,18 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parsing_test.c                                     :+:      :+:    :+:   */
+/*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/13 14:51:02 by nholbroo          #+#    #+#             */
-/*   Updated: 2024/05/16 12:01:06 by nholbroo         ###   ########.fr       */
+/*   Updated: 2024/05/17 16:30:54 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../include/minishell.h"
+#include "minishell.h"
 
-// A temporary function for parsing, until we find a better solution. 
+// A temporary function for parsing, until we find a better solution.
 
 void	parsing(char *input, char **envp)
 {

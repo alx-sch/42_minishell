@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/06 12:08:35 by aschenk           #+#    #+#             */
-/*   Updated: 2024/05/15 16:56:24 by nholbroo         ###   ########.fr       */
+/*   Updated: 2024/05/17 20:10:31 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,8 @@
 # define MINISHELL_H
 
 # include "libft.h" // libft
-# include "config.h" // prompt, etc.
+# include "errors.h" // prompt, etc.
+# include "config.h" // error messages
 # include "tokenizer.h" // prompt, etc.
 
 # include <stdlib.h> // malloc, free, exit
@@ -33,9 +34,43 @@
 # include <termios.h> // tcsetattr, tcgetattr
 # include <curses.h> // tgetent, tgetflag, tgetnum, tgetstr, tgoto, tputs
 
+typedef struct s_cd
+{
+	char	*username;
+	char	*subdirectory;
+	char	*home_user;
+	char	*parentdirectory;
+	char	**component;
+}	t_cd;
+
+/*
+- char *input:		The input string containing the command line input.
+*/
+typedef struct s_data
+{
+	int		argc;
+	char	**argv;
+	char	**envp;
+	char	*input;
+	char	*tmp;
+	t_tok	tok;
+	t_cd	cd;
+}	t_data;
 
 
 // utils.c
+
+void	perror_and_exit(char *msg, t_data *data);
+void	msg_and_exit(char *msg, t_data *data);
+
+// 0_tokenizer/tokenizer_redirection.c
+
+int		is_redirection(t_data *data, int *i);
+
+// 0_tokenizer/scanner.c
+
+t_list	*create_tok(t_data *data, t_token_type type, const char *lexeme,
+			int *i);
 
 // FOR TESTING!!
 void	print_string_array(char **array);
@@ -57,20 +92,13 @@ int		is_delimiter(const char c);
 
 // 0_lexer/scanner.c
 
-t_list	*get_tokens(const char *input);
+void	get_tokens(t_data	*data);
 
 // free.c
 
 void	del_token(void *content);
+void	free_data(t_data **data_struct);
 
-typedef struct s_cd
-{
-	char	*username;
-	char	*subdirectory;
-	char	*home_user;
-	char	*parentdirectory;
-	char	**component;
-}	t_cd;
 
 // Parsing:
 void	parsing(char *input, char **envp);

@@ -6,7 +6,7 @@
 /*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/13 12:12:15 by aschenk           #+#    #+#             */
-/*   Updated: 2024/05/15 19:43:46 by aschenk          ###   ########.fr       */
+/*   Updated: 2024/05/16 17:06:24 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,4 +44,10 @@ void	del_token(void *content)
 		return ;
 	free(token->lexeme);
 	free(token);
+}
+
+void	free_data(t_data **data_struct)
+{
+	data_struct = NULL;
+	return ;
 }
