@@ -6,7 +6,7 @@
 /*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/06 12:05:14 by aschenk           #+#    #+#             */
-/*   Updated: 2024/05/17 18:51:26 by aschenk          ###   ########.fr       */
+/*   Updated: 2024/05/17 19:00:39 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,25 +42,25 @@ void	init_data_struct(t_data *data, int argc, char **argv, char **envp)
 	data->argc = argc;
 	data->argv = argv;
 	data->envp = envp;
+	data->tok.input = NULL;
+	data->tok.tok_lst = NULL;
+
 }
 
 int	main(int argc, char **argv, char **envp)
 {
-	t_data	dat;
-	char	*input;
-	t_list	*token_list;
+	t_data	data;
 
 	while (1)
 	{
-		init_data_struct(&dat, argc, argv, envp);
-		input = readline(PROMPT); // Display prompt and read input
+		init_data_struct(&data, argc, argv, envp);
+		data.tok.input = readline(PROMPT); // Display prompt and read input
 		// Process input (this will be implemented later)
-		if (input) // Checking if input is not NULL.
-			add_history(input); // Adding to input-history.
-		parsing(input, envp);
-		token_list = get_tokens(input);
-		free(input);
-		ft_lstclear(&token_list, del_token);
+		if (data.tok.input ) // Checking if input is not NULL.
+			add_history(data.tok.input ); // Adding to input-history.
+		parsing(data.tok.input , envp);
+		data.tok.tok_lst = get_tokens(data.tok.input);
+		ft_lstclear(&data.tok.tok_lst , del_token);
 	}
 	exit(EXIT_SUCCESS);
 }
