@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parsing.c                                          :+:      :+:    :+:   */
+/*   parsing_test.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/13 14:51:02 by nholbroo          #+#    #+#             */
-/*   Updated: 2024/05/17 16:30:54 by aschenk          ###   ########.fr       */
+/*   Updated: 2024/05/18 16:09:34 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 // A temporary function for parsing, until we find a better solution.
 
-void	parsing(char *input, char **envp)
+void	parsing(char *input, char **envp) // instead of input the data_struct can be passed (which contains a cd struct; initializatio for cd struct can also be added to init_data_strcut() in main.c; this helps to make cd fcts more concise)
 {
 	if (!ft_strcmp(input, "pwd")) // Checking if the input is exactly "pwd". NB!! Handle spaces etc.
 		pwd(); // Calls the pwd-function that is working as the command.

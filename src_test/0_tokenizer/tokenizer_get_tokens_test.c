@@ -6,7 +6,7 @@
 /*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 16:59:48 by aschenk           #+#    #+#             */
-/*   Updated: 2024/05/17 22:54:20 by aschenk          ###   ########.fr       */
+/*   Updated: 2024/05/18 16:14:43 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ static void	malloc_fail_in_create_token(t_data *data)
 		free(data->tok.tok);
 		data->tok.tok = NULL;
 	}
-	ft_putstr_fd(ERR_MALLOC, STDERR_FILENO);
+	perror(ERR_MALLOC);
 }
 
 /*
@@ -50,10 +50,10 @@ Returns:
 t_list	*create_tok(t_data *data, t_token_type type, const char *lexeme, int *i)
 {
 	// Allocate memory for the new token structure
-	data->tok.tok = ft_calloc(1, sizeof(t_token));
+	data->tok.tok = malloc(sizeof(t_token));
 	if (!data->tok.tok)
 	{
-		ft_putstr_fd(ERR_MALLOC, STDERR_FILENO);
+		perror(ERR_MALLOC);
 		return (NULL);
 	}
 	// Write lexeme from the stack into the token structure
