@@ -6,7 +6,7 @@
 /*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/17 13:00:24 by aschenk           #+#    #+#             */
-/*   Updated: 2024/05/17 22:33:06 by aschenk          ###   ########.fr       */
+/*   Updated: 2024/05/18 16:18:05 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,10 +51,10 @@ static char	*is_valid_operand(const char *inp, int *i)
 	if (inp[j] == '>' || inp[j] == '<' || inp[j] == '|' || inp[j] == '\0')
 	{
 		// Allocate memory for the invalid operand string
-		invalid_op = (char *)ft_calloc(8, sizeof(char)); // Allocate for "newline" + null terminator
+		invalid_op = malloc(sizeof(char) * 8); // Allocate for "newline" + null terminator
 		if (!invalid_op)
 		{
-			ft_putstr_fd(ERR_MALLOC, STDERR_FILENO);
+			perror(ERR_MALLOC);
 			return (NULL);
 		}
 		// Construct the invalid operand string

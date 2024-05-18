@@ -6,7 +6,7 @@
 /*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 16:59:48 by aschenk           #+#    #+#             */
-/*   Updated: 2024/05/17 21:14:49 by aschenk          ###   ########.fr       */
+/*   Updated: 2024/05/18 16:18:38 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,10 +25,10 @@ t_list	*create_token(t_token_type type, const char *lexeme, int *i)
 	t_token	*token; // Declare a pointer to the token structure
 	t_list	*new_node; // Declare a pointer to a linked list node
 
-	token = ft_calloc(1, sizeof(t_token)); // Allocate memory for the new token structure
+	token = malloc(sizeof(t_token)); // Allocate memory for the new token structure
 	if (token == NULL)
 	{
-		perror("malloc token"); // probably: substitute with "clean everything and then perror" fct
+		perror(ERR_MALLOC); // probably: substitute with "clean everything and then perror" fct
 		return (NULL);
 	}
 	// Initialize the token fields
