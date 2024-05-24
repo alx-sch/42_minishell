@@ -6,7 +6,7 @@
 #    By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/04/08 11:14:10 by aschenk           #+#    #+#              #
-#    Updated: 2024/05/17 20:43:24 by aschenk          ###   ########.fr        #
+#    Updated: 2024/05/25 01:20:38 by aschenk          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -182,6 +182,7 @@ TEST_DIR :=		src_test
 TEST_SRCS :=	$(TEST_DIR)/main_test.c \
   				$(TEST_DIR)/free_test.c \
 				$(TEST_DIR)/utils_test.c \
+				$(TEST_DIR)/0_tokenizer/tokeziner_expansion_test.c \
 				$(TEST_DIR)/0_tokenizer/tokenizer_get_tokens_test.c \
 				$(TEST_DIR)/0_tokenizer/tokenizer_redirection_test.c \
 				$(TEST_DIR)/0_tokenizer/tokenizer_utils_test.c \

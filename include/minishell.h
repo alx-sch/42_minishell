@@ -6,7 +6,7 @@
 /*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/06 12:08:35 by aschenk           #+#    #+#             */
-/*   Updated: 2024/05/17 20:10:31 by aschenk          ###   ########.fr       */
+/*   Updated: 2024/05/25 01:12:41 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,12 @@ t_list	*create_tok(t_data *data, t_token_type type, const char *lexeme,
 void	print_string_array(char **array);
 
 // free.c
+
 void	free_str_arr(char ***array_ptr);
+
+// 0_tokenizer/tokenizer_expansion.c
+
+char	*expand_variables(t_data *data);
 
 // 0_lexer/lexer_main.c
 
