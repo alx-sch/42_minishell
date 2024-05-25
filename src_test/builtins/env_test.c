@@ -6,7 +6,7 @@
 /*   By: natalierh <natalierh@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/25 09:38:05 by natalierh         #+#    #+#             */
-/*   Updated: 2024/05/25 10:20:40 by natalierh        ###   ########.fr       */
+/*   Updated: 2024/05/25 15:46:02 by natalierh        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,31 @@
 
 int is_env(char *input)
 {
-    
+    int i;
+
+    i = 0;
+    while (is_space(input[i]))
+        i++;
+    if (input[i++] != 'e')
+        return (0);
+    if (input[i++] != 'n')
+        return (0);
+    if (input[i++] != 'v')
+        return (0);
+    while (input[i] != '\0')
+    {
+        if (!is_space(input[i]))
+            return (0);
+        i++;
+    }
+    return (1);
 }
 
-void    env(char *input, char **envp)
+void    env(char **envp)
 {
+    int i;
     
+    i = 0;
+    while (envp[i])
+        printf("%s\n", envp[i++]);
 }

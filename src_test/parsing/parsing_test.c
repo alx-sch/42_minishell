@@ -6,7 +6,7 @@
 /*   By: natalierh <natalierh@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/13 14:51:02 by nholbroo          #+#    #+#             */
-/*   Updated: 2024/05/25 11:31:50 by natalierh        ###   ########.fr       */
+/*   Updated: 2024/05/25 15:46:36 by natalierh        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,17 +14,17 @@
 
 // A temporary function for parsing, until we find a better solution.
 
-void	parsing(char *input, char **envp) // instead of input the data_struct can be passed (which contains a cd struct; initializatio for cd struct can also be added to init_data_strcut() in main.c; this helps to make cd fcts more concise)
+void	parsing(t_data *data) // instead of input the data_struct can be passed (which contains a cd struct; initializatio for cd struct can also be added to init_data_strcut() in main.c; this helps to make cd fcts more concise)
 {
-	if (is_pwd(input)) // Checking if the input is "pwd". Ignores extra junk after pwd, like bash, but not handling options. Might implement error message with "invalid option".
+	if (is_pwd(data->input)) // Checking if the input is "pwd". Ignores extra junk after pwd, like bash, but not handling options. Might implement error message with "invalid option".
 		pwd(); // Calls the pwd-function that is working as the command.
-	else if (ft_strnstr(input, "cd", sizeof(input)) != NULL) // Checking if "cd" is present in the input.
-		cd(input, envp);
-//	else if (is_env(input))
-//		env(input, envp);
-	else if (is_exit(input)) // Checking if the input is exactly "exit"
+	else if (ft_strnstr(data->input, "cd", sizeof(data->input)) != NULL) // Checking if "cd" is present in the input.
+		cd(data->input, data->envp);
+	else if (is_env(data->input))
+		env(data->envp);
+	else if (is_exit(data->input)) // Checking if the input is exactly "exit"
 	{
 		printf("exit\n");
-		exit(exit_with_code(input)); // Exits minishell.
+		exit(exit_with_code(data->input)); // Exits minishell.
 	}
 }

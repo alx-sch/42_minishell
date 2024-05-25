@@ -6,7 +6,7 @@
 #    By: natalierh <natalierh@student.42.fr>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/04/08 11:14:10 by aschenk           #+#    #+#              #
-#    Updated: 2024/05/25 10:51:37 by natalierh        ###   ########.fr        #
+#    Updated: 2024/05/25 15:47:12 by natalierh        ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -188,6 +188,7 @@ TEST_SRCS :=	$(TEST_DIR)/main_test.c \
 				$(TEST_DIR)/builtins/builtin_struct_inits_test.c \
 				$(TEST_DIR)/builtins/cd_test.c \
 				$(TEST_DIR)/builtins/pwd_test.c \
+				$(TEST_DIR)/builtins/env_test.c \
 				$(TEST_DIR)/builtins/exit_test.c \
 				$(TEST_DIR)/errors/print_error_test.c \
 				$(TEST_DIR)/parsing/parsing_test.c \

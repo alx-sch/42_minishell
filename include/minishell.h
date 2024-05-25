@@ -6,7 +6,7 @@
 /*   By: natalierh <natalierh@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/06 12:08:35 by aschenk           #+#    #+#             */
-/*   Updated: 2024/05/25 11:08:06 by natalierh        ###   ########.fr       */
+/*   Updated: 2024/05/25 15:44:51 by natalierh        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,14 +100,16 @@ void			free_data(t_data **data_struct);
 
 
 // Parsing:
-void			parsing(char *input, char **envp);
+void			parsing(t_data *data);
 int				is_pwd(char *input);
 int 			is_exit(char *input);
+int				is_env(char *input);
 
 // Builtins:
 void			init_cd_struct(t_cd **cd, char *input);
 void			cd(char *input, char **envp);
 void			pwd(void);
+void			env(char **envp);
 unsigned int 	exit_with_code(char *input);
 
 // Modified standard functions:
