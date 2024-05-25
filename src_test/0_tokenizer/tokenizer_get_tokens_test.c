@@ -6,7 +6,7 @@
 /*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 16:59:48 by aschenk           #+#    #+#             */
-/*   Updated: 2024/05/18 16:14:43 by aschenk          ###   ########.fr       */
+/*   Updated: 2024/05/25 20:25:16 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,6 +105,11 @@ void	get_tokens(t_data *d)
 	{
 		while (is_space(d->input[i])) // Skipping whitespace
 			i++;
+		if (!is_single_quotation(d, &i))
+		{
+			printf("I am stopping here!\n"); // FOR TESTING ONLY!
+			return ;
+		}
 		if (!is_redirection(d, &i))
 		{
 			printf("I am stopping here!\n"); // FOR TESTING ONLY!
