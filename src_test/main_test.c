@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main_test.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
+/*   By: natalierh <natalierh@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/06 12:05:14 by aschenk           #+#    #+#             */
-/*   Updated: 2024/05/17 19:53:02 by aschenk          ###   ########.fr       */
+/*   Updated: 2024/05/25 10:18:55 by natalierh        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ int	main(int argc, char **argv, char **envp)
 		// Process input (this will be implemented later)
 		if (data.input) // Checking if input is not NULL.
 			add_history(data.input); // Adding to input-history.
-		parsing(data.input, envp);
+		parsing(data.input, data.envp);
 		get_tokens(&data);
 		ft_lstclear(&data.tok.tok_lst , del_token);
 	}

@@ -6,9 +6,18 @@
 /*   By: natalierh <natalierh@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/25 09:38:05 by natalierh         #+#    #+#             */
-/*   Updated: 2024/05/25 09:38:10 by natalierh        ###   ########.fr       */
+/*   Updated: 2024/05/25 10:20:40 by natalierh        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+int is_env(char *input)
+{
+    
+}
+
+void    env(char *input, char **envp)
+{
+    
+}

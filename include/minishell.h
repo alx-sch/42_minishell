@@ -6,7 +6,7 @@
 /*   By: natalierh <natalierh@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/06 12:08:35 by aschenk           #+#    #+#             */
-/*   Updated: 2024/05/25 09:49:01 by natalierh        ###   ########.fr       */
+/*   Updated: 2024/05/25 11:08:06 by natalierh        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,67 +59,69 @@ typedef struct s_data
 
 // utils.c
 
-void	perror_and_exit(char *msg, t_data *data);
-void	msg_and_exit(char *msg, t_data *data);
+void			perror_and_exit(char *msg, t_data *data);
+void			msg_and_exit(char *msg, t_data *data);
 
 // 0_tokenizer/tokenizer_redirection.c
 
-int		is_redirection(t_data *data, int *i);
+int				is_redirection(t_data *data, int *i);
 
 // 0_tokenizer/scanner.c
 
-t_list	*create_tok(t_data *data, t_token_type type, const char *lexeme,
-			int *i);
+t_list			*create_tok(t_data *data, t_token_type type, const char *lexeme,
+				int *i);
 
 // FOR TESTING!!
-void	print_string_array(char **array);
+void			print_string_array(char **array);
 
 // free.c
-void	free_str_arr(char ***array_ptr);
+void			free_str_arr(char ***array_ptr);
 
 // 0_lexer/lexer_main.c
 
-char	**parser(char *input);
+char			**parser(char *input);
 
 // lexer_utils.c
 
-void	print_token(const t_list *current);
-void	print_token_list(t_list *token_list);
-int		is_space(int c);
-int		is_input_empty(const char *input);
-int		is_delimiter(const char c);
+void			print_token(const t_list *current);
+void			print_token_list(t_list *token_list);
+int				is_space(int c);
+int				is_input_empty(const char *input);
+int				is_delimiter(const char c);
 
 // 0_lexer/scanner.c
 
-void	get_tokens(t_data	*data);
+void			get_tokens(t_data	*data);
 
 // free.c
 
-void	del_token(void *content);
-void	free_data(t_data **data_struct);
+void			del_token(void *content);
+void			free_data(t_data **data_struct);
 
 
 // Parsing:
-void	parsing(char *input, char **envp);
-int		is_pwd(char *input);
+void			parsing(char *input, char **envp);
+int				is_pwd(char *input);
+int 			is_exit(char *input);
 
 // Builtins:
-void	init_cd_struct(t_cd **cd, char *input);
-void	cd(char *input, char **envp);
-void	pwd(void);
+void			init_cd_struct(t_cd **cd, char *input);
+void			cd(char *input, char **envp);
+void			pwd(void);
+unsigned int 	exit_with_code(char *input);
 
 // Modified standard functions:
-int		ft_strrchr_index(const char *s, int c);
-bool	is_only_duplicates(char *s, char c);
+int				ft_strrchr_index(const char *s, int c);
+bool			is_only_duplicates(char *s, char c);
 
 // Counting-functions:
-int		count_array_length(char **array);
+int				count_array_length(char **array);
 
 // Freeing allocated memory:
-int		ft_freearray(char **arr);
-void	free_cd_struct(t_cd **cd);
+int				ft_freearray(char **arr);
+void			free_cd_struct(t_cd **cd);
 
 // Errors:
-void	print_error_cd(int error_code, t_cd **cd);
+void			print_error_cd(int error_code, t_cd **cd);
 
 #endif
