@@ -6,7 +6,7 @@
 /*   By: natalierh <natalierh@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/06 12:08:35 by aschenk           #+#    #+#             */
-/*   Updated: 2024/05/25 09:01:45 by natalierh        ###   ########.fr       */
+/*   Updated: 2024/05/25 09:49:01 by natalierh        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,6 +101,7 @@ void	free_data(t_data **data_struct);
 
 // Parsing:
 void	parsing(char *input, char **envp);
+int		is_pwd(char *input);
 
 // Builtins:
 void	init_cd_struct(t_cd **cd, char *input);
