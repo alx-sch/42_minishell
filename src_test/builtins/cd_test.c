@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   cd.c                                               :+:      :+:    :+:   */
+/*   cd_test.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
+/*   By: natalierh <natalierh@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/13 13:51:10 by nholbroo          #+#    #+#             */
-/*   Updated: 2024/05/17 16:31:05 by aschenk          ###   ########.fr       */
+/*   Updated: 2024/05/25 09:13:55 by natalierh        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,8 @@ static void	cd_one_up(t_cd **cd, char *cwd)
 		(*cd)->parentdirectory[i] = cwd[i]; // Copying over the path to the parent directory.
 		i++; // Iterating i.
 	}
+	if (eol == 0) // If eol is 0, it means that the parent directory is root.
+		(*cd)->parentdirectory[i++] = '/'; // In that case, I hardset the parent directory to root.
 	(*cd)->parentdirectory[i] = '\0'; // Null-terminating the new string containing the path to the parent directory.
 	chdir((*cd)->parentdirectory); // Changing directory to parent directory.
 }
@@ -38,17 +40,14 @@ static void	cd_to_home_user(t_cd **cd, char **envp)
 	i = 0;
 	while (envp[i]) // Going through all of envp, which is showing the environmental variables.
 	{
-		if (!ft_strncmp(envp[i], "USER=", 5)) // When I find the "USER="-line, I break the loop, as I know that I will find the username.
+		if (!ft_strncmp(envp[i], "HOME=", 5)) // When I find the "HOME="-line, I break the loop, as I know that I will find the /home/username.
 			break ;
 		i++;
 	}
-	(*cd)->username = ft_strdup(envp[i]); // I store the username in its own variable.
-	if (!(*cd)->username) // Protecting the malloc.
-		print_error_cd(1, cd); // Prints an error and exits if allocation fails.
-	(*cd)->username += 5; // I move the username-pointer to skip "USER=" and go directly to the name itself.
-	(*cd)->home_user = ft_strjoin("/home/", (*cd)->username); // Setting the new path to include the username.
+	(*cd)->home_user = ft_strdup(envp[i]); // I store the "HOME="-line in its own variable.
 	if (!(*cd)->home_user) // Protecting the malloc.
 		print_error_cd(1, cd); // Prints an error and exits if allocation fails.
+	(*cd)->home_user += 5; // I move the home/username-pointer to skip "HOME=" and go directly to the name itself.
 	chdir((*cd)->home_user); // Changing the current working directory to "/home/<username>".
 }
 

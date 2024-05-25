@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   builtin_struct_inits.c                             :+:      :+:    :+:   */
+/*   builtin_struct_inits_test.c                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
+/*   By: natalierh <natalierh@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 16:28:08 by nholbroo          #+#    #+#             */
-/*   Updated: 2024/05/17 16:31:09 by aschenk          ###   ########.fr       */
+/*   Updated: 2024/05/25 09:00:27 by natalierh        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,5 +23,4 @@ void	init_cd_struct(t_cd **cd, char *input)
 	(*cd)->home_user = NULL;
 	(*cd)->parentdirectory = NULL;
 	(*cd)->subdirectory = NULL;
-	(*cd)->username = NULL;
 }
