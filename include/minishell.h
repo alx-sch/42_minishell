@@ -6,7 +6,7 @@
 /*   By: natalierh <natalierh@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/06 12:08:35 by aschenk           #+#    #+#             */
-/*   Updated: 2024/05/28 12:38:59 by natalierh        ###   ########.fr       */
+/*   Updated: 2024/05/29 11:17:14 by natalierh        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -127,5 +127,6 @@ void			free_cd_struct(t_cd **cd);
 // Errors:
 void			print_error_cd(int error_code, t_cd **cd);
 void			print_error_exit(char *input);
+void			exit_check_argc(char *input);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: natalierh <natalierh@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/13 14:43:40 by nholbroo          #+#    #+#             */
-/*   Updated: 2024/05/29 10:53:52 by natalierh        ###   ########.fr       */
+/*   Updated: 2024/05/29 11:20:45 by natalierh        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,12 +26,27 @@ static void	mem_alloc_fail_cd(t_cd **cd)
 static void	mem_alloc_fail_exit(char *tmp_error_msg)
 {
 	if (tmp_error_msg)
-	{
 		free(tmp_error_msg);
-		errno = ENOMEM;
-		perror("minishell: exit");
-		exit(errno);
+	errno = ENOMEM;
+	perror("minishell: exit");
+	exit(errno);
+}
+
+void	exit_check_argc(char *input)
+{
+	char	**arguments;
+
+	arguments = ft_split (input, ' ');
+	if (!arguments)
+		mem_alloc_fail_exit(NULL);
+	if (count_array_length(arguments) > 2)
+	{
+		printf("exit\n");
+		write(2, "minishell: exit: too many arguments\n", 36);
+		ft_freearray(arguments);
+		exit(1);
 	}
+	ft_freearray(arguments);
 }
 
 void	print_error_exit(char *input)

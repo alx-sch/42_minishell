@@ -6,7 +6,7 @@
 /*   By: natalierh <natalierh@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/25 10:35:04 by natalierh         #+#    #+#             */
-/*   Updated: 2024/05/28 13:30:28 by natalierh        ###   ########.fr       */
+/*   Updated: 2024/05/29 11:24:58 by natalierh        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,7 @@ int is_exit(char *input)
         || input[i] == '+' || input[i] == '-' 
         || (input[i] >= '0' && input[i] <= '9'))) // Checking if what comes after "exit" is either numerical, '+', '-' or whitespaces. If it's not, then it's not valid.
         i++;
+    exit_check_argc(input); // Checking if there are more than one argument to the "exit" command -> in that case it prints an error message and exits.
     if (input[i] != '\0') // If something that comes after 'exit' is not whitespace or a number, printing an error message, and exiting the process.
         print_error_exit(input);
     return (1);
