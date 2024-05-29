@@ -6,7 +6,7 @@
 /*   By: natalierh <natalierh@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/06 12:05:14 by aschenk           #+#    #+#             */
-/*   Updated: 2024/05/29 10:36:31 by natalierh        ###   ########.fr       */
+/*   Updated: 2024/05/29 11:03:44 by natalierh        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,7 @@ int	main(int argc, char **argv, char **envp)
 		if (data.input && data.input[0] != '\0') // Checking if input is not NULL, and the input is not empty.
 			parsing(&data); // Checking if the input matches any of the builtins.
 		get_tokens(&data);
+		// Maybe as a check completely in the end, if nothing else worked, we can mimic the "Command <some_command> not found"?
 		ft_lstclear(&data.tok.tok_lst , del_token);
 		free(data.input); // This was causing leaks, as it was not present. 
 	}
