@@ -6,11 +6,14 @@
 /*   By: natalierh <natalierh@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/25 09:38:05 by natalierh         #+#    #+#             */
-/*   Updated: 2024/05/25 15:46:02 by natalierh        ###   ########.fr       */
+/*   Updated: 2024/05/28 12:44:03 by natalierh        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+// Implement errors in case of "env dsafasgasg" or "env -dsdasf" or something.
+// Consider storing envp in a linked list instead of an array, easier to remove/add new variables.
 
 int is_env(char *input)
 {
