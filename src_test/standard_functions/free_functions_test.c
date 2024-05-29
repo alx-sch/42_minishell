@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   free_functions.c                                   :+:      :+:    :+:   */
+/*   free_functions_test.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
+/*   By: natalierh <natalierh@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 15:59:31 by nholbroo          #+#    #+#             */
-/*   Updated: 2024/05/17 16:30:45 by aschenk          ###   ########.fr       */
+/*   Updated: 2024/05/25 09:01:17 by natalierh        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,9 +23,7 @@ void	free_cd_struct(t_cd **cd)
 		if ((*cd)->parentdirectory)
 			free((*cd)->parentdirectory);
 		if ((*cd)->home_user)
-			free((*cd)->home_user);
-		if ((*cd)->username)
-			free((*cd)->username - 5);
+			free((*cd)->home_user - 5);
 		free(*cd);
 	}
 }
