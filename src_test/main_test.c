@@ -6,7 +6,7 @@
 /*   By: natalierh <natalierh@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/06 12:05:14 by aschenk           #+#    #+#             */
-/*   Updated: 2024/05/25 15:30:50 by natalierh        ###   ########.fr       */
+/*   Updated: 2024/05/28 13:41:43 by natalierh        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,9 +58,10 @@ int	main(int argc, char **argv, char **envp)
 		init_data_struct(&data, argc, argv, envp);
 		data.input = readline(PROMPT); // Display prompt and read input
 		// Process input (this will be implemented later)
-		if (data.input) // Checking if input is not NULL.
-			add_history(data.input); // Adding to input-history.
-		parsing(&data);
+		if (data.input && data.input[0] != '\n') // Checking if input is not NULL.
+			add_history(data.input); // Adding to input-history. NOTE TO SELF: Ignore empty prompts somehow??
+		if (data.input && data.input[0] != '\n')
+			parsing(&data);
 		get_tokens(&data);
 		ft_lstclear(&data.tok.tok_lst , del_token);
 		free(data.input); // This was causing leaks, as it was not present. 

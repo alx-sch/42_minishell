@@ -6,11 +6,12 @@
 /*   By: natalierh <natalierh@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/13 14:41:46 by nholbroo          #+#    #+#             */
-/*   Updated: 2024/05/25 10:13:39 by natalierh        ###   ########.fr       */
+/*   Updated: 2024/05/28 13:22:24 by natalierh        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+// Don't accept "pwddd" for instance.
 
 int	is_pwd(char *input)
 {
@@ -32,10 +33,10 @@ int	is_pwd(char *input)
 
 void	pwd(void)
 {
-	char	cwd[4096]; // It is hardset to 4096, as it is the max amount of characters allowed in a path, as far as I've understood.
+	char	cwd[4096]; // It is hardset to 4096, as it is the max amount of characters allowed in a path.
 
 	if (getcwd(cwd, sizeof(cwd))) // Checking that getcwd-function works. It is used to find current working directory.
 		printf("%s\n", cwd); // Printing the current working directory.
 	else
-		printf("pwd: %s\n", strerror(errno)); // If getcwd fails, this function will print an error.
+		perror("minishell: pwd"); // If getcwd fails, this function will print an error.
 }
