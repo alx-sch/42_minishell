@@ -6,7 +6,7 @@
 /*   By: natalierh <natalierh@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/13 14:43:40 by nholbroo          #+#    #+#             */
-/*   Updated: 2024/05/28 13:04:49 by natalierh        ###   ########.fr       */
+/*   Updated: 2024/05/29 10:37:38 by natalierh        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ static void	mem_alloc_fail_exit(char *tmp_error_msg)
 		exit(errno);
 	}
 }
-// FIX VARIABLE NAMES AND ALSO THE MEM_ALLOC_FAIL FUNCTION!!!!
+
 void	print_error_exit(char *input)
 {
 	char	*tmp_error_msg;
