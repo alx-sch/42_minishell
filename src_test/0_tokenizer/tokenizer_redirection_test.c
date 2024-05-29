@@ -6,7 +6,7 @@
 /*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/17 13:00:24 by aschenk           #+#    #+#             */
-/*   Updated: 2024/05/25 19:28:36 by aschenk          ###   ########.fr       */
+/*   Updated: 2024/05/29 12:36:57 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,15 +115,11 @@ static void	create_redirection_token(t_data *data, int *i, t_token_type type,
 	const char *symbol)
 {
 	data->tok.new_node = create_tok(data, type, symbol, i);
-	// Update the position pointer if token creation fails (as this is done when create_tok() is successful)
-	if (!data->tok.new_node)
-		*i = *i + ft_strlen(symbol);
-	else
-		ft_lstadd_back(&data->tok.tok_lst, data->tok.new_node);
+	ft_lstadd_back(&data->tok.tok_lst, data->tok.new_node);
 }
 
 /*
-Checks for redirection operators in the 'input' string starting from index *i.
+Checks for redirection operators in the 'input' string startinf from index *i.
 If a redirection operator is found, it creates the corresponding token and adds
 it to the token list.
 It also checks for a valid operand after the redirection operator.

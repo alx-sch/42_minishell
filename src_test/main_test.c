@@ -6,7 +6,7 @@
 /*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/06 12:05:14 by aschenk           #+#    #+#             */
-/*   Updated: 2024/05/25 20:20:26 by aschenk          ###   ########.fr       */
+/*   Updated: 2024/05/29 11:23:19 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ int	main(int argc, char **argv, char **envp)
 		// Process input (this will be implemented later)
 		if (data.input) // Checking if input is not NULL.
 			add_history(data.input); // Adding to input-history.
-		free(expand_variables(&data));
+		//free(expand_variables(&data)); // just testing variable expanding, will likely be used right before command exc
 		parsing(data.input, envp);
 		get_tokens(&data);
 		ft_lstclear(&data.tok.tok_lst , del_token);

@@ -6,7 +6,7 @@
 #    By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/04/08 11:14:10 by aschenk           #+#    #+#              #
-#    Updated: 2024/05/25 20:19:04 by aschenk          ###   ########.fr        #
+#    Updated: 2024/05/29 11:29:52 by aschenk          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -180,7 +180,7 @@ re_all:	fclean_all all
 NAME_TEST :=	$(NAME)_test
 TEST_DIR :=		src_test
 TEST_SRCS :=	$(TEST_DIR)/main_test.c \
-  				$(TEST_DIR)/free_test.c \
+				$(TEST_DIR)/free_test.c \
 				$(TEST_DIR)/utils_test.c \
 				$(TEST_DIR)/0_tokenizer/tokenizer_quotation_test.c \
 				$(TEST_DIR)/0_tokenizer/tokeziner_expansion_test.c \
