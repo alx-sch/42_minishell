@@ -6,7 +6,8 @@
 #    By: natalierh <natalierh@student.42.fr>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/04/08 11:14:10 by aschenk           #+#    #+#              #
-#    Updated: 2024/05/25 15:47:12 by natalierh        ###   ########.fr        #
+#    Updated: 2024/05/29 11:29:52 by aschenk          ###   ########.fr        #
+#
 #                                                                              #
 # **************************************************************************** #
 
@@ -180,8 +181,10 @@ re_all:	fclean_all all
 NAME_TEST :=	$(NAME)_test
 TEST_DIR :=		src_test
 TEST_SRCS :=	$(TEST_DIR)/main_test.c \
-  				$(TEST_DIR)/free_test.c \
+				$(TEST_DIR)/free_test.c \
 				$(TEST_DIR)/utils_test.c \
+				$(TEST_DIR)/0_tokenizer/tokenizer_quotation_test.c \
+				$(TEST_DIR)/0_tokenizer/tokeziner_expansion_test.c \
 				$(TEST_DIR)/0_tokenizer/tokenizer_get_tokens_test.c \
 				$(TEST_DIR)/0_tokenizer/tokenizer_redirection_test.c \
 				$(TEST_DIR)/0_tokenizer/tokenizer_utils_test.c \

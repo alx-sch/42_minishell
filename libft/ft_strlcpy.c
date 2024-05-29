@@ -6,14 +6,14 @@
 /*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/15 13:33:08 by aschenk           #+#    #+#             */
-/*   Updated: 2024/04/17 16:09:04 by aschenk          ###   ########.fr       */
+/*   Updated: 2024/05/25 00:43:38 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
 /*
-The purpo  se of this function is straightforward: to copy one string to another
+The purpose of this function is straightforward: to copy one string to another
 while ensuring the destination string is always NUL-terminated. If you provide
 a 'size' large enough to accommodate the entire string without truncation,
 strlcpy() behaves like strcpy() and simply copies the entire string.

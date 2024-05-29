@@ -6,7 +6,7 @@
 /*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 16:36:37 by aschenk           #+#    #+#             */
-/*   Updated: 2024/05/17 19:52:42 by aschenk          ###   ########.fr       */
+/*   Updated: 2024/05/29 10:40:38 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,8 @@ typedef enum e_token_type
 	BI_UNSET,
 	BI_ENV,
 	BI_EXIT,
+	SINGLE_QUOT,
+	DOUBLE_QUOT,
 	PATH,
 	BUILTIN,
 	ARG,

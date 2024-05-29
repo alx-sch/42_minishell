@@ -6,11 +6,15 @@
 /*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 16:59:48 by aschenk           #+#    #+#             */
-/*   Updated: 2024/05/18 16:14:43 by aschenk          ###   ########.fr       */
+/*   Updated: 2024/05/29 13:17:48 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+
+
+
 
 /*
 To handle memory allocation failures create_token() more efficiently, this
@@ -76,7 +80,7 @@ t_list	*create_tok(t_data *data, t_token_type type, const char *lexeme, int *i)
 	// Update the position pointer to the end of the lexeme
 	*i = *i + ft_strlen(lexeme);
 	// for TESTING ONLY
-	ft_printf("Lexem [%d]: '%s' (%d)\n", data->tok.tok->position, data->tok.tok->lexeme, data->tok.tok->type);
+	ft_printf("Input[%d]: '%s' (token type:%d)\n", data->tok.tok->position, data->tok.tok->lexeme, data->tok.tok->type);
 	return (data->tok.new_node);
 }
 
@@ -105,6 +109,11 @@ void	get_tokens(t_data *d)
 	{
 		while (is_space(d->input[i])) // Skipping whitespace
 			i++;
+		if (!is_quotation(d, &i))
+		{
+			printf("I am stopping here!\n"); // FOR TESTING ONLY!
+			return ;
+		}
 		if (!is_redirection(d, &i))
 		{
 			printf("I am stopping here!\n"); // FOR TESTING ONLY!
@@ -112,18 +121,18 @@ void	get_tokens(t_data *d)
 		}
 		else if (d->input[i] == '$' && d->input[i + 1] == '?') // checks if the shell variable '$?' (exit status) is input
 			ft_lstadd_back(&d->tok.tok_lst, create_tok(d, DOLLAR_QUEST, "$?", &i));
-		else if (d->input[i]) // if not already at end of string: all the rest is considered a COMMAND --> which is not true, could also be a pathfile -> '/' --> bash: /: Is a directory
+		else if (d->input[i] && !is_space(d->input[i])) // if not already at end of string: all the rest is considered a COMMAND --> which is not true, could also be a pathfile -> '/' --> bash: /: Is a directory
 		{
 			start = i;
 			while (!is_delimiter(d->input[i]))
 				i++;
 			d->tmp = ft_substr(d->input, start, i - start);
-			d->tok.new_node = create_tok(d, CMD, d->tmp, &start);
-			free(d->tmp);
-			if (d->tok.new_node)
+			if (d->tmp[0] != '\0') // no empty token if 'start' is a delimiter, e.g. in "hello world"'test'
+			{
+				d->tok.new_node = create_tok(d, CMD, d->tmp, &start);
 				ft_lstadd_back(&d->tok.tok_lst, d->tok.new_node);
-			else
-				break ;
+			}
+			free(d->tmp);
 		}
 	}
 }

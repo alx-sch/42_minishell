@@ -6,7 +6,7 @@
 /*   By: natalierh <natalierh@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/06 12:05:14 by aschenk           #+#    #+#             */
-/*   Updated: 2024/05/29 11:03:44 by natalierh        ###   ########.fr       */
+/*   Updated: 2024/05/29 11:23:19 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,12 +53,13 @@ int	main(int argc, char **argv, char **envp)
 {
 	t_data	data;
 
+	init_data_struct(&data, argc, argv, envp);
 	while (1)
 	{
-		init_data_struct(&data, argc, argv, envp);
 		data.input = readline(PROMPT); // Display prompt and read input
 		if (data.input && data.input[0] != '\0') // Checking if input is not NULL, and the input is not empty.
 			add_history(data.input); // Adding to input-history.
+		//free(expand_variables(&data)); // just testing variable expanding, will likely be used right before command exc and not here
 		if (data.input && data.input[0] != '\0') // Checking if input is not NULL, and the input is not empty.
 			parsing(&data); // Checking if the input matches any of the builtins.
 		get_tokens(&data);

@@ -6,6 +6,7 @@
 /*   By: natalierh <natalierh@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/06 12:08:35 by aschenk           #+#    #+#             */
+/*   Updated: 2024/05/29 12:51:58 by aschenk          ###   ########.fr       */
 /*   Updated: 2024/05/29 11:17:14 by natalierh        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
@@ -75,13 +76,22 @@ t_list			*create_tok(t_data *data, t_token_type type, const char *lexeme,
 void			print_string_array(char **array);
 
 // free.c
+
 void			free_str_arr(char ***array_ptr);
+
+// 0_tokenzier/tokenizer_quotation.c
+
+int		is_quotation(t_data *data, int *i);
+
+// 0_tokenizer/tokenizer_expansion.c
+
+char	*expand_variables(t_data *data);
 
 // 0_lexer/lexer_main.c
 
 char			**parser(char *input);
 
-// lexer_utils.c
+// tokenizer_utils.c
 
 void			print_token(const t_list *current);
 void			print_token_list(t_list *token_list);
