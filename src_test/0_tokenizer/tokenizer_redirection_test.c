@@ -6,17 +6,19 @@
 /*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/17 13:00:24 by aschenk           #+#    #+#             */
-/*   Updated: 2024/05/29 12:36:57 by aschenk          ###   ########.fr       */
+/*   Updated: 2024/06/04 16:51:46 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 /*
-This file contains a function to check the input string for a valid redirection.
+This file contains a function to check the input string for a redirection
+and creates the corresponding token if the redirection is valid.
+Returns an error if the redirection is not valid.
 */
 
 #include "minishell.h"
 
-// FILE
+// FUNCTION IN FILE
 
 int	is_redirection(t_data *data, int *i);
 

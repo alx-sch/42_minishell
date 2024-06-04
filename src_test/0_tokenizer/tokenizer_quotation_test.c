@@ -6,16 +6,21 @@
 /*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/24 22:36:32 by aschenk           #+#    #+#             */
-/*   Updated: 2024/05/29 13:41:59 by aschenk          ###   ########.fr       */
+/*   Updated: 2024/06/04 16:51:24 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 /*
-This file contains a function to check the input string for a valid use of
-quotation marks (single and double).
+This file contains a function to check the input string for quotations (single
+and double) and creates the corresponding token if the quotation is valid.
+Returns an error if the quotation is not closed.
 */
 
 #include "minishell.h"
+
+// FUNCTION IN FILE
+
+int	is_quotation(t_data *data, int *i);
 
 /*
 Checks if the quotation mark at a given position has a corresponding closing
@@ -101,5 +106,3 @@ int	is_quotation(t_data *data, int *i)
 	}
 	return (1); // No quotation mark found or it's properly closed
 }
-
-

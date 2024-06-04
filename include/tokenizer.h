@@ -6,7 +6,7 @@
 /*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 16:36:37 by aschenk           #+#    #+#             */
-/*   Updated: 2024/05/29 10:40:38 by aschenk          ###   ########.fr       */
+/*   Updated: 2024/06/04 17:04:39 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ Categorizes tokens / lexemes:
 -	HEREDOC:		'<<'
 -	HEREDOC_DELIM:	String delimiter as specified after HEREDOC input
 -	DOLLAR:			Parameter extension of variables
--	DOLLAR_QUEST:	Exit status of the most recently executed pipeline
+-	EXIT_CODE:		'$?': Exit status of the most recently executed pipeline
 -	EOF:			End-of-file token
 */
 typedef enum e_token_type
@@ -62,7 +62,7 @@ typedef enum e_token_type
 	HEREDOC,
 	HEREDOC_DELIM,
 	DOLLAR,
-	DOLLAR_QUEST,
+	EXIT_CODE,
 	EOF
 }		t_token_type;
 
