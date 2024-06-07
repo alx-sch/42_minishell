@@ -6,7 +6,7 @@
 /*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 16:59:48 by aschenk           #+#    #+#             */
-/*   Updated: 2024/06/04 13:58:23 by aschenk          ###   ########.fr       */
+/*   Updated: 2024/06/06 21:10:49 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,7 +117,7 @@ void	get_tokens(t_data *d)
 			return ;
 		}
 		else if (d->input[i] == '$' && d->input[i + 1] == '?') // checks if the shell variable '$?' (exit status) is input
-			ft_lstadd_back(&d->tok.tok_lst, create_tok(d, DOLLAR_QUEST, "$?", &i));
+			ft_lstadd_back(&d->tok.tok_lst, create_tok(d, EXIT_CODE, "$?", &i));
 		else if (d->input[i] && !is_space(d->input[i])) // if not already at end of string: all the rest is considered a COMMAND --> which is not true, could also be a pathfile -> '/' --> bash: /: Is a directory
 		{
 			start = i;
