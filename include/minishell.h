@@ -6,7 +6,7 @@
 /*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/06 12:08:35 by aschenk           #+#    #+#             */
-/*   Updated: 2024/06/06 21:09:16 by aschenk          ###   ########.fr       */
+/*   Updated: 2024/06/08 23:05:26 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,7 +105,7 @@ void			get_tokens(t_data	*data);
 // free.c
 
 void			del_token(void *content);
-void			free_data(t_data **data_struct);
+void			free_data(t_data *data);
 
 
 // Parsing:

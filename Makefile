@@ -43,7 +43,7 @@ LIBFT :=		$(LIBFT_DIR)/libft.a
 LIB_FLAGS :=	$(LIBFT_FLAGS)
 
 CC :=			cc
-CFLAGS :=		-Wall -Werror -Wextra -I$(HDRS_DIR) -I$(LIBFT_DIR)
+CFLAGS :=		-Werror -Wextra -Wall -I$(HDRS_DIR) -I$(LIBFT_DIR)
 CFLAGS +=		-Wpedantic -g
 #CFLAGS +=		-fsanitize=address
 

@@ -6,7 +6,7 @@
 /*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/10 16:51:05 by aschenk           #+#    #+#             */
-/*   Updated: 2024/05/16 17:31:13 by aschenk          ###   ########.fr       */
+/*   Updated: 2024/06/08 23:08:12 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ void	msg_and_exit(char *msg, t_data *data)
 		perror_and_exit(ERR_MALLOC, data);
 	ft_putstr_fd(prefixed_msg, STDERR_FILENO);
 	free(prefixed_msg);
-	free_data(&data);
+	free_data(data);
 	exit(EXIT_FAILURE);
 }
 
@@ -38,7 +38,7 @@ Then, exits the program.
 void	perror_and_exit(char *msg, t_data *data)
 {
 	perror(msg);
-	free_data(&data);
+	free_data(data);
 	exit(EXIT_FAILURE);
 }
 

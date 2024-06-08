@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main_test.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: natalierh <natalierh@student.42.fr>        +#+  +:+       +#+        */
+/*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/06 12:05:14 by aschenk           #+#    #+#             */
-/*   Updated: 2024/05/29 11:23:19 by aschenk          ###   ########.fr       */
+/*   Updated: 2024/06/08 23:25:16 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ int	main(int argc, char **argv, char **envp)
 		get_tokens(&data);
 		// Maybe as a check completely in the end, if nothing else worked, we can mimic the "Command <some_command> not found"?
 		ft_lstclear(&data.tok.tok_lst , del_token);
-		free(data.input); // This was causing leaks, as it was not present. 
+		free_data(&data);
 	}
 	exit(EXIT_SUCCESS);
 }
