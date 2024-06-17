@@ -6,7 +6,7 @@
 /*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/17 13:00:24 by aschenk           #+#    #+#             */
-/*   Updated: 2024/06/04 16:51:46 by aschenk          ###   ########.fr       */
+/*   Updated: 2024/06/17 19:48:02 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,6 +94,7 @@ static int	check_operand(const char *input, int *i, int *j)
 	if (invalid_op) // If an invalid operand is found
 	{
 		// Print error message
+		ft_putstr_fd(ERR_COLOR, STDERR_FILENO);
 		ft_putstr_fd(ERR_PREFIX, STDERR_FILENO);
 		ft_putstr_fd(ERR_REDIR_OPERAND, STDERR_FILENO);
 		if (input[*j] == '>' && input[*j + 1] == '>')
@@ -106,6 +107,7 @@ static int	check_operand(const char *input, int *i, int *j)
 			ft_putstr_fd("'<': '", STDERR_FILENO);
 		ft_putstr_fd(invalid_op, STDERR_FILENO);
 		ft_putstr_fd("'\n", STDERR_FILENO);
+		ft_putstr_fd(RESET, STDERR_FILENO);
 		free(invalid_op);
 		return (0); // Invalid operand was found
 	}

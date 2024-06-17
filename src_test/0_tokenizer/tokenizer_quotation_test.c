@@ -6,7 +6,7 @@
 /*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/24 22:36:32 by aschenk           #+#    #+#             */
-/*   Updated: 2024/06/04 16:51:24 by aschenk          ###   ########.fr       */
+/*   Updated: 2024/06/17 19:51:17 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ Returns:
 */
 static int	is_closed(t_data *data, int *i, const char c)
 {
-	char	char_str[2]; // tring to hold char c and null terminator
+	char	char_str[2]; // string to hold char c and null terminator
 	int		j; // Position of closing char
 
 	j = *i + 1; // Go to position after opening char (e.g., quotation mark)
@@ -44,10 +44,12 @@ static int	is_closed(t_data *data, int *i, const char c)
 	// Error handling if closing quotation mark is not found
 	char_str[0] = c;
 	char_str[1] = '\0';
+	ft_putstr_fd(ERR_COLOR, STDERR_FILENO);
 	ft_putstr_fd(ERR_PREFIX, STDERR_FILENO);
 	ft_putstr_fd(ERR_NOT_CLOSED_PRE, STDERR_FILENO);
 	ft_putstr_fd(char_str, STDERR_FILENO);
 	ft_putstr_fd(ERR_NOT_CLOSED_SUF, STDERR_FILENO);
+	ft_putstr_fd(RESET, STDERR_FILENO);
 	return (0); // char (e.g. quotation mark) is not closed
 }
 

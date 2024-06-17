@@ -62,8 +62,6 @@ ORANGE :=		\033[38;5;208m
 BLUE := 		\033[34m
 VIOLET := 		\033[35;1m
 
-LOGO :=			"$(BOLD)$(L_RED) _  _   $(ORANGE)__   $(YELLOW)__ _   $(GREEN)__   $(BLUE)____   $(VIOLET)_  _   $(L_RED)____   $(ORANGE)__     $(YELLOW)__   \n$(L_RED)( \\/ ) $(ORANGE)(  ) $(YELLOW)(  ( \\ $(GREEN)(  ) $(BLUE)/ ___) $(VIOLET)/ )( \\ $(L_RED)(  __) $(ORANGE)(  )   $(YELLOW)(  )  \n$(L_RED)/ \\/ \\  $(ORANGE))(  $(YELLOW)/    /  $(GREEN))(  $(BLUE)\\___ \\ $(VIOLET)) __ (  $(L_RED)) _)  $(ORANGE)/ (_/\\ $(YELLOW)/ (_/\\ \n$(L_RED)\\_)(_/ $(ORANGE)(__) $(YELLOW)\\_)__) $(GREEN)(__) $(BLUE)(____/ $(VIOLET)\\_)(_/ $(L_RED)(____) $(ORANGE)\\____/ $(YELLOW)\\____/\n\n$(RESET)$(BOLD)by Natalie Holbrook & Alex Schenk @42 Berlin, June 2024\n$(RESET)"
-
 # target
 all:			$(LIBFT) $(NAME)
 
@@ -127,7 +125,6 @@ $(LIBFT):	$(LIBFT_DIR)/libft.h \
 $(NAME):	$(OBJS) $(LIBFT)
 	@$(CC) $(CFLAGS) $(OBJS) $(LIB_FLAGS) -o $(NAME)
 	@echo "$(BOLD)$(YELLOW)\n$(NAME) successfully compiled.$(RESET)"
-	@echo $(LOGO)
 	@echo "Usage: './minishell' to start the program, then use it like bash.\n"
 
 # COMPILATION PROGRESS BAR
@@ -208,8 +205,7 @@ SRC_NUM :=		0
 $(NAME_TEST):	$(TEST_OBJS) $(LIBFT)
 	@$(CC) $(CFLAGS) $(TEST_OBJS) $(LIB_FLAGS) -o $(NAME_TEST)
 	@echo "$(BOLD)$(YELLOW)\n$(NAME_TEST) successfully compiled.$(RESET)"
-	@echo $(LOGO)
-	@echo "Usage: './minishell_test' to start the program, then use it like bash.\n"
+	@echo "\nUsage: './minishell_test' to start the program, then use it like bash.\n"
 
 # Compilation of TEST
 $(OBJS_DIR)/%.o:	$(TEST_DIR)/%.c $(HDRS)

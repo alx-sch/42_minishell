@@ -6,7 +6,7 @@
 /*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 22:40:57 by aschenk           #+#    #+#             */
-/*   Updated: 2024/05/25 01:30:19 by aschenk          ###   ########.fr       */
+/*   Updated: 2024/06/17 18:53:48 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,8 @@ static char	*get_env_values(const char *env_var_search, char **env)
 	}
 	return (NULL);
 }
+
+
 
 char	*expand_variables(t_data *data)
 {
@@ -94,4 +96,3 @@ char	*expand_variables(t_data *data)
 	expanded[expanded_len] = '\0';
 	return (expanded);
 }
-
