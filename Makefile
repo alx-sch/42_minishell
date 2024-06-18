@@ -181,10 +181,10 @@ TEST_SRCS :=	$(TEST_DIR)/main_test.c \
 				$(TEST_DIR)/free_test.c \
 				$(TEST_DIR)/utils_test.c \
 				$(TEST_DIR)/0_tokenizer/tokenizer_quotation_test.c \
-				$(TEST_DIR)/0_tokenizer/tokeziner_expansion_test.c \
 				$(TEST_DIR)/0_tokenizer/tokenizer_get_tokens_test.c \
 				$(TEST_DIR)/0_tokenizer/tokenizer_redirection_test.c \
 				$(TEST_DIR)/0_tokenizer/tokenizer_utils_test.c \
+				$(TEST_DIR)/1_parser/parser_var_expansion_test.c \
 				$(TEST_DIR)/builtins/builtin_struct_inits_test.c \
 				$(TEST_DIR)/builtins/cd_test.c \
 				$(TEST_DIR)/builtins/pwd_test.c \
