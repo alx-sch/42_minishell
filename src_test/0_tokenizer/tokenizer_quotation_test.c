@@ -6,16 +6,21 @@
 /*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/24 22:36:32 by aschenk           #+#    #+#             */
-/*   Updated: 2024/05/29 13:41:59 by aschenk          ###   ########.fr       */
+/*   Updated: 2024/06/17 19:51:17 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 /*
-This file contains a function to check the input string for a valid use of
-quotation marks (single and double).
+This file contains a function to check the input string for quotations (single
+and double) and creates the corresponding token if the quotation is valid.
+Returns an error if the quotation is not closed.
 */
 
 #include "minishell.h"
+
+// FUNCTION IN FILE
+
+int	is_quotation(t_data *data, int *i);
 
 /*
 Checks if the quotation mark at a given position has a corresponding closing
@@ -26,7 +31,7 @@ Returns:
 */
 static int	is_closed(t_data *data, int *i, const char c)
 {
-	char	char_str[2]; // tring to hold char c and null terminator
+	char	char_str[2]; // string to hold char c and null terminator
 	int		j; // Position of closing char
 
 	j = *i + 1; // Go to position after opening char (e.g., quotation mark)
@@ -39,10 +44,12 @@ static int	is_closed(t_data *data, int *i, const char c)
 	// Error handling if closing quotation mark is not found
 	char_str[0] = c;
 	char_str[1] = '\0';
+	ft_putstr_fd(ERR_COLOR, STDERR_FILENO);
 	ft_putstr_fd(ERR_PREFIX, STDERR_FILENO);
 	ft_putstr_fd(ERR_NOT_CLOSED_PRE, STDERR_FILENO);
 	ft_putstr_fd(char_str, STDERR_FILENO);
 	ft_putstr_fd(ERR_NOT_CLOSED_SUF, STDERR_FILENO);
+	ft_putstr_fd(RESET, STDERR_FILENO);
 	return (0); // char (e.g. quotation mark) is not closed
 }
 
@@ -101,5 +108,3 @@ int	is_quotation(t_data *data, int *i)
 	}
 	return (1); // No quotation mark found or it's properly closed
 }
-
-

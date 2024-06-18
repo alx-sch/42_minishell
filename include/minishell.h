@@ -3,11 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: natalierh <natalierh@student.42.fr>        +#+  +:+       +#+        */
+/*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/06 12:08:35 by aschenk           #+#    #+#             */
-/*   Updated: 2024/05/29 12:51:58 by aschenk          ###   ########.fr       */
-/*   Updated: 2024/05/29 11:17:14 by natalierh        ###   ########.fr       */
+/*   Updated: 2024/06/17 20:10:43 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +61,7 @@ typedef struct s_data
 
 void			perror_and_exit(char *msg, t_data *data);
 void			msg_and_exit(char *msg, t_data *data);
+void			print_logo(void);
 
 // 0_tokenizer/tokenizer_redirection.c
 
@@ -70,7 +70,7 @@ int				is_redirection(t_data *data, int *i);
 // 0_tokenizer/scanner.c
 
 t_list			*create_tok(t_data *data, t_token_type type, const char *lexeme,
-				int *i);
+					int *i);
 
 // FOR TESTING!!
 void			print_string_array(char **array);
@@ -81,11 +81,11 @@ void			free_str_arr(char ***array_ptr);
 
 // 0_tokenzier/tokenizer_quotation.c
 
-int		is_quotation(t_data *data, int *i);
+int				is_quotation(t_data *data, int *i);
 
 // 0_tokenizer/tokenizer_expansion.c
 
-char	*expand_variables(t_data *data);
+char			*expand_variables(t_data *data);
 
 // 0_lexer/lexer_main.c
 
@@ -106,14 +106,14 @@ void			get_tokens(t_data	*data);
 // free.c
 
 void			del_token(void *content);
-void			free_data(t_data **data_struct);
+void			free_data(t_data *data);
 
 
 // Parsing:
 void			parsing(t_data *data);
 int				is_pwd(char *input);
 int				is_cd(char *input);
-int 			is_exit(char *input);
+int				is_exit(char *input);
 int				is_env(char *input);
 
 // Builtins:
@@ -121,7 +121,7 @@ void			init_cd_struct(t_cd **cd, char *input);
 void			cd(char *input, char **envp);
 void			pwd(void);
 void			env(char **envp);
-unsigned int 	exit_with_code(char *input);
+unsigned int	exit_with_code(char *input);
 
 // Modified standard functions:
 int				ft_strrchr_index(const char *s, int c);

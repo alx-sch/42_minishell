@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env_test.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: natalierh <natalierh@student.42.fr>        +#+  +:+       +#+        */
+/*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/25 09:38:05 by natalierh         #+#    #+#             */
-/*   Updated: 2024/05/28 12:44:03 by natalierh        ###   ########.fr       */
+/*   Updated: 2024/06/03 14:07:40 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ int is_env(char *input)
 void    env(char **envp)
 {
     int i;
-    
+
     i = 0;
     while (envp[i])
         printf("%s\n", envp[i++]);

@@ -6,7 +6,7 @@
 /*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/13 12:12:15 by aschenk           #+#    #+#             */
-/*   Updated: 2024/05/18 15:48:45 by aschenk          ###   ########.fr       */
+/*   Updated: 2024/06/08 23:21:39 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,9 +46,12 @@ void	del_token(void *content)
 	free(token);
 }
 
-void	free_data(t_data **data_struct)
+// Frees/closes all resources allocated for the data structure.
+void	free_data(t_data *data)
 {
-	if (data_struct)
-		data_struct = NULL;
-	return ;
+	if (!data)
+		return ;
+	free(data->input);
+	// might need to free other members of the t_data struct
 }
+
