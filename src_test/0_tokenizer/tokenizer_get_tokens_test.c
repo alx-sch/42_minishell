@@ -6,15 +6,11 @@
 /*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 16:59:48 by aschenk           #+#    #+#             */
-/*   Updated: 2024/05/29 13:17:48 by aschenk          ###   ########.fr       */
+/*   Updated: 2024/06/08 18:56:17 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-
-
-
 
 /*
 To handle memory allocation failures create_token() more efficiently, this
@@ -23,17 +19,18 @@ the standard error stream.
 */
 static void	malloc_fail_in_create_token(t_data *data)
 {
-	if (data->tok.tok)
+	if (data->tok.tok) // Check if the token pointer within data is not NULL
 	{
-		if (data->tok.tok->lexeme)
+		if (data->tok.tok->lexeme) // If the token's lexeme has been allocated, free it and set to NULL
 		{
 			free(data->tok.tok->lexeme);
 			data->tok.tok->lexeme = NULL;
 		}
+		// Free the token itself and set the pointer to NULL
 		free(data->tok.tok);
 		data->tok.tok = NULL;
 	}
-	perror(ERR_MALLOC);
+	perror(ERR_MALLOC); // Output an error message indicating a malloc failure
 }
 
 /*
@@ -80,7 +77,7 @@ t_list	*create_tok(t_data *data, t_token_type type, const char *lexeme, int *i)
 	// Update the position pointer to the end of the lexeme
 	*i = *i + ft_strlen(lexeme);
 	// for TESTING ONLY
-	ft_printf("Input[%d]: '%s' (token type:%d)\n", data->tok.tok->position, data->tok.tok->lexeme, data->tok.tok->type);
+	ft_printf("Input[%d]: '%s' (token type: %d)\n", data->tok.tok->position, data->tok.tok->lexeme, data->tok.tok->type);
 	return (data->tok.new_node);
 }
 
@@ -114,13 +111,13 @@ void	get_tokens(t_data *d)
 			printf("I am stopping here!\n"); // FOR TESTING ONLY!
 			return ;
 		}
-		if (!is_redirection(d, &i))
+		else if (!is_redirection(d, &i))
 		{
 			printf("I am stopping here!\n"); // FOR TESTING ONLY!
 			return ;
 		}
 		else if (d->input[i] == '$' && d->input[i + 1] == '?') // checks if the shell variable '$?' (exit status) is input
-			ft_lstadd_back(&d->tok.tok_lst, create_tok(d, DOLLAR_QUEST, "$?", &i));
+			ft_lstadd_back(&d->tok.tok_lst, create_tok(d, EXIT_CODE, "$?", &i));
 		else if (d->input[i] && !is_space(d->input[i])) // if not already at end of string: all the rest is considered a COMMAND --> which is not true, could also be a pathfile -> '/' --> bash: /: Is a directory
 		{
 			start = i;

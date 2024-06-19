@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main_test.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: natalierh <natalierh@student.42.fr>        +#+  +:+       +#+        */
+/*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/06 12:05:14 by aschenk           #+#    #+#             */
-/*   Updated: 2024/05/29 11:23:19 by aschenk          ###   ########.fr       */
+/*   Updated: 2024/06/17 20:17:04 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,19 +54,20 @@ int	main(int argc, char **argv, char **envp)
 {
 	t_data	data;
 
+	print_logo();
 	init_data_struct(&data, argc, argv, envp);
 	while (1)
 	{
 		data.input = readline(PROMPT); // Display prompt and read input
 		if (data.input && data.input[0] != '\0') // Checking if input is not NULL, and the input is not empty.
 			add_history(data.input); // Adding to input-history.
-		//free(expand_variables(&data)); // just testing variable expanding, will likely be used right before command exc and not here
+		//expand_variables(&data); // just testing variable expanding, will likely be used right before command exc and not here
 		if (data.input && data.input[0] != '\0') // Checking if input is not NULL, and the input is not empty.
 			parsing(&data); // Checking if the input matches any of the builtins.
 		get_tokens(&data);
 		// Maybe as a check completely in the end, if nothing else worked, we can mimic the "Command <some_command> not found"?
 		ft_lstclear(&data.tok.tok_lst , del_token);
-		free(data.input); // This was causing leaks, as it was not present. 
+		free_data(&data);
 	}
 	free_env_struct(&data.envp_temp);
 	exit(EXIT_SUCCESS);
