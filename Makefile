@@ -188,6 +188,7 @@ TEST_SRCS :=	$(TEST_DIR)/main_test.c \
 				$(TEST_DIR)/builtins/builtin_struct_inits_test.c \
 				$(TEST_DIR)/builtins/cd_test.c \
 				$(TEST_DIR)/builtins/pwd_test.c \
+				$(TEST_DIR)/builtins/unset_test.c \
 				$(TEST_DIR)/builtins/env_test.c \
 				$(TEST_DIR)/builtins/exit_test.c \
 				$(TEST_DIR)/errors/print_error_test.c \

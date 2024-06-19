@@ -3,15 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   pwd_test.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: natalierh <natalierh@student.42.fr>        +#+  +:+       +#+        */
+/*   By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/13 14:41:46 by nholbroo          #+#    #+#             */
-/*   Updated: 2024/05/28 13:22:24 by natalierh        ###   ########.fr       */
+/*   Updated: 2024/06/19 13:30:50 by nholbroo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-// Don't accept "pwddd" for instance.
 
 int	is_pwd(char *input)
 {

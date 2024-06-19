@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
+/*   By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/06 12:08:35 by aschenk           #+#    #+#             */
-/*   Updated: 2024/06/17 20:10:43 by aschenk          ###   ########.fr       */
+/*   Updated: 2024/06/19 16:11:40 by nholbroo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,25 +123,29 @@ int				is_pwd(char *input);
 int				is_cd(char *input);
 int				is_exit(char *input);
 int				is_env(char *input);
+int				is_unset(char *input);
 
 // Builtins:
 void			init_cd_struct(t_cd **cd, char *input);
-void			cd(char *input, char **envp);
-void			pwd(void);
 t_env   		*init_env_tmp(char **envp);
-void			env(char **envp);
+int				cd(char *input, char **envp);
+void			pwd(void);
+void			env(t_env *env_temp);
+void			unset(char *input, t_env **envp_temp);
 unsigned int	exit_with_code(char *input);
 
 // Modified standard functions:
 int				ft_strrchr_index(const char *s, int c);
 bool			is_only_duplicates(char *s, char c);
+int				is_letter(char c);
 
 // Counting-functions:
 int				count_array_length(char **array);
 
-// Freeing allocated memory:
+// Freeing allocated memory for builtins:
 int				ft_freearray(char **arr);
-void			free_cd_struct(t_cd **cd);
+int				too_many_args_cd(t_cd **cd);
+int				free_cd_struct(t_cd **cd);
 void			free_env_struct(t_env **head);
 
 // Errors:
