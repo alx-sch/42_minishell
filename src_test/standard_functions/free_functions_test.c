@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free_functions_test.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: natalierh <natalierh@student.42.fr>        +#+  +:+       +#+        */
+/*   By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 15:59:31 by nholbroo          #+#    #+#             */
-/*   Updated: 2024/05/25 09:01:17 by natalierh        ###   ########.fr       */
+/*   Updated: 2024/06/19 15:00:41 by nholbroo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,15 @@ void free_env_struct(t_env **head)
     }
 }
 
-void	free_cd_struct(t_cd **cd)
+int	too_many_args_cd(t_cd **cd)
+{
+	errno = EINVAL;
+	perror("minishell: cd");
+	free_cd_struct(cd); // Freeing the struct.
+	return (0);
+}
+
+int	free_cd_struct(t_cd **cd)
 {
 	if (*cd)
 	{
@@ -45,6 +53,7 @@ void	free_cd_struct(t_cd **cd)
 			free((*cd)->home_user - 5);
 		free(*cd);
 	}
+	return (0);
 }
 
 int	ft_freearray(char **arr)

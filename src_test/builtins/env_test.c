@@ -6,21 +6,15 @@
 /*   By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/25 09:38:05 by natalierh         #+#    #+#             */
-/*   Updated: 2024/06/19 13:27:41 by nholbroo         ###   ########.fr       */
+/*   Updated: 2024/06/19 15:33:44 by nholbroo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-// Implement errors in case of "env dsafasgasg" or "env -dsdasf" or something.
-// Consider storing envp in a linked list instead of an array, easier to remove/add new variables.
+// The env builtin - accepts several spaces etc, but not "envv" etc.
+// Prints an error in the case of "env dsafgasg" or "env -dsdasf" or something.
 
-static int  is_letter(char c)
-{
-    if ((c >= 'A' && c <= 'Z') || (c >= 'a' && c <= 'z'))
-        return (1);
-    return (0);
-}
 static int env_error_messages(char *input, int i)
 {
     if (input[i] == '-' && is_letter(input[i + 1]))
@@ -66,11 +60,11 @@ int is_env(char *input)
     return (1);
 }
 
-void    env(char **envp)
+void    env(t_env *envp_temp)
 {
-    int i;
-
-    i = 0;
-    while (envp[i])
-        printf("%s\n", envp[i++]);
+    while (envp_temp)
+    {
+        printf("%s\n", envp_temp->value);
+        envp_temp = envp_temp->next;
+    }
 }
