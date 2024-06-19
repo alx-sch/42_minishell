@@ -46,6 +46,14 @@ typedef struct s_cd
 /*
 - char *input:		The input string containing the command line input.
 */
+
+typedef struct s_env
+{
+	char			*value;
+	struct s_env	*next;
+	struct s_env	*previous;
+}	t_env;
+
 typedef struct s_data
 {
 	int		argc;
@@ -55,8 +63,8 @@ typedef struct s_data
 	char	*tmp;
 	t_tok	tok;
 	t_cd	cd;
+	t_env	*envp_temp;
 }	t_data;
-
 
 // utils.c
 
@@ -120,6 +128,7 @@ int				is_env(char *input);
 void			init_cd_struct(t_cd **cd, char *input);
 void			cd(char *input, char **envp);
 void			pwd(void);
+t_env   		*init_env_tmp(char **envp);
 void			env(char **envp);
 unsigned int 	exit_with_code(char *input);
 
@@ -133,6 +142,7 @@ int				count_array_length(char **array);
 // Freeing allocated memory:
 int				ft_freearray(char **arr);
 void			free_cd_struct(t_cd **cd);
+void			free_env_struct(t_env **head);
 
 // Errors:
 void			print_error_cd(int error_code, t_cd **cd);

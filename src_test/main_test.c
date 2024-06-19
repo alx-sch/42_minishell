@@ -42,6 +42,7 @@ void	init_data_struct(t_data *data, int argc, char **argv, char **envp)
 	data->argc = argc;
 	data->argv = argv;
 	data->envp = envp;
+	data->envp_temp = init_env_tmp(envp);
 	data->input = NULL;
 	data->tmp = NULL;
 	data->tok.tok = NULL;
@@ -67,6 +68,7 @@ int	main(int argc, char **argv, char **envp)
 		ft_lstclear(&data.tok.tok_lst , del_token);
 		free(data.input); // This was causing leaks, as it was not present. 
 	}
+	free_env_struct(&data.envp_temp);
 	exit(EXIT_SUCCESS);
 }
 

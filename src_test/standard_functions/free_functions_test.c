@@ -12,6 +12,25 @@
 
 #include "minishell.h"
 
+void free_env_struct(t_env **head)
+{
+    t_env   *current;
+    t_env   *next_node;
+
+    current = *head;
+	if (current)
+    {
+        while (current)
+        {
+            next_node = current->next;
+            free(current->value);
+            free(current);
+            current = NULL;
+            current = next_node;
+        }
+    }
+}
+
 void	free_cd_struct(t_cd **cd)
 {
 	if (*cd)
