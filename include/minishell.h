@@ -6,7 +6,7 @@
 /*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/06 12:08:35 by aschenk           #+#    #+#             */
-/*   Updated: 2024/06/17 20:10:43 by aschenk          ###   ########.fr       */
+/*   Updated: 2024/06/19 13:40:01 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,8 @@ typedef struct s_cd
 }	t_cd;
 
 /*
-- char *input:		The input string containing the command line input.
+- char	*input:		The input string containing the command line input.
+- char	quote:		Encountered quotation symbol (single or double) in input.
 */
 typedef struct s_data
 {
@@ -52,6 +53,7 @@ typedef struct s_data
 	char	**envp;
 	char	*input;
 	char	*tmp;
+	char	quote;
 	t_tok	tok;
 	t_cd	cd;
 }	t_data;
@@ -62,6 +64,10 @@ typedef struct s_data
 void			perror_and_exit(char *msg, t_data *data);
 void			msg_and_exit(char *msg, t_data *data);
 void			print_logo(void);
+
+// 0_check_input/check_quotation.c
+
+int				is_quotation_closed(t_data *data);
 
 // 0_tokenizer/tokenizer_redirection.c
 
@@ -79,10 +85,6 @@ void			print_string_array(char **array);
 
 void			free_str_arr(char ***array_ptr);
 
-// 0_tokenzier/tokenizer_quotation.c
-
-int				is_quotation(t_data *data, int *i);
-
 // 0_tokenizer/tokenizer_expansion.c
 
 char			*expand_variables(t_data *data);
@@ -96,8 +98,7 @@ char			**parser(char *input);
 void			print_token(const t_list *current);
 void			print_token_list(t_list *token_list);
 int				is_space(int c);
-int				is_input_empty(const char *input);
-int				is_delimiter(const char c);
+int				is_delimiter(t_data *data, const char c);
 
 // 0_lexer/scanner.c
 

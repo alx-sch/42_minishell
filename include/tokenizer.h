@@ -6,7 +6,7 @@
 /*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 16:36:37 by aschenk           #+#    #+#             */
-/*   Updated: 2024/06/04 17:04:39 by aschenk          ###   ########.fr       */
+/*   Updated: 2024/06/19 14:34:30 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ Categorizes tokens / lexemes:
 */
 typedef enum e_token_type
 {
-	CMD,
+	NOT_OPERATOR,
 	BI_ECHO,
 	BI_CD,
 	BI_PWD,
@@ -50,20 +50,11 @@ typedef enum e_token_type
 	BI_UNSET,
 	BI_ENV,
 	BI_EXIT,
-	SINGLE_QUOT,
-	DOUBLE_QUOT,
-	PATH,
-	BUILTIN,
-	ARG,
 	PIPE,
 	REDIRECT_IN,
 	REDIRECT_OUT,
 	APPEND_OUT,
 	HEREDOC,
-	HEREDOC_DELIM,
-	DOLLAR,
-	EXIT_CODE,
-	EOF
 }		t_token_type;
 
 /*

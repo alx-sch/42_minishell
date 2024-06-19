@@ -6,7 +6,7 @@
 /*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 14:04:08 by aschenk           #+#    #+#             */
-/*   Updated: 2024/05/29 12:42:05 by aschenk          ###   ########.fr       */
+/*   Updated: 2024/06/19 14:36:54 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,65 +25,78 @@ int	is_space(int c)
 }
 
 /*
-Checks if the input string represents an empty command, which can be:
-- An empty string ("").
-- Contains only whitespace characters.
-- Contains only a comment ('# COMMENT'), with optional preceding whitespace.
+Checks if a character in the input string is a quotation mark and toggles
+the quote state.
+
+If no quote is currently set in the `quote` member of the `data` structure and
+the input character is a single (') or double (") quotation mark, it sets the
+`quote` member to that character.
+If the input character matches the currently set quotation mark, it unsets
+the `quote` member.
 */
-int	is_input_empty(const char *input)
+static void	is_quotation(t_data *data, const char c)
 {
-	int	i;
-
-	i = 0;
-
-	while (input[i])
+	if (!data->quote)
 	{
-		if (!is_space(input[i]))
-			return (0);
-		i++;
+		if (c == '\'' || c == '\"')
+			data->quote = c;
 	}
-	return (1);
+	else if (c == data->quote)
+		data->quote = '\0';
 }
 
 /*
-Checks if a character is a delimiter during lexical analysis:
-whitespace, redirection symbols (<, >), pipe (|),
-variable expansion ($), or a null terminator ('\0').
+Checks if a character is a delimiter during tokenization.
+
+The function first checks if the character is a quotation mark by calling
+`is_quotation`, which sets or unsets the quote state in the provided `t_data`
+struct. If a quote is open, 'usual' delimiters are ignored.
+
+Parameters:
+- data: A pointer to a `t_data` structure that contains the `quote` member.
+- c: The character to check.
+
+Returns:
+- 1 if the character is a delimiter and not within a quotation.
+- 0 otherwise.
 */
-int	is_delimiter(const char c)
+int	is_delimiter(t_data *data, const char c)
 {
-	if (is_space(c) || c == '>' || c == '<' || c == '|' || c == '$'
-		|| c == '\n' || c == '\0' || c == '\'' || c == '\"')
-		return (1);
-	else
-		return (0);
-}
-
-/*
-FOR TESTING ONLY!!
-*/
-void	print_token(const t_list *current)
-{
-	t_token	*token;
-
-	token = (t_token *)(current)->content;
-	printf("token type :%u, lexeme: %s position %d", token->type, token->lexeme,
-		token->position);
-	return ;
-}
-
-/*
-FOR TESTING ONLY!!
-*/
-void	print_token_list(t_list *token_list)
-{
-	t_list	*current;
-
-	current = token_list;
-	while (current != NULL)
+	is_quotation(data, c);
+	if (!data->quote) // if not within quote
 	{
-		print_token(current);
-		current = current->next;
+		if (is_space(c) || c == '>' || c == '<' || c == '|' || c == '\n'
+			|| c == '\0')
+			return (1);
 	}
-	return ;
+	return (0);
 }
+
+// /*
+// FOR TESTING ONLY!!
+// */
+// void	print_token(const t_list *current)
+// {
+// 	t_token	*token;
+
+// 	token = (t_token *)(current)->content;
+// 	printf("token type :%u, lexeme: %s position %d", token->type, token->lexeme,
+// 		token->position);
+// 	return ;
+// }
+
+// /*
+// FOR TESTING ONLY!!
+// */
+// void	print_token_list(t_list *token_list)
+// {
+// 	t_list	*current;
+
+// 	current = token_list;
+// 	while (current != NULL)
+// 	{
+// 		print_token(current);
+// 		current = current->next;
+// 	}
+// 	return ;
+// }
