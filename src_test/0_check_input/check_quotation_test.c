@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   tokenizer_quotation_test.c                         :+:      :+:    :+:   */
+/*   check_quotation_test.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/24 22:36:32 by aschenk           #+#    #+#             */
-/*   Updated: 2024/06/19 13:26:23 by aschenk          ###   ########.fr       */
+/*   Updated: 2024/06/19 13:28:32 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,6 @@ double quotations. If a quotation is not closed, the function returns an error.
 
 // FUNCTION IN FILE
 
-int	is_quotation(t_data *data, int *i);
 
 /*
 Checks if the quotation mark at a given position has a corresponding closing
@@ -58,29 +57,34 @@ and if so, checks if it is properly closed.
 
 Parameters:
 - data: Pointer to the main data structure containing the input string.
-- i: Pointer to the current position in the input string.
 
 Returns:
 - 1 if no quotation mark is found or if the quotation mark is properly closed.
 - 0 if a quotation mark is found but not properly closed.
  */
-int	is_quotation(t_data *data, int *i)
+int	is_quotation_closed(t_data *data)
 {
-	int	j;
+	int	i; // Current position in input string
+	int	j; // Position of the closing quotation mark
 
-	if (data->input[*i] == '\'') // Check for single-quotated mark
+	i = 0;
+	while(data->input[i])
 	{
-		j = is_closed(data, *i, '\''); // Check if it's properly closed
-		if (j == 0)
-			return (0); // Not closed
-		*i = j + 1;
-	}
-	else if (data->input[*i] == '\"') // Check for double-quotated mark
-	{
-		j = is_closed(data, *i, '\"'); // Check if it's properly closed
-		if (j == 0)
-			return (0); // Not closed
-		*i = j + 1;
+		if (data->input[i] == '\'') // Check for single-quotated mark
+		{
+			j = is_closed(data, i, '\''); // Check if it's properly closed
+			if (j == 0)
+				return (0); // Not closed
+			i = j; // Move to the position of the closing quote
+		}
+		else if (data->input[i] == '\"') // Check for double-quotated mark
+		{
+			j = is_closed(data, i, '\"'); // Check if it's properly closed
+			if (j == 0)
+				return (0); // Not closed
+			i = j; // Move to the position of the closing quote
+		}
+		i++;
 	}
 	return (1); // No quotation mark found or it's properly closed
 }

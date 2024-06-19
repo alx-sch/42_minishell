@@ -6,7 +6,7 @@
 /*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 16:59:48 by aschenk           #+#    #+#             */
-/*   Updated: 2024/06/08 18:56:17 by aschenk          ###   ########.fr       */
+/*   Updated: 2024/06/19 14:35:15 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,27 +106,20 @@ void	get_tokens(t_data *d)
 	{
 		while (is_space(d->input[i])) // Skipping whitespace
 			i++;
-		if (!is_quotation(d, &i))
+		if (!is_redirection(d, &i))
 		{
 			printf("I am stopping here!\n"); // FOR TESTING ONLY!
 			return ;
 		}
-		else if (!is_redirection(d, &i))
-		{
-			printf("I am stopping here!\n"); // FOR TESTING ONLY!
-			return ;
-		}
-		else if (d->input[i] == '$' && d->input[i + 1] == '?') // checks if the shell variable '$?' (exit status) is input
-			ft_lstadd_back(&d->tok.tok_lst, create_tok(d, EXIT_CODE, "$?", &i));
 		else if (d->input[i] && !is_space(d->input[i])) // if not already at end of string: all the rest is considered a COMMAND --> which is not true, could also be a pathfile -> '/' --> bash: /: Is a directory
 		{
 			start = i;
-			while (!is_delimiter(d->input[i]))
+			while (!is_delimiter(d, d->input[i])) // is not delimiter
 				i++;
 			d->tmp = ft_substr(d->input, start, i - start);
 			if (d->tmp[0] != '\0') // no empty token if 'start' is a delimiter, e.g. in "hello world"'test'
 			{
-				d->tok.new_node = create_tok(d, CMD, d->tmp, &start);
+				d->tok.new_node = create_tok(d, NOT_OPERATOR, d->tmp, &start);
 				ft_lstadd_back(&d->tok.tok_lst, d->tok.new_node);
 			}
 			free(d->tmp);

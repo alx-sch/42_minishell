@@ -6,7 +6,7 @@
 /*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/06 12:05:14 by aschenk           #+#    #+#             */
-/*   Updated: 2024/06/17 20:17:04 by aschenk          ###   ########.fr       */
+/*   Updated: 2024/06/19 13:27:59 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,7 @@ void	init_data_struct(t_data *data, int argc, char **argv, char **envp)
 	data->envp_temp = init_env_tmp(envp);
 	data->input = NULL;
 	data->tmp = NULL;
+	data->quote = '\0';
 	data->tok.tok = NULL;
 	data->tok.new_node = NULL;
 	data->tok.tok_lst = NULL;
@@ -61,10 +62,13 @@ int	main(int argc, char **argv, char **envp)
 		data.input = readline(PROMPT); // Display prompt and read input
 		if (data.input && data.input[0] != '\0') // Checking if input is not NULL, and the input is not empty.
 			add_history(data.input); // Adding to input-history.
+		if (is_quotation_closed(&data)) // check if user input is valid (quotations closed, correct redirection)
+		{
 		//expand_variables(&data); // just testing variable expanding, will likely be used right before command exc and not here
 		if (data.input && data.input[0] != '\0') // Checking if input is not NULL, and the input is not empty.
 			parsing(&data); // Checking if the input matches any of the builtins.
 		get_tokens(&data);
+		}
 		// Maybe as a check completely in the end, if nothing else worked, we can mimic the "Command <some_command> not found"?
 		ft_lstclear(&data.tok.tok_lst , del_token);
 		free_data(&data);
