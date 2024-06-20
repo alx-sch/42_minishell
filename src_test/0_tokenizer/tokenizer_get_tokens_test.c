@@ -6,15 +6,25 @@
 /*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 16:59:48 by aschenk           #+#    #+#             */
-/*   Updated: 2024/06/19 14:35:15 by aschenk          ###   ########.fr       */
+/*   Updated: 2024/06/20 20:11:51 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+/*
+TBD
+*/
+
 #include "minishell.h"
 
+// FUNCTIONS IN FILE
+
+void	get_tokens(t_data *data);
+t_list	*create_tok(t_data *data, t_token_type type, const char *lexeme,
+			int *i);
+
 /*
-To handle memory allocation failures create_token() more efficiently, this
-helper function cleans up the allocated memory outputs an error message to
+To handle memory allocation failures in create_token() more efficiently,
+this helper function cleans up the allocated memory outputs an error message to
 the standard error stream.
 */
 static void	malloc_fail_in_create_token(t_data *data)
@@ -82,47 +92,89 @@ t_list	*create_tok(t_data *data, t_token_type type, const char *lexeme, int *i)
 }
 
 /*
+Checks if the current character in the input string is a pipe ('|') and creates
+a pipe token if it is.
+
+Returns:
+- 0 if the pipe token creation failed.
+- 1 if no pipe was found or the pipe token was successfully created.
+*/
+static int	is_pipe(t_data *d, int *i)
+{
+	if (d->input[*i] == '|')
+	{
+		d->tok.new_node = create_tok(d, PIPE, "|", i);
+		if (d->tok.new_node == NULL)
+			return (0);
+		ft_lstadd_back(&d->tok.tok_lst, d->tok.new_node);
+	}
+	return (1);
+}
+
+/*
+Extracts a token from the input string starting at position *i until a
+delimiter is encountered.
+
+Returns:
+- 0 if memory allocation fails during substring creation or token node creation.
+- 1 if a token is successfully extracted and added OR if no token was added as
+	data->input[*i] is whitespace or the string end.
+*/
+static int	add_other_token(t_data *data, int *i)
+{
+	int	start;
+
+	start = *i;
+	if (data->input[*i] && !is_space(data->input[*i])) // Skip token creation if end of string or whitespace
+	{
+		while (!is_delimiter(data, data->input[*i])) // Find the end of the token
+			(*i)++;
+		data->tmp = ft_substr(data->input, start, (*i) - start); // Extract the token substring
+		if (!data->tmp)
+		{
+			perror(ERR_MALLOC);
+			return (0); // Substring extraction failed.
+		}
+		data->tok.new_node = create_tok(data, OTHER, data->tmp, &start); // Create a new token node and add it to the token list
+		if (data->tok.new_node == NULL)
+		{
+			free(data->tmp);
+			return (0); // Token creation failed.
+		}
+		ft_lstadd_back(&data->tok.tok_lst, data->tok.new_node);
+		free(data->tmp);
+	}
+	return (1);
+}
+
+/*
 Parses the input string to extract tokens and builds a token list (t_list type).
 
 This function iterates over the input string and extracts tokens based on
-certain criteria:
-- It skips leading whitespace characters.
-- It checks for redirection operators and adds a tokens if found.
-- It checks for the shell variable '$?' (exit status) and adds a token if found.
-- It treats the remaining part of the input string as a command or pathfile and
-  extracts tokens accordingly.
+specific criteria:
+- Skips leading whitespace characters.
+- Checks for redirection operators and adds tokens if found.
+- Adds a token for the pipe character '|' if found.
+- Treats remaining parts of the input string as OTHER tokens.
 
 For each token, it creates a new token node and adds it to the token list.
 If a token cannot be created due to a memory allocation failure, the function
 stops processing further tokens.
 */
-void	get_tokens(t_data *d)
+void	get_tokens(t_data *data)
 {
-	int		i;
-	int		start;
+	int	i;
 
 	i = 0;
-	while (d->input[i])
+	while (data->input[i]) // Iterate through the input string
 	{
-		while (is_space(d->input[i])) // Skipping whitespace
+		while (is_space(data->input[i])) // Skip leading whitespace
 			i++;
-		if (!is_redirection(d, &i))
-		{
-			printf("I am stopping here!\n"); // FOR TESTING ONLY!
-			return ;
-		}
-		else if (d->input[i] && !is_space(d->input[i])) // if not already at end of string: all the rest is considered a COMMAND --> which is not true, could also be a pathfile -> '/' --> bash: /: Is a directory
-		{
-			start = i;
-			while (!is_delimiter(d, d->input[i])) // is not delimiter
-				i++;
-			d->tmp = ft_substr(d->input, start, i - start);
-			if (d->tmp[0] != '\0') // no empty token if 'start' is a delimiter, e.g. in "hello world"'test'
-			{
-				d->tok.new_node = create_tok(d, NOT_OPERATOR, d->tmp, &start);
-				ft_lstadd_back(&d->tok.tok_lst, d->tok.new_node);
-			}
-			free(d->tmp);
-		}
+		if (!is_redirection(data, &i)) // Check if redirection and if so, create respective token
+			return ; // Memory allocation failed or invalid redirection operand (file)
+		else if (!is_pipe(data, &i)) // Check if pipe and if so, create respective token
+			return ;  // Memory allocation failed
+		else if (!add_other_token(data, &i)) // check if not end of string or whitespace and if not, create OTHER token.
+			return ; // Memory allocation failed
 	}
 }

@@ -6,7 +6,7 @@
 /*   By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/06 12:08:35 by aschenk           #+#    #+#             */
-/*   Updated: 2024/06/19 17:06:25 by nholbroo         ###   ########.fr       */
+/*   Updated: 2024/06/20 19:44:32 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,7 +108,7 @@ void			print_token_list(t_list *token_list);
 int				is_space(int c);
 int				is_delimiter(t_data *data, const char c);
 
-// 0_lexer/scanner.c
+// 0_tokenizer_/tokenizer_get_tokens.c
 
 void			get_tokens(t_data	*data);
 
