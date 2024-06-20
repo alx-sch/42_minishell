@@ -6,7 +6,7 @@
 /*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/06 12:05:14 by aschenk           #+#    #+#             */
-/*   Updated: 2024/06/19 13:27:59 by aschenk          ###   ########.fr       */
+/*   Updated: 2024/06/20 19:45:19 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,8 +73,6 @@ int	main(int argc, char **argv, char **envp)
 		ft_lstclear(&data.tok.tok_lst , del_token);
 		free_data(&data);
 	}
-	free_env_struct(&data.envp_temp);
-	exit(EXIT_SUCCESS);
 }
 
 // int	main(int argc, char **argv, char **envp)

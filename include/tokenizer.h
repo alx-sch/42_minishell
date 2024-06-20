@@ -6,7 +6,7 @@
 /*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 16:36:37 by aschenk           #+#    #+#             */
-/*   Updated: 2024/06/19 14:34:30 by aschenk          ###   ########.fr       */
+/*   Updated: 2024/06/20 19:07:16 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,18 +42,11 @@ Categorizes tokens / lexemes:
 */
 typedef enum e_token_type
 {
-	NOT_OPERATOR,
-	BI_ECHO,
-	BI_CD,
-	BI_PWD,
-	BI_EXPORT,
-	BI_UNSET,
-	BI_ENV,
-	BI_EXIT,
+	OTHER,
 	PIPE,
-	REDIRECT_IN,
-	REDIRECT_OUT,
-	APPEND_OUT,
+	INPUT_FILE,
+	OUTPUT_FILE,
+	APPEND_FILE,
 	HEREDOC,
 }		t_token_type;
 

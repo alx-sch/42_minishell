@@ -6,7 +6,7 @@
 /*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/16 17:26:08 by aschenk           #+#    #+#             */
-/*   Updated: 2024/06/19 13:42:32 by aschenk          ###   ########.fr       */
+/*   Updated: 2024/06/20 20:31:21 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,6 @@
 # define ERR_PREFIX			"minishell: "
 # define ERR_REDIR_OPERAND	"syntax error after redirection "
 # define ERR_NOT_CLOSED_PRE	"opening quotation "
-# define ERR_NOT_CLOSED_SUF " is not closed\n"
+# define ERR_NOT_CLOSED_SUF " is not closed (position: "
 
 #endif
