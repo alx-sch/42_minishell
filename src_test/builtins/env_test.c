@@ -6,7 +6,7 @@
 /*   By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/25 09:38:05 by natalierh         #+#    #+#             */
-/*   Updated: 2024/06/19 15:33:44 by nholbroo         ###   ########.fr       */
+/*   Updated: 2024/06/19 18:08:53 by nholbroo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 
 static int env_error_messages(char *input, int i)
 {
-    if (input[i] == '-' && is_letter(input[i + 1]))
+    if (input[i] == '-' && (input[i + 1]))
     {
         write(2, "env: invalid option: -- '", 25);
         write(2, &input[i + 1], 1);
