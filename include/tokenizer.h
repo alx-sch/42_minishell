@@ -6,7 +6,7 @@
 /*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 16:36:37 by aschenk           #+#    #+#             */
-/*   Updated: 2024/06/20 19:07:16 by aschenk          ###   ########.fr       */
+/*   Updated: 2024/06/20 21:17:59 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,9 +44,9 @@ typedef enum e_token_type
 {
 	OTHER,
 	PIPE,
-	INPUT_FILE,
-	OUTPUT_FILE,
-	APPEND_FILE,
+	REDIR_IN,
+	REDIR_OUT,
+	APPEND_OUT,
 	HEREDOC,
 }		t_token_type;
 

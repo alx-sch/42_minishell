@@ -6,7 +6,7 @@
 /*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/17 13:00:24 by aschenk           #+#    #+#             */
-/*   Updated: 2024/06/20 20:57:34 by aschenk          ###   ########.fr       */
+/*   Updated: 2024/06/20 21:30:52 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,7 +111,6 @@ static int	check_operand(const char *input, int *i, int *j)
 	char	*invalid_op; // String for the invalid operand
 	char	*str_j; // String to hold the position of failed redirection
 
-	printf("position: %d\n", *i);
 	invalid_op = is_valid_operand(input, i); // Check if the operand is valid
 	if (invalid_op) // If an invalid operand is found
 	{
@@ -131,6 +130,12 @@ static int	check_operand(const char *input, int *i, int *j)
 
 /*
 Function to create redirection tokens and add them to the token list.
+
+Parameters:
+- data: Data structure containing input string and token list.
+- i: The current index in the input string.
+- type: The type of redirection token to be created.
+- symbol: The string representation of the redirection symbol.
 
 Returns:
 - 0 if the token creation failed.
@@ -163,24 +168,23 @@ Returns:
 int	is_redirection(t_data *data, int *i)
 {
 	int	j;
+	int	token_created; // Flag to indicate status of token creation
 
 	j = *i; // Store the initial index value
 	// Check for different redirection operators and create corresponding tokens
-	// Using '&&' and '&&' operators for short-circuit evaluation:
-	// The '&&' operators evaluate conditions sequentially from left to right until one is false
-	// The '||' operators evaluate conditions sequentially from left to right until one is true
-	if ((data->input[*i] == '>' && data->input[*i + 1] == '>'
-			&& !create_redirection_token(data, i, APPEND_FILE, ">>"))
-		|| (data->input[*i] == '>' && data->input[*i + 1] != '<'
-			&& !create_redirection_token(data, i, OUTPUT_FILE, ">"))
-		|| (data->input[*i] == '<' && data->input[*i + 1] == '<'
-			&& !create_redirection_token(data, i, HEREDOC, "<<"))
-		|| (data->input[*i] == '<'
-			&& !create_redirection_token(data, i, INPUT_FILE, "<")))
-		return (0); // Token creation failed
+	if (data->input[*i] == '>' && data->input[*i + 1] == '>')
+		token_created = create_redirection_token(data, i, APPEND_OUT, ">>");
+	else if (data->input[*i] == '>')
+		token_created = create_redirection_token(data, i, REDIR_OUT, ">");
+	else if (data->input[*i] == '<' && data->input[*i + 1] == '<')
+		token_created = create_redirection_token(data, i, HEREDOC, "<<");
+	else if (data->input[*i] == '<')
+		token_created = create_redirection_token(data, i, REDIR_IN, "<");
 	// Check if a redirection was found and validate its operand
 	if (j != *i) // If *i has been incremented, it means a redirection was found
-		if (!check_operand(data->input, i, &j))
-			return (0); // The operand is invalid
+	{
+		if (!check_operand(data->input, i, &j) || token_created == 0)
+			return (0); // The operand is invalid or token creation failed.
+	}
 	return (1); // No redirection found or operand is valid
 }
