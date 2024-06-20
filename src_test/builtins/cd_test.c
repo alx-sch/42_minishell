@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd_test.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: natalierh <natalierh@student.42.fr>        +#+  +:+       +#+        */
+/*   By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/13 13:51:10 by nholbroo          #+#    #+#             */
-/*   Updated: 2024/05/29 10:53:59 by natalierh        ###   ########.fr       */
+/*   Updated: 2024/06/19 14:59:55 by nholbroo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,7 +98,7 @@ void	cd_one_down(t_cd **cd, char *cwd)
 	free(input);
 }
 
-void	cd(char *input, char **envp)
+int	cd(char *input, char **envp)
 {
 	char		cwd[4096];
 	t_cd		*cd;
@@ -106,11 +106,7 @@ void	cd(char *input, char **envp)
 	cd = NULL;
 	init_cd_struct(&cd, input);
 	if (count_array_length(cd->component) > 2)
-	{
-		errno = EINVAL;
-		perror("minishell: cd");
-		return ;
-	}
+		return (too_many_args_cd(&cd));
 	if (!getcwd(cwd, sizeof(cwd))) // Get the current working directory.
 		perror("minishell: cd");
 	if (cd->component[1] == NULL) // If "cd" is the only input, without any components.
@@ -126,5 +122,5 @@ void	cd(char *input, char **envp)
 		cd_one_up(&cd, cwd); // Changes the working directory to its parent directory.
 	else // If "cd" is followed by a path, change to that relative or absolute path.
 		cd_one_down(&cd, cwd); // Changes the working directory to a subdirectory or an absolute path.
-	free_cd_struct(&cd); // Freeing the struct.
+	return (free_cd_struct(&cd)); // Freeing the struct.
 }
