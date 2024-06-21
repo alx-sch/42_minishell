@@ -1,42 +1,44 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   env_test.c                                         :+:      :+:    :+:   */
+/*   export_test.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/05/25 09:38:05 by natalierh         #+#    #+#             */
-/*   Updated: 2024/06/20 14:48:18 by nholbroo         ###   ########.fr       */
+/*   Created: 2024/06/20 14:14:17 by nholbroo          #+#    #+#             */
+/*   Updated: 2024/06/20 15:02:35 by nholbroo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-// The env builtin - accepts several spaces etc, but not "envv" etc.
-// Prints an error in the case of "env dsafgasg" or "env -dsdasf" or something.
-
-static int	env_error_messages(char *input, int i)
+static int	export_err_invalid_option(char *input, int i)
 {
-	if (input[i] == '-' && (input[i + 1]))
+	if (input[i] == '-' && is_space(input[i - 1]))
 	{
-		write(2, "env: invalid option: -- '", 25);
-		write(2, &input[i + 1], 1);
-		write(2, "'\n", 2);
+		write(2, "minishell: export: ", 20);
+		if (input[i + 1])
+		{
+			write(2, &input[i], 1);
+			write(2, &input[i + 1], 1);
+		}
+		else
+			write(2, &input[i], 1);
+		write(2, ": invalid option\n", 18);
+		return (0);
 	}
-	else if (is_letter(input[i]))
+	else
 	{
-		errno = ENOENT;
-		write(2, "env: ", 5);
-		write(2, "'", 1);
+		write(2, "minishell: export: '", 21);
 		while (input[i] && !is_space(input[i]))
 			write(2, &input[i++], 1);
-		write(2, "': ", 3);
-		perror("");
+		write(2, "': not a valid identifier\n", 27);
+		return (0);
 	}
-	return (0);
+	return (1);
 }
 
-int	is_env(char *input)
+int	is_export(char *input)
 {
 	int	i;
 
@@ -45,26 +47,23 @@ int	is_env(char *input)
 		i++;
 	if (input[i++] != 'e')
 		return (0);
-	if (input[i++] != 'n')
+	if (input[i++] != 'x')
 		return (0);
-	if (input[i++] != 'v')
+	if (input[i++] != 'p')
+		return (0);
+	if (input[i++] != 'o')
+		return (0);
+	if (input[i++] != 'r')
+		return (0);
+	if (input[i++] != 't')
 		return (0);
 	if (input[i] && !is_space(input[i]))
 		return (0);
 	while (input[i] != '\0')
 	{
-		if (!is_space(input[i]))
-			return (env_error_messages(input, i));
+		if (input[i] == '-')
+			return (export_err_invalid_option(input, i));
 		i++;
 	}
 	return (1);
-}
-
-void	env(t_env *envp_temp)
-{
-	while (envp_temp)
-	{
-		printf("%s\n", envp_temp->value);
-		envp_temp = envp_temp->next;
-	}
 }

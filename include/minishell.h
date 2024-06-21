@@ -6,7 +6,7 @@
 /*   By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/06 12:08:35 by aschenk           #+#    #+#             */
-/*   Updated: 2024/06/19 17:06:25 by nholbroo         ###   ########.fr       */
+/*   Updated: 2024/06/21 15:45:35 by nholbroo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,6 +125,7 @@ int				is_cd(char *input);
 int				is_exit(char *input);
 int				is_env(char *input);
 int				is_unset(char *input);
+int				is_export(char *input);
 
 // Builtins:
 void			init_cd_struct(t_cd **cd, char *input);
@@ -133,7 +134,7 @@ int				cd(char *input, char **envp);
 void			pwd(void);
 void			env(t_env *env_temp);
 void			unset(char *input, t_env **envp_temp);
-unsigned int	exit_with_code(char *input);
+unsigned int	exit_with_code(t_data *data);
 
 // Modified standard functions:
 int				ft_strrchr_index(const char *s, int c);

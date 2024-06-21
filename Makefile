@@ -191,6 +191,7 @@ TEST_SRCS :=	$(TEST_DIR)/main_test.c \
 				$(TEST_DIR)/builtins/unset_test.c \
 				$(TEST_DIR)/builtins/env_test.c \
 				$(TEST_DIR)/builtins/exit_test.c \
+				$(TEST_DIR)/builtins/export_test.c \
 				$(TEST_DIR)/errors/print_error_test.c \
 				$(TEST_DIR)/parsing/parsing_test.c \
 				$(TEST_DIR)/standard_functions/count_test.c \

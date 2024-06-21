@@ -6,7 +6,7 @@
 /*   By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 15:59:31 by nholbroo          #+#    #+#             */
-/*   Updated: 2024/06/19 15:00:41 by nholbroo         ###   ########.fr       */
+/*   Updated: 2024/06/20 16:15:36 by nholbroo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,21 +14,21 @@
 
 void free_env_struct(t_env **head)
 {
-    t_env   *current;
-    t_env   *next_node;
+	t_env	*current;
+	t_env	*next_node;
 
-    current = *head;
+	current = *head;
 	if (current)
-    {
-        while (current)
-        {
-            next_node = current->next;
-            free(current->value);
-            free(current);
-            current = NULL;
-            current = next_node;
-        }
-    }
+	{
+		while (current)
+		{
+			next_node = current->next;
+			free(current->value);
+			free(current);
+			current = NULL;
+			current = next_node;
+		}
+	}
 }
 
 int	too_many_args_cd(t_cd **cd)
