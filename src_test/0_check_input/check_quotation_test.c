@@ -6,30 +6,34 @@
 /*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/24 22:36:32 by aschenk           #+#    #+#             */
-/*   Updated: 2024/06/19 13:28:32 by aschenk          ###   ########.fr       */
+/*   Updated: 2024/06/20 20:40:33 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 /*
 This file contains a function that checks an input string for both single and
-double quotations. If a quotation is not closed, the function returns an error.
+double quotations. If a quotation is not closed, the function prints an error
+message into the standard error output.
 */
 
 #include "minishell.h"
 
 // FUNCTION IN FILE
 
+int	is_quotation_closed(t_data *data);
 
 /*
 Checks if the quotation mark at a given position has a corresponding closing
-quotation mark.
+quotation mark and its position in the input string.
+
 Returns:
-- The position of the closing quotation  mark if found.
+- The position of the closing quotation mark if found.
 - 0 if the closing quotation mark is not found; also prints an error message
 */
 static int	is_closed(t_data *data, int i, const char c)
 {
 	char	char_str[2]; // string to hold char c and null terminator
+	char	*i_str; // string to hold the position of unclosed quotation and null terminator
 	int		j; // Position of closing char
 
 	j = i + 1; // Go to position after opening char (e.g., quotation mark)
@@ -42,13 +46,17 @@ static int	is_closed(t_data *data, int i, const char c)
 	// Error handling if closing quotation mark is not found
 	char_str[0] = c;
 	char_str[1] = '\0';
-	ft_putstr_fd(ERR_COLOR, STDERR_FILENO);
+	i_str = ft_itoa(i);
+	ft_putstr_fd(ERR_COLOR, STDERR_FILENO); // Following output is all in defined ERROR COLOR
 	ft_putstr_fd(ERR_PREFIX, STDERR_FILENO);
 	ft_putstr_fd(ERR_NOT_CLOSED_PRE, STDERR_FILENO);
 	ft_putstr_fd(char_str, STDERR_FILENO);
 	ft_putstr_fd(ERR_NOT_CLOSED_SUF, STDERR_FILENO);
-	ft_putstr_fd(RESET, STDERR_FILENO);
-	return (0); // char (e.g. quotation mark) is not closed
+	ft_putstr_fd(i_str, STDERR_FILENO);
+	ft_putstr_fd(")\n", STDERR_FILENO);
+	ft_putstr_fd(RESET, STDERR_FILENO); // Resets output style to default
+	free(i_str);
+	return (0); // Quotation mark is not closed
 }
 
 /*
