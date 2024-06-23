@@ -12,6 +12,75 @@
 
 #include "minishell.h"
 
+// Note to self:
+// When you use the export command without assigning a value, you're declaring the variable to be exported, but you're not giving it a value. 
+// So, it exists, but it's empty. When you run env, it shows you all the environment variables that have been set and their values. 
+// Since the variable you exported doesn't have a value, it doesn't appear in the output of env.
+// On the other hand, when you use export with an assignment, you're both declaring the variable and giving it a value. So, it does appear in the output of env.
+// In short, env shows variables and their values. If a variable doesn't have a value, it won't appear in the output of env, even if it has been exported.
+
+// When you unset PATH, you're not creating a new variable or changing the value of an existing one. 
+// Instead, you're removing an existing variable from the environment. 
+// This action affects the current shell session and any child processes it starts after the unset command is executed. 
+// The shell doesn't need to export the unset action because it directly modifies the environment of the current shell session.
+
+// You only need to use export to:
+// -> Change the value of an existing variable.
+// -> Create a new variable.
+// You do this in order to export the environmental variables to child processes.
+
+static int	list_length(t_env *envp_temp)
+{
+	int	len;
+
+	len = 0;
+	while (envp_temp)
+	{
+		envp_temp = envp_temp->next;
+		len++;
+	}
+	return (len);
+}
+
+static void print_export_alphabetical_order(t_data *data)
+{
+    t_env *current;
+    t_env *lowest_node;
+    int len;
+    int count;
+
+    len = list_length(data->envp_temp);
+    count = 0;
+    while (count < len)
+    {
+        current = data->envp_temp;
+        lowest_node = NULL;
+        while (current)
+        {
+            if (!current->printed
+				&& (lowest_node == NULL || ft_strcmp(current->value, lowest_node->value) < 0))
+                lowest_node = current;
+            current = current->next;
+        }
+        if (lowest_node)
+        {
+			printf("declare -x ");
+            printf("%s\n", lowest_node->value);
+            lowest_node->printed = 1;
+        }
+        count++;
+    }
+}
+
+void	export(t_data *data)
+{
+	char	**args;
+
+	args = ft_split(data->input, ' ');
+	if (!args[1])
+		print_export_alphabetical_order(data);
+}
+
 static int	export_err_invalid_option(char *input, int i)
 {
 	if (input[i] == '-' && is_space(input[i - 1]))

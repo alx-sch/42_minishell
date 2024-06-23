@@ -12,7 +12,7 @@
 
 #include "minishell.h"
 
-// *data->input is equivalent to *(data->input), not (*data)->input.
+// Fun fact: *data->input is equivalent to *(data->input), not (*data)->input.
 
 unsigned int	exit_with_code(t_data *data)
 {

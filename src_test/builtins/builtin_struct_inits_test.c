@@ -61,6 +61,7 @@ t_env   *init_env_tmp(char **envp)
         node->value = NULL;
         node->previous = NULL;
         node->next = NULL;
+        node->printed = false;
         ft_env_tmp_add_back(&head, node);
         node->value = ft_strdup(envp[i++]);
         if (!node->value)

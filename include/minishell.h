@@ -52,6 +52,7 @@ typedef struct s_env
 	char			*value;
 	struct s_env	*next;
 	struct s_env	*previous;
+	bool			printed;
 }	t_env;
 
 typedef struct s_data
@@ -135,6 +136,7 @@ void			pwd(void);
 void			env(t_env *env_temp);
 void			unset(char *input, t_env **envp_temp);
 unsigned int	exit_with_code(t_data *data);
+void			export(t_data *data);
 
 // Modified standard functions:
 int				ft_strrchr_index(const char *s, int c);
