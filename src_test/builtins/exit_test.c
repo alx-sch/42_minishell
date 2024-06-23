@@ -25,6 +25,7 @@ unsigned int	exit_with_code(t_data *data)
 		exit_arg++;
 	exit_code = (unsigned int) ft_atoi(exit_arg); // Converting the numeral part of the string to an unsigned int.
 	free_env_struct(&data->envp_temp);
+	free_env_struct(&data->export_list);
 	free_data(data);
 	return (exit_code); // Returning the exit code.
 }

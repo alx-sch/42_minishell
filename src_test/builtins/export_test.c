@@ -29,56 +29,13 @@
 // -> Create a new variable.
 // You do this in order to export the environmental variables to child processes.
 
-static void	reset_count_export(t_env *envp_temp)
+void	print_export(t_env *export_list)
 {
-	while (envp_temp)
+	while (export_list)
 	{
-		envp_temp->printed = 0;
-		envp_temp = envp_temp->next;
+		printf("%s\n", export_list->value);
+		export_list = export_list->next;
 	}
-}
-
-static int	list_length(t_env *envp_temp)
-{
-	int	len;
-
-	len = 0;
-	while (envp_temp)
-	{
-		envp_temp = envp_temp->next;
-		len++;
-	}
-	return (len);
-}
-
-static void print_export_alphabetical_order(t_data *data)
-{
-    t_env	*current;
-    t_env	*lowest_node;
-    int		len;
-    int		count;
-
-    len = list_length(data->envp_temp);
-	reset_count_export(data->envp_temp);
-    count = 0;
-    while (count < len)
-    {
-        current = data->envp_temp;
-        lowest_node = NULL;
-        while (current)
-        {
-            if (!current->printed
-				&& (lowest_node == NULL || ft_strcmp(current->value, lowest_node->value) < 0))
-                lowest_node = current;
-            current = current->next;
-        }
-        if (lowest_node)
-        {
-            printf("declare -x %s\n", lowest_node->value);
-            lowest_node->printed = 1;
-        }
-        count++;
-    }
 }
 
 void	export(t_data *data)
@@ -87,7 +44,8 @@ void	export(t_data *data)
 
 	args = ft_split(data->input, ' ');
 	if (!args[1])
-		print_export_alphabetical_order(data);
+		print_export(data->export_list);
+	ft_freearray(args);
 }
 
 static int	export_err_invalid_option(char *input, int i)

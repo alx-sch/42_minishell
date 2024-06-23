@@ -66,6 +66,7 @@ typedef struct s_data
 	t_tok	tok;
 	t_cd	cd;
 	t_env	*envp_temp;
+	t_env	*export_list;
 }	t_data;
 
 // utils.c
@@ -131,6 +132,8 @@ int				is_export(char *input);
 // Builtins:
 void			init_cd_struct(t_cd **cd, char *input);
 t_env   		*init_env_tmp(char **envp);
+t_env			*init_export_list(t_data *data);
+void			ft_env_tmp_add_back(t_env **head, t_env *new);
 int				cd(char *input, char **envp);
 void			pwd(void);
 void			env(t_env *env_temp);
