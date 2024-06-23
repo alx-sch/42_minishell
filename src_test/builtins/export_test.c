@@ -29,6 +29,15 @@
 // -> Create a new variable.
 // You do this in order to export the environmental variables to child processes.
 
+static void	reset_count_export(t_env *envp_temp)
+{
+	while (envp_temp)
+	{
+		envp_temp->printed = 0;
+		envp_temp = envp_temp->next;
+	}
+}
+
 static int	list_length(t_env *envp_temp)
 {
 	int	len;
@@ -44,12 +53,13 @@ static int	list_length(t_env *envp_temp)
 
 static void print_export_alphabetical_order(t_data *data)
 {
-    t_env *current;
-    t_env *lowest_node;
-    int len;
-    int count;
+    t_env	*current;
+    t_env	*lowest_node;
+    int		len;
+    int		count;
 
     len = list_length(data->envp_temp);
+	reset_count_export(data->envp_temp);
     count = 0;
     while (count < len)
     {
@@ -64,8 +74,7 @@ static void print_export_alphabetical_order(t_data *data)
         }
         if (lowest_node)
         {
-			printf("declare -x ");
-            printf("%s\n", lowest_node->value);
+            printf("declare -x %s\n", lowest_node->value);
             lowest_node->printed = 1;
         }
         count++;
