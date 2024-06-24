@@ -6,7 +6,7 @@
 /*   By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/20 14:14:17 by nholbroo          #+#    #+#             */
-/*   Updated: 2024/06/24 11:47:49 by nholbroo         ###   ########.fr       */
+/*   Updated: 2024/06/24 15:25:37 by nholbroo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,28 +48,13 @@ void	export(t_data *data)
 	ft_freearray(args);
 }
 
-static int	export_err_invalid_option(char *input, int i)
+static int	export_check_option(char *input, int i)
 {
-	if (input[i] == '-' && is_space(input[i - 1]))
+	while (input[i] != '\0')
 	{
-		write(2, "minishell: export: ", 20);
-		if (input[i + 1])
-		{
-			write(2, &input[i], 1);
-			write(2, &input[i + 1], 1);
-		}
-		else
-			write(2, &input[i], 1);
-		write(2, ": invalid option\n", 18);
-		return (0);
-	}
-	else
-	{
-		write(2, "minishell: export: '", 21);
-		while (input[i] && !is_space(input[i]))
-			write(2, &input[i++], 1);
-		write(2, "': not a valid identifier\n", 27);
-		return (0);
+		if (input[i] == '-')
+			return (export_err_invalid_option(input, i));
+		i++;
 	}
 	return (1);
 }
@@ -81,18 +66,19 @@ int	is_export(char *input)
 	i = 0;
 	while (is_space(input[i]))
 		i++;
-	if (input[i] != 'e' && input[i + 1] != 'x'
-		&& input[i + 2] != 'p' && input[i + 3] != 'o'
-		&& input[i + 4] != 'r' && input[i + 5] != 't')
+	if (input[i++] != 'e')
 		return (0);
-	i += 6;
+	if (input[i++] != 'x')
+		return (0);
+	if (input[i++] != 'p')
+		return (0);
+	if (input[i++] != 'o')
+		return (0);
+	if (input[i++] != 'r')
+		return (0);
+	if (input[i++] != 't')
+		return (0);
 	if (input[i] && !is_space(input[i]))
 		return (0);
-	while (input[i] != '\0')
-	{
-		if (input[i] == '-')
-			return (export_err_invalid_option(input, i));
-		i++;
-	}
-	return (1);
+	return (export_check_option(input, i));
 }

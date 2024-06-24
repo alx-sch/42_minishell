@@ -6,7 +6,7 @@
 /*   By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/25 10:35:04 by natalierh         #+#    #+#             */
-/*   Updated: 2024/06/24 12:07:20 by nholbroo         ###   ########.fr       */
+/*   Updated: 2024/06/24 14:28:57 by nholbroo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,9 +19,12 @@ static int	check_multiple_signs_exit_code(char *exit_arg)
 	int	i;
 
 	i = 0;
-	if ((*exit_arg == '-' || *exit_arg == '+') 
-		&& (*exit_arg++ < '0' || *exit_arg > '9'))
-		return (1);
+	if (*exit_arg == '-' || *exit_arg == '+') 
+	{
+		exit_arg++;
+		if (*exit_arg && (*exit_arg < '0' || *exit_arg > '9'))
+			return (1);
+	}
 	return (0);
 }
 

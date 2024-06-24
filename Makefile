@@ -180,12 +180,15 @@ TEST_DIR :=		src_test
 TEST_SRCS :=	$(TEST_DIR)/main_test.c \
 				$(TEST_DIR)/free_test.c \
 				$(TEST_DIR)/utils_test.c \
+				$(TEST_DIR)/struct_inits/init_cd_test.c \
+				$(TEST_DIR)/struct_inits/init_data_test.c \
+				$(TEST_DIR)/struct_inits/init_env_test.c \
+				$(TEST_DIR)/struct_inits/init_export_test.c \
 				$(TEST_DIR)/0_check_input/check_quotation_test.c \
 				$(TEST_DIR)/0_tokenizer/tokenizer_get_tokens_test.c \
 				$(TEST_DIR)/0_tokenizer/tokenizer_redirection_test.c \
 				$(TEST_DIR)/0_tokenizer/tokenizer_utils_test.c \
 				$(TEST_DIR)/1_parser/parser_var_expansion_test.c \
-				$(TEST_DIR)/builtins/builtin_struct_inits_test.c \
 				$(TEST_DIR)/builtins/cd_test.c \
 				$(TEST_DIR)/builtins/pwd_test.c \
 				$(TEST_DIR)/builtins/unset_test.c \
@@ -194,6 +197,10 @@ TEST_SRCS :=	$(TEST_DIR)/main_test.c \
 				$(TEST_DIR)/builtins/export_test.c \
 				$(TEST_DIR)/errors/exit_errors_test.c \
 				$(TEST_DIR)/errors/cd_errors_test.c \
+				$(TEST_DIR)/errors/env_errors_test.c \
+				$(TEST_DIR)/errors/export_errors_test.c \
+				$(TEST_DIR)/errors/unset_errors_test.c \
+				$(TEST_DIR)/errors/pwd_errors_test.c \
 				$(TEST_DIR)/parsing/parsing_test.c \
 				$(TEST_DIR)/standard_functions/count_test.c \
 				$(TEST_DIR)/standard_functions/free_functions_test.c \

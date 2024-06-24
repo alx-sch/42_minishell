@@ -6,11 +6,19 @@
 /*   By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/24 11:48:26 by nholbroo          #+#    #+#             */
-/*   Updated: 2024/06/24 11:49:56 by nholbroo         ###   ########.fr       */
+/*   Updated: 2024/06/24 12:39:47 by nholbroo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+int	too_many_args_cd(t_cd **cd)
+{
+	errno = EINVAL;
+	perror("minishell: cd");
+	free_cd_struct(cd); // Freeing the struct.
+	return (0);
+}
 
 static void	mem_alloc_fail_cd(t_cd **cd)
 {

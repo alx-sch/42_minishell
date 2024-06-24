@@ -6,30 +6,88 @@
 /*   By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/19 13:30:29 by nholbroo          #+#    #+#             */
-/*   Updated: 2024/06/20 15:32:52 by nholbroo         ###   ########.fr       */
+/*   Updated: 2024/06/24 14:15:44 by nholbroo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static void	unset_err_memalloc_fail(t_env **envp_temp)
+static void	export_unset_remove_variable(t_env **current, \
+t_env **envp_temp, char *arg)
 {
-	free_env_struct(envp_temp); // Freeing the struct.
-	errno = ENOMEM; // Setting errno to "Memory allocation failure"
-	perror("minishell: env"); // Prints the error message
-	exit(errno); // Exits with correct errno code.
+	char	*envvar;
+
+	envvar = NULL;
+	while (*current)
+	{
+		envvar = ft_substr((*current)->value, 11, ft_strlen((*current)->value));
+		if (ft_strncmp(arg, envvar, ft_strlen(arg)) == 0)
+		{
+			if ((*current)->next)
+				(*current)->next->previous = (*current)->previous;
+			if ((*current)->previous)
+				(*current)->previous->next = (*current)->next;
+			else
+				*envp_temp = (*current)->next;
+			free((*current)->value);
+			free(*current);
+			if (envvar)
+				free(envvar);
+			break ;
+		}
+		if (envvar)
+			free(envvar);
+		*current = (*current)->next;
+	}
 }
 
-static int unset_err_invalid_option(char *input, int i)
+static void	env_unset_remove_variable(t_env **current, \
+t_env **envp_temp, char *arg)
 {
-	if (input[i] == '-' && is_letter(input[i + 1]))
+	while (*current)
 	{
-		write(2, "minishell: unset: invalid option: -- '", 39);
-		write(2, &input[i + 1], 1);
-		write(2, "'\n", 2);
-		return (0);
+		if (ft_strncmp(arg, (*current)->value, ft_strlen(arg)) == 0)
+		{
+			if ((*current)->next)
+				(*current)->next->previous = (*current)->previous;
+			if ((*current)->previous)
+				(*current)->previous->next = (*current)->next;
+			else
+				*envp_temp = (*current)->next;
+			free((*current)->value);
+			free(*current);
+			break ;
+		}
+		*current = (*current)->next;
 	}
-	return (1);
+}
+
+void	unset(char *input, t_env **envp_temp, bool type)
+{
+	char	**args;
+	t_env	*current;
+	int		i;
+
+	current = *envp_temp;
+	i = 1;
+	args = ft_split(input, ' ');
+	if (!args)
+		unset_err_memalloc_fail(envp_temp);
+	if (!args[i])
+	{
+		ft_freearray(args);
+		return ;
+	}
+	while (args[i])
+	{
+		current = *envp_temp;
+		if (type == 0)
+			env_unset_remove_variable(&current, envp_temp, args[i]);
+		else if (type == 1)
+			export_unset_remove_variable(&current, envp_temp, args[i]);
+		i++;
+	}
+	ft_freearray(args);
 }
 
 int	is_unset(char *input)
@@ -58,49 +116,4 @@ int	is_unset(char *input)
 		i++;
 	}
 	return (1);
-}
-
-static void	unset_remove_variable(t_env **current, t_env **envp_temp, char *arg)
-{
-	while (*current)
-	{
-		if (ft_strncmp(arg, (*current)->value, ft_strlen(arg)) == 0)
-		{
-			if ((*current)->next)
-				(*current)->next->previous = (*current)->previous;
-			if ((*current)->previous)
-				(*current)->previous->next = (*current)->next;
-			else
-				*envp_temp = (*current)->next;
-			free((*current)->value);
-			free(*current);
-			break ;
-		}
-		*current = (*current)->next;
-	}
-}
-
-void	unset(char *input, t_env **envp_temp)
-{
-	char	**args;
-	t_env	*current;
-	int		i;
-
-	current = *envp_temp;
-	i = 1;
-	args = ft_split(input, ' ');
-	if (!args)
-		unset_err_memalloc_fail(envp_temp);
-	if (!args[i])
-	{
-		ft_freearray(args);
-		return ;
-	}
-	while (args[i])
-	{
-		current = *envp_temp;
-		unset_remove_variable(&current, envp_temp, args[i]);
-		i++;
-	}
-	ft_freearray(args);
 }

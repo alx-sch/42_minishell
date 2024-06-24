@@ -6,13 +6,13 @@
 /*   By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 15:59:31 by nholbroo          #+#    #+#             */
-/*   Updated: 2024/06/20 16:15:36 by nholbroo         ###   ########.fr       */
+/*   Updated: 2024/06/24 12:39:33 by nholbroo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void free_env_struct(t_env **head)
+void	free_env_struct(t_env **head)
 {
 	t_env	*current;
 	t_env	*next_node;
@@ -29,14 +29,6 @@ void free_env_struct(t_env **head)
 			current = next_node;
 		}
 	}
-}
-
-int	too_many_args_cd(t_cd **cd)
-{
-	errno = EINVAL;
-	perror("minishell: cd");
-	free_cd_struct(cd); // Freeing the struct.
-	return (0);
 }
 
 int	free_cd_struct(t_cd **cd)

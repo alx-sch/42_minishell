@@ -6,7 +6,7 @@
 /*   By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/06 12:05:14 by aschenk           #+#    #+#             */
-/*   Updated: 2024/06/21 17:07:03 by nholbroo         ###   ########.fr       */
+/*   Updated: 2024/06/24 12:46:24 by nholbroo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,23 +36,6 @@ and executing them until the user decides to exit it.
 // 	}
 // 	exit(EXIT_SUCCESS);
 // }
-
-void	init_data_struct(t_data *data, int argc, char **argv, char **envp)
-{
-	data->argc = argc;
-	data->argv = argv;
-	data->envp = envp;
-	data->envp_temp = NULL;
-	data->envp_temp = init_env_tmp(envp);
-	data->export_list = NULL;
-	data->export_list = init_export_list(data);
-	data->input = NULL;
-	data->tmp = NULL;
-	data->quote = '\0';
-	data->tok.tok = NULL;
-	data->tok.new_node = NULL;
-	data->tok.tok_lst = NULL;
-}
 
 int	main(int argc, char **argv, char **envp)
 {

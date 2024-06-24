@@ -6,7 +6,7 @@
 /*   By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/13 14:51:02 by nholbroo          #+#    #+#             */
-/*   Updated: 2024/06/24 12:07:13 by nholbroo         ###   ########.fr       */
+/*   Updated: 2024/06/24 13:18:53 by nholbroo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,8 +26,8 @@ void	parsing(t_data *data) // instead of input the data_struct can be passed (wh
 		exit(exit_with_code(data)); // Exits minishell with correct exit code.
 	else if (is_unset(data->input)) // Checks if the input is "unset", accepts arguments, but not options.
 	{
-		unset(data->input, &data->envp_temp); // Unsets an environmental variable if it exists. If it doesn't, nothing happens.
-		unset(data->input, &data->export_list);
+		unset(data->input, &data->envp_temp, 0); // Unsets an environmental variable if it exists. If it doesn't, nothing happens.
+		unset(data->input, &data->export_list, 1);
 	}
 	else if (is_export(data->input))
 		export(data);

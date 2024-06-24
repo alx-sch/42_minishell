@@ -6,7 +6,7 @@
 /*   By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/06 12:08:35 by aschenk           #+#    #+#             */
-/*   Updated: 2024/06/21 17:06:48 by nholbroo         ###   ########.fr       */
+/*   Updated: 2024/06/24 13:19:04 by nholbroo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,13 @@ typedef struct s_data
 	t_env	*export_list;
 }	t_data;
 
+// Struct initializations
+void			init_cd_struct(t_cd **cd, char *input);
+t_env			*init_env_tmp(char **envp);
+t_env			*init_export_list(t_data *data);
+void			init_data_struct(t_data *data, \
+int argc, char **argv, char **envp);
+
 // utils.c
 
 void			perror_and_exit(char *msg, t_data *data);
@@ -130,14 +137,11 @@ int				is_unset(char *input);
 int				is_export(char *input);
 
 // Builtins:
-void			init_cd_struct(t_cd **cd, char *input);
-t_env   		*init_env_tmp(char **envp);
-t_env			*init_export_list(t_data *data);
 void			ft_env_tmp_add_back(t_env **head, t_env *new);
 int				cd(char *input, char **envp);
 void			pwd(void);
 void			env(t_env *env_temp);
-void			unset(char *input, t_env **envp_temp);
+void			unset(char *input, t_env **envp_temp, bool type);
 unsigned int	exit_with_code(t_data *data);
 void			export(t_data *data);
 
@@ -158,6 +162,12 @@ void			free_env_struct(t_env **head);
 // Errors:
 void			print_error_cd(int error_code, t_cd **cd);
 void			print_error_exit(char *input);
+int				env_error_messages(char *input, int i);
+void			mem_alloc_fail_env(t_env **head);
 void			exit_check_argc(char *input);
+int				export_err_invalid_option(char *input, int i);
+void			unset_err_memalloc_fail(t_env **envp_temp);
+int				unset_err_invalid_option(char *input, int i);
+int				pwd_invalid_option(char *input, int i);
 
 #endif
