@@ -6,7 +6,7 @@
 /*   By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/20 14:14:17 by nholbroo          #+#    #+#             */
-/*   Updated: 2024/06/24 15:25:37 by nholbroo         ###   ########.fr       */
+/*   Updated: 2024/06/24 17:14:22 by nholbroo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,34 @@
 // -> Create a new variable.
 // You do this in order to export the environmental variables to child processes.
 
+void	add_env_var_only_export(t_data *data, char *arg)
+{
+	char	*envvar;
+	t_env	*node;
+
+	envvar = ft_strjoin("declare -x ", arg);
+	node = malloc(sizeof(t_env));
+	node->next = NULL;
+	node->previous = NULL;
+	node->value = ft_strdup(envvar);
+	free(envvar);
+	node->printed = 0;
+	ft_env_tmp_add_back(&data->export_list, node);
+}
+
+void	add_env_var_both(t_data *data, char *arg)
+{
+	t_env	*node;
+
+	add_env_var_only_export(data, arg);
+	node = malloc(sizeof(t_env));
+	node->next = NULL;
+	node->previous = NULL;
+	node->value = ft_strdup(arg);
+	node->printed = 0;
+	ft_env_tmp_add_back(&data->envp_temp, node);
+}
+
 void	print_export(t_env *export_list)
 {
 	while (export_list)
@@ -41,10 +69,20 @@ void	print_export(t_env *export_list)
 void	export(t_data *data)
 {
 	char	**args;
+	int		i;
 
+	i = 1;
 	args = ft_split(data->input, ' ');
 	if (!args[1])
 		print_export(data->export_list);
+	while (args[i])
+	{
+		if (!ft_strchr(args[i], '='))
+			add_env_var_only_export(data, args[i]);
+		else
+			add_env_var_both(data, args[i]);
+		i++;
+	}
 	ft_freearray(args);
 }
 
