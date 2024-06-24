@@ -6,7 +6,7 @@
 /*   By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/20 14:14:17 by nholbroo          #+#    #+#             */
-/*   Updated: 2024/06/20 15:02:35 by nholbroo         ###   ########.fr       */
+/*   Updated: 2024/06/24 11:47:49 by nholbroo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,18 +81,11 @@ int	is_export(char *input)
 	i = 0;
 	while (is_space(input[i]))
 		i++;
-	if (input[i++] != 'e')
+	if (input[i] != 'e' && input[i + 1] != 'x'
+		&& input[i + 2] != 'p' && input[i + 3] != 'o'
+		&& input[i + 4] != 'r' && input[i + 5] != 't')
 		return (0);
-	if (input[i++] != 'x')
-		return (0);
-	if (input[i++] != 'p')
-		return (0);
-	if (input[i++] != 'o')
-		return (0);
-	if (input[i++] != 'r')
-		return (0);
-	if (input[i++] != 't')
-		return (0);
+	i += 6;
 	if (input[i] && !is_space(input[i]))
 		return (0);
 	while (input[i] != '\0')

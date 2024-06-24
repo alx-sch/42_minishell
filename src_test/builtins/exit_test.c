@@ -6,13 +6,24 @@
 /*   By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/25 10:35:04 by natalierh         #+#    #+#             */
-/*   Updated: 2024/06/21 17:03:09 by nholbroo         ###   ########.fr       */
+/*   Updated: 2024/06/24 12:07:20 by nholbroo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 // Fun fact: *data->input is equivalent to *(data->input), not (*data)->input.
+
+static int	check_multiple_signs_exit_code(char *exit_arg)
+{
+	int	i;
+
+	i = 0;
+	if ((*exit_arg == '-' || *exit_arg == '+') 
+		&& (*exit_arg++ < '0' || *exit_arg > '9'))
+		return (1);
+	return (0);
+}
 
 unsigned int	exit_with_code(t_data *data)
 {
@@ -23,10 +34,13 @@ unsigned int	exit_with_code(t_data *data)
 	while (*exit_arg && (*exit_arg < '0' || *exit_arg > '9') // This loop is skipping the input string until the exit number is getting defined. E.g. "exit     -123".
 		&& *exit_arg != '-' && *exit_arg != '+')
 		exit_arg++;
+	if (check_multiple_signs_exit_code(exit_arg))
+		print_error_exit(data->input);
 	exit_code = (unsigned int) ft_atoi(exit_arg); // Converting the numeral part of the string to an unsigned int.
 	free_env_struct(&data->envp_temp);
 	free_env_struct(&data->export_list);
 	free_data(data);
+	printf("exit\n"); // Prints "exit" on the STOUT.
 	return (exit_code); // Returning the exit code.
 }
 
