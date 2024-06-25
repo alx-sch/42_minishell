@@ -6,7 +6,7 @@
 /*   By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 15:59:31 by nholbroo          #+#    #+#             */
-/*   Updated: 2024/06/24 12:39:33 by nholbroo         ###   ########.fr       */
+/*   Updated: 2024/06/25 14:53:51 by nholbroo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,12 @@ void	free_env_struct(t_env **head)
 		while (current)
 		{
 			next_node = current->next;
-			free(current->value);
-			free(current);
+			if (current->value)
+				free(current->value);
+			if (current->e_var)
+				free(current->e_var);
+			if (current)
+				free(current);
 			current = NULL;
 			current = next_node;
 		}

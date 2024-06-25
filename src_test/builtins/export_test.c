@@ -6,7 +6,7 @@
 /*   By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/20 14:14:17 by nholbroo          #+#    #+#             */
-/*   Updated: 2024/06/24 17:55:07 by nholbroo         ###   ########.fr       */
+/*   Updated: 2024/06/25 15:58:44 by nholbroo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,8 @@
 // -> Change the value of an existing variable.
 // -> Create a new variable.
 // You do this in order to export the environmental variables to child processes.
+
+// HERE IT NEEDS A GOOD FIX!!
 
 void	add_env_var_only_export(t_data *data, char *arg)
 {
@@ -61,7 +63,7 @@ void	print_export(t_env *export_list)
 {
 	while (export_list)
 	{
-		printf("%s\n", export_list->value);
+		printf("declare -x %s=\"%s\"\n", export_list->e_var, export_list->value);
 		export_list = export_list->next;
 	}
 }

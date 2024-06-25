@@ -6,7 +6,7 @@
 /*   By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/06 12:08:35 by aschenk           #+#    #+#             */
-/*   Updated: 2024/06/24 17:47:09 by nholbroo         ###   ########.fr       */
+/*   Updated: 2024/06/25 15:55:06 by nholbroo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,7 @@ typedef struct s_cd
 typedef struct s_env
 {
 	char			*value;
+	char			*e_var;
 	struct s_env	*next;
 	struct s_env	*previous;
 	bool			printed;
@@ -141,7 +142,7 @@ void			ft_env_tmp_add_back(t_env **head, t_env *new);
 int				cd(char *input, char **envp);
 void			pwd(void);
 void			env(t_env *env_temp);
-void			unset(char *input, t_env **envp_temp, bool type);
+void			unset(char *input, t_env **envp_temp);
 unsigned int	exit_with_code(t_data *data);
 void			export(t_data *data);
 

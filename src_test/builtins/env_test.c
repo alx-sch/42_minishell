@@ -6,7 +6,7 @@
 /*   By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/25 09:38:05 by natalierh         #+#    #+#             */
-/*   Updated: 2024/06/24 12:10:48 by nholbroo         ###   ########.fr       */
+/*   Updated: 2024/06/25 15:19:34 by nholbroo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ void	env(t_env *envp_temp)
 {
 	while (envp_temp)
 	{
-		printf("%s\n", envp_temp->value);
+		printf("%s=%s\n", envp_temp->e_var, envp_temp->value);
 		envp_temp = envp_temp->next;
 	}
 }

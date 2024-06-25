@@ -6,22 +6,48 @@
 /*   By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/19 13:30:29 by nholbroo          #+#    #+#             */
-/*   Updated: 2024/06/24 14:15:44 by nholbroo         ###   ########.fr       */
+/*   Updated: 2024/06/25 15:54:56 by nholbroo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static void	export_unset_remove_variable(t_env **current, \
+// static void	export_unset_remove_variable(t_env **current, \
+// t_env **envp_temp, char *arg)
+// {
+// 	char	*envvar;
+
+// 	envvar = NULL;
+// 	while (*current)
+// 	{
+// 		envvar = ft_substr((*current)->value, 11, ft_strlen((*current)->value));
+// 		if (ft_strncmp(arg, envvar, ft_strlen(arg)) == 0)
+// 		{
+// 			if ((*current)->next)
+// 				(*current)->next->previous = (*current)->previous;
+// 			if ((*current)->previous)
+// 				(*current)->previous->next = (*current)->next;
+// 			else
+// 				*envp_temp = (*current)->next;
+// 			free((*current)->value);
+// 			free((*current)->e_var);
+// 			free(*current);
+// 			if (envvar)
+// 				free(envvar);
+// 			break ;
+// 		}
+// 		if (envvar)
+// 			free(envvar);
+// 		*current = (*current)->next;
+// 	}
+// }
+
+static void	unset_remove_variable(t_env **current, \
 t_env **envp_temp, char *arg)
 {
-	char	*envvar;
-
-	envvar = NULL;
 	while (*current)
 	{
-		envvar = ft_substr((*current)->value, 11, ft_strlen((*current)->value));
-		if (ft_strncmp(arg, envvar, ft_strlen(arg)) == 0)
+		if (ft_strncmp(arg, (*current)->e_var, ft_strlen(arg)) == 0)
 		{
 			if ((*current)->next)
 				(*current)->next->previous = (*current)->previous;
@@ -30,31 +56,7 @@ t_env **envp_temp, char *arg)
 			else
 				*envp_temp = (*current)->next;
 			free((*current)->value);
-			free(*current);
-			if (envvar)
-				free(envvar);
-			break ;
-		}
-		if (envvar)
-			free(envvar);
-		*current = (*current)->next;
-	}
-}
-
-static void	env_unset_remove_variable(t_env **current, \
-t_env **envp_temp, char *arg)
-{
-	while (*current)
-	{
-		if (ft_strncmp(arg, (*current)->value, ft_strlen(arg)) == 0)
-		{
-			if ((*current)->next)
-				(*current)->next->previous = (*current)->previous;
-			if ((*current)->previous)
-				(*current)->previous->next = (*current)->next;
-			else
-				*envp_temp = (*current)->next;
-			free((*current)->value);
+			free((*current)->e_var);
 			free(*current);
 			break ;
 		}
@@ -62,7 +64,7 @@ t_env **envp_temp, char *arg)
 	}
 }
 
-void	unset(char *input, t_env **envp_temp, bool type)
+void	unset(char *input, t_env **envp_temp)
 {
 	char	**args;
 	t_env	*current;
@@ -81,10 +83,7 @@ void	unset(char *input, t_env **envp_temp, bool type)
 	while (args[i])
 	{
 		current = *envp_temp;
-		if (type == 0)
-			env_unset_remove_variable(&current, envp_temp, args[i]);
-		else if (type == 1)
-			export_unset_remove_variable(&current, envp_temp, args[i]);
+		unset_remove_variable(&current, envp_temp, args[i]);
 		i++;
 	}
 	ft_freearray(args);

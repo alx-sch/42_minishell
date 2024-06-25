@@ -18,3 +18,8 @@ only receives ONE builtin with arguments, and not the whole input string.
 --> And also - I am guessing we expand the environmental variables outside of
 the function that handles builtins. So for instance "export NAME=$USER" would
 be translated BEFORE entering the builtin-part. 
+
+NEW NOTE TO SELF:
+--> Remember to fix the export with arguments, not working atm.
+-- It is in the export file. You have to add to both value and e_var, as it is
+not the case now, and you can also use the same function for both.
