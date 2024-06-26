@@ -6,7 +6,7 @@
 /*   By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/06 12:08:35 by aschenk           #+#    #+#             */
-/*   Updated: 2024/06/25 15:55:06 by nholbroo         ###   ########.fr       */
+/*   Updated: 2024/06/26 16:30:34 by nholbroo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -136,17 +136,25 @@ int				is_exit(char *input);
 int				is_env(char *input);
 int				is_unset(char *input);
 int				is_export(char *input);
+int				is_echo(char *input);
 
 // Builtins:
-void			ft_env_tmp_add_back(t_env **head, t_env *new);
 int				cd(char *input, char **envp);
 void			pwd(void);
 void			env(t_env *env_temp);
 void			unset(char *input, t_env **envp_temp);
 unsigned int	exit_with_code(t_data *data);
 void			export(t_data *data);
+//void			echo(t_data *data);
+
+// Butiltins utils:
+void			add_env_var_no_value(t_data *data, char *arg);
+void			add_env_var_export_with_value(t_data *data, char *arg);
+void			add_env_var_envp_with_value(t_data *data, char *arg);
+void			ft_env_tmp_add_back(t_env **head, t_env *new);
 
 // Modified standard functions:
+int				ft_strchr_index(const char *s, int c);
 int				ft_strrchr_index(const char *s, int c);
 bool			is_only_duplicates(char *s, char c);
 int				is_letter(char c);

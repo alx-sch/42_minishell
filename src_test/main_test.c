@@ -6,7 +6,7 @@
 /*   By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/06 12:05:14 by aschenk           #+#    #+#             */
-/*   Updated: 2024/06/24 12:46:24 by nholbroo         ###   ########.fr       */
+/*   Updated: 2024/06/26 15:56:45 by nholbroo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,10 +50,10 @@ int	main(int argc, char **argv, char **envp)
 			add_history(data.input); // Adding to input-history.
 		if (is_quotation_closed(&data)) // check if user input is valid (quotations closed, correct redirection)
 		{
-		//expand_variables(&data); // just testing variable expanding, will likely be used right before command exc and not here
-		if (data.input && data.input[0] != '\0') // Checking if input is not NULL, and the input is not empty.
-			parsing(&data); // Checking if the input matches any of the builtins.
-		get_tokens(&data);
+			//expand_variables(&data); // just testing variable expanding, will likely be used right before command exc and not here
+			if (data.input && data.input[0] != '\0') // Checking if input is not NULL, and the input is not empty.
+				parsing(&data); // Checking if the input matches any of the builtins.
+			get_tokens(&data);
 		}
 		// Maybe as a check completely in the end, if nothing else worked, we can mimic the "Command <some_command> not found"?
 		free_data(&data);

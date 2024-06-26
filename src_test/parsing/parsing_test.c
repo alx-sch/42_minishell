@@ -6,7 +6,7 @@
 /*   By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/13 14:51:02 by nholbroo          #+#    #+#             */
-/*   Updated: 2024/06/25 15:54:44 by nholbroo         ###   ########.fr       */
+/*   Updated: 2024/06/26 16:30:10 by nholbroo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,4 +31,7 @@ void	parsing(t_data *data) // instead of input the data_struct can be passed (wh
 	}
 	else if (is_export(data->input))
 		export(data);
+	else if (is_echo(data->input))
+		// echo(data);
+		printf(":)");
 }

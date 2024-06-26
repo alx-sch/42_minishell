@@ -6,7 +6,7 @@
 /*   By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/20 14:14:17 by nholbroo          #+#    #+#             */
-/*   Updated: 2024/06/25 15:58:44 by nholbroo         ###   ########.fr       */
+/*   Updated: 2024/06/26 15:55:53 by nholbroo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,39 +31,15 @@
 
 // HERE IT NEEDS A GOOD FIX!!
 
-void	add_env_var_only_export(t_data *data, char *arg)
-{
-	char	*envvar;
-	t_env	*node;
-
-	envvar = ft_strjoin("declare -x ", arg);
-	node = malloc(sizeof(t_env));
-	node->next = NULL;
-	node->previous = NULL;
-	node->value = ft_strdup(envvar);
-	free(envvar);
-	node->printed = 0;
-	ft_env_tmp_add_back(&data->export_list, node);
-}
-
-void	add_env_var_both(t_data *data, char *arg)
-{
-	t_env	*node;
-
-	add_env_var_only_export(data, arg);
-	node = malloc(sizeof(t_env));
-	node->next = NULL;
-	node->previous = NULL;
-	node->value = ft_strdup(arg);
-	node->printed = 0;
-	ft_env_tmp_add_back(&data->envp_temp, node);
-}
-
 void	print_export(t_env *export_list)
 {
 	while (export_list)
 	{
-		printf("declare -x %s=\"%s\"\n", export_list->e_var, export_list->value);
+		if (export_list->value)
+			printf("declare -x %s=\"%s\"\n", export_list->e_var, \
+			export_list->value);
+		else
+			printf("declare -x %s\n", export_list->e_var);
 		export_list = export_list->next;
 	}
 }
@@ -80,9 +56,12 @@ void	export(t_data *data)
 	while (args[i])
 	{
 		if (!ft_strchr(args[i], '='))
-			add_env_var_only_export(data, args[i]);
+			add_env_var_no_value(data, args[i]);
 		else
-			add_env_var_both(data, args[i]);
+		{
+			add_env_var_envp_with_value(data, args[i]);
+			add_env_var_export_with_value(data, args[i]);
+		}
 		i++;
 	}
 	ft_freearray(args);

@@ -23,3 +23,8 @@ NEW NOTE TO SELF:
 --> Remember to fix the export with arguments, not working atm.
 -- It is in the export file. You have to add to both value and e_var, as it is
 not the case now, and you can also use the same function for both.
+
+NOTE TO SELF ON JUNE 26TH:
+--> Protect all mallocs!!
+--> Put everything into src without comments.
+--> Implement echo builtin.

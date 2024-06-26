@@ -195,6 +195,8 @@ TEST_SRCS :=	$(TEST_DIR)/main_test.c \
 				$(TEST_DIR)/builtins/env_test.c \
 				$(TEST_DIR)/builtins/exit_test.c \
 				$(TEST_DIR)/builtins/export_test.c \
+				$(TEST_DIR)/builtins/export_utils_test.c \
+				$(TEST_DIR)/builtins/echo_test.c \
 				$(TEST_DIR)/errors/exit_errors_test.c \
 				$(TEST_DIR)/errors/cd_errors_test.c \
 				$(TEST_DIR)/errors/env_errors_test.c \

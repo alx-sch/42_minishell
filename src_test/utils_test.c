@@ -3,15 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   utils_test.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
+/*   By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/10 16:51:05 by aschenk           #+#    #+#             */
-/*   Updated: 2024/06/17 20:13:04 by aschenk          ###   ########.fr       */
+/*   Updated: 2024/06/26 15:59:07 by nholbroo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
 
 /*
 Prints an error message to stderr, frees memory allocated within the
@@ -80,6 +79,7 @@ void	print_logo(void)
 	printf("%s(____) %s\\____/ ", L_RED, ORANGE);
 	printf("%s\\____/\n\n", YELLOW);
 	printf("%s%s", RESET, BOLD);
-	printf("by Natalie Holbrook & Alex Schenk @42 Berlin, June 2024\n\n");
+	printf("by Natalie Rekedal Holbrook & Alex Schenk @42 Berlin, \
+June 2024\n\n");
 	printf("%s", RESET);
 }
