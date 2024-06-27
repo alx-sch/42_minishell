@@ -6,7 +6,7 @@
 /*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/06 12:05:14 by aschenk           #+#    #+#             */
-/*   Updated: 2024/06/20 21:32:50 by aschenk          ###   ########.fr       */
+/*   Updated: 2024/06/27 19:19:06 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,47 @@ and executing them until the user decides to exit it.
 // 	exit(EXIT_SUCCESS);
 // }
 
-void	init_data_struct(t_data *data, int argc, char **argv, char **envp)
+/*
+Used in main().
+
+Prints a custom, color-coded logo for the minishell project.
+*/
+static void	print_logo(void)
+{
+	printf("%s%s _  _   ", BOLD, L_RED);
+	printf("%s__   %s__ _   ", ORANGE, YELLOW);
+	printf("%s__   %s____   ", GREEN, BLUE);
+	printf("%s_  _   %s____   ", VIOLET, L_RED);
+	printf("%s__     %s__   \n", ORANGE, YELLOW);
+	printf("%s( \\/ ) %s(  ) ", L_RED, ORANGE);
+	printf("%s(  ( \\ %s(  ) ", YELLOW, GREEN);
+	printf("%s/ ___) %s/ )( \\ ", BLUE, VIOLET);
+	printf("%s(  __) %s(  )   ", L_RED, ORANGE);
+	printf("%s(  )  \n", YELLOW);
+	printf("%s/ \\/ \\  %s)(  ", L_RED, ORANGE);
+	printf("%s/    /  %s)(  ", YELLOW, GREEN);
+	printf("%s\\___ \\ %s) __ (  ", BLUE, VIOLET);
+	printf("%s) _)  %s/ (_/\\ ", L_RED, ORANGE);
+	printf("%s/ (_/\\ \n", YELLOW);
+	printf("%s\\_)(_/ %s(__) ", L_RED, ORANGE);
+	printf("%s\\_)__) %s(__) ", YELLOW, GREEN);
+	printf("%s(____/ %s\\_)(_/ ", BLUE, VIOLET);
+	printf("%s(____) %s\\____/ ", L_RED, ORANGE);
+	printf("%s\\____/\n\n", YELLOW);
+	printf("%s%s", RESET, BOLD);
+	printf("by Natalie Holbrook & Alex Schenk @42 Berlin, July 2024\n\n");
+	printf("%s", RESET);
+}
+
+/*
+Used in main().
+
+Initializes members in the data structure to starting values.
+This helps to prevent accessing uninitialized variables, particularly
+in functions like free_data(), which is automatically called in case
+of program termination due to an error.
+*/
+static void	init_data_struct(t_data *data, int argc, char **argv, char **envp)
 {
 	data->argc = argc;
 	data->argv = argv;
@@ -51,6 +91,12 @@ void	init_data_struct(t_data *data, int argc, char **argv, char **envp)
 	data->tok.tok_lst = NULL;
 }
 
+/*
+main is first of all a loop that runs the shell taking inputs from the user
+and executing them until the user decides to exit it.
+
+
+*/
 int	main(int argc, char **argv, char **envp)
 {
 	t_data	data;
@@ -68,29 +114,9 @@ int	main(int argc, char **argv, char **envp)
 		if (data.input && data.input[0] != '\0') // Checking if input is not NULL, and the input is not empty.
 			parsing(&data); // Checking if the input matches any of the builtins.
 		get_tokens(&data);
+		print_heredoc_found(&data);
 		}
 		// Maybe as a check completely in the end, if nothing else worked, we can mimic the "Command <some_command> not found"?
-		ft_lstclear(&data.tok.tok_lst , del_token);
 		free_data(&data);
 	}
 }
-
-// int	main(int argc, char **argv, char **envp)
-// {
-// 	t_data	d;
-
-// 	while (1)
-// 	{
-// 		init_data_struct(&d, argc, argv, envp);
-// 		d.tok.input = readline(PROMPT); // Display prompt and read input
-// 		// Process input (this will be implemented later)
-// 		if (d.tok.input ) // Checking if input is not NULL.
-// 			add_history(d.tok.input); // Adding to input-history.
-// 		parsing(d.tok.input, d.envp);
-// 		get_tokens(d.tok.input);
-// 		//free(input);
-// 		free(d.tok.input);
-// 		ft_lstclear(&d.tok.tok_lst, del_token);
-// 	}
-// 	exit(EXIT_SUCCESS);
-// }
