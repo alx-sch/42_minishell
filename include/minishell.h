@@ -67,11 +67,13 @@ typedef struct s_data
 	t_env	*envp_temp;
 }	t_data;
 
+
+void			print_heredoc_found(t_data *data);
+
 // utils.c
 
 void			perror_and_exit(char *msg, t_data *data);
 void			msg_and_exit(char *msg, t_data *data);
-void			print_logo(void);
 
 // 0_check_input/check_quotation.c
 
