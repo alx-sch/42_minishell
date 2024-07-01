@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/06 12:08:35 by aschenk           #+#    #+#             */
-/*   Updated: 2024/06/20 19:44:32 by aschenk          ###   ########.fr       */
+/*   Updated: 2024/07/01 16:44:38 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,10 @@
 # include <termios.h> // tcsetattr, tcgetattr
 # include <curses.h> // tgetent, tgetflag, tgetnum, tgetstr, tgoto, tputs
 
+//	++++++++++++++++
+//	++ STRUCTURES ++
+//	++++++++++++++++
+
 typedef struct s_cd
 {
 	char	*subdirectory;
@@ -45,6 +49,7 @@ typedef struct s_cd
 /*
 - char	*input:		The input string containing the command line input.
 - char	quote:		Encountered quotation symbol (single or double) in input.
+- int	pipe_no:	The number of pipes in the input string.
 */
 
 typedef struct s_env
@@ -62,16 +67,13 @@ typedef struct s_data
 	char	*input;
 	char	*tmp;
 	char	quote;
+	int		pipe_no;
 	t_tok	tok;
 	t_cd	cd;
 	t_env	*envp_temp;
 }	t_data;
 
-// utils.c
-
-void			perror_and_exit(char *msg, t_data *data);
-void			msg_and_exit(char *msg, t_data *data);
-void			print_logo(void);
+void		print_heredoc_found(t_data *data);
 
 // 0_check_input/check_quotation.c
 
@@ -81,10 +83,7 @@ int				is_quotation_closed(t_data *data);
 
 int				is_redirection(t_data *data, int *i);
 
-// 0_tokenizer/scanner.c
-
-t_list			*create_tok(t_data *data, t_token_type type, const char *lexeme,
-					int *i);
+int				is_pipe(t_data *data, int *i);
 
 // FOR TESTING!!
 void			print_string_array(char **array);
@@ -108,9 +107,6 @@ void			print_token_list(t_list *token_list);
 int				is_space(int c);
 int				is_delimiter(t_data *data, const char c);
 
-// 0_tokenizer_/tokenizer_get_tokens.c
-
-void			get_tokens(t_data	*data);
 
 // free.c
 

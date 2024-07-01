@@ -6,11 +6,20 @@
 /*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 14:04:08 by aschenk           #+#    #+#             */
-/*   Updated: 2024/06/19 14:36:54 by aschenk          ###   ########.fr       */
+/*   Updated: 2024/06/27 19:20:16 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+/*
+TBD
+*/
+
+#include "minishell.h"		
+
+// IN FILE:
+
+int	is_space(int c);
+int	is_delimiter(t_data *data, const char c);
 
 /*
 Checks if a character is a whitespace character:
@@ -25,7 +34,9 @@ int	is_space(int c)
 }
 
 /*
-Checks if a character in the input string is a quotation mark and toggles
+Used in is_delimiter().
+
+Checks if a character in the input string is a quotation mark and sets
 the quote state.
 
 If no quote is currently set in the `quote` member of the `data` structure and
@@ -49,12 +60,12 @@ static void	is_quotation(t_data *data, const char c)
 Checks if a character is a delimiter during tokenization.
 
 The function first checks if the character is a quotation mark by calling
-`is_quotation`, which sets or unsets the quote state in the provided `t_data`
-struct. If a quote is open, 'usual' delimiters are ignored.
+is_quotation(), which sets or unsets the quote state in the provided `t_data`
+struct. If a quote is open, delimiters are ignored (as part of quotation).
 
 Parameters:
-- data: A pointer to a `t_data` structure that contains the `quote` member.
-- c: The character to check.
+- t_data *data: A pointer to the `t_data` structure.
+- char c: The character to check.
 
 Returns:
 - 1 if the character is a delimiter and not within a quotation.

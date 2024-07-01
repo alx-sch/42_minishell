@@ -6,7 +6,7 @@
 /*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/24 22:36:32 by aschenk           #+#    #+#             */
-/*   Updated: 2024/06/20 20:40:33 by aschenk          ###   ########.fr       */
+/*   Updated: 2024/06/27 19:24:28 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,14 +47,14 @@ static int	is_closed(t_data *data, int i, const char c)
 	char_str[0] = c;
 	char_str[1] = '\0';
 	i_str = ft_itoa(i);
-	ft_putstr_fd(ERR_COLOR, STDERR_FILENO); // Following output is all in defined ERROR COLOR
+	ft_putstr_fd(ERR_COLOR, STDERR_FILENO); // Set error color for the output
 	ft_putstr_fd(ERR_PREFIX, STDERR_FILENO);
 	ft_putstr_fd(ERR_NOT_CLOSED_PRE, STDERR_FILENO);
 	ft_putstr_fd(char_str, STDERR_FILENO);
 	ft_putstr_fd(ERR_NOT_CLOSED_SUF, STDERR_FILENO);
 	ft_putstr_fd(i_str, STDERR_FILENO);
 	ft_putstr_fd(")\n", STDERR_FILENO);
-	ft_putstr_fd(RESET, STDERR_FILENO); // Resets output style to default
+	ft_putstr_fd(RESET, STDERR_FILENO); // Reset the output style to default
 	free(i_str);
 	return (0); // Quotation mark is not closed
 }
@@ -62,9 +62,6 @@ static int	is_closed(t_data *data, int i, const char c)
 /*
 Checks if the current character in the input string is a quotation mark
 and if so, checks if it is properly closed.
-
-Parameters:
-- data: Pointer to the main data structure containing the input string.
 
 Returns:
 - 1 if no quotation mark is found or if the quotation mark is properly closed.

@@ -183,6 +183,7 @@ TEST_SRCS :=	$(TEST_DIR)/main_test.c \
 				$(TEST_DIR)/0_check_input/check_quotation_test.c \
 				$(TEST_DIR)/0_tokenizer/tokenizer_get_tokens_test.c \
 				$(TEST_DIR)/0_tokenizer/tokenizer_redirection_test.c \
+				$(TEST_DIR)/0_tokenizer/tokenizer_pipe_test.c \
 				$(TEST_DIR)/0_tokenizer/tokenizer_utils_test.c \
 				$(TEST_DIR)/1_parser/parser_var_expansion_test.c \
 				$(TEST_DIR)/1_parser/parser_heredoc_test.c \

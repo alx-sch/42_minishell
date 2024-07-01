@@ -6,7 +6,7 @@
 /*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/06 12:05:14 by aschenk           #+#    #+#             */
-/*   Updated: 2024/06/27 19:19:06 by aschenk          ###   ########.fr       */
+/*   Updated: 2024/07/01 18:48:29 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,8 +81,9 @@ static void	init_data_struct(t_data *data, int argc, char **argv, char **envp)
 {
 	data->argc = argc;
 	data->argv = argv;
+	data->pipe_no = 0;
 	data->envp = envp;
-	data->envp_temp = init_env_tmp(envp);
+	//data->envp_temp = init_env_tmp(envp);
 	data->input = NULL;
 	data->tmp = NULL;
 	data->quote = '\0';
@@ -114,7 +115,7 @@ int	main(int argc, char **argv, char **envp)
 		if (data.input && data.input[0] != '\0') // Checking if input is not NULL, and the input is not empty.
 			parsing(&data); // Checking if the input matches any of the builtins.
 		get_tokens(&data);
-		print_heredoc_found(&data);
+		//print_heredoc_found(&data);
 		}
 		// Maybe as a check completely in the end, if nothing else worked, we can mimic the "Command <some_command> not found"?
 		free_data(&data);
