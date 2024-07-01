@@ -6,7 +6,7 @@
 /*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/06 12:08:35 by aschenk           #+#    #+#             */
-/*   Updated: 2024/07/01 19:08:24 by aschenk          ###   ########.fr       */
+/*   Updated: 2024/07/01 19:10:41 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,7 @@ typedef struct s_data
 	t_env	*envp_temp;
 }	t_data;
 
-void		print_heredoc_found(t_data *data);
+void			print_heredoc_found(t_data *data);
 
 // 0_check_input/check_quotation.c
 
