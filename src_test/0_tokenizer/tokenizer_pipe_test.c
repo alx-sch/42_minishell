@@ -6,7 +6,7 @@
 /*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/01 16:34:21 by aschenk           #+#    #+#             */
-/*   Updated: 2024/07/01 18:07:00 by aschenk          ###   ########.fr       */
+/*   Updated: 2024/07/01 18:09:50 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,8 +106,8 @@ static void	print_empty_pipe_err_msg(char *str_j)
 {
 	ft_putstr_fd(ERR_COLOR, STDERR_FILENO); // Set error color for the output
 	ft_putstr_fd(ERR_PREFIX, STDERR_FILENO);
-	ft_putstr_fd("syntax error before '|': 'missing input' ", STDERR_FILENO);
-	ft_putstr_fd("(position: ", STDERR_FILENO);
+	ft_putstr_fd(ERR_EMPTY_PIPE, STDERR_FILENO);
+	ft_putstr_fd(" (position: ", STDERR_FILENO);
 	ft_putstr_fd(str_j, STDERR_FILENO); // Print the position of failed redirection
 	ft_putstr_fd(")\n", STDERR_FILENO);
 	ft_putstr_fd(RESET, STDERR_FILENO); // Reset the output style to default
