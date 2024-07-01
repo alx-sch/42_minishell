@@ -6,12 +6,35 @@
 /*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/10 16:51:05 by aschenk           #+#    #+#             */
-/*   Updated: 2024/06/21 17:06:07 by aschenk          ###   ########.fr       */
+/*   Updated: 2024/07/01 20:11:34 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+/*
+This file contains utility functions used throughout the minishell project.
+*/
+
 #include "minishell.h"
 
+// IN FILE:
+
+int	is_whitespace(int c);
+
+/*
+Checks if a character is a whitespace character:
+space, tab, newline, vertical tab, form feed, or carriage return.
+
+Returns:
+- 1 if character is a whitespace character.
+- 0 otherwise.
+*/
+int	is_whitespace(int c)
+{
+	if (c == ' ' || (c >= 9 && c <= 13))
+		return (1);
+	else
+		return (0);
+}
 
 // /*
 // Prints an error message to stderr, frees memory allocated within the
@@ -54,32 +77,4 @@
 // 		counter++;
 // 		array++;
 // 	}
-// }
-
-// Prints a custom, color-coded logo for the minishell project.
-// void	print_logo(void)
-// {
-// 	printf("%s%s _  _   ", BOLD, L_RED);
-// 	printf("%s__   %s__ _   ", ORANGE, YELLOW);
-// 	printf("%s__   %s____   ", GREEN, BLUE);
-// 	printf("%s_  _   %s____   ", VIOLET, L_RED);
-// 	printf("%s__     %s__   \n", ORANGE, YELLOW);
-// 	printf("%s( \\/ ) %s(  ) ", L_RED, ORANGE);
-// 	printf("%s(  ( \\ %s(  ) ", YELLOW, GREEN);
-// 	printf("%s/ ___) %s/ )( \\ ", BLUE, VIOLET);
-// 	printf("%s(  __) %s(  )   ", L_RED, ORANGE);
-// 	printf("%s(  )  \n", YELLOW);
-// 	printf("%s/ \\/ \\  %s)(  ", L_RED, ORANGE);
-// 	printf("%s/    /  %s)(  ", YELLOW, GREEN);
-// 	printf("%s\\___ \\ %s) __ (  ", BLUE, VIOLET);
-// 	printf("%s) _)  %s/ (_/\\ ", L_RED, ORANGE);
-// 	printf("%s/ (_/\\ \n", YELLOW);
-// 	printf("%s\\_)(_/ %s(__) ", L_RED, ORANGE);
-// 	printf("%s\\_)__) %s(__) ", YELLOW, GREEN);
-// 	printf("%s(____/ %s\\_)(_/ ", BLUE, VIOLET);
-// 	printf("%s(____) %s\\____/ ", L_RED, ORANGE);
-// 	printf("%s\\____/\n\n", YELLOW);
-// 	printf("%s%s", RESET, BOLD);
-// 	printf("by Natalie Holbrook & Alex Schenk @42 Berlin, July 2024\n\n");
-// 	printf("%s", RESET);
 // }

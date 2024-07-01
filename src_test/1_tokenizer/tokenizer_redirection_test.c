@@ -6,7 +6,7 @@
 /*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/17 13:00:24 by aschenk           #+#    #+#             */
-/*   Updated: 2024/07/01 18:51:49 by aschenk          ###   ########.fr       */
+/*   Updated: 2024/07/01 19:04:21 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ static char	*is_valid_operand(const char *inp, int *i)
 
 	j = *i;
 	invalid_op = NULL;
-	while (is_space(inp[j])) // Skip leading whitespace
+	while (is_whitespace(inp[j])) // Skip leading whitespace
 		j++;
 	// Check for invalid operands or end of input string (expecting a file)
 	if (inp[j] == '>' || inp[j] == '<' || inp[j] == '|' || inp[j] == '\0')

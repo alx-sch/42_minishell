@@ -6,7 +6,7 @@
 /*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 16:59:48 by aschenk           #+#    #+#             */
-/*   Updated: 2024/07/01 16:45:39 by aschenk          ###   ########.fr       */
+/*   Updated: 2024/07/01 19:04:06 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -136,7 +136,7 @@ static int	add_other_token(t_data *data, int *i)
 	int	start;
 
 	start = *i;
-	if (data->input[*i] && !is_space(data->input[*i])) // Skip token creation if end of string or whitespace
+	if (data->input[*i] && !is_whitespace(data->input[*i])) // Skip token creation if end of string or whitespace
 	{
 		while (!is_delimiter(data, data->input[*i])) // Find the end of the token
 			(*i)++;
@@ -179,7 +179,7 @@ void	get_tokens(t_data *data)
 	i = 0;
 	while (data->input[i]) // Iterate through the input string
 	{
-		while (is_space(data->input[i])) // Skip leading whitespace
+		while (is_whitespace(data->input[i])) // Skip leading whitespace
 			i++;
 		if (!is_redirection(data, &i)) // Check if redirection and if so, create respective token
 			return ; // Memory allocation failed or invalid redirection operand (file)

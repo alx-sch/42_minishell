@@ -6,7 +6,7 @@
 /*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/06 12:08:35 by aschenk           #+#    #+#             */
-/*   Updated: 2024/07/01 19:10:41 by aschenk          ###   ########.fr       */
+/*   Updated: 2024/07/01 19:01:56 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,7 +104,7 @@ char			**parser(char *input);
 
 void			print_token(const t_list *current);
 void			print_token_list(t_list *token_list);
-int				is_space(int c);
+int				is_whitespace(int c);
 int				is_delimiter(t_data *data, const char c);
 
 

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd_test.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/13 13:51:10 by nholbroo          #+#    #+#             */
-/*   Updated: 2024/06/19 14:59:55 by nholbroo         ###   ########.fr       */
+/*   Updated: 2024/07/01 19:05:06 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,13 +17,13 @@ int	is_cd(char *input)
 	int	i;
 
 	i = 0;
-	while (input[i] && is_space(input[i])) // Skipping whitespaces in the beginning
+	while (input[i] && is_whitespace(input[i])) // Skipping whitespaces in the beginning
 		i++;
 	if (input[i] && input[i++] != 'c') // Hard-checking for "cd"
 		return (0);
 	if (input[i] && input[i++] != 'd')
 		return (0);
-	if (input[i] && !is_space(input[i])) // Only accepting a space after "cd" -> e.g. "cd /". Would not accept "cdd".
+	if (input[i] && !is_whitespace(input[i])) // Only accepting a space after "cd" -> e.g. "cd /". Would not accept "cdd".
 		return (0);
 	return (1);
 }

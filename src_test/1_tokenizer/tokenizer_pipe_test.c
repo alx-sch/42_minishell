@@ -6,7 +6,7 @@
 /*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/01 16:34:21 by aschenk           #+#    #+#             */
-/*   Updated: 2024/07/01 18:09:50 by aschenk          ###   ########.fr       */
+/*   Updated: 2024/07/01 19:04:33 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ Parameters:
 Returns:
 - The dynamically allocated string containing the invalid syntax symbol
   ('newline' for '\0' to mirror the behavior of invalid redirections).
-- NULL if the syntax is valid
+- NULL if the syntax is valid.
 - "ERR" string literal, if memory allocation fails while attempting to
   allocate space for the invalid syntax.
 */
@@ -49,16 +49,16 @@ static char	*is_valid_syntax(const char *inp, int j)
 
 	j += 1;
 	invalid_syn = NULL;
-	while (is_space(inp[j])) // Skip leading whitespace
+	while (is_whitespace(inp[j])) // Skip leading whitespace
 		j++;
-	// Check for invalid operands or end of input string (expecting a file)
+	// Check for invalid syntax ('empty' string after '|')
 	if (inp[j] == '|' || inp[j] == '\0')
 	{
-		// Allocate memory for the invalid operand string
+		// Allocate memory for the invalid syntax string
 		invalid_syn = malloc(sizeof(char) * 8); // Allocate for "newline" + null terminator
 		if (!invalid_syn)
-			return ("ERR"); // Default invalid operand, if memory allocation failed
-		// Construct the invalid operand string
+			return ("ERR"); // Default invalid syntax, if memory allocation failed
+		// Construct the invalid syntax string
 		if (inp[j] == '\0')
 			ft_strlcpy(invalid_syn, "newline", 8);
 		else
@@ -78,7 +78,7 @@ Prints an error message for invalid syntax encountered after a pipe symbol ('|')
 
 Parameters:
 - char *invalid_syn:	The invalid operand encountered in the input.
-- char *str_j:			The string representation of int j (position of failed piping).
+- char *str_j:	The string representation of int j (position of failed piping).
 */
 static void	print_pipe_err_msg(char *invalid_syn, char *str_j)
 {
@@ -99,8 +99,7 @@ Used in check_syntax().
 Prints an error message for missing input before the first pipe ('|').
 
 Parameters:
-- char *invalid_syn:	The invalid operand encountered in the input.
-- char *str_j:			The string representation of int j (position of failed piping).
+- char *str_j:	The string representation of int j (position of failed piping).
 */
 static void	print_empty_pipe_err_msg(char *str_j)
 {
@@ -120,8 +119,8 @@ Checks if the syntax before/after an encountered '|' valid.
 If syntax is invalid, it prints a custom error message.
 
 Parameters:
-- t_data *data:    Data structure containing token-related info.
-- int j:           The index of the piping symbol ('|').
+- t_data *data:	Data structure containing token-related info.
+- int j:		The index of the piping symbol ('|').
 
 Returns:
 - 0: If syntax is invalid and an error message was printed OR malloc fail.
@@ -131,7 +130,6 @@ static int	check_syntax(t_data *data, int j)
 {
 	char	*invalid_syn; // String for the invalid syntax.
 	char	*str_j; // String to hold the position of failed piping.
-
 
 	invalid_syn = is_valid_syntax(data->input, j); // Check if the syntax is valid.
 	if (invalid_syn != NULL || data->tok.tok_lst == NULL) // If invalid syntax is found OR if 'pipe' token would be the first token.
@@ -163,12 +161,12 @@ If the syntax is valid, it creates the corresponding token and adds
 it to the token list.
 
 Parameters:
-- t_data *data: Data structure containing input string and token list.
-- int *i:       Pointer to the current index in the input string.
+- t_data *data:	Data structure containing input string and token list.
+- int *i:		Pointer to the current index in the input string.
 
 Returns:
 - 0 if the syntax is invalid or if token creation failed.
-- 1 if a pipe token was added to the token list or if no pipe is found.
+- 1 if a pipe token was added to the token list or if input[*i] is not a pipe.
 */
 int	is_pipe(t_data *data, int *i)
 {

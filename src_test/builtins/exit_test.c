@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit_test.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: natalierh <natalierh@student.42.fr>        +#+  +:+       +#+        */
+/*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/25 10:35:04 by natalierh         #+#    #+#             */
-/*   Updated: 2024/05/29 11:24:58 by natalierh        ###   ########.fr       */
+/*   Updated: 2024/07/01 19:07:15 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ int is_exit(char *input)
     int i;
 
     i = 0;
-    while (is_space(input[i])) // Skipping all whitespaces in the beginning
+    while (is_whitespace(input[i])) // Skipping all whitespaces in the beginning
         i++;
     if (input[i++] != 'e') // Hard-checking for "exit".
         return (0);
@@ -38,10 +38,10 @@ int is_exit(char *input)
         return (0);
     if (input[i++] != 't')
         return (0);
-    if (input[i] && !is_space(input[i]))
+    if (input[i] && !is_whitespace(input[i]))
         return (0);
-    while ((input[i]) && (is_space(input[i]) 
-        || input[i] == '+' || input[i] == '-' 
+    while ((input[i]) && (is_whitespace(input[i])
+        || input[i] == '+' || input[i] == '-'
         || (input[i] >= '0' && input[i] <= '9'))) // Checking if what comes after "exit" is either numerical, '+', '-' or whitespaces. If it's not, then it's not valid.
         i++;
     exit_check_argc(input); // Checking if there are more than one argument to the "exit" command -> in that case it prints an error message and exits.

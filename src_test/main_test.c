@@ -6,7 +6,7 @@
 /*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/06 12:05:14 by aschenk           #+#    #+#             */
-/*   Updated: 2024/07/01 18:48:29 by aschenk          ###   ########.fr       */
+/*   Updated: 2024/07/01 19:45:55 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,6 +93,29 @@ static void	init_data_struct(t_data *data, int argc, char **argv, char **envp)
 }
 
 /*
+Checks if the user input is empty or consists only of whitespace.
+
+Returns:
+- 0 if the user input is not empty.
+- 1 if the user input is empty, consists only of whitespace or is NULL.
+*/
+static int	is_input_empty(char *input)
+{
+	int	i;
+
+	i = 0;
+	if (!input)
+		return (1);
+	while (input[i])
+	{
+		if (!is_whitespace(input[i]))
+			return (0);
+		i++;
+	}
+	return (1);
+}
+
+/*
 main is first of all a loop that runs the shell taking inputs from the user
 and executing them until the user decides to exit it.
 
@@ -106,16 +129,17 @@ int	main(int argc, char **argv, char **envp)
 	init_data_struct(&data, argc, argv, envp);
 	while (1)
 	{
-		data.input = readline(PROMPT); // Display prompt and read input
-		if (data.input && data.input[0] != '\0') // Checking if input is not NULL, and the input is not empty.
-			add_history(data.input); // Adding to input-history.
-		if (is_quotation_closed(&data)) // check if user input is valid (quotations closed, correct redirection)
+		data.input = readline(PROMPT);
+		if (data.input && !is_input_empty(data.input))
 		{
-		//expand_variables(&data); // just testing variable expanding, will likely be used right before command exc and not here
-		if (data.input && data.input[0] != '\0') // Checking if input is not NULL, and the input is not empty.
-			parsing(&data); // Checking if the input matches any of the builtins.
-		get_tokens(&data);
-		//print_heredoc_found(&data);
+			if (!is_whitespace(data.input[0]))
+				add_history(data.input);
+			if (is_quotation_closed(&data)) // check if user input is valid (quotations closed, correct redirection)
+			{
+				parsing(&data); // Checking if the input matches any of the builtins.
+				get_tokens(&data);
+				//print_heredoc_found(&data);
+			}
 		}
 		// Maybe as a check completely in the end, if nothing else worked, we can mimic the "Command <some_command> not found"?
 		free_data(&data);

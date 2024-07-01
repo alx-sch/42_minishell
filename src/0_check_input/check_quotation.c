@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   check_quotation_test.c                             :+:      :+:    :+:   */
+/*   check_quotation.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/24 22:36:32 by aschenk           #+#    #+#             */
-/*   Updated: 2024/07/01 18:45:15 by aschenk          ###   ########.fr       */
+/*   Updated: 2024/07/01 18:44:58 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,31 +32,30 @@ Returns:
 */
 static int	is_closed(t_data *data, int i, const char c)
 {
-	char	char_str[2]; // string to hold char c and null terminator
-	char	*i_str; // string to hold the position of unclosed quotation and null terminator
-	int		j; // Position of closing char
+	char	char_str[2];
+	char	*i_str;
+	int		j;
 
-	j = i + 1; // Go to position after opening char (e.g., quotation mark)
+	j = i + 1;
 	while (data->input[j])
 	{
 		if (data->input[j] == c)
-			return (j); // Char is closed
+			return (j);
 		j += 1;
 	}
-	// Error handling if closing quotation mark is not found
 	char_str[0] = c;
 	char_str[1] = '\0';
 	i_str = ft_itoa(i);
-	ft_putstr_fd(ERR_COLOR, STDERR_FILENO); // Set error color for the output
+	ft_putstr_fd(ERR_COLOR, STDERR_FILENO);
 	ft_putstr_fd(ERR_PREFIX, STDERR_FILENO);
 	ft_putstr_fd(ERR_NOT_CLOSED_PRE, STDERR_FILENO);
 	ft_putstr_fd(char_str, STDERR_FILENO);
 	ft_putstr_fd(ERR_NOT_CLOSED_SUF, STDERR_FILENO);
 	ft_putstr_fd(i_str, STDERR_FILENO);
 	ft_putstr_fd(")\n", STDERR_FILENO);
-	ft_putstr_fd(RESET, STDERR_FILENO); // Reset the output style to default
+	ft_putstr_fd(RESET, STDERR_FILENO);
 	free(i_str);
-	return (0); // Quotation mark is not closed
+	return (0);
 }
 
 /*
@@ -69,27 +68,27 @@ Returns:
  */
 int	is_quotation_closed(t_data *data)
 {
-	int	i; // Current position in input string
-	int	j; // Position of the closing quotation mark
+	int	i;
+	int	j;
 
 	i = 0;
 	while (data->input[i])
 	{
-		if (data->input[i] == '\'') // Check for single-quotated mark
+		if (data->input[i] == '\'')
 		{
-			j = is_closed(data, i, '\''); // Check if it's properly closed
+			j = is_closed(data, i, '\'');
 			if (j == 0)
-				return (0); // Not closed
-			i = j; // Move to the position of the closing quote
+				return (0);
+			i = j;
 		}
-		else if (data->input[i] == '\"') // Check for double-quotated mark
+		else if (data->input[i] == '\"')
 		{
-			j = is_closed(data, i, '\"'); // Check if it's properly closed
+			j = is_closed(data, i, '\"');
 			if (j == 0)
-				return (0); // Not closed
-			i = j; // Move to the position of the closing quote
+				return (0);
+			i = j;
 		}
 		i++;
 	}
-	return (1); // No quotation mark found or it's properly closed
+	return (1);
 }
