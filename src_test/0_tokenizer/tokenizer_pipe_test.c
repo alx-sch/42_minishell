@@ -6,7 +6,7 @@
 /*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/01 16:34:21 by aschenk           #+#    #+#             */
-/*   Updated: 2024/07/01 19:02:02 by aschenk          ###   ########.fr       */
+/*   Updated: 2024/07/01 18:07:00 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ Returns:
   ('newline' for '\0' to mirror the behavior of invalid redirections).
 - NULL if the syntax is valid
 - "ERR" string literal, if memory allocation fails while attempting to
-  allocate space for the invalid operand.
+  allocate space for the invalid syntax.
 */
 static char	*is_valid_syntax(const char *inp, int j)
 {
