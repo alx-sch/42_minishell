@@ -6,7 +6,7 @@
 /*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/07 16:54:03 by aschenk           #+#    #+#             */
-/*   Updated: 2024/07/01 20:30:31 by aschenk          ###   ########.fr       */
+/*   Updated: 2024/07/03 18:18:28 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@
 
 # define PROMPT_COL ORANGE BOLD
 # define PROMPT		"🌈 " PROMPT_COL "minishell$ " RESET
+# define HEREDOC_P	"> "
 
 // History: Override macros when invoking 'make':
 // 'make CFLAGS+="-DHIST_FILE='new_path' -DHIST_SIZE=42"

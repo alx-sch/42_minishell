@@ -6,7 +6,7 @@
 /*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/06 12:05:14 by aschenk           #+#    #+#             */
-/*   Updated: 2024/07/01 19:45:55 by aschenk          ###   ########.fr       */
+/*   Updated: 2024/07/03 17:26:29 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -137,8 +137,8 @@ int	main(int argc, char **argv, char **envp)
 			if (is_quotation_closed(&data)) // check if user input is valid (quotations closed, correct redirection)
 			{
 				parsing(&data); // Checking if the input matches any of the builtins.
-				get_tokens(&data);
-				//print_heredoc_found(&data);
+				if (get_tokens(&data)) // continue if tokenziation is sucessful
+					print_heredoc_found(&data);
 			}
 		}
 		// Maybe as a check completely in the end, if nothing else worked, we can mimic the "Command <some_command> not found"?

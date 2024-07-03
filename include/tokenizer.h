@@ -6,7 +6,7 @@
 /*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 16:36:37 by aschenk           #+#    #+#             */
-/*   Updated: 2024/06/21 14:35:11 by aschenk          ###   ########.fr       */
+/*   Updated: 2024/07/03 17:19:37 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,7 +89,7 @@ typedef struct s_tok
 
 // 0_tokenizer/tokenizer_get_tokens.c
 
-void		get_tokens(t_data *data);
+int			get_tokens(t_data *data);
 t_list		*create_tok(t_data *data, t_token_type type, const char *lexeme,
 				int *i);
 
