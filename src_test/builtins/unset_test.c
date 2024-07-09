@@ -12,36 +12,6 @@
 
 #include "minishell.h"
 
-// static void	export_unset_remove_variable(t_env **current, \
-// t_env **envp_temp, char *arg)
-// {
-// 	char	*envvar;
-
-// 	envvar = NULL;
-// 	while (*current)
-// 	{
-// 		envvar = ft_substr((*current)->value, 11, ft_strlen((*current)->value));
-// 		if (ft_strncmp(arg, envvar, ft_strlen(arg)) == 0)
-// 		{
-// 			if ((*current)->next)
-// 				(*current)->next->previous = (*current)->previous;
-// 			if ((*current)->previous)
-// 				(*current)->previous->next = (*current)->next;
-// 			else
-// 				*envp_temp = (*current)->next;
-// 			free((*current)->value);
-// 			free((*current)->e_var);
-// 			free(*current);
-// 			if (envvar)
-// 				free(envvar);
-// 			break ;
-// 		}
-// 		if (envvar)
-// 			free(envvar);
-// 		*current = (*current)->next;
-// 	}
-// }
-
 static void	unset_remove_variable(t_env **current, \
 t_env **envp_temp, char *arg)
 {

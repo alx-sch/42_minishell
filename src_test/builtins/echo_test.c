@@ -12,21 +12,59 @@
 
 #include "minishell.h"
 
-// int	check_option_echo(char *input)
-// {
-// }
+void	print_echo(char *input, bool print_newline)
+{
+	int	i;
 
-// void	echo(t_data *data)
-// {
-// 	if (check_option_echo(data->input))
+	i = 4;
+	while (input[i] && is_space(input[i]))
+		i++;
+	if (input[i] && input[i] == '-')
+	{
+		i += 2;
+		while (input[i] && is_space(input[i]))
+			i++;
+	}
+	while (input[i])
+	{
+		if (is_space(input[i]))
+		{
+			while (input[i] && is_space(input[i]))
+				i++;
+			if (input[i])
+				write(1, " ", 1);
+		}
+		write(1, &input[i++], 1);
+	}
+	if (print_newline)
+		write(1, "\n", 1);
+}
 
-// }
+int	check_option_echo(char *input)
+{
+	int	i;
+
+	i = 4;
+	while (input[i] && is_space(input[i]))
+		i++;
+	if (input[i] == '-')
+		return (1);
+	return (0);
+}
+
+void	minishell_echo(t_data *data)
+{
+ 	if (check_option_echo(data->input))
+		print_echo(data->input, false);
+	else
+		print_echo(data->input, true);
+}
 
 static int	echo_err_invalid_option(char *input, int i)
 {
 	if (input[i] == '-' && input[i + 1] && input[i + 1] != 'n')
 	{
-		write(2, "minishell: echo: invalid option: -- '", 39);
+		write(2, "minishell: echo: invalid option: -- '", 38);
 		write(2, &input[i + 1], 1);
 		write(2, "'\n", 2);
 		return (0);
