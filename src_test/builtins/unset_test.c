@@ -12,59 +12,41 @@
 
 #include "minishell.h"
 
-static void	unset_err_memalloc_fail(t_env **envp_temp)
-{
-	free_env_struct(envp_temp); // Freeing the struct.
-	errno = ENOMEM; // Setting errno to "Memory allocation failure"
-	perror("minishell: env"); // Prints the error message
-	exit(errno); // Exits with correct errno code.
-}
+// static void	export_unset_remove_variable(t_env **current, \
+// t_env **envp_temp, char *arg)
+// {
+// 	char	*envvar;
+// 	envvar = NULL;
+// 	while (*current)
+// 	{
+// 		envvar = ft_substr((*current)->value, 11, ft_strlen((*current)->value));
+// 		if (ft_strncmp(arg, envvar, ft_strlen(arg)) == 0)
+// 		{
+// 			if ((*current)->next)
+// 				(*current)->next->previous = (*current)->previous;
+// 			if ((*current)->previous)
+// 				(*current)->previous->next = (*current)->next;
+// 			else
+// 				*envp_temp = (*current)->next;
+// 			free((*current)->value);
+// 			free((*current)->e_var);
+// 			free(*current);
+// 			if (envvar)
+// 				free(envvar);
+// 			break ;
+// 		}
+// 		if (envvar)
+// 			free(envvar);
+// 		*current = (*current)->next;
+// 	}
+// }
 
-static int unset_err_invalid_option(char *input, int i)
-{
-    if (input[i] == '-' && is_letter(input[i + 1]))
-    {
-        write(2, "minishell: unset: invalid option: -- '", 39);
-        write(2, &input[i + 1], 1);
-        write(2, "'\n", 2);
-		return (0);
-    }
-	return (1);
-}
-
-int	is_unset(char *input)
-{
-    int i;
-
-    i = 0;
-    while (is_whitespace(input[i]))
-        i++;
-    if (input[i++] != 'u')
-        return (0);
-    if (input[i++] != 'n')
-        return (0);
-    if (input[i++] != 's')
-        return (0);
-    if (input[i++] != 'e')
-        return (0);
-    if (input[i++] != 't')
-        return (0);
-    if (input[i] && !is_whitespace(input[i]))
-        return (0);
-    while (input[i] != '\0')
-    {
-        if (!is_whitespace(input[i]))
-            return (unset_err_invalid_option(input, i));
-        i++;
-    }
-    return (1);
-}
-
-static void	unset_remove_variable(t_env **current, t_env **envp_temp, char *arg)
+static void	unset_remove_variable(t_env **current, \
+t_env **envp_temp, char *arg)
 {
 	while (*current)
 	{
-		if (ft_strncmp(arg, (*current)->value, ft_strlen(arg)) == 0)
+		if (ft_strncmp(arg, (*current)->e_var, ft_strlen(arg)) == 0)
 		{
 			if ((*current)->next)
 				(*current)->next->previous = (*current)->previous;
@@ -73,6 +55,7 @@ static void	unset_remove_variable(t_env **current, t_env **envp_temp, char *arg)
 			else
 				*envp_temp = (*current)->next;
 			free((*current)->value);
+			free((*current)->e_var);
 			free(*current);
 			break ;
 		}
@@ -103,4 +86,32 @@ void	unset(char *input, t_env **envp_temp)
 		i++;
 	}
 	ft_freearray(args);
+}
+
+int	is_unset(char *input)
+{
+	int	i;
+
+	i = 0;
+	while (is_whitespace(input[i]))
+		i++;
+	if (input[i++] != 'u')
+		return (0);
+	if (input[i++] != 'n')
+		return (0);
+	if (input[i++] != 's')
+		return (0);
+	if (input[i++] != 'e')
+		return (0);
+	if (input[i++] != 't')
+		return (0);
+	if (input[i] && !is_whitespace(input[i]))
+		return (0);
+	while (input[i] != '\0')
+	{
+		if (!is_whitespace(input[i]))
+			return (unset_err_invalid_option(input, i));
+		i++;
+	}
+	return (1);
 }

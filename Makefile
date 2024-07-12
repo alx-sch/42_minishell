@@ -191,7 +191,6 @@ re_all:	fclean_all all
 
 NAME_TEST :=	$(NAME)_test
 TEST_DIR :=		src_test
-
 TEST_FILES :=	main_test.c \
 				free_test.c \
 				utils_test.c \

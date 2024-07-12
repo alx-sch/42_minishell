@@ -58,8 +58,10 @@ typedef struct s_cd
 typedef struct s_env
 {
 	char			*value;
+	char			*e_var;
 	struct s_env	*next;
 	struct s_env	*previous;
+	bool			printed;
 }	t_env;
 
 /*
@@ -77,11 +79,23 @@ typedef struct s_data
 	t_tok	tok;
 	t_cd	cd;
 	t_env	*envp_temp;
+	t_env	*export_list;
 }	t_data;
+
 
 //	+++++++++++++++
 //	++ FUNCTIONS ++
 //	+++++++++++++++
+
+// Struct initializations
+
+void			init_cd_struct(t_cd **cd, char *input);
+t_env			*init_env_tmp(char **envp);
+t_env			*init_export_list(t_data *data);
+void			init_data_struct(t_data *data, \
+int argc, char **argv, char **envp);
+
+// utils.c
 
 void			print_heredoc_found(t_data *data);
 
@@ -130,34 +144,57 @@ int				is_cd(char *input);
 int				is_exit(char *input);
 int				is_env(char *input);
 int				is_unset(char *input);
+int				is_export(char *input);
+int				is_echo(char *input);
 
 // Builtins:
 
 void			init_cd_struct(t_cd **cd, char *input);
 t_env			*init_env_tmp(char **envp);
+
 int				cd(char *input, char **envp);
 void			pwd(void);
 void			env(t_env *env_temp);
 void			unset(char *input, t_env **envp_temp);
-unsigned int	exit_with_code(char *input);
+unsigned int	exit_with_code(t_data *data);
+void			export(t_data *data);
+//void			echo(t_data *data);
+
+// Butiltins utils:
+
+void			add_env_var_no_value(t_data *data, char *arg);
+void			add_env_var_export_with_value(t_data *data, char *arg);
+void			add_env_var_envp_with_value(t_data *data, char *arg);
+void			ft_env_tmp_add_back(t_env **head, t_env *new);
 
 // Modified standard functions:
+
+int				ft_strchr_index(const char *s, int c);
 int				ft_strrchr_index(const char *s, int c);
 bool			is_only_duplicates(char *s, char c);
 int				is_letter(char c);
 
 // Counting-functions:
+
 int				count_array_length(char **array);
 
 // Freeing allocated memory for builtins:
+
 int				ft_freearray(char **arr);
 int				too_many_args_cd(t_cd **cd);
 int				free_cd_struct(t_cd **cd);
 void			free_env_struct(t_env **head);
 
 // Errors:
+
 void			print_error_cd(int error_code, t_cd **cd);
 void			print_error_exit(char *input);
+int				env_error_messages(char *input, int i);
+void			mem_alloc_fail_env(t_env **head);
 void			exit_check_argc(char *input);
+int				export_err_invalid_option(char *input, int i);
+void			unset_err_memalloc_fail(t_env **envp_temp);
+int				unset_err_invalid_option(char *input, int i);
+int				pwd_invalid_option(char *input, int i);
 
 #endif

@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   main_test.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
+/*   By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/06 12:05:14 by aschenk           #+#    #+#             */
 /*   Updated: 2024/07/03 17:26:29 by aschenk          ###   ########.fr       */
@@ -36,7 +36,6 @@ and executing them until the user decides to exit it.
 // 	}
 // 	exit(EXIT_SUCCESS);
 // }
-
 /*
 Used in main().
 
@@ -118,8 +117,6 @@ static int	is_input_empty(char *input)
 /*
 main is first of all a loop that runs the shell taking inputs from the user
 and executing them until the user decides to exit it.
-
-
 */
 int	main(int argc, char **argv, char **envp)
 {

@@ -6,7 +6,7 @@
 /*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/13 13:51:10 by nholbroo          #+#    #+#             */
-/*   Updated: 2024/07/01 19:05:06 by aschenk          ###   ########.fr       */
+/*   Updated: 2024/06/24 12:36:51 by nholbroo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,4 +123,21 @@ int	cd(char *input, char **envp)
 	else // If "cd" is followed by a path, change to that relative or absolute path.
 		cd_one_down(&cd, cwd); // Changes the working directory to a subdirectory or an absolute path.
 	return (free_cd_struct(&cd)); // Freeing the struct.
+}
+
+int	is_cd(char *input)
+{
+	int	i;
+
+	i = 0;
+	while (input[i] && 
+         pace(input[i])) // Skipping whitespaces in the beginning
+		i++;
+	if (input[i] && input[i++] != 'c') // Hard-checking for "cd"
+		return (0);
+	if (input[i] && input[i++] != 'd')
+		return (0);
+	if (input[i] && !is_space(input[i])) // Only accepting a space after "cd" -> e.g. "cd /". Would not accept "cdd".
+		return (0);
+	return (1);
 }

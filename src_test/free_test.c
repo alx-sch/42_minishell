@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   free_test.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
+/*   By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/13 12:12:15 by aschenk           #+#    #+#             */
 /*   Updated: 2024/07/03 17:51:26 by aschenk          ###   ########.fr       */

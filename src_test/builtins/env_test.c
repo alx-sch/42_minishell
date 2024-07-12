@@ -6,7 +6,7 @@
 /*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/25 09:38:05 by natalierh         #+#    #+#             */
-/*   Updated: 2024/07/01 19:06:53 by aschenk          ###   ########.fr       */
+/*   Updated: 2024/06/25 15:19:34 by nholbroo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,56 +15,35 @@
 // The env builtin - accepts several spaces etc, but not "envv" etc.
 // Prints an error in the case of "env dsafgasg" or "env -dsdasf" or something.
 
-static int env_error_messages(char *input, int i)
+int	is_env(char *input)
 {
-    if (input[i] == '-' && (input[i + 1]))
-    {
-        write(2, "env: invalid option: -- '", 25);
-        write(2, &input[i + 1], 1);
-        write(2, "'\n", 2);
-    }
-    else if (is_letter(input[i]))
-    {
-        errno = ENOENT;
-        write(2, "env: ", 5);
-        write(2, "'", 1);
-        while (input[i] && !is_whitespace(input[i]))
-            write(2, &input[i++], 1);
-        write(2, "': ", 3);
-        perror("");
-    }
-    return (0);
+	int	i;
+
+	i = 0;
+	while (is_whitespace(input[i]))
+		i++;
+	if (input[i++] != 'e')
+		return (0);
+	if (input[i++] != 'n')
+		return (0);
+	if (input[i++] != 'v')
+		return (0);
+	if (input[i] && !is_whitespace(input[i]))
+		return (0);
+	while (input[i] != '\0')
+	{
+		if (!is_whitespace(input[i]))
+			return (env_error_messages(input, i));
+		i++;
+	}
+	return (1);
 }
 
-int is_env(char *input)
+void	env(t_env *envp_temp)
 {
-    int i;
-
-    i = 0;
-    while (is_whitespace(input[i]))
-        i++;
-    if (input[i++] != 'e')
-        return (0);
-    if (input[i++] != 'n')
-        return (0);
-    if (input[i++] != 'v')
-        return (0);
-    if (input[i] && !is_whitespace(input[i]))
-        return (0);
-    while (input[i] != '\0')
-    {
-        if (!is_whitespace(input[i]))
-            return (env_error_messages(input, i));
-        i++;
-    }
-    return (1);
-}
-
-void    env(t_env *envp_temp)
-{
-    while (envp_temp)
-    {
-        printf("%s\n", envp_temp->value);
-        envp_temp = envp_temp->next;
-    }
+	while (envp_temp)
+	{
+		printf("%s=%s\n", envp_temp->e_var, envp_temp->value);
+		envp_temp = envp_temp->next;
+	}
 }
