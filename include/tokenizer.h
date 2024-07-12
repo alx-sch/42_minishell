@@ -6,7 +6,7 @@
 /*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 16:36:37 by aschenk           #+#    #+#             */
-/*   Updated: 2024/07/03 17:19:37 by aschenk          ###   ########.fr       */
+/*   Updated: 2024/07/12 11:19:12 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,10 +33,10 @@ typedef struct s_data	t_data;
 /*
 Data type `enum` defines a set of constants via integer (starting with 0).
 Categorizes tokens / lexemes:
-- OTHER:		Lexemes to be passed to execve(), may contain quotes and variables.
+- OTHER:		Lexemes to be passed to execve(), may contain quotes and vars.
 - PIPE:			'|' ; pipeline between two commands.
 - REDIR_IN:		'<'	; redirects input of a command from a file instead of STDIN.
-- REDIR_OUT:	'>' ; redirects output of a command into a file instead of STDOUT.
+- REDIR_OUT:	'>' ; redirects output of a command into file instead of STDOUT.
 - REDIR_APPEND:	'>>'; appends cmd output to a file without truncating it.
 - HEREDOC:		'<<'; creates a here-document, directly input via CL.
 */

@@ -6,7 +6,7 @@
 /*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 16:59:48 by aschenk           #+#    #+#             */
-/*   Updated: 2024/07/01 20:18:32 by aschenk          ###   ########.fr       */
+/*   Updated: 2024/07/12 10:41:17 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ in a linked list.
 
 // IN FILE:
 
-void	get_tokens(t_data *data);
+int		get_tokens(t_data *data);
 t_list	*create_tok(t_data *data, t_token_type type, const char *lexeme,
 			int *i);
 
@@ -163,8 +163,12 @@ specific criteria:
 For each token, it creates a new token node and adds it to the token list.
 If a token cannot be created due to a memory allocation failure, the function
 stops processing further tokens.
+
+Returns:
+- 0 if tokenization failed.
+- 1 if tokenization was sucessful.
 */
-void	get_tokens(t_data *data)
+int	get_tokens(t_data *data)
 {
 	int	i;
 
@@ -174,10 +178,11 @@ void	get_tokens(t_data *data)
 		while (is_whitespace(data->input[i]))
 			i++;
 		if (!is_redirection(data, &i))
-			return ;
+			return (0);
 		else if (!is_pipe(data, &i))
-			return ;
+			return (0);
 		else if (!add_other_token(data, &i))
-			return ;
+			return (0);
 	}
+	return (1);
 }

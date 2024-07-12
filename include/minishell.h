@@ -6,9 +6,13 @@
 /*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/06 12:08:35 by aschenk           #+#    #+#             */
-/*   Updated: 2024/07/01 19:01:56 by aschenk          ###   ########.fr       */
+/*   Updated: 2024/07/12 11:26:40 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+/*
+TBD
+*/
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
@@ -51,7 +55,6 @@ typedef struct s_cd
 - char	quote:		Encountered quotation symbol (single or double) in input.
 - int	pipe_no:	The number of pipes in the input string.
 */
-
 typedef struct s_env
 {
 	char			*value;
@@ -59,6 +62,9 @@ typedef struct s_env
 	struct s_env	*previous;
 }	t_env;
 
+/*
+TBD
+*/
 typedef struct s_data
 {
 	int		argc;
@@ -72,6 +78,10 @@ typedef struct s_data
 	t_cd	cd;
 	t_env	*envp_temp;
 }	t_data;
+
+//	+++++++++++++++
+//	++ FUNCTIONS ++
+//	+++++++++++++++
 
 void			print_heredoc_found(t_data *data);
 
@@ -107,14 +117,13 @@ void			print_token_list(t_list *token_list);
 int				is_whitespace(int c);
 int				is_delimiter(t_data *data, const char c);
 
-
 // free.c
 
 void			del_token(void *content);
 void			free_data(t_data *data);
 
-
 // Parsing:
+
 void			parsing(t_data *data);
 int				is_pwd(char *input);
 int				is_cd(char *input);
@@ -123,8 +132,9 @@ int				is_env(char *input);
 int				is_unset(char *input);
 
 // Builtins:
+
 void			init_cd_struct(t_cd **cd, char *input);
-t_env   		*init_env_tmp(char **envp);
+t_env			*init_env_tmp(char **envp);
 int				cd(char *input, char **envp);
 void			pwd(void);
 void			env(t_env *env_temp);
