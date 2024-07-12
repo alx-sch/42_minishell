@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing_test.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/13 14:51:02 by nholbroo          #+#    #+#             */
-/*   Updated: 2024/06/19 17:00:10 by nholbroo         ###   ########.fr       */
+/*   Updated: 2024/07/03 17:53:27 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ void	parsing(t_data *data) // instead of input the data_struct can be passed (wh
 	else if (is_exit(data->input)) // Checks if the input is "exit". It accepts whitespaces before and after, and and exit code like "12", "+32" or "-213".
 	{
 		printf("exit\n"); // Prints "exit" on the STOUT.
+		get_next_line(-1); // cleans gnl stash, if existen
 		exit(exit_with_code(data->input)); // Exits minishell with correct exit code.
 	}
 	else if (is_unset(data->input)) // Checks if the input is "unset", accepts arguments, but not options.
