@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   unset_test.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/19 13:30:29 by nholbroo          #+#    #+#             */
-/*   Updated: 2024/06/26 16:06:54 by nholbroo         ###   ########.fr       */
+/*   Updated: 2024/07/01 19:06:18 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,6 @@
 // t_env **envp_temp, char *arg)
 // {
 // 	char	*envvar;
-
 // 	envvar = NULL;
 // 	while (*current)
 // 	{
@@ -94,7 +93,7 @@ int	is_unset(char *input)
 	int	i;
 
 	i = 0;
-	while (is_space(input[i]))
+	while (is_whitespace(input[i]))
 		i++;
 	if (input[i++] != 'u')
 		return (0);
@@ -106,11 +105,11 @@ int	is_unset(char *input)
 		return (0);
 	if (input[i++] != 't')
 		return (0);
-	if (input[i] && !is_space(input[i]))
+	if (input[i] && !is_whitespace(input[i]))
 		return (0);
 	while (input[i] != '\0')
 	{
-		if (!is_space(input[i]))
+		if (!is_whitespace(input[i]))
 			return (unset_err_invalid_option(input, i));
 		i++;
 	}

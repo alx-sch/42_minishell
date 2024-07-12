@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   env_test.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/25 09:38:05 by natalierh         #+#    #+#             */
 /*   Updated: 2024/06/25 15:19:34 by nholbroo         ###   ########.fr       */
@@ -20,7 +20,7 @@ int	is_env(char *input)
 	int	i;
 
 	i = 0;
-	while (is_space(input[i]))
+	while (is_whitespace(input[i]))
 		i++;
 	if (input[i++] != 'e')
 		return (0);
@@ -28,11 +28,11 @@ int	is_env(char *input)
 		return (0);
 	if (input[i++] != 'v')
 		return (0);
-	if (input[i] && !is_space(input[i]))
+	if (input[i] && !is_whitespace(input[i]))
 		return (0);
 	while (input[i] != '\0')
 	{
-		if (!is_space(input[i]))
+		if (!is_whitespace(input[i]))
 			return (env_error_messages(input, i));
 		i++;
 	}

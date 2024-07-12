@@ -6,39 +6,42 @@
 /*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/17 13:00:24 by aschenk           #+#    #+#             */
-/*   Updated: 2024/06/20 21:30:52 by aschenk          ###   ########.fr       */
+/*   Updated: 2024/07/01 19:04:21 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 /*
-This file contains a function to check the input string for a redirection
-and creates the corresponding token if the redirection is valid.
-Returns an error if the redirection is not valid.
+This file contains a function to check the input string for redirections
+and creates the corresponding token if the redirection points to valid operand.
+
+Returns an error message if the redirection is not valid.
 */
 
 #include "minishell.h"
 
-// FUNCTION IN FILE
+// IN FILE:
 
 int	is_redirection(t_data *data, int *i);
 
 /*
-Scans the 'input' string starting from the current index (*i).
+Used in check_operand().
+
+Scans the input string starting from the current index (*i).
 Skips any leading whitespace and checks if the encountered character is valid.
 - Valid redirections are: '>', '>>', '<', '<<'.
-- Redirection cannot be the last part of the command line input,
+- Redirection cannot be the last part of the input string,
   a valid operand is needed.
-- Valid operands cannot be or start with '>', '<', or '|'.
+- Valid operands (files) cannot be or start with '>', '<', or '|'.
 
 Parameters:
-- inp: The input string containing the command line input.
-- i: Pointer to the current index in the input string.
+- char *inp: The input string containing the command line input.
+- int *i: The current index in the input string.
 
 Returns:
-- Pointer to the dynamically allocated string containing the invalid operand,
-  if encountered.
-- NULL if the operand is valid or if memory allocation for the invalid
-  operand failed.
+- The dynamically allocated string containing the invalid operand.
+- NULL if the operand is valid
+- "ERR" string literal, if memory allocation fails while attempting to
+  allocate space for the invalid operand.
 */
 static char	*is_valid_operand(const char *inp, int *i)
 {
@@ -47,7 +50,7 @@ static char	*is_valid_operand(const char *inp, int *i)
 
 	j = *i;
 	invalid_op = NULL;
-	while (is_space(inp[j])) // Skip leading whitespace
+	while (is_whitespace(inp[j])) // Skip leading whitespace
 		j++;
 	// Check for invalid operands or end of input string (expecting a file)
 	if (inp[j] == '>' || inp[j] == '<' || inp[j] == '|' || inp[j] == '\0')
@@ -57,7 +60,7 @@ static char	*is_valid_operand(const char *inp, int *i)
 		if (!invalid_op)
 		{
 			perror(ERR_MALLOC);
-			return (NULL);
+			return ("ERR"); // Default invalid operand, if memory allocation failed
 		}
 		// Construct the invalid operand string
 		if (inp[j] == '\0')
@@ -72,12 +75,24 @@ static char	*is_valid_operand(const char *inp, int *i)
 	return (NULL); // Valid operand was encountered
 }
 
+/*
+Used in check_operand().
+
+Prints an error message for invalid redirection operands in the input string.
+
+Parameters:
+- char *invalid_op:		The invalid operand encountered in the input.
+- const char *input:	The  input string containing the command line input.
+- char *str_j:	The string representation of int j.
+- int j: 		Position index of the failed redirection in the input string.
+*/
 static void	print_redir_err_msg(char *invalid_op, const char *input,
 	char *str_j, int j)
 {
-	ft_putstr_fd(ERR_COLOR, STDERR_FILENO); // Following output is all in defined ERROR COLOR
+	ft_putstr_fd(ERR_COLOR, STDERR_FILENO); // Set error color for the output
 	ft_putstr_fd(ERR_PREFIX, STDERR_FILENO);
-	ft_putstr_fd(ERR_REDIR_OPERAND, STDERR_FILENO);
+	ft_putstr_fd(ERR_SYNTAX, STDERR_FILENO);
+	// Print the specific redirection operator encountered
 	if (input[j] == '>' && input[j + 1] == '>')
 		ft_putstr_fd("'>>': '", STDERR_FILENO);
 	else if (input[j] == '>')
@@ -86,27 +101,29 @@ static void	print_redir_err_msg(char *invalid_op, const char *input,
 		ft_putstr_fd("'<<': '", STDERR_FILENO);
 	else if (input[j] == '<')
 		ft_putstr_fd("'<': '", STDERR_FILENO);
-	ft_putstr_fd(invalid_op, STDERR_FILENO);
+	ft_putstr_fd(invalid_op, STDERR_FILENO); // Print the invalid operand
 	ft_putstr_fd("' (position: ", STDERR_FILENO);
-	ft_putstr_fd(str_j, STDERR_FILENO);
+	ft_putstr_fd(str_j, STDERR_FILENO); // Print the position of failed redirection
 	ft_putstr_fd(")\n", STDERR_FILENO);
-	ft_putstr_fd(RESET, STDERR_FILENO); // Resets output style to default
+	ft_putstr_fd(RESET, STDERR_FILENO); // Reset the output style to default
 }
 
 /*
+Used in is_redirection().
+
 Checks if the operand in the 'input' string is valid starting from the index *i.
 If an invalid operand is found, it prints a custom error message.
 
 Parameters:
-- input: The input string containing the command line input.
-- i: Pointer to the current index in the input string.
-- j: Pointer to the index of the redirection operator in the input string.
+- char *input: The input string containing the command line input.
+- int *i:	Pointer to the current index in the input string.
+- int j:	The index of the redirection operator in the input string.
 
 Returns:
 - 0: If an invalid operand is found and an error message is printed.
 - 1: If the operand is valid.
 */
-static int	check_operand(const char *input, int *i, int *j)
+static int	check_operand(const char *input, int *i, int j)
 {
 	char	*invalid_op; // String for the invalid operand
 	char	*str_j; // String to hold the position of failed redirection
@@ -114,13 +131,13 @@ static int	check_operand(const char *input, int *i, int *j)
 	invalid_op = is_valid_operand(input, i); // Check if the operand is valid
 	if (invalid_op) // If an invalid operand is found
 	{
-		str_j = ft_itoa(*j);
+		str_j = ft_itoa(j);
 		if (!str_j)
 		{
 			perror(ERR_MALLOC);
 			return (0); // Malloc allocation failure
 		}
-		print_redir_err_msg(invalid_op, input, str_j, *j);
+		print_redir_err_msg(invalid_op, input, str_j, j);
 		free(invalid_op);
 		free(str_j);
 		return (0); // Invalid operand was found
@@ -129,13 +146,15 @@ static int	check_operand(const char *input, int *i, int *j)
 }
 
 /*
+Used in is_redirection().
+
 Function to create redirection tokens and add them to the token list.
 
 Parameters:
-- data: Data structure containing input string and token list.
-- i: The current index in the input string.
-- type: The type of redirection token to be created.
-- symbol: The string representation of the redirection symbol.
+- t_data *data:	Data structure containing input string and token list.
+- int *i:		Pointer to the current index in the input string.
+- t_token_type type:	The type of redirection token to be created.
+- char *symbol:	The string representation of the redirection symbol.
 
 Returns:
 - 0 if the token creation failed.
@@ -152,18 +171,18 @@ static int	create_redirection_token(t_data *data, int *i, t_token_type type,
 }
 
 /*
-Checks for redirection operators in the 'input' string startinf from index *i.
+Checks for redirection operators in the 'input' string starting from index *i.
 If a redirection operator is found, it creates the corresponding token and adds
-it to the token list. It also checks for a valid operand after the
+it to the token list. It also checks for a valid operand (file) after the
 redirection operator.
 
 Parameters:
-- data:	Data structure containing input string and token list.
-- i:	The current index in the input string.
+- t_data *data:	Data structure containing input string and token list.
+- int *i:		Pointer to the current index in the input string.
 
 Returns:
-- 0: If an invalid operand is found or if token creation failed.
-- 1: If the redirection and its operand are valid or if no redirection is found.
+- 0 if an invalid operand is found or if token creation failed.
+- 1 if the redirection and its operand are valid or if no redirection is found.
 */
 int	is_redirection(t_data *data, int *i)
 {
@@ -183,7 +202,7 @@ int	is_redirection(t_data *data, int *i)
 	// Check if a redirection was found and validate its operand
 	if (j != *i) // If *i has been incremented, it means a redirection was found
 	{
-		if (!check_operand(data->input, i, &j) || token_created == 0)
+		if (!check_operand(data->input, i, j) || token_created == 0)
 			return (0); // The operand is invalid or token creation failed.
 	}
 	return (1); // No redirection found or operand is valid

@@ -3,12 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/06 12:08:35 by aschenk           #+#    #+#             */
-/*   Updated: 2024/06/26 16:30:34 by nholbroo         ###   ########.fr       */
+/*   Updated: 2024/07/12 11:26:40 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+/*
+TBD
+*/
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
@@ -34,6 +38,10 @@
 # include <termios.h> // tcsetattr, tcgetattr
 # include <curses.h> // tgetent, tgetflag, tgetnum, tgetstr, tgoto, tputs
 
+//	++++++++++++++++
+//	++ STRUCTURES ++
+//	++++++++++++++++
+
 typedef struct s_cd
 {
 	char	*subdirectory;
@@ -45,8 +53,8 @@ typedef struct s_cd
 /*
 - char	*input:		The input string containing the command line input.
 - char	quote:		Encountered quotation symbol (single or double) in input.
+- int	pipe_no:	The number of pipes in the input string.
 */
-
 typedef struct s_env
 {
 	char			*value;
@@ -56,6 +64,9 @@ typedef struct s_env
 	bool			printed;
 }	t_env;
 
+/*
+TBD
+*/
 typedef struct s_data
 {
 	int		argc;
@@ -64,13 +75,20 @@ typedef struct s_data
 	char	*input;
 	char	*tmp;
 	char	quote;
+	int		pipe_no;
 	t_tok	tok;
 	t_cd	cd;
 	t_env	*envp_temp;
 	t_env	*export_list;
 }	t_data;
 
+
+//	+++++++++++++++
+//	++ FUNCTIONS ++
+//	+++++++++++++++
+
 // Struct initializations
+
 void			init_cd_struct(t_cd **cd, char *input);
 t_env			*init_env_tmp(char **envp);
 t_env			*init_export_list(t_data *data);
@@ -79,9 +97,7 @@ int argc, char **argv, char **envp);
 
 // utils.c
 
-void			perror_and_exit(char *msg, t_data *data);
-void			msg_and_exit(char *msg, t_data *data);
-void			print_logo(void);
+void			print_heredoc_found(t_data *data);
 
 // 0_check_input/check_quotation.c
 
@@ -91,10 +107,7 @@ int				is_quotation_closed(t_data *data);
 
 int				is_redirection(t_data *data, int *i);
 
-// 0_tokenizer/scanner.c
-
-t_list			*create_tok(t_data *data, t_token_type type, const char *lexeme,
-					int *i);
+int				is_pipe(t_data *data, int *i);
 
 // FOR TESTING!!
 void			print_string_array(char **array);
@@ -115,20 +128,16 @@ char			**parser(char *input);
 
 void			print_token(const t_list *current);
 void			print_token_list(t_list *token_list);
-int				is_space(int c);
+int				is_whitespace(int c);
 int				is_delimiter(t_data *data, const char c);
-
-// 0_tokenizer_/tokenizer_get_tokens.c
-
-void			get_tokens(t_data	*data);
 
 // free.c
 
 void			del_token(void *content);
 void			free_data(t_data *data);
 
-
 // Parsing:
+
 void			parsing(t_data *data);
 int				is_pwd(char *input);
 int				is_cd(char *input);
@@ -139,6 +148,10 @@ int				is_export(char *input);
 int				is_echo(char *input);
 
 // Builtins:
+
+void			init_cd_struct(t_cd **cd, char *input);
+t_env			*init_env_tmp(char **envp);
+
 int				cd(char *input, char **envp);
 void			pwd(void);
 void			env(t_env *env_temp);
@@ -148,27 +161,32 @@ void			export(t_data *data);
 //void			echo(t_data *data);
 
 // Butiltins utils:
+
 void			add_env_var_no_value(t_data *data, char *arg);
 void			add_env_var_export_with_value(t_data *data, char *arg);
 void			add_env_var_envp_with_value(t_data *data, char *arg);
 void			ft_env_tmp_add_back(t_env **head, t_env *new);
 
 // Modified standard functions:
+
 int				ft_strchr_index(const char *s, int c);
 int				ft_strrchr_index(const char *s, int c);
 bool			is_only_duplicates(char *s, char c);
 int				is_letter(char c);
 
 // Counting-functions:
+
 int				count_array_length(char **array);
 
 // Freeing allocated memory for builtins:
+
 int				ft_freearray(char **arr);
 int				too_many_args_cd(t_cd **cd);
 int				free_cd_struct(t_cd **cd);
 void			free_env_struct(t_env **head);
 
 // Errors:
+
 void			print_error_cd(int error_code, t_cd **cd);
 void			print_error_exit(char *input);
 int				env_error_messages(char *input, int i);

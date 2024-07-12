@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   cd_test.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/13 13:51:10 by nholbroo          #+#    #+#             */
 /*   Updated: 2024/06/24 12:36:51 by nholbroo         ###   ########.fr       */
@@ -11,6 +11,22 @@
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+int	is_cd(char *input)
+{
+	int	i;
+
+	i = 0;
+	while (input[i] && is_whitespace(input[i])) // Skipping whitespaces in the beginning
+		i++;
+	if (input[i] && input[i++] != 'c') // Hard-checking for "cd"
+		return (0);
+	if (input[i] && input[i++] != 'd')
+		return (0);
+	if (input[i] && !is_whitespace(input[i])) // Only accepting a space after "cd" -> e.g. "cd /". Would not accept "cdd".
+		return (0);
+	return (1);
+}
 
 static void	cd_one_up(t_cd **cd, char *cwd)
 {
@@ -114,7 +130,8 @@ int	is_cd(char *input)
 	int	i;
 
 	i = 0;
-	while (input[i] && is_space(input[i])) // Skipping whitespaces in the beginning
+	while (input[i] && 
+         pace(input[i])) // Skipping whitespaces in the beginning
 		i++;
 	if (input[i] && input[i++] != 'c') // Hard-checking for "cd"
 		return (0);

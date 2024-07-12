@@ -6,7 +6,7 @@
 /*   By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/13 12:12:15 by aschenk           #+#    #+#             */
-/*   Updated: 2024/06/21 17:00:38 by nholbroo         ###   ########.fr       */
+/*   Updated: 2024/07/03 17:51:26 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,5 +54,6 @@ void	free_data(t_data *data)
 	ft_lstclear(&data->tok.tok_lst, del_token);
 	if (data->input)
 		free(data->input);
-	// might need to free other members of the t_data struct
+	data->pipe_no = 0; // Reset number of pipes to default.
+	// prob need to free other members of the t_data struct
 }

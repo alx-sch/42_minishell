@@ -6,7 +6,7 @@
 /*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/07 16:54:03 by aschenk           #+#    #+#             */
-/*   Updated: 2024/06/17 20:14:51 by aschenk          ###   ########.fr       */
+/*   Updated: 2024/07/12 11:17:54 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,8 +24,8 @@
 # define BLUE 		"\033[34m"
 # define VIOLET 	"\033[35;1m"
 
-# define PROMPT_COL ORANGE BOLD
-# define PROMPT		"🌈 " PROMPT_COL "minishell$ " RESET
+# define PROMPT		"🌈\033[38;5;208m\033[1m minishell$ \033[0m"
+# define HEREDOC_P	"> "
 
 // History: Override macros when invoking 'make':
 // 'make CFLAGS+="-DHIST_FILE='new_path' -DHIST_SIZE=42"

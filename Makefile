@@ -11,37 +11,98 @@
 #                                                                              #
 # **************************************************************************** #
 
+#################
+## DEFINITIONS ##
+#################
+
 NAME :=			minishell
 
+# SOURCE FILES
 SRCS_DIR :=		src
-SRCS :=			$(SRCS_DIR)/main.c \
-				$(SRCS_DIR)/free.c \
-				$(SRCS_DIR)/builtins/builtin_struct_inits.c \
-				$(SRCS_DIR)/builtins/cd.c \
-				$(SRCS_DIR)/builtins/pwd.c \
-				$(SRCS_DIR)/errors/print_error.c \
-				$(SRCS_DIR)/parsing/parsing.c \
-				$(SRCS_DIR)/standard_functions/count.c \
-				$(SRCS_DIR)/standard_functions/free_functions.c \
-				$(SRCS_DIR)/standard_functions/modified_standards.c
+SRCS_FILES :=	main.c \
+				free.c \
+				utils.c \
+				0_check_input/check_quotation.c \
+				1_tokenizer/tokenizer_get_tokens.c \
+				1_tokenizer/tokenizer_redirection.c \
+				1_tokenizer/tokenizer_pipe.c \
+				1_tokenizer/tokenizer_utils.c
 
+SRCS :=			$(addprefix $(SRCS_DIR)/, $(SRCS_FILES))
+
+# OBJECT FILES
 OBJS_DIR :=		obj
 OBJS :=			$(SRCS:$(SRCS_DIR)/%.c=$(OBJS_DIR)/%.o)
 
+# HEADER FILES
 HDRS_DIR :=		include
-HDRS := 		$(HDRS_DIR)/minishell.h \
-				$(HDRS_DIR)/config.h \
-				$(HDRS_DIR)/tokenizer.h \
-				$(HDRS_DIR)/errors.h
+HDRS_FILES := 	minishell.h \
+				config.h \
+				tokenizer.h \
+				errors.h
+
+HDRS :=			$(addprefix $(HDRS_DIR)/, $(HDRS_FILES))
 
 # LIBFT
 LIBFT_DIR :=	libft
-LIBFT_FLAGS :=	-L$(LIBFT_DIR) -lft -lreadline -lhistory
+LIBFT_LIST :=	libft.h \
+				ft_isalpha.c \
+				ft_isdigit.c \
+				ft_isalnum.c \
+				ft_isascii.c \
+				ft_isprint.c \
+				ft_strlen.c \
+				ft_toupper.c \
+				ft_tolower.c \
+				ft_strncmp.c \
+				ft_strlcpy.c \
+				ft_strlcat.c \
+				ft_strchr.c \
+				ft_strrchr.c \
+				ft_strnstr.c \
+				ft_memset.c \
+				ft_memchr.c \
+				ft_memcpy.c \
+				ft_memcmp.c \
+				ft_memmove.c \
+				ft_bzero.c \
+				ft_atoi.c \
+				ft_strdup.c \
+				ft_calloc.c \
+				ft_substr.c \
+				ft_strjoin.c \
+				ft_strtrim.c \
+				ft_split.c \
+				ft_itoa.c \
+				ft_strmapi.c \
+				ft_striteri.c \
+				ft_putchar_fd.c \
+				ft_putstr_fd.c \
+				ft_putendl_fd.c \
+				ft_putnbr_fd.c \
+				ft_lstnew.c \
+				ft_lstadd_front.c \
+				ft_lstsize.c \
+				ft_lstlast.c \
+				ft_lstadd_back.c \
+				ft_lstdelone.c \
+				ft_lstclear.c \
+				ft_lstiter.c \
+				ft_lstmap.c \
+				ft_strcmp.c \
+				ft_isbinary.c \
+				get_next_line_bonus.c \
+				ft_printf_utils.c \
+				ft_printf.c \
+				ft_atoi_base.c
+
+LIBFT_FILES := $(addprefix $(LIBFT_DIR)/, $(LIBFT_LIST))
 LIBFT :=		$(LIBFT_DIR)/libft.a
 
-# OTHER LIBS
-LIB_FLAGS :=	$(LIBFT_FLAGS)
+# LINKING LIBS
+LIB_FLAGS  :=	-L$(LIBFT_DIR) -lft -lreadline -lhistory
 
+# COMPILER
 CC :=			cc
 CFLAGS :=		-Werror -Wextra -Wall -I$(HDRS_DIR) -I$(LIBFT_DIR)
 CFLAGS +=		-Wpedantic -g
@@ -51,77 +112,29 @@ CFLAGS +=		-Wpedantic -g
 TOTAL_SRCS :=	$(words $(SRCS))
 SRC_NUM :=		0
 
-# Define ANSI escape codes for colors and styles
+# ANSI escape codes for colors and styles
 RESET =			\033[0m
 BOLD =			\033[1m
 RED =			\033[31;2m
 GREEN =			\033[32m
 YELLOW =		\033[33m
 L_RED :=		\033[91m
-ORANGE :=		\033[38;5;208m
-BLUE := 		\033[34m
-VIOLET := 		\033[35;1m
 
-# target
-all:			$(LIBFT) $(NAME)
+###########
+## RULES ##
+###########
+
+# Default target
+all:		$(LIBFT) $(NAME)
 
 # Build libft library by calling 'make' in LIBFT_DIR.
 # This target will be executed if libft.a is missing or
 # if any of the listed .c or .h files in LIBFT_DIR are modified.
-$(LIBFT):	$(LIBFT_DIR)/libft.h \
-			$(LIBFT_DIR)/ft_isalpha.c \
-			$(LIBFT_DIR)/ft_isdigit.c \
-			$(LIBFT_DIR)/ft_isalnum.c \
-			$(LIBFT_DIR)/ft_isascii.c \
-			$(LIBFT_DIR)/ft_isprint.c \
-			$(LIBFT_DIR)/ft_strlen.c \
-			$(LIBFT_DIR)/ft_toupper.c \
-			$(LIBFT_DIR)/ft_tolower.c \
-			$(LIBFT_DIR)/ft_strncmp.c \
-			$(LIBFT_DIR)/ft_strlcpy.c \
-			$(LIBFT_DIR)/ft_strlcat.c \
-			$(LIBFT_DIR)/ft_strchr.c \
-			$(LIBFT_DIR)/ft_strrchr.c \
-			$(LIBFT_DIR)/ft_strnstr.c \
-			$(LIBFT_DIR)/ft_memset.c \
-			$(LIBFT_DIR)/ft_memchr.c \
-			$(LIBFT_DIR)/ft_memcpy.c \
-			$(LIBFT_DIR)/ft_memcmp.c \
-			$(LIBFT_DIR)/ft_memmove.c \
-			$(LIBFT_DIR)/ft_bzero.c \
-			$(LIBFT_DIR)/ft_atoi.c \
-			$(LIBFT_DIR)/ft_strdup.c \
-			$(LIBFT_DIR)/ft_calloc.c \
-			$(LIBFT_DIR)/ft_substr.c \
-			$(LIBFT_DIR)/ft_strjoin.c \
-			$(LIBFT_DIR)/ft_strtrim.c \
-			$(LIBFT_DIR)/ft_split.c \
-			$(LIBFT_DIR)/ft_itoa.c \
-			$(LIBFT_DIR)/ft_strmapi.c \
-			$(LIBFT_DIR)/ft_striteri.c \
-			$(LIBFT_DIR)/ft_putchar_fd.c \
-			$(LIBFT_DIR)/ft_putstr_fd.c \
-			$(LIBFT_DIR)/ft_putendl_fd.c \
-			$(LIBFT_DIR)/ft_putnbr_fd.c \
-			$(LIBFT_DIR)/ft_lstnew.c \
-			$(LIBFT_DIR)/ft_lstadd_front.c \
-			$(LIBFT_DIR)/ft_lstsize.c \
-			$(LIBFT_DIR)/ft_lstlast.c \
-			$(LIBFT_DIR)/ft_lstadd_back.c \
-			$(LIBFT_DIR)/ft_lstdelone.c \
-			$(LIBFT_DIR)/ft_lstclear.c \
-			$(LIBFT_DIR)/ft_lstiter.c \
-			$(LIBFT_DIR)/ft_lstmap.c \
-			$(LIBFT_DIR)/ft_strcmp.c \
-			$(LIBFT_DIR)/ft_isbinary.c \
-			$(LIBFT_DIR)/get_next_line_bonus.c \
-			$(LIBFT_DIR)/ft_printf_utils.c \
-			$(LIBFT_DIR)/ft_printf.c \
-			$(LIBFT_DIR)/ft_atoi_base.c
+$(LIBFT):	$(LIBFT_FILES)
 	@make -s -C $(LIBFT_DIR)
 	@echo ""
 
-# Target $(NAME) depends on object files $(OBJS) and libft library.
+# Target $(NAME) depends on object files $(OBJS) and the libft library.
 $(NAME):	$(OBJS) $(LIBFT)
 	@$(CC) $(CFLAGS) $(OBJS) $(LIB_FLAGS) -o $(NAME)
 	@echo "$(BOLD)$(YELLOW)\n$(NAME) successfully compiled.$(RESET)"
@@ -130,10 +143,11 @@ $(NAME):	$(OBJS) $(LIBFT)
 # COMPILATION PROGRESS BAR
 # Rule to define how to generate object files (%.o) from corresponding
 # source files (%.c). Each .o file depends on the associated .c file and the
-# project header file (include/project.h)
+# project header files.
+# Last line:
 # -c:		Generates o. files without linking.
-# -o $@:	Output file name;  '$@' is replaced with target name (the o. file).
 # -$<:		Represents the first prerequisite (the c. file).
+# -o $@:	Output file name;  '$@' is replaced with target name (the o. file).
 $(OBJS_DIR)/%.o:	$(SRCS_DIR)/%.c $(HDRS)
 	@mkdir -p $(@D)
 	@$(eval SRC_NUM := $(shell expr $(SRC_NUM) + 1))
@@ -148,17 +162,17 @@ $(OBJS_DIR)/%.o:	$(SRCS_DIR)/%.c $(HDRS)
 	@printf "%d%% $(RESET)" $(PERCENT)
 	@$(CC) $(CFLAGS) -D BUFFER_SIZE=$(BUFFER_SIZE) -D FD_SIZE=$(FD_SIZE) -c $< -o $@
 
-# Target to remove all generated files.
+# Rule to remove all generated object files.
 clean:
 	@rm -rf $(OBJS_DIR)
 	@echo "$(BOLD)$(RED)$(NAME) object files removed.$(RESET)"
 
-# Target to remove all generated files and the program executable.
+# Rule to remove all generated object files and the program executable.
 fclean:	clean
 	@rm -f $(NAME) $(NAME_TEST)
 	@echo "$(BOLD)$(RED)$(NAME) removed.$(RESET)"
 
-# Target to remove all generated files, the program executable,
+# Rule to remove all generated object files, the program executable,
 # and then rebuild the program.
 re:	fclean all
 
@@ -177,37 +191,29 @@ re_all:	fclean_all all
 
 NAME_TEST :=	$(NAME)_test
 TEST_DIR :=		src_test
-TEST_SRCS :=	$(TEST_DIR)/main_test.c \
-				$(TEST_DIR)/free_test.c \
-				$(TEST_DIR)/utils_test.c \
-				$(TEST_DIR)/struct_inits/init_cd_test.c \
-				$(TEST_DIR)/struct_inits/init_data_test.c \
-				$(TEST_DIR)/struct_inits/init_env_test.c \
-				$(TEST_DIR)/struct_inits/init_export_test.c \
-				$(TEST_DIR)/0_check_input/check_quotation_test.c \
-				$(TEST_DIR)/0_tokenizer/tokenizer_get_tokens_test.c \
-				$(TEST_DIR)/0_tokenizer/tokenizer_redirection_test.c \
-				$(TEST_DIR)/0_tokenizer/tokenizer_utils_test.c \
-				$(TEST_DIR)/1_parser/parser_var_expansion_test.c \
-				$(TEST_DIR)/builtins/cd_test.c \
-				$(TEST_DIR)/builtins/pwd_test.c \
-				$(TEST_DIR)/builtins/unset_test.c \
-				$(TEST_DIR)/builtins/env_test.c \
-				$(TEST_DIR)/builtins/exit_test.c \
-				$(TEST_DIR)/builtins/export_test.c \
-				$(TEST_DIR)/builtins/export_utils_test.c \
-				$(TEST_DIR)/builtins/echo_test.c \
-				$(TEST_DIR)/errors/exit_errors_test.c \
-				$(TEST_DIR)/errors/cd_errors_test.c \
-				$(TEST_DIR)/errors/env_errors_test.c \
-				$(TEST_DIR)/errors/export_errors_test.c \
-				$(TEST_DIR)/errors/unset_errors_test.c \
-				$(TEST_DIR)/errors/pwd_errors_test.c \
-				$(TEST_DIR)/parsing/parsing_test.c \
-				$(TEST_DIR)/standard_functions/count_test.c \
-				$(TEST_DIR)/standard_functions/free_functions_test.c \
-				$(TEST_DIR)/standard_functions/modified_standards_test.c
+TEST_FILES :=	main_test.c \
+				free_test.c \
+				utils_test.c \
+				0_check_input/check_quotation_test.c \
+				1_tokenizer/tokenizer_get_tokens_test.c \
+				1_tokenizer/tokenizer_redirection_test.c \
+				1_tokenizer/tokenizer_pipe_test.c \
+				1_tokenizer/tokenizer_utils_test.c \
+				2_parser/parser_var_expansion_test.c \
+				2_parser/parser_heredoc_test.c \
+				builtins/builtin_struct_inits_test.c \
+				builtins/cd_test.c \
+				builtins/pwd_test.c \
+				builtins/unset_test.c \
+				builtins/env_test.c \
+				builtins/exit_test.c \
+				errors/print_error_test.c \
+				parsing/parsing_test.c \
+				standard_functions/count_test.c \
+				standard_functions/free_functions_test.c \
+				standard_functions/modified_standards_test.c
 
+TEST_SRCS :=	$(addprefix $(TEST_DIR)/, $(TEST_FILES))
 TEST_OBJS :=	$(TEST_SRCS:$(TEST_DIR)/%.c=$(OBJS_DIR)/%.o)
 
 # Used for progress bar

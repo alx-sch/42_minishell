@@ -52,7 +52,7 @@ int	is_exit(char *input)
 	int	i;
 
 	i = 0;
-	while (is_space(input[i])) // Skipping all whitespaces in the beginning
+	while (is_whitespace(input[i])) // Skipping all whitespaces in the beginning
 		i++;
 	if (input[i++] != 'e') // Hard-checking for "exit".
 		return (0);
@@ -62,9 +62,9 @@ int	is_exit(char *input)
 		return (0);
 	if (input[i++] != 't')
 		return (0);
-	if (input[i] && !is_space(input[i]))
+	if (input[i] && !is_whitespace(input[i]))
 		return (0);
-	while ((input[i]) && (is_space(input[i]) 
+	while ((input[i]) && (is_whitespace(input[i]) 
 		|| input[i] == '+' || input[i] == '-' 
 		|| (input[i] >= '0' && input[i] <= '9'))) // Checking if what comes after "exit" is either numerical, '+', '-' or whitespaces. If it's not, then it's not valid.
 		i++;
