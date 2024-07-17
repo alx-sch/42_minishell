@@ -36,6 +36,5 @@ void	parsing(t_data *data) // instead of input the data_struct can be passed (wh
 	else if (is_export(data->input))
 		export(data);
 	else if (is_echo(data->input))
-		// echo(data);
-		printf(":)");
+		minishell_echo(data);
 }

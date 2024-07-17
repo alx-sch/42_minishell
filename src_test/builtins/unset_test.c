@@ -12,6 +12,7 @@
 
 #include "minishell.h"
 
+<<<<<<< HEAD
 // static void	export_unset_remove_variable(t_env **current, \
 // t_env **envp_temp, char *arg)
 // {
@@ -41,6 +42,8 @@
 // 	}
 // }
 
+=======
+>>>>>>> 24-implement-echo-builtin
 static void	unset_remove_variable(t_env **current, \
 t_env **envp_temp, char *arg)
 {

@@ -16,9 +16,6 @@
 
 static int	check_multiple_signs_exit_code(char *exit_arg)
 {
-	int	i;
-
-	i = 0;
 	if (*exit_arg == '-' || *exit_arg == '+') 
 	{
 		exit_arg++;

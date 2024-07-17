@@ -158,7 +158,7 @@ void			env(t_env *env_temp);
 void			unset(char *input, t_env **envp_temp);
 unsigned int	exit_with_code(t_data *data);
 void			export(t_data *data);
-//void			echo(t_data *data);
+void			minishell_echo(t_data *data);
 
 // Butiltins utils:
 
