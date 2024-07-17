@@ -17,19 +17,19 @@ void	print_echo(char *input, bool print_newline)
 	int	i;
 
 	i = 4;
-	while (input[i] && is_space(input[i]))
+	while (input[i] && is_whitespace(input[i]))
 		i++;
 	if (input[i] && input[i] == '-')
 	{
 		i += 2;
-		while (input[i] && is_space(input[i]))
+		while (input[i] && is_whitespace(input[i]))
 			i++;
 	}
 	while (input[i])
 	{
-		if (is_space(input[i]))
+		if (is_whitespace(input[i]))
 		{
-			while (input[i] && is_space(input[i]))
+			while (input[i] && is_whitespace(input[i]))
 				i++;
 			if (input[i])
 				write(1, " ", 1);
@@ -45,7 +45,7 @@ int	check_option_echo(char *input)
 	int	i;
 
 	i = 4;
-	while (input[i] && is_space(input[i]))
+	while (input[i] && is_whitespace(input[i]))
 		i++;
 	if (input[i] == '-')
 		return (1);
@@ -77,7 +77,7 @@ int	is_echo(char *input)
 	int	i;
 
 	i = 0;
-	while (is_space(input[i]))
+	while (is_whitespace(input[i]))
 		i++;
 	if (input[i++] != 'e')
 		return (0);
@@ -87,11 +87,11 @@ int	is_echo(char *input)
 		return (0);
 	if (input[i++] != 'o')
 		return (0);
-	if (input[i] && !is_space(input[i]))
+	if (input[i] && !is_whitespace(input[i]))
 		return (0);
 	while (input[i] != '\0')
 	{
-		if (!is_space(input[i]))
+		if (!is_whitespace(input[i]))
 			return (echo_err_invalid_option(input, i));
 		i++;
 	}

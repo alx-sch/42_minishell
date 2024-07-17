@@ -33,7 +33,7 @@ int	env_error_messages(char *input, int i)
 		errno = ENOENT;
 		write(2, "env: ", 5);
 		write(2, "'", 1);
-		while (input[i] && !is_space(input[i]))
+		while (input[i] && !is_whitespace(input[i]))
 			write(2, &input[i++], 1);
 		write(2, "': ", 3);
 		perror("");

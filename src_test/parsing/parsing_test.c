@@ -24,9 +24,8 @@ void	parsing(t_data *data) // instead of input the data_struct can be passed (wh
 		env(data->envp_temp); // Calls the env-function that works like the command.
 	else if (is_exit(data->input)) // Checks if the input is "exit". It accepts whitespaces before and after, and and exit code like "12", "+32" or "-213".
 	{
-		printf("exit\n"); // Prints "exit" on the STOUT.
 		get_next_line(-1); // cleans gnl stash, if existen
-		exit(exit_with_code(data->input)); // Exits minishell with correct exit code.
+		exit(exit_with_code(data)); // Exits minishell with correct exit code.
 	}
 	else if (is_unset(data->input)) // Checks if the input is "unset", accepts arguments, but not options.
 	{

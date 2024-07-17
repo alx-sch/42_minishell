@@ -201,17 +201,28 @@ TEST_FILES :=	main_test.c \
 				1_tokenizer/tokenizer_utils_test.c \
 				2_parser/parser_var_expansion_test.c \
 				2_parser/parser_heredoc_test.c \
-				builtins/builtin_struct_inits_test.c \
 				builtins/cd_test.c \
-				builtins/pwd_test.c \
-				builtins/unset_test.c \
+				builtins/echo_test.c \
 				builtins/env_test.c \
 				builtins/exit_test.c \
-				errors/print_error_test.c \
+				builtins/export_test.c \
+				builtins/export_utils_test.c \
+				builtins/pwd_test.c \
+				builtins/unset_test.c \
+				errors/cd_errors_test.c \
+				errors/env_errors_test.c \
+				errors/exit_errors_test.c \
+				errors/export_errors_test.c \
+				errors/pwd_errors_test.c \
+				errors/unset_errors_test.c \
 				parsing/parsing_test.c \
 				standard_functions/count_test.c \
 				standard_functions/free_functions_test.c \
-				standard_functions/modified_standards_test.c
+				standard_functions/modified_standards_test.c \
+				struct_inits/init_cd_test.c \
+				struct_inits/init_data_test.c \
+				struct_inits/init_env_test.c \
+				struct_inits/init_export_test.c
 
 TEST_SRCS :=	$(addprefix $(TEST_DIR)/, $(TEST_FILES))
 TEST_OBJS :=	$(TEST_SRCS:$(TEST_DIR)/%.c=$(OBJS_DIR)/%.o)

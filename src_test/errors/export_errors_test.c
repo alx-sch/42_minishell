@@ -14,7 +14,7 @@
 
 int	export_err_invalid_option(char *input, int i)
 {
-	if (input[i] == '-' && is_space(input[i - 1]))
+	if (input[i] == '-' && is_whitespace(input[i - 1]))
 	{
 		write(2, "minishell: export: ", 20);
 		if (input[i + 1])
@@ -30,7 +30,7 @@ int	export_err_invalid_option(char *input, int i)
 	else
 	{
 		write(2, "minishell: export: '", 21);
-		while (input[i] && !is_space(input[i]))
+		while (input[i] && !is_whitespace(input[i]))
 			write(2, &input[i++], 1);
 		write(2, "': not a valid identifier\n", 27);
 		return (0);

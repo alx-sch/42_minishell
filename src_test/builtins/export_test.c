@@ -83,7 +83,7 @@ int	is_export(char *input)
 	int	i;
 
 	i = 0;
-	while (is_space(input[i]))
+	while (is_whitespace(input[i]))
 		i++;
 	if (input[i++] != 'e')
 		return (0);
@@ -97,7 +97,7 @@ int	is_export(char *input)
 		return (0);
 	if (input[i++] != 't')
 		return (0);
-	if (input[i] && !is_space(input[i]))
+	if (input[i] && !is_whitespace(input[i]))
 		return (0);
 	return (export_check_option(input, i));
 }

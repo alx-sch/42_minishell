@@ -69,29 +69,6 @@ static void	print_logo(void)
 }
 
 /*
-Used in main().
-
-Initializes members in the data structure to starting values.
-This helps to prevent accessing uninitialized variables, particularly
-in functions like free_data(), which is automatically called in case
-of program termination due to an error.
-*/
-static void	init_data_struct(t_data *data, int argc, char **argv, char **envp)
-{
-	data->argc = argc;
-	data->argv = argv;
-	data->pipe_no = 0;
-	data->envp = envp;
-	//data->envp_temp = init_env_tmp(envp);
-	data->input = NULL;
-	data->tmp = NULL;
-	data->quote = '\0';
-	data->tok.tok = NULL;
-	data->tok.new_node = NULL;
-	data->tok.tok_lst = NULL;
-}
-
-/*
 Checks if the user input is empty or consists only of whitespace.
 
 Returns:
