@@ -52,7 +52,7 @@ This helps to prevent accessing uninitialized variables, particularly
 in functions like free_data(), which is automatically called in case
 of program termination due to an error.
 */
-static void	init_data_struct(t_data *data, int argc, char **argv, char **envp)
+void	init_data_struct(t_data *data, int argc, char **argv, char **envp)
 {
 	data->argc = argc;
 	data->argv = argv;
