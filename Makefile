@@ -138,7 +138,7 @@ $(LIBFT):	$(LIBFT_FILES)
 $(NAME):	$(OBJS) $(LIBFT)
 	@$(CC) $(CFLAGS) $(OBJS) $(LIB_FLAGS) -o $(NAME)
 	@echo "$(BOLD)$(YELLOW)\n$(NAME) successfully compiled.$(RESET)"
-	@echo "Usage: './minishell' to start the program, then use it like bash.\n"
+	@echo "\nUsage: './minishell' to start the program, then use it like bash.\n"
 
 # COMPILATION PROGRESS BAR
 # Rule to define how to generate object files (%.o) from corresponding
