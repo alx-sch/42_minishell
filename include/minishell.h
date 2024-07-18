@@ -6,7 +6,7 @@
 /*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/06 12:08:35 by aschenk           #+#    #+#             */
-/*   Updated: 2024/07/12 11:26:40 by aschenk          ###   ########.fr       */
+/*   Updated: 2024/07/18 15:45:43 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,6 @@ typedef struct s_data
 	t_env	*envp_temp;
 	t_env	*export_list;
 }	t_data;
-
 
 //	+++++++++++++++
 //	++ FUNCTIONS ++
