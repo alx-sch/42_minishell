@@ -6,7 +6,7 @@
 /*   By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/24 12:46:41 by nholbroo          #+#    #+#             */
-/*   Updated: 2024/06/24 12:46:47 by nholbroo         ###   ########.fr       */
+/*   Updated: 2024/07/22 19:43:53 by nholbroo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,14 @@ Initializes members in the data structure to starting values.
 This helps to prevent accessing uninitialized variables, particularly
 in functions like free_data(), which is automatically called in case
 of program termination due to an error.
+@param envp An array containing the initial state of the environmental 
+variables.
+@param envp_temp Used for "env"-command. A linked list containing the 
+continously modified state of the environmental variables.
+@param export_list Used for "export"-command. A linked list containing the 
+continously modified state of the environmental variables that have 
+been marked for export (also the ones without value).
 */
-
 void	init_data_struct(t_data *data, int argc, char **argv, char **envp)
 {
 	data->argc = argc;

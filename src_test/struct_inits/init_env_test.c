@@ -6,12 +6,13 @@
 /*   By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 16:28:08 by nholbroo          #+#    #+#             */
-/*   Updated: 2024/06/25 15:59:06 by nholbroo         ###   ########.fr       */
+/*   Updated: 2024/07/22 19:46:00 by nholbroo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+// Adding a new node to the envp_temp list.
 void	ft_env_tmp_add_back(t_env **head, t_env *new)
 {
 	t_env	*current;
@@ -30,6 +31,7 @@ void	ft_env_tmp_add_back(t_env **head, t_env *new)
 	}
 }
 
+// Initializing a node of the envp_temp list.
 static t_env	*init_node_of_env(char *envp, t_env *node)
 {
 	node->e_var = ft_substr(envp, 0, ft_strrchr_index(envp, '='));
@@ -45,6 +47,8 @@ static t_env	*init_node_of_env(char *envp, t_env *node)
 	return (node);
 }
 
+// Initializing the envp_temp list. Essentially copies the "envp"-array
+// into a new linked list.
 t_env	*init_env_tmp(char **envp)
 {
 	t_env	*head;

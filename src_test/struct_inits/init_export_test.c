@@ -6,13 +6,18 @@
 /*   By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/24 12:43:52 by nholbroo          #+#    #+#             */
-/*   Updated: 2024/06/25 15:49:37 by nholbroo         ###   ########.fr       */
+/*   Updated: 2024/07/22 19:57:42 by nholbroo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static void	reset_count_export(t_env *envp_temp)
+// Part of the sorting algorithm to sort the environmental variables
+// alphabetically, to be stored in export_list. 
+// Sets all the envp_temp->printed to 0.
+// NB! WHEN YOU ADD A NEW NODE USING EXPORT, IT SHOULD BE PLACED
+// ALPHABETICALLY TOO, WHICH IS NOT THE CASE NOW. 
+static void	reset_printed_export(t_env *envp_temp)
 {
 	while (envp_temp)
 	{
@@ -21,6 +26,7 @@ static void	reset_count_export(t_env *envp_temp)
 	}
 }
 
+// Checks the length of the envp_temp list (how many nodes).
 static int	list_length(t_env *envp_temp)
 {
 	int	len;
@@ -34,6 +40,11 @@ static int	list_length(t_env *envp_temp)
 	return (len);
 }
 
+// Adds the current lowest alphabetical value environmental variable 
+// from envp_temp to export_list.
+// If export_list doesn't exist, meaning it is the lowest_node is the first
+// node to be added, the functin initializes export_list.
+// @param lowest_node The current node that should be added to export_list.
 static t_env	*build_export_list(t_data *data, t_env *lowest_node)
 {
 	t_env	*node;
@@ -58,7 +69,14 @@ static t_env	*build_export_list(t_data *data, t_env *lowest_node)
 	return (data->export_list);
 }
 
-t_env   *init_export_list(t_data *data)
+// Initializes the export_list.
+// A sorting algorithm to sort the environmental variables alphabetically.
+// Iterates through the envp_temp-list, taking the element
+// with the lowest alphabetical value that has NOT been stored yet, 
+// and adds it to the export_list. Goes through the envp_temp-list until all
+// elements have been added to export_list.
+// NB! FUNCTION TOO LONG.
+t_env	*init_export_list(t_data *data)
 {
 	t_env	*current;
 	t_env	*lowest_node;
@@ -66,7 +84,7 @@ t_env   *init_export_list(t_data *data)
 	int		count;
 
 	len = list_length(data->envp_temp);
-	reset_count_export(data->envp_temp);
+	reset_printed_export(data->envp_temp);
 	count = 0;
 	while (count < len)
 	{

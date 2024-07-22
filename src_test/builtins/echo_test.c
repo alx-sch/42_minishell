@@ -6,17 +6,24 @@
 /*   By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/26 16:05:17 by nholbroo          #+#    #+#             */
-/*   Updated: 2024/07/22 15:51:51 by nholbroo         ###   ########.fr       */
+/*   Updated: 2024/07/22 19:23:42 by nholbroo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+// Prints whatever argument passed to "echo"-command.
+// 
+// print_newline:
+// -If true, it means echo is called with no options, and a newline should be
+// printed.
+// -If false, it means echo is called with "-n" option, and a newline 
+// should NOT be printed.
 void	print_echo(char *input, bool print_newline)
 {
 	int	i;
 
-	i = 4;
+	i = 4; // Starting after "echo" part of the input.
 	while (input[i] && is_whitespace(input[i]))
 		i++;
 	if (input[i] && input[i] == '-')
@@ -40,6 +47,7 @@ void	print_echo(char *input, bool print_newline)
 		write(1, "\n", 1);
 }
 
+// Checking if there is an option or not for the "echo"-command.
 int	check_option_echo(char *input)
 {
 	int	i;
@@ -52,6 +60,9 @@ int	check_option_echo(char *input)
 	return (0);
 }
 
+// Works like the "echo"-command, essentially outputting whatever is passed
+// as an argument to echo. The function checks if there is an "-n"-option or
+// not, to see if newline should be printed or not.
 void	minishell_echo(t_data *data)
 {
 	if (check_option_echo(data->input))
@@ -60,6 +71,11 @@ void	minishell_echo(t_data *data)
 		print_echo(data->input, true);
 }
 
+// Checking if there is an option for the "echo"-command. If it is not '-n', it
+// is not accepted, and an error message is printed.
+//
+// Returns 0 if there is an invalid option.
+// Returns 1 upon success.
 static int	echo_err_invalid_option(char *input, int i)
 {
 	if (input[i] == '-' && input[i + 1] && input[i + 1] != 'n')
@@ -72,6 +88,12 @@ static int	echo_err_invalid_option(char *input, int i)
 	return (1);
 }
 
+// Checking if the input is "echo". Ignores whitespaces in beginning/end.
+// Throws an error message if there is an invalid option (not -n).
+// Accepts several arguments.
+// 
+// Returns 0 upon error.
+// Returns 1 upon success.
 int	is_echo(char *input)
 {
 	int	i;

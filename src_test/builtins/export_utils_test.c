@@ -6,12 +6,15 @@
 /*   By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/26 15:50:31 by nholbroo          #+#    #+#             */
-/*   Updated: 2024/07/22 18:34:19 by nholbroo         ###   ########.fr       */
+/*   Updated: 2024/07/22 18:59:53 by nholbroo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+// Checks if the environmental variable already exists in the list.
+// @param env_list Can be either export_list or envp_temp.
+// @param arg The current argument to the "export"-command.
 static t_env	*check_if_envar_exists(t_env *env_list, char *arg)
 {
 	while (env_list)
@@ -23,7 +26,12 @@ static t_env	*check_if_envar_exists(t_env *env_list, char *arg)
 	return (NULL);
 }
 
-
+/*Adds an environmental variable to the export-list with no value.
+-If the environmental variable already exists, nothing happens.
+-Otherwise a new environmental variable is created and added to the end of the 
+list.
+@param arg The argument to the "export"-command (the name of the new
+variable).*/
 void	add_env_var_no_value(t_data *data, char *arg)
 {
 	t_env	*node;
@@ -39,6 +47,15 @@ void	add_env_var_no_value(t_data *data, char *arg)
 	ft_env_tmp_add_back(&data->export_list, node);
 }
 
+/*Adds or modifies an environmental variable to the export-list with a defined
+value.
+-If the environmental variable already exists, give it a new value.
+-Otherwise create a new environmental variable, assign it a value, and
+add it to the end of the list.
+@param arg The argument to the "export"-command, either a new variable or 
+a variable + value (separated by a '='). A new variable would look like this:
+"export GROUP", and assigning a value to an already existing variable: "export 
+NAME=JOE".*/
 void	add_env_var_export_with_value(t_data *data, char *arg)
 {
 	t_env	*node;
@@ -63,7 +80,15 @@ void	add_env_var_export_with_value(t_data *data, char *arg)
 	}
 }
 
-/**/
+/*Adds or modifies an environmental variable to the env-list with a defined
+value.
+-If the environmental variable already exists, give it a new value.
+-Otherwise create a new environmental variable, assign it a value, and
+add it to the end of the list.
+@param arg The argument to the "export"-command, either a new variable or 
+a variable + value (separated by a '='). A new variable would look like this:
+"export GROUP", and assigning a value to an already existing variable: "export 
+NAME=JOE".*/
 void	add_env_var_envp_with_value(t_data *data, char *arg)
 {
 	t_env	*node;

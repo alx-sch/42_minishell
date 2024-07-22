@@ -3,15 +3,19 @@
 /*                                                        :::      ::::::::   */
 /*   cd_test.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
+/*   By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/13 13:51:10 by nholbroo          #+#    #+#             */
-/*   Updated: 2024/06/24 12:36:51 by nholbroo         ###   ########.fr       */
+/*   Updated: 2024/07/22 19:39:04 by nholbroo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+// Checks if input is "cd". Ignores whitespaces in the beginning/end.
+//
+// Returns 0 upon error (e.g. "cdd" instead of "cd").
+// Returns 1 upon success.
 int	is_cd(char *input)
 {
 	int	i;
@@ -28,6 +32,9 @@ int	is_cd(char *input)
 	return (1);
 }
 
+// Changes current working directory to parent directory ("cd ..").
+// Throws an error if memory allocation fails or something goes wrong with
+// changing the directory.
 static void	cd_one_up(t_cd **cd, char *cwd)
 {
 	int		eol; // Stands for "end of line".
@@ -52,6 +59,12 @@ static void	cd_one_up(t_cd **cd, char *cwd)
 		perror("minishell: cd");
 }
 
+// Changes current working directory to "home".
+// Iterates through the environmental variables to find correct "home"-
+// directory.
+// Throws an error message if it doesn't exist (it has been removed).
+// NB! THAT ERROR MESSAGE DOESN'T YET APPLY, AS IT'S NOT UPDATED. REMEMBER
+// TO FIX.
 static void	cd_to_home_user(t_cd **cd, char **envp)
 {
 	int		i;
@@ -76,6 +89,12 @@ static void	cd_to_home_user(t_cd **cd, char **envp)
 		perror("minishell: cd");
 }
 
+// Moves to a subdirectory or an absolute path.
+// First checks if it is a valid absolute path ("cd /home/natalierh"). In that 
+// case it changes current working directory to that.
+// Otherwise moves on to change to a defined subdirectory.
+//
+// Throws an error if the defined subdirectory doesn't exist.
 void	cd_one_down(t_cd **cd, char *cwd)
 {
 	char	*input;
@@ -98,6 +117,19 @@ void	cd_one_down(t_cd **cd, char *cwd)
 	free(input);
 }
 
+// Works like the "cd"-command in bash.
+// 
+// Does not accept:
+// -More than one argument.
+// -Non-existing file or directory.
+// 
+// Does accept:
+// -Whitespaces in the beginning/end.
+// -Both relative and absolute paths ("cd .." or "cd /home/nholbroo").
+// -Go to home ("cd" or "cd ~").
+// -Go to root ("cd /" or even "cd ///////////").
+// -Go to subdirectory (type "cd" followed by a subdirectory or press tab-key 
+// to see a list of different available subdirectories.)
 int	cd(char *input, char **envp)
 {
 	char		cwd[4096];
