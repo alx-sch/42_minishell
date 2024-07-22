@@ -6,7 +6,7 @@
 /*   By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/25 10:35:04 by natalierh         #+#    #+#             */
-/*   Updated: 2024/06/24 14:28:57 by nholbroo         ###   ########.fr       */
+/*   Updated: 2024/07/22 16:08:19 by nholbroo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ unsigned int	exit_with_code(t_data *data)
 		&& *exit_arg != '-' && *exit_arg != '+')
 		exit_arg++;
 	if (check_multiple_signs_exit_code(exit_arg))
-		print_error_exit(data->input);
+		print_error_exit(data);
 	exit_code = (unsigned int) ft_atoi(exit_arg); // Converting the numeral part of the string to an unsigned int.
 	free_env_struct(&data->envp_temp);
 	free_env_struct(&data->export_list);
@@ -44,29 +44,29 @@ unsigned int	exit_with_code(t_data *data)
 	return (exit_code); // Returning the exit code.
 }
 
-int	is_exit(char *input)
+int	is_exit(t_data *data)
 {
 	int	i;
 
 	i = 0;
-	while (is_whitespace(input[i])) // Skipping all whitespaces in the beginning
+	while (is_whitespace(data->input[i])) // Skipping all whitespaces in the beginning
 		i++;
-	if (input[i++] != 'e') // Hard-checking for "exit".
+	if (data->input[i++] != 'e') // Hard-checking for "exit".
 		return (0);
-	if (input[i++] != 'x')
+	if (data->input[i++] != 'x')
 		return (0);
-	if (input[i++] != 'i')
+	if (data->input[i++] != 'i')
 		return (0);
-	if (input[i++] != 't')
+	if (data->input[i++] != 't')
 		return (0);
-	if (input[i] && !is_whitespace(input[i]))
+	if (data->input[i] && !is_whitespace(data->input[i]))
 		return (0);
-	while ((input[i]) && (is_whitespace(input[i]) 
-		|| input[i] == '+' || input[i] == '-' 
-		|| (input[i] >= '0' && input[i] <= '9'))) // Checking if what comes after "exit" is either numerical, '+', '-' or whitespaces. If it's not, then it's not valid.
+	while ((data->input[i]) && (is_whitespace(data->input[i]) 
+		|| data->input[i] == '+' || data->input[i] == '-' 
+		|| (data->input[i] >= '0' && data->input[i] <= '9'))) // Checking if what comes after "exit" is either numerical, '+', '-' or whitespaces. If it's not, then it's not valid.
 		i++;
-	exit_check_argc(input); // Checking if there are more than one argument to the "exit" command -> in that case it prints an error message and exits.
-	if (input[i] != '\0') // If something that comes after 'exit' is not whitespace or a number, printing an error message, and exiting the process.
-		print_error_exit(input);
+	exit_check_argc(data); // Checking if there are more than one argument to the "exit" command -> in that case it prints an error message and exits.
+	if (data->input[i] != '\0') // If something that comes after 'exit' is not whitespace or a number, printing an error message, and exiting the process.
+		print_error_exit(data);
 	return (1);
 }

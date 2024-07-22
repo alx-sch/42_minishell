@@ -6,7 +6,7 @@
 /*   By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/26 16:05:17 by nholbroo          #+#    #+#             */
-/*   Updated: 2024/06/26 16:35:09 by nholbroo         ###   ########.fr       */
+/*   Updated: 2024/07/22 15:51:51 by nholbroo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ int	check_option_echo(char *input)
 
 void	minishell_echo(t_data *data)
 {
- 	if (check_option_echo(data->input))
+	if (check_option_echo(data->input))
 		print_echo(data->input, false);
 	else
 		print_echo(data->input, true);

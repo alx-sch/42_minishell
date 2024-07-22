@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
+/*   By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/06 12:08:35 by aschenk           #+#    #+#             */
-/*   Updated: 2024/07/18 15:45:43 by aschenk          ###   ########.fr       */
+/*   Updated: 2024/07/22 16:07:59 by nholbroo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -140,7 +140,7 @@ void			free_data(t_data *data);
 void			parsing(t_data *data);
 int				is_pwd(char *input);
 int				is_cd(char *input);
-int				is_exit(char *input);
+int				is_exit(t_data *data);
 int				is_env(char *input);
 int				is_unset(char *input);
 int				is_export(char *input);
@@ -187,10 +187,10 @@ void			free_env_struct(t_env **head);
 // Errors:
 
 void			print_error_cd(int error_code, t_cd **cd);
-void			print_error_exit(char *input);
+void			print_error_exit(t_data *data);
 int				env_error_messages(char *input, int i);
 void			mem_alloc_fail_env(t_env **head);
-void			exit_check_argc(char *input);
+void			exit_check_argc(t_data *data);
 int				export_err_invalid_option(char *input, int i);
 void			unset_err_memalloc_fail(t_env **envp_temp);
 int				unset_err_invalid_option(char *input, int i);
