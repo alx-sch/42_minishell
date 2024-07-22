@@ -6,7 +6,7 @@
 /*   By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/26 15:50:31 by nholbroo          #+#    #+#             */
-/*   Updated: 2024/06/26 15:56:01 by nholbroo         ###   ########.fr       */
+/*   Updated: 2024/07/22 18:34:19 by nholbroo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,7 @@ void	add_env_var_export_with_value(t_data *data, char *arg)
 	}
 }
 
+/**/
 void	add_env_var_envp_with_value(t_data *data, char *arg)
 {
 	t_env	*node;

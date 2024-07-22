@@ -6,15 +6,15 @@
 /*   By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 17:16:54 by nholbroo          #+#    #+#             */
-/*   Updated: 2024/06/26 15:23:34 by nholbroo         ###   ########.fr       */
+/*   Updated: 2024/07/22 16:37:57 by nholbroo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-// This first function works exactly as ft_strrchr except for this:
-// The return value is an int instead of a pointer.
-
+// Iterates through a string, from start to end, to search for a character.
+// It returns its index if it is found. If it's not found, the 
+// function returns -1.
 int	ft_strchr_index(const char *s, int c)
 {
 	int		i;
@@ -29,6 +29,9 @@ int	ft_strchr_index(const char *s, int c)
 	return (-1);
 }
 
+// Iterates through a string, from end to start, to search for a character.
+// It returns its index if it is found. If it's not found, the 
+// function returns -1.
 int	ft_strrchr_index(const char *s, int c)
 {
 	char	char_c;
@@ -47,6 +50,7 @@ int	ft_strrchr_index(const char *s, int c)
 	return (-1);
 }
 
+/*Checks if the passed string ONLY contains a certain character*/
 bool	is_only_duplicates(char *s, char c)
 {
 	int	i;
@@ -61,9 +65,10 @@ bool	is_only_duplicates(char *s, char c)
 	return (true);
 }
 
-int  is_letter(char c)
+/*Checks if the char is an alphabetical character.*/
+int	is_letter(char c)
 {
-    if ((c >= 'A' && c <= 'Z') || (c >= 'a' && c <= 'z'))
-        return (1);
-    return (0);
+	if ((c >= 'A' && c <= 'Z') || (c >= 'a' && c <= 'z'))
+		return (1);
+	return (0);
 }

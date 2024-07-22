@@ -6,7 +6,7 @@
 /*   By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/20 14:14:17 by nholbroo          #+#    #+#             */
-/*   Updated: 2024/06/26 15:55:53 by nholbroo         ###   ########.fr       */
+/*   Updated: 2024/07/22 18:39:18 by nholbroo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,8 +29,8 @@
 // -> Create a new variable.
 // You do this in order to export the environmental variables to child processes.
 
-// HERE IT NEEDS A GOOD FIX!!
-
+// Prints a list of the current exported environmental variables, mimicking the 
+// behavior of the "export"-command in bash, without arguments/options.
 void	print_export(t_env *export_list)
 {
 	while (export_list)
@@ -44,6 +44,11 @@ void	print_export(t_env *export_list)
 	}
 }
 
+// -If input is "export" without arguments, the function prints a list.
+// -If there is an argument, NOT followed by a '=' it adds an environmental
+// variable to export list, but without assigning a value. E.g. "export NAME"
+// -If there is an argument followed by a '=' and something more, it adds an
+// environmental variable to both export and env list. E.g. "export NAME=BRAD".
 void	export(t_data *data)
 {
 	char	**args;

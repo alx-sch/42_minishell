@@ -6,12 +6,15 @@
 /*   By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/24 11:48:41 by nholbroo          #+#    #+#             */
-/*   Updated: 2024/07/22 16:14:30 by nholbroo         ###   ########.fr       */
+/*   Updated: 2024/07/22 18:23:16 by nholbroo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+/*Frees memory in case of memory allocation failure, and exits process.
+@param tmp_error_msg Passing the previous part of the error message (freeing it
+if it has been allocated)*/
 static void	mem_alloc_fail_exit(char *tmp_error_msg)
 {
 	if (tmp_error_msg)
@@ -21,6 +24,7 @@ static void	mem_alloc_fail_exit(char *tmp_error_msg)
 	exit(errno);
 }
 
+/*Frees allocated memory of the data struct*/
 static void	free_mem_exit(t_data *data)
 {
 	free_env_struct(&data->envp_temp);
@@ -28,6 +32,8 @@ static void	free_mem_exit(t_data *data)
 	free_data(data);
 }
 
+/*Prints an error message when the exit command is used, if there is more
+than one argument*/
 void	exit_check_argc(t_data *data)
 {
 	char	**arguments;
@@ -45,6 +51,8 @@ void	exit_check_argc(t_data *data)
 	ft_freearray(arguments);
 }
 
+/*Prints an error message when the exit command is used, if the argument is
+not numerical*/
 void	print_error_exit(t_data *data)
 {
 	char	*tmp_error_msg;

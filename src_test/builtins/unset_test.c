@@ -3,15 +3,19 @@
 /*                                                        :::      ::::::::   */
 /*   unset_test.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
+/*   By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/19 13:30:29 by nholbroo          #+#    #+#             */
-/*   Updated: 2024/07/01 19:06:18 by aschenk          ###   ########.fr       */
+/*   Updated: 2024/07/22 18:31:10 by nholbroo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+/*Removes a node from the t_env list.
+@param e_var "Environmental variable"
+@param value "Value of the environmental variable"
+@param current "The current node"*/
 static void	unset_remove_variable(t_env **current, t_env **envp_temp, char *arg)
 {
 	while (*current)
@@ -33,6 +37,10 @@ static void	unset_remove_variable(t_env **current, t_env **envp_temp, char *arg)
 	}
 }
 
+/*Removes one or more environmental variable(s) from the env-list or 
+export-list. The function is called twice in the file parsing.c, making sure 
+both lists are updated. If no variables are specified or the variable doesn't
+exist, nothing happens.*/
 void	unset(char *input, t_env **envp_temp)
 {
 	char	**args;
@@ -58,6 +66,8 @@ void	unset(char *input, t_env **envp_temp)
 	ft_freearray(args);
 }
 
+/*Checking if the input is "unset", ignoring whitespaces before "unset", 
+and not accepting options.*/
 int	is_unset(char *input)
 {
 	int	i;

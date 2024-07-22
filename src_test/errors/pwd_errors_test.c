@@ -6,12 +6,14 @@
 /*   By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/24 13:12:56 by nholbroo          #+#    #+#             */
-/*   Updated: 2024/06/24 13:13:28 by nholbroo         ###   ########.fr       */
+/*   Updated: 2024/07/22 16:33:34 by nholbroo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+/*Prints out an error message in case of an option, which is not a 
+functionality in minishell*/
 int	pwd_invalid_option(char *input, int i)
 {
 	if (input[i] == '-' && input[i + 1])

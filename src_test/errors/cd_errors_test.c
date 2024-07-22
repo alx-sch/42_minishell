@@ -6,20 +6,22 @@
 /*   By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/24 11:48:26 by nholbroo          #+#    #+#             */
-/*   Updated: 2024/06/24 12:39:47 by nholbroo         ###   ########.fr       */
+/*   Updated: 2024/07/22 18:24:51 by nholbroo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+// Prints an error message if there are too many arguments to cd command.
 int	too_many_args_cd(t_cd **cd)
 {
-	errno = EINVAL;
-	perror("minishell: cd");
+	write(2, "cd: too many arguments\n", 24);
 	free_cd_struct(cd); // Freeing the struct.
 	return (0);
 }
 
+// Prints an error message if there is a memory allocation failure for t_cd
+// struct.
 static void	mem_alloc_fail_cd(t_cd **cd)
 {
 	free_cd_struct(cd); // Freeing the struct.
@@ -28,6 +30,10 @@ static void	mem_alloc_fail_cd(t_cd **cd)
 	exit(errno); // Exits with correct errno code.
 }
 
+// Prints an error message for cd command, like memory allocation failure or
+// "No such file or directory"-message. 
+// @param error_code Error_code = 1 means memory allocation fail, and 
+// error_code = 2 means file/directory doesn't exist or similar.
 void	print_error_cd(int error_code, t_cd **cd)
 {
 	char	*error_msg;
