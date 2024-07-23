@@ -6,7 +6,7 @@
 /*   By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/24 12:43:52 by nholbroo          #+#    #+#             */
-/*   Updated: 2024/07/23 15:50:15 by nholbroo         ###   ########.fr       */
+/*   Updated: 2024/07/23 16:30:45 by nholbroo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,8 @@ static int	list_length(t_env *envp_temp)
 	return (len);
 }
 
+// Initializes the head of the export_list, if the lowest node is the first
+// element of the list.
 static t_env	*init_head_export_list(t_data *data, t_env *lowest_node)
 {
 	data->export_list = malloc(sizeof(t_env));
@@ -74,7 +76,6 @@ static t_env	*build_export_list(t_data *data, t_env *lowest_node)
 // with the lowest alphabetical value that has NOT been stored yet, 
 // and adds it to the export_list. Goes through the envp_temp-list until all
 // elements have been added to export_list.
-// NB! FUNCTION TOO LONG.
 t_env	*init_export_list(t_data *data)
 {
 	t_env	*current;

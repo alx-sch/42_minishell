@@ -6,7 +6,7 @@
 /*   By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/13 13:51:10 by nholbroo          #+#    #+#             */
-/*   Updated: 2024/07/23 13:47:57 by nholbroo         ###   ########.fr       */
+/*   Updated: 2024/07/23 16:47:30 by nholbroo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 //
 // Returns 0 upon error (e.g. "cdd" instead of "cd").
 // Returns 1 upon success.
+// NB! SOME WEIRD ERROR HERE IF YOU TYPE ONLY "c".
 int	is_cd(char *input)
 {
 	int	i;

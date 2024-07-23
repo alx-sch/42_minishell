@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   cd_test.c                                          :+:      :+:    :+:   */
+/*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/13 13:51:10 by nholbroo          #+#    #+#             */
-/*   Updated: 2024/07/23 14:22:07 by nholbroo         ###   ########.fr       */
+/*   Updated: 2024/07/23 16:46:45 by nholbroo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 //
 // Returns 0 upon error (e.g. "cdd" instead of "cd").
 // Returns 1 upon success.
+// NB! SOME WEIRD ERROR HERE IF YOU TYPE ONLY "c".
 int	is_cd(char *input)
 {
 	int	i;
@@ -27,7 +28,7 @@ int	is_cd(char *input)
 		return (0);
 	if (input[i] && input[i++] != 'd')
 		return (0);
-	if (input[i] && !is_whitespace(input[i]))
+	if (input[i] != '\0' && !is_whitespace(input[i]))
 		return (0);
 	return (1);
 }
