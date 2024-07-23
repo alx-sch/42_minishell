@@ -1,17 +1,37 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   modified_standards.c                               :+:      :+:    :+:   */
+/*   modified_standards_test.c                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 17:16:54 by nholbroo          #+#    #+#             */
-/*   Updated: 2024/05/15 17:10:39 by nholbroo         ###   ########.fr       */
+/*   Updated: 2024/07/22 16:37:57 by nholbroo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../include/minishell.h"
+#include "minishell.h"
 
+// Iterates through a string, from start to end, to search for a character.
+// It returns its index if it is found. If it's not found, the 
+// function returns -1.
+int	ft_strchr_index(const char *s, int c)
+{
+	int		i;
+
+	i = 0;
+	while (s[i])
+	{
+		if (s[i] == c)
+			return (i);
+		i++;
+	}
+	return (-1);
+}
+
+// Iterates through a string, from end to start, to search for a character.
+// It returns its index if it is found. If it's not found, the 
+// function returns -1.
 int	ft_strrchr_index(const char *s, int c)
 {
 	char	char_c;
@@ -30,6 +50,7 @@ int	ft_strrchr_index(const char *s, int c)
 	return (-1);
 }
 
+/*Checks if the passed string ONLY contains a certain character*/
 bool	is_only_duplicates(char *s, char c)
 {
 	int	i;
@@ -42,4 +63,12 @@ bool	is_only_duplicates(char *s, char c)
 		i++;
 	}
 	return (true);
+}
+
+/*Checks if the char is an alphabetical character.*/
+int	is_letter(char c)
+{
+	if ((c >= 'A' && c <= 'Z') || (c >= 'a' && c <= 'z'))
+		return (1);
+	return (0);
 }
