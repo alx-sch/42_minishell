@@ -6,7 +6,7 @@
 /*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 16:59:48 by aschenk           #+#    #+#             */
-/*   Updated: 2024/07/03 17:25:45 by aschenk          ###   ########.fr       */
+/*   Updated: 2024/07/18 17:12:29 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,28 +97,6 @@ t_list	*create_tok(t_data *data, t_token_type type, const char *lexeme, int *i)
 	ft_printf("Input[%d]: '%s' (token type: %d)\n", data->tok.tok->position, data->tok.tok->lexeme, data->tok.tok->type);
 	return (data->tok.new_node);
 }
-
-/*
-Used in get_tokens().
-
-Checks if the current character in the input string is a pipe (`|`) and creates
-a pipe token if it is.
-
-Returns:
-- 0 if the pipe token creation failed.
-- 1 if no pipe was found or the pipe token was successfully created.
-*/
-// static int	is_pipe(t_data *d, int *i)
-// {
-// 	if (d->input[*i] == '|')
-// 	{
-// 		d->tok.new_node = create_tok(d, PIPE, "|", i);
-// 		if (d->tok.new_node == NULL)
-// 			return (0);
-// 		ft_lstadd_back(&d->tok.tok_lst, d->tok.new_node);
-// 	}
-// 	return (1);
-// }
 
 /*
 Used in get_tokens().

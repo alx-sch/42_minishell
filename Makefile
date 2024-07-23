@@ -104,8 +104,9 @@ LIB_FLAGS  :=	-L$(LIBFT_DIR) -lft -lreadline -lhistory
 
 # COMPILER
 CC :=			cc
-CFLAGS :=		-Werror -Wextra -Wall -I$(HDRS_DIR) -I$(LIBFT_DIR)
-CFLAGS +=		-Wpedantic -g
+CFLAGS := 		-I$(HDRS_DIR) -I$(LIBFT_DIR)
+#CFLAGS :=		-Werror -Wextra -Wall -I$(HDRS_DIR) -I$(LIBFT_DIR)
+#CFLAGS +=		-Wpedantic -g
 #CFLAGS +=		-fsanitize=address
 
 # Used for progress bar
