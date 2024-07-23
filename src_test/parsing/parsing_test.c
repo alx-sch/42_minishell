@@ -6,7 +6,7 @@
 /*   By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/13 14:51:02 by nholbroo          #+#    #+#             */
-/*   Updated: 2024/07/22 16:35:21 by nholbroo         ###   ########.fr       */
+/*   Updated: 2024/07/23 13:36:51 by nholbroo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void	parsing(t_data *data) // instead of input the data_struct can be passed (wh
 	if (is_pwd(data->input)) // Checking if the input is "pwd". Ignores extra junk after pwd, like bash, but not handling options. Might implement error message with "invalid option".
 		pwd(); // Calls the pwd-function that is working as the command.
 	else if (is_cd(data->input)) // Checks if the input is "cd", accepts whitespaces and something following "cd" like "     cd    /home/natalierh". But not "cdd".
-		cd(data->input, data->envp); // Calls the cd-function that works like the command.
+		cd(data->input, data->envp_temp); // Calls the cd-function that works like the command.
 	else if (is_env(data->input)) //Checks if the input is "env". Ignores whitespaces before and after "env", but won't work if there are other characters present.
 		env(data->envp_temp); // Calls the env-function that works like the command.
 	else if (is_exit(data)) // Checks if the input is "exit". It accepts whitespaces before and after, and and exit code like "12", "+32" or "-213".

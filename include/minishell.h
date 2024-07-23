@@ -6,7 +6,7 @@
 /*   By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/06 12:08:35 by aschenk           #+#    #+#             */
-/*   Updated: 2024/07/22 20:00:45 by nholbroo         ###   ########.fr       */
+/*   Updated: 2024/07/23 13:40:15 by nholbroo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -151,7 +151,7 @@ int				is_echo(char *input);
 void			init_cd_struct(t_cd **cd, char *input);
 t_env			*init_env_tmp(char **envp);
 
-int				cd(char *input, char **envp);
+int				cd(char *input, t_env *envp_temp);
 void			pwd(void);
 void			env(t_env *env_temp);
 void			unset(char *input, t_env **envp_temp);

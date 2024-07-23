@@ -6,7 +6,7 @@
 /*   By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 15:59:31 by nholbroo          #+#    #+#             */
-/*   Updated: 2024/07/22 16:35:41 by nholbroo         ###   ########.fr       */
+/*   Updated: 2024/07/23 13:43:24 by nholbroo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ int	free_cd_struct(t_cd **cd)
 		if ((*cd)->parentdirectory)
 			free((*cd)->parentdirectory);
 		if ((*cd)->home_user)
-			free((*cd)->home_user - 5);
+			free((*cd)->home_user);
 		free(*cd);
 	}
 	return (0);
