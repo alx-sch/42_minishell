@@ -6,7 +6,7 @@
 /*   By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/26 15:50:31 by nholbroo          #+#    #+#             */
-/*   Updated: 2024/07/22 18:59:53 by nholbroo         ###   ########.fr       */
+/*   Updated: 2024/07/23 14:14:53 by nholbroo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,38 @@ static t_env	*check_if_envar_exists(t_env *env_list, char *arg)
 		env_list = env_list->next;
 	}
 	return (NULL);
+}
+
+/*Adds the new environmental variable into export_list, maintaining the
+alphabetical order. Also handles the case where the new node is of the 
+lowest alphabetical value.
+@param head Beginning of the export_list.
+@param node The new node (environmental variable) to be added.*/
+static void	add_to_export_list_alphabetical(t_env **head, t_env *node)
+{
+	t_env	*current;
+
+	if (!head || !node)
+		return ;
+	if (!*head || ft_strcmp((*head)->e_var, node->e_var) > 0)
+	{
+		node->next = *head;
+		if (*head)
+			(*head)->previous = node;
+		*head = node;
+	}
+	else
+	{
+		current = *head;
+		while (current->next && ft_strcmp(current->next->e_var, node->e_var) \
+		< 0)
+			current = current->next;
+		node->next = current->next;
+		if (current->next)
+			current->next->previous = node;
+		current->next = node;
+		node->previous = current;
+	}
 }
 
 /*Adds an environmental variable to the export-list with no value.
@@ -44,7 +76,7 @@ void	add_env_var_no_value(t_data *data, char *arg)
 	node->e_var = ft_strdup(arg);
 	node->value = NULL;
 	node->printed = 0;
-	ft_env_tmp_add_back(&data->export_list, node);
+	add_to_export_list_alphabetical(&data->export_list, node);
 }
 
 /*Adds or modifies an environmental variable to the export-list with a defined
@@ -69,7 +101,7 @@ void	add_env_var_export_with_value(t_data *data, char *arg)
 		node->value = ft_substr(arg, ft_strchr_index(arg, '=') + 1, \
 		ft_strlen(arg));
 		node->printed = 0;
-		ft_env_tmp_add_back(&data->export_list, node);
+		add_to_export_list_alphabetical(&data->export_list, node);
 	}
 	else
 	{
