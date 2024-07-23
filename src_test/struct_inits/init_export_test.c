@@ -6,25 +6,11 @@
 /*   By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/24 12:43:52 by nholbroo          #+#    #+#             */
-/*   Updated: 2024/07/22 19:57:42 by nholbroo         ###   ########.fr       */
+/*   Updated: 2024/07/23 13:53:51 by nholbroo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-// Part of the sorting algorithm to sort the environmental variables
-// alphabetically, to be stored in export_list. 
-// Sets all the envp_temp->printed to 0.
-// NB! WHEN YOU ADD A NEW NODE USING EXPORT, IT SHOULD BE PLACED
-// ALPHABETICALLY TOO, WHICH IS NOT THE CASE NOW. 
-static void	reset_printed_export(t_env *envp_temp)
-{
-	while (envp_temp)
-	{
-		envp_temp->printed = 0;
-		envp_temp = envp_temp->next;
-	}
-}
 
 // Checks the length of the envp_temp list (how many nodes).
 static int	list_length(t_env *envp_temp)
@@ -66,6 +52,7 @@ static t_env	*build_export_list(t_data *data, t_env *lowest_node)
 	node->e_var = ft_strdup(lowest_node->e_var);
 	node->value = ft_strdup(lowest_node->value);
 	ft_env_tmp_add_back(&data->export_list, node);
+	lowest_node->printed = 1;
 	return (data->export_list);
 }
 
@@ -84,7 +71,6 @@ t_env	*init_export_list(t_data *data)
 	int		count;
 
 	len = list_length(data->envp_temp);
-	reset_printed_export(data->envp_temp);
 	count = 0;
 	while (count < len)
 	{
@@ -98,10 +84,7 @@ t_env	*init_export_list(t_data *data)
 			current = current->next;
 		}
 		if (lowest_node)
-		{
 			data->export_list = build_export_list(data, lowest_node);
-			lowest_node->printed = 1;
-		}
 		count++;
 	}
 	return (data->export_list);
