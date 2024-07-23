@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   init_export_test.c                                 :+:      :+:    :+:   */
+/*   init_export.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/24 12:43:52 by nholbroo          #+#    #+#             */
-/*   Updated: 2024/07/23 13:53:51 by nholbroo         ###   ########.fr       */
+/*   Updated: 2024/07/23 15:50:15 by nholbroo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,22 @@ static int	list_length(t_env *envp_temp)
 	return (len);
 }
 
+static t_env	*init_head_export_list(t_data *data, t_env *lowest_node)
+{
+	data->export_list = malloc(sizeof(t_env));
+	if (!data->export_list)
+		export_mem_alloc_failure(data);
+	data->export_list->next = NULL;
+	data->export_list->previous = NULL;
+	data->export_list->printed = 0;
+	data->export_list->e_var = ft_strdup(lowest_node->e_var);
+	data->export_list->value = ft_strdup(lowest_node->value);
+	if (!data->export_list->e_var || !data->export_list->value)
+		export_mem_alloc_failure(data);
+	lowest_node->printed = 1;
+	return (data->export_list);
+}
+
 // Adds the current lowest alphabetical value environmental variable 
 // from envp_temp to export_list.
 // If export_list doesn't exist, meaning it is the lowest_node is the first
@@ -36,21 +52,17 @@ static t_env	*build_export_list(t_data *data, t_env *lowest_node)
 	t_env	*node;
 
 	if (!data->export_list)
-	{
-		data->export_list = malloc(sizeof(t_env));
-		data->export_list->next = NULL;
-		data->export_list->previous = NULL;
-		data->export_list->printed = 0;
-		data->export_list->e_var = ft_strdup(lowest_node->e_var);
-		data->export_list->value = ft_strdup(lowest_node->value);
-		return (data->export_list);
-	}
+		return (init_head_export_list(data, lowest_node));
 	node = malloc(sizeof(t_env));
+	if (!node)
+		export_mem_alloc_failure(data);
 	node->next = NULL;
 	node->previous = NULL;
 	node->printed = 0;
 	node->e_var = ft_strdup(lowest_node->e_var);
 	node->value = ft_strdup(lowest_node->value);
+	if (!node->e_var || !node->value)
+		export_mem_alloc_failure(data);
 	ft_env_tmp_add_back(&data->export_list, node);
 	lowest_node->printed = 1;
 	return (data->export_list);
