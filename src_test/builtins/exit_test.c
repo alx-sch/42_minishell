@@ -6,7 +6,7 @@
 /*   By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/25 10:35:04 by natalierh         #+#    #+#             */
-/*   Updated: 2024/07/22 19:11:21 by nholbroo         ###   ########.fr       */
+/*   Updated: 2024/07/23 15:07:12 by nholbroo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,9 +53,7 @@ unsigned int	exit_with_code(t_data *data)
 	if (check_multiple_signs_exit_code(exit_arg))
 		print_error_exit(data);
 	exit_code = (unsigned int) ft_atoi(exit_arg); // Converting the numeral part of the string to an unsigned int.
-	free_env_struct(&data->envp_temp);
-	free_env_struct(&data->export_list);
-	free_data(data);
+	free_data(data, 1);
 	printf("exit\n"); // Prints "exit" on the STOUT.
 	return (exit_code); // Returning the exit code.
 }

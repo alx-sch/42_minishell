@@ -6,7 +6,7 @@
 /*   By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/13 12:12:15 by aschenk           #+#    #+#             */
-/*   Updated: 2024/07/03 17:51:26 by aschenk          ###   ########.fr       */
+/*   Updated: 2024/07/23 15:06:54 by nholbroo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ void	del_token(void *content)
 }
 
 // Frees/closes all resources allocated for the data structure.
-void	free_data(t_data *data)
+void	free_data(t_data *data, bool exit)
 {
 	if (!data)
 		return ;
@@ -55,5 +55,11 @@ void	free_data(t_data *data)
 	if (data->input)
 		free(data->input);
 	data->pipe_no = 0; // Reset number of pipes to default.
-	// prob need to free other members of the t_data struct
+	if (exit)
+	{
+		if (data->envp_temp)
+			free_env_struct(&data->envp_temp);
+		if (data->export_list)
+			free_env_struct(&data->export_list);
+	}
 }

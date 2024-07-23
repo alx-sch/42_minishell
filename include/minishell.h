@@ -6,7 +6,7 @@
 /*   By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/06 12:08:35 by aschenk           #+#    #+#             */
-/*   Updated: 2024/07/23 13:40:15 by nholbroo         ###   ########.fr       */
+/*   Updated: 2024/07/23 15:14:58 by nholbroo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -133,7 +133,7 @@ int				is_delimiter(t_data *data, const char c);
 // free.c
 
 void			del_token(void *content);
-void			free_data(t_data *data);
+void			free_data(t_data *data, bool exit);
 
 // Parsing:
 
@@ -150,7 +150,6 @@ int				is_echo(char *input);
 
 void			init_cd_struct(t_cd **cd, char *input);
 t_env			*init_env_tmp(char **envp);
-
 int				cd(char *input, t_env *envp_temp);
 void			pwd(void);
 void			env(t_env *env_temp);
@@ -195,5 +194,6 @@ int				export_err_invalid_option(char *input, int i);
 void			unset_err_memalloc_fail(t_env **envp_temp);
 int				unset_err_invalid_option(char *input, int i);
 int				pwd_invalid_option(char *input, int i);
+void			export_mem_alloc_failure(t_data *data);
 
 #endif

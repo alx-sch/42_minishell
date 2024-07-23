@@ -6,7 +6,7 @@
 /*   By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/24 11:48:41 by nholbroo          #+#    #+#             */
-/*   Updated: 2024/07/22 18:23:16 by nholbroo         ###   ########.fr       */
+/*   Updated: 2024/07/23 15:09:19 by nholbroo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,14 +24,6 @@ static void	mem_alloc_fail_exit(char *tmp_error_msg)
 	exit(errno);
 }
 
-/*Frees allocated memory of the data struct*/
-static void	free_mem_exit(t_data *data)
-{
-	free_env_struct(&data->envp_temp);
-	free_env_struct(&data->export_list);
-	free_data(data);
-}
-
 /*Prints an error message when the exit command is used, if there is more
 than one argument*/
 void	exit_check_argc(t_data *data)
@@ -45,7 +37,7 @@ void	exit_check_argc(t_data *data)
 	{
 		write(2, "minishell: exit: too many arguments\n", 36);
 		ft_freearray(arguments);
-		free_mem_exit(data);
+		free_data(data, 1);
 		exit(1);
 	}
 	ft_freearray(arguments);
@@ -74,6 +66,6 @@ void	print_error_exit(t_data *data)
 	write(2, full_error_msg, ft_strlen(full_error_msg));
 	free(tmp_error_msg);
 	free(full_error_msg); // Frees the error_msg - string.
-	free_mem_exit(data);
+	free_data(data, 1);
 	exit(2);
 }

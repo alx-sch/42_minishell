@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   export_test.c                                      :+:      :+:    :+:   */
+/*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/20 14:14:17 by nholbroo          #+#    #+#             */
-/*   Updated: 2024/07/23 14:24:11 by nholbroo         ###   ########.fr       */
+/*   Updated: 2024/07/23 15:26:36 by nholbroo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,8 @@ void	export(t_data *data)
 
 	i = 1;
 	args = ft_split(data->input, ' ');
+	if (!args)
+		export_mem_alloc_failure(data);
 	if (!args[1])
 		print_export(data->export_list);
 	while (args[i])

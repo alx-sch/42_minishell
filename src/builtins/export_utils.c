@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   export_utils_test.c                                :+:      :+:    :+:   */
+/*   export_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/26 15:50:31 by nholbroo          #+#    #+#             */
-/*   Updated: 2024/07/23 14:14:53 by nholbroo         ###   ########.fr       */
+/*   Updated: 2024/07/23 15:22:05 by nholbroo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,9 +71,13 @@ void	add_env_var_no_value(t_data *data, char *arg)
 	if (check_if_envar_exists(data->export_list, arg))
 		return ;
 	node = malloc(sizeof(t_env));
+	if (!node)
+		export_mem_alloc_failure(data);
 	node->next = NULL;
 	node->previous = NULL;
 	node->e_var = ft_strdup(arg);
+	if (!node->e_var)
+		export_mem_alloc_failure(data);
 	node->value = NULL;
 	node->printed = 0;
 	add_to_export_list_alphabetical(&data->export_list, node);
@@ -95,6 +99,8 @@ void	add_env_var_export_with_value(t_data *data, char *arg)
 	if (!check_if_envar_exists(data->export_list, arg))
 	{
 		node = malloc(sizeof(t_env));
+		if (!node)
+			export_mem_alloc_failure(data);
 		node->next = NULL;
 		node->previous = NULL;
 		node->e_var = ft_substr(arg, 0, ft_strchr_index(arg, '='));
@@ -110,6 +116,8 @@ void	add_env_var_export_with_value(t_data *data, char *arg)
 		node->value = ft_substr(arg, ft_strchr_index(arg, '=') \
 		+ 1, ft_strlen(arg));
 	}
+	if (!node->e_var || !node->value)
+		export_mem_alloc_failure(data);
 }
 
 /*Adds or modifies an environmental variable to the env-list with a defined
@@ -128,6 +136,8 @@ void	add_env_var_envp_with_value(t_data *data, char *arg)
 	if (!check_if_envar_exists(data->envp_temp, arg))
 	{
 		node = malloc(sizeof(t_env));
+		if (!node)
+			export_mem_alloc_failure(data);
 		node->next = NULL;
 		node->previous = NULL;
 		node->e_var = ft_substr(arg, 0, ft_strchr_index(arg, '='));
@@ -143,4 +153,6 @@ void	add_env_var_envp_with_value(t_data *data, char *arg)
 		node->value = ft_substr(arg, ft_strchr_index(arg, '=') \
 		+ 1, ft_strlen(arg));
 	}
+	if (!node->e_var || !node->value)
+		export_mem_alloc_failure(data);
 }

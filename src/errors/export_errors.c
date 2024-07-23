@@ -1,16 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   export_errors_test.c                               :+:      :+:    :+:   */
+/*   export_errors.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/24 12:11:29 by nholbroo          #+#    #+#             */
-/*   Updated: 2024/07/22 16:33:30 by nholbroo         ###   ########.fr       */
+/*   Updated: 2024/07/23 15:17:35 by nholbroo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+/*Called when there is a memory allocation failure in the export command.
+Cleans up memory, prints an error message and exits the process.*/
+void	export_mem_alloc_failure(t_data *data)
+{
+	free_data(data, 1);
+	errno = ENOMEM;
+	perror("minishell: export");
+	exit(errno);
+}
 
 /*Two different kinds of error messages for export, one in the case of 
 invalid option, e.g. "export -b", and the other one in case of invalid

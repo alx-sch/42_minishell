@@ -6,7 +6,7 @@
 /*   By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/06 12:05:14 by aschenk           #+#    #+#             */
-/*   Updated: 2024/07/23 14:33:06 by nholbroo         ###   ########.fr       */
+/*   Updated: 2024/07/23 14:57:04 by nholbroo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,6 +90,6 @@ int	main(int argc, char **argv, char **envp)
 				get_tokens(&data);
 			}
 		}
-		free_data(&data);
+		free_data(&data, 0);
 	}
 }
