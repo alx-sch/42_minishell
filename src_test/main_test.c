@@ -6,7 +6,7 @@
 /*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/06 12:05:14 by aschenk           #+#    #+#             */
-/*   Updated: 2024/07/23 15:06:31 by nholbroo         ###   ########.fr       */
+/*   Updated: 2024/07/24 20:16:43 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,8 +112,8 @@ int	main(int argc, char **argv, char **envp)
 			{
 				if (get_tokens(&data)) // continue if tokenziation is sucessful
 				{
-					//parsing(&data); // Checking if the input matches any of the builtins.
-					//print_heredoc_found(&data);
+					parsing(&data); // Checking if the input matches any of the builtins.
+					print_heredoc_found(&data);
 				}
 			}
 		}

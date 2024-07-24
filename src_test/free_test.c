@@ -6,7 +6,7 @@
 /*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/13 12:12:15 by aschenk           #+#    #+#             */
-/*   Updated: 2024/07/24 19:50:43 by aschenk          ###   ########.fr       */
+/*   Updated: 2024/07/24 20:19:43 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 
 void	del_token(void *content);
 void	free_unlinked_token(t_data *data);
-void	free_data(t_data *data);
+void	free_data(t_data *data, bool exit);
 
 /*
 USED AT ALL?
@@ -79,7 +79,6 @@ void	free_data(t_data *data, bool exit)
 	if (!data)
 		return ;
 	ft_lstclear(&data->tok.tok_lst, del_token);
-	//free_unlinked_token(data);
 	if (data->input)
 		free(data->input);
 	data->pipe_no = 0; // Reset number of pipes to default.

@@ -6,7 +6,7 @@
 /*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/01 16:34:21 by aschenk           #+#    #+#             */
-/*   Updated: 2024/07/24 19:35:51 by aschenk          ###   ########.fr       */
+/*   Updated: 2024/07/24 20:16:06 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -181,7 +181,7 @@ int	is_pipe(t_data *data, int *i)
 		if (check_syntax(data, j))
 		{
 			data->tok.new_node = create_tok(data, PIPE, "|", i);
-			if (data->tok.new_node)
+			if (!data->tok.new_node)
 			{
 				free_unlinked_token(data); // Frees dangling token not added to linked list
 				return (0); // Token creation failed.
