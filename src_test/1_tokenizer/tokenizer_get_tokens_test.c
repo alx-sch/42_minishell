@@ -6,7 +6,7 @@
 /*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 16:59:48 by aschenk           #+#    #+#             */
-/*   Updated: 2024/07/03 17:25:45 by aschenk          ###   ########.fr       */
+/*   Updated: 2024/07/24 19:40:17 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ static void	malloc_fail_in_create_token(t_data *data)
 		free(data->tok.tok);
 		data->tok.tok = NULL;
 	}
-	perror(ERR_MALLOC); // Output an error message indicating a malloc failure
+	print_err_msg(ERR_MALLOC);
 }
 
 /*
@@ -67,11 +67,10 @@ Returns:
 */
 t_list	*create_tok(t_data *data, t_token_type type, const char *lexeme, int *i)
 {
-	// Allocate memory for the new token structure
 	data->tok.tok = malloc(sizeof(t_token));
 	if (!data->tok.tok)
 	{
-		perror(ERR_MALLOC);
+		print_err_msg(ERR_MALLOC);
 		return (NULL);
 	}
 	// Write lexeme from the stack into the token structure
@@ -93,32 +92,8 @@ t_list	*create_tok(t_data *data, t_token_type type, const char *lexeme, int *i)
 	data->tok.tok->position = *i;
 	// Update the position pointer to the end of the lexeme
 	*i = *i + ft_strlen(lexeme);
-	// for TESTING ONLY
-	ft_printf("Input[%d]: '%s' (token type: %d)\n", data->tok.tok->position, data->tok.tok->lexeme, data->tok.tok->type);
 	return (data->tok.new_node);
 }
-
-/*
-Used in get_tokens().
-
-Checks if the current character in the input string is a pipe (`|`) and creates
-a pipe token if it is.
-
-Returns:
-- 0 if the pipe token creation failed.
-- 1 if no pipe was found or the pipe token was successfully created.
-*/
-// static int	is_pipe(t_data *d, int *i)
-// {
-// 	if (d->input[*i] == '|')
-// 	{
-// 		d->tok.new_node = create_tok(d, PIPE, "|", i);
-// 		if (d->tok.new_node == NULL)
-// 			return (0);
-// 		ft_lstadd_back(&d->tok.tok_lst, d->tok.new_node);
-// 	}
-// 	return (1);
-// }
 
 /*
 Used in get_tokens().
@@ -143,13 +118,14 @@ static int	add_other_token(t_data *data, int *i)
 		data->tmp = ft_substr(data->input, start, (*i) - start); // Extract the token substring
 		if (!data->tmp)
 		{
-			perror(ERR_MALLOC);
+			print_err_msg(ERR_MALLOC);
 			return (0); // Substring extraction failed.
 		}
 		data->tok.new_node = create_tok(data, OTHER, data->tmp, &start); // Create a new token node and add it to the token list
-		if (data->tok.new_node == NULL)
+		if (!data->tok.new_node)
 		{
 			free(data->tmp);
+			free_unlinked_token(data); // Frees dangling token not added to linked list
 			return (0); // Token creation failed.
 		}
 		ft_lstadd_back(&data->tok.tok_lst, data->tok.new_node);

@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   main_test.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/06 12:05:14 by aschenk           #+#    #+#             */
 /*   Updated: 2024/07/23 15:06:31 by nholbroo         ###   ########.fr       */
@@ -110,12 +110,15 @@ int	main(int argc, char **argv, char **envp)
 				add_history(data.input);
 			if (is_quotation_closed(&data)) // check if user input is valid (quotations closed, correct redirection)
 			{
-				parsing(&data); // Checking if the input matches any of the builtins.
 				if (get_tokens(&data)) // continue if tokenziation is sucessful
-					print_heredoc_found(&data);
+				{
+					//parsing(&data); // Checking if the input matches any of the builtins.
+					//print_heredoc_found(&data);
+				}
 			}
 		}
 		// Maybe as a check completely in the end, if nothing else worked, we can mimic the "Command <some_command> not found"?
+		print_token_list(data.tok.tok_lst); // TESTING ONLY
 		free_data(&data, 0);
 	}
 }

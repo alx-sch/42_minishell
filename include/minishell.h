@@ -97,6 +97,8 @@ int argc, char **argv, char **envp);
 // utils.c
 
 void			print_heredoc_found(t_data *data);
+void			print_err_msg(char *msg);
+void			print_token_list(t_list *lst); // TESTING ONLY
 
 // 0_check_input/check_quotation.c
 
@@ -133,6 +135,7 @@ int				is_delimiter(t_data *data, const char c);
 // free.c
 
 void			del_token(void *content);
+void			free_unlinked_token(t_data *data);
 void			free_data(t_data *data, bool exit);
 
 // Parsing:

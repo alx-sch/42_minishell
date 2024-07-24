@@ -35,6 +35,10 @@ void	free_str_arr(char ***array_ptr)
 	*array_ptr = NULL;
 }
 
+/*
+Function used within the wrapper function ft_lstclear() to delete and
+clean up the linked list nodes used for tokenization.
+*/
 void	del_token(void *content)
 {
 	t_token	*token;

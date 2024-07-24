@@ -6,7 +6,7 @@
 /*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/24 22:36:32 by aschenk           #+#    #+#             */
-/*   Updated: 2024/07/03 18:52:09 by aschenk          ###   ########.fr       */
+/*   Updated: 2024/07/18 17:34:36 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,13 +42,13 @@ void	print_heredoc_found(t_data *data)
 	char	*heredoc_delim;
 
 	current_node = data->tok.tok_lst;
-	while (current_node != NULL)
+	while (current_node != NULL) // traverse the token list
 	{
 		current_token = (t_token *)current_node->content;
-		count_pipes(data, current_token);
+		count_pipes(data, current_token); // increase pipe counter if token is 'PIPE'
 		if (current_token->type == HEREDOC)
 		{
-		 	heredoc_delim = ((t_token *)current_node->next->content)->lexeme;
+		 	heredoc_delim = ((t_token *)current_node->next->content)->lexeme; // Delimiter is the token after the HEREDOC token.
 			ft_printf(HEREDOC_P); // weirdly enough, printf() 'lags' here, thus ft_printf() is used
 			input_line = get_next_line(0);	// Use get_next_line to read input from stdin (fd = 0)
 			trim_newline(input_line);

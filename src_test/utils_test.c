@@ -6,7 +6,7 @@
 /*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/10 16:51:05 by aschenk           #+#    #+#             */
-/*   Updated: 2024/07/18 15:47:23 by aschenk          ###   ########.fr       */
+/*   Updated: 2024/07/24 18:16:34 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,8 @@ This file contains utility functions used throughout the minishell project.
 
 // IN FILE:
 
-int	is_whitespace(int c);
+int		is_whitespace(int c);
+void	print_err_msg(char *msg);
 
 /*
 Checks if a character is a whitespace character:
@@ -34,6 +35,25 @@ int	is_whitespace(int c)
 		return (1);
 	else
 		return (0);
+}
+
+void	print_err_msg(char *msg)
+{
+	ft_putstr_fd(ERR_COLOR, STDERR_FILENO);
+	perror(msg);
+	ft_putstr_fd(RESET, STDERR_FILENO); // Reset the output style to default
+}
+
+// Function to print the list of tokens
+// FOR TESTING ONLY
+void	print_token_list(t_list *lst)
+{
+	while (lst)
+	{
+		t_token *token = lst->content;
+		printf("Position[%d]: '%s' (token type: %d)\n", token->position, token->lexeme, token->type);
+		lst = lst->next;
+	}
 }
 
 // /*

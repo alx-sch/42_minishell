@@ -6,7 +6,7 @@
 /*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/17 13:00:24 by aschenk           #+#    #+#             */
-/*   Updated: 2024/07/01 19:04:21 by aschenk          ###   ########.fr       */
+/*   Updated: 2024/07/24 19:43:06 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -164,8 +164,11 @@ static int	create_redirection_token(t_data *data, int *i, t_token_type type,
 	const char *symbol)
 {
 	data->tok.new_node = create_tok(data, type, symbol, i);
-	if (data->tok.new_node == NULL)
+	if (!data->tok.new_node)
+	{
+		free_unlinked_token(data); // Frees dangling token not added to linked list
 		return (0);
+	}
 	ft_lstadd_back(&data->tok.tok_lst, data->tok.new_node);
 	return (1);
 }
