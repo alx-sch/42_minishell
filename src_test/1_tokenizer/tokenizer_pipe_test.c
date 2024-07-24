@@ -6,7 +6,7 @@
 /*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/01 16:34:21 by aschenk           #+#    #+#             */
-/*   Updated: 2024/07/18 17:16:24 by aschenk          ###   ########.fr       */
+/*   Updated: 2024/07/24 19:35:51 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -137,14 +137,17 @@ static int	check_syntax(t_data *data, int j)
 		str_j = ft_itoa(j);
 		if (!str_j)
 		{
-			perror(ERR_MALLOC);
+			if (ft_strcmp(invalid_syn, "ERR") != 0)
+				free(invalid_syn);
+			print_err_msg(ERR_MALLOC);
 			return (0); // Malloc allocation failure
 		}
 		if (data->tok.tok_lst == NULL)
 			print_empty_pipe_err_msg(str_j);
 		else
 			print_pipe_err_msg(invalid_syn, str_j);
-		free(invalid_syn);
+		if (ft_strcmp(invalid_syn, "ERR") != 0)
+			free(invalid_syn);
 		free(str_j);
 		return (0); // Invalid syntax was found.
 	}
@@ -178,8 +181,11 @@ int	is_pipe(t_data *data, int *i)
 		if (check_syntax(data, j))
 		{
 			data->tok.new_node = create_tok(data, PIPE, "|", i);
-			if (data->tok.new_node == NULL)
+			if (data->tok.new_node)
+			{
+				free_unlinked_token(data); // Frees dangling token not added to linked list
 				return (0); // Token creation failed.
+			}
 			ft_lstadd_back(&data->tok.tok_lst, data->tok.new_node);
 			return (1); // Pipe token added to token list.
 		}
