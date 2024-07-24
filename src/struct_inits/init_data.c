@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   init_data_test.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
+/*   By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/24 12:46:41 by nholbroo          #+#    #+#             */
 /*   Updated: 2024/07/22 19:43:53 by nholbroo         ###   ########.fr       */

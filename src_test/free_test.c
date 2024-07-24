@@ -57,18 +57,6 @@ void	del_token(void *content)
 	free(token);
 }
 
-// void	free_unlinked_token(t_data *data)
-// {
-// 	if (data->tok.new_node)
-// 		free(data->tok.new_node);
-// 	if (data->tok.tok)
-// 	{
-// 		if (data->tok.tok->lexeme)
-// 			free(data->tok.tok->lexeme);
-// 		free(data->tok.tok);
-// 	}
-// }
-
 /*
 Frees memory allocated for the token data structure in case of failure
 during token creation in create_tok().
@@ -86,7 +74,7 @@ void	free_unlinked_token(t_data *data)
 }
 
 // Frees/closes all resources allocated for the data structure.
-void	free_data(t_data *data)
+void	free_data(t_data *data, bool exit)
 {
 	if (!data)
 		return ;
@@ -95,5 +83,11 @@ void	free_data(t_data *data)
 	if (data->input)
 		free(data->input);
 	data->pipe_no = 0; // Reset number of pipes to default.
-	// prob need to free other members of the t_data struct
+	if (exit)
+	{
+		if (data->envp_temp)
+			free_env_struct(&data->envp_temp);
+		if (data->export_list)
+			free_env_struct(&data->export_list);
+	}
 }

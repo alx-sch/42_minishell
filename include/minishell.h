@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
+/*   By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/06 12:08:35 by aschenk           #+#    #+#             */
-/*   Updated: 2024/07/24 19:30:25 by aschenk          ###   ########.fr       */
+/*   Updated: 2024/07/23 15:14:58 by nholbroo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -136,14 +136,14 @@ int				is_delimiter(t_data *data, const char c);
 
 void			del_token(void *content);
 void			free_unlinked_token(t_data *data);
-void			free_data(t_data *data);
+void			free_data(t_data *data, bool exit);
 
 // Parsing:
 
 void			parsing(t_data *data);
 int				is_pwd(char *input);
 int				is_cd(char *input);
-int				is_exit(char *input);
+int				is_exit(t_data *data);
 int				is_env(char *input);
 int				is_unset(char *input);
 int				is_export(char *input);
@@ -153,8 +153,7 @@ int				is_echo(char *input);
 
 void			init_cd_struct(t_cd **cd, char *input);
 t_env			*init_env_tmp(char **envp);
-
-int				cd(char *input, char **envp);
+int				cd(char *input, t_env *envp_temp);
 void			pwd(void);
 void			env(t_env *env_temp);
 void			unset(char *input, t_env **envp_temp);
@@ -190,13 +189,14 @@ void			free_env_struct(t_env **head);
 // Errors:
 
 void			print_error_cd(int error_code, t_cd **cd);
-void			print_error_exit(char *input);
+void			print_error_exit(t_data *data);
 int				env_error_messages(char *input, int i);
 void			mem_alloc_fail_env(t_env **head);
-void			exit_check_argc(char *input);
+void			exit_check_argc(t_data *data);
 int				export_err_invalid_option(char *input, int i);
 void			unset_err_memalloc_fail(t_env **envp_temp);
 int				unset_err_invalid_option(char *input, int i);
 int				pwd_invalid_option(char *input, int i);
+void			export_mem_alloc_failure(t_data *data);
 
 #endif

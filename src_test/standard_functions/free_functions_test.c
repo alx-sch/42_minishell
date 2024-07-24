@@ -6,12 +6,13 @@
 /*   By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 15:59:31 by nholbroo          #+#    #+#             */
-/*   Updated: 2024/06/25 14:53:51 by nholbroo         ###   ########.fr       */
+/*   Updated: 2024/07/23 13:43:24 by nholbroo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+/*Frees the memory of a struct of type t_env. See minishell.h for declaration*/
 void	free_env_struct(t_env **head)
 {
 	t_env	*current;
@@ -35,6 +36,7 @@ void	free_env_struct(t_env **head)
 	}
 }
 
+/*Frees the memory of a struct of type t_cd. See minishell.h for declaration*/
 int	free_cd_struct(t_cd **cd)
 {
 	if (*cd)
@@ -46,12 +48,13 @@ int	free_cd_struct(t_cd **cd)
 		if ((*cd)->parentdirectory)
 			free((*cd)->parentdirectory);
 		if ((*cd)->home_user)
-			free((*cd)->home_user - 5);
+			free((*cd)->home_user);
 		free(*cd);
 	}
 	return (0);
 }
 
+/*Frees the memory of any char array.*/
 int	ft_freearray(char **arr)
 {
 	int	crstr;

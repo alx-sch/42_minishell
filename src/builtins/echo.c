@@ -6,7 +6,7 @@
 /*   By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/26 16:05:17 by nholbroo          #+#    #+#             */
-/*   Updated: 2024/07/22 19:23:42 by nholbroo         ###   ########.fr       */
+/*   Updated: 2024/07/23 14:22:18 by nholbroo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ void	print_echo(char *input, bool print_newline)
 {
 	int	i;
 
-	i = 4; // Starting after "echo" part of the input.
+	i = 4;
 	while (input[i] && is_whitespace(input[i]))
 		i++;
 	if (input[i] && input[i] == '-')

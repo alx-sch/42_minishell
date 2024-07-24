@@ -26,7 +26,29 @@ SRCS_FILES :=	main.c \
 				1_tokenizer/tokenizer_get_tokens.c \
 				1_tokenizer/tokenizer_redirection.c \
 				1_tokenizer/tokenizer_pipe.c \
-				1_tokenizer/tokenizer_utils.c
+				1_tokenizer/tokenizer_utils.c \
+				builtins/cd.c \
+				builtins/echo.c \
+				builtins/env.c \
+				builtins/exit.c \
+				builtins/export.c \
+				builtins/export_utils.c \
+				builtins/pwd.c \
+				builtins/unset.c \
+				errors/cd_errors.c \
+				errors/env_errors.c \
+				errors/exit_errors.c \
+				errors/export_errors.c \
+				errors/pwd_errors.c \
+				errors/unset_errors.c \
+				parsing/parsing.c \
+				standard_functions/count.c \
+				standard_functions/free_functions.c \
+				standard_functions/modified_standards.c \
+				struct_inits/init_cd.c \
+				struct_inits/init_data.c \
+				struct_inits/init_env.c \
+				struct_inits/init_export.c \
 
 SRCS :=			$(addprefix $(SRCS_DIR)/, $(SRCS_FILES))
 

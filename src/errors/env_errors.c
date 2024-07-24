@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   env_errors_test.c                                  :+:      :+:    :+:   */
+/*   env_errors.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/24 12:09:25 by nholbroo          #+#    #+#             */
-/*   Updated: 2024/07/22 16:39:59 by nholbroo         ###   ########.fr       */
+/*   Updated: 2024/07/23 14:28:03 by nholbroo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,9 +17,9 @@
 void	mem_alloc_fail_env(t_env **head)
 {
 	free_env_struct(head);
-	errno = ENOMEM; // Setting errno to "Memory allocation failure"
-	perror("minishell: env"); // Prints the error message
-	exit(errno); // Exits with correct errno code.
+	errno = ENOMEM;
+	perror("minishell: env");
+	exit(errno);
 }
 
 /*Prints an error message if there is an option or argument to env command,

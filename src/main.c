@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
+/*   By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/06 12:05:14 by aschenk           #+#    #+#             */
-/*   Updated: 2024/07/12 20:32:04 by aschenk          ###   ########.fr       */
+/*   Updated: 2024/07/23 14:57:04 by nholbroo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,29 +42,6 @@ static void	print_logo(void)
 	printf("%s%s", RESET, BOLD);
 	printf("by Natalie Holbrook & Alex Schenk @42 Berlin, July 2024\n\n");
 	printf("%s", RESET);
-}
-
-/*
-Used in main().
-
-Initializes members in the data structure to starting values.
-This helps to prevent accessing uninitialized variables, particularly
-in functions like free_data(), which is automatically called in case
-of program termination due to an error.
-*/
-void	init_data_struct(t_data *data, int argc, char **argv, char **envp)
-{
-	data->argc = argc;
-	data->argv = argv;
-	data->pipe_no = 0;
-	data->envp = envp;
-	//data->envp_temp = init_env_tmp(envp);
-	data->input = NULL;
-	data->tmp = NULL;
-	data->quote = '\0';
-	data->tok.tok = NULL;
-	data->tok.new_node = NULL;
-	data->tok.tok_lst = NULL;
 }
 
 /*
@@ -109,10 +86,10 @@ int	main(int argc, char **argv, char **envp)
 				add_history(data.input);
 			if (is_quotation_closed(&data))
 			{
-				//parsing(&data);
+				parsing(&data);
 				get_tokens(&data);
 			}
 		}
-		free_data(&data);
+		free_data(&data, 0);
 	}
 }

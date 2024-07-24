@@ -3,15 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   pwd_test.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
+/*   By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/13 14:41:46 by nholbroo          #+#    #+#             */
-/*   Updated: 2024/06/24 14:28:54 by nholbroo         ###   ########.fr       */
+/*   Updated: 2024/07/22 18:33:55 by nholbroo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+// Checking if the input is "pwd". Accepts arguments (but they won't change the
+// behavior), and does NOT accept options.
 int	is_pwd(char *input)
 {
 	int	i;
@@ -36,6 +38,9 @@ int	is_pwd(char *input)
 	return (1); // If the input has ended after "pwd" - or there is more left, but it's separated by at least one space - it is valid and I return 1.
 }
 
+/*Prints out the current working directory. If something goes wrong, it prints
+an error message with errno set to indicate the error.
+@param cwd "Current working directory"*/
 void	pwd(void)
 {
 	char	cwd[4096]; // It is hardset to 4096, as it is the max amount of characters allowed in a path.

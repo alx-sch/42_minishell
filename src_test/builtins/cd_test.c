@@ -3,15 +3,20 @@
 /*                                                        :::      ::::::::   */
 /*   cd_test.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
+/*   By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/13 13:51:10 by nholbroo          #+#    #+#             */
-/*   Updated: 2024/06/24 12:36:51 by nholbroo         ###   ########.fr       */
+/*   Updated: 2024/07/23 16:47:30 by nholbroo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+// Checks if input is "cd". Ignores whitespaces in the beginning/end.
+//
+// Returns 0 upon error (e.g. "cdd" instead of "cd").
+// Returns 1 upon success.
+// NB! SOME WEIRD ERROR HERE IF YOU TYPE ONLY "c".
 int	is_cd(char *input)
 {
 	int	i;
@@ -28,6 +33,9 @@ int	is_cd(char *input)
 	return (1);
 }
 
+// Changes current working directory to parent directory ("cd ..").
+// Throws an error if memory allocation fails or something goes wrong with
+// changing the directory.
 static void	cd_one_up(t_cd **cd, char *cwd)
 {
 	int		eol; // Stands for "end of line".
@@ -52,30 +60,36 @@ static void	cd_one_up(t_cd **cd, char *cwd)
 		perror("minishell: cd");
 }
 
-static void	cd_to_home_user(t_cd **cd, char **envp)
+// Changes current working directory to "home".
+// Iterates through the environmental variables to find correct "home"-
+// directory.
+// Throws an error message if it doesn't exist (it has been removed).
+static void	cd_to_home_user(t_cd **cd, t_env *envp_temp)
 {
-	int		i;
-
-	i = 0;
-	while (envp[i]) // Going through all of envp, which is showing the environmental variables.
+	while (envp_temp) // Going through all of envp, which is showing the environmental variables.
 	{
-		if (!ft_strncmp(envp[i], "HOME=", 5)) // When I find the "HOME="-line, I break the loop, as I know that I will find the /home/username.
+		if (!ft_strncmp(envp_temp->e_var, "HOME", 4)) // When I find the "HOME="-line, I break the loop, as I know that I will find the /home/username.
 			break ;
-		i++;
+		envp_temp = envp_temp->next;
 	}
-	if (!envp[i])
+	if (!envp_temp)
 	{
 		write(2, "minishell: cd: HOME not set\n", 28);
 		return ;
 	}
-	(*cd)->home_user = ft_strdup(envp[i]); // I store the "HOME="-line in its own variable.
+	(*cd)->home_user = ft_strdup(envp_temp->value); // I store the "HOME="-line in its own variable.
 	if (!(*cd)->home_user) // Protecting the malloc.
 		print_error_cd(1, cd); // Prints an error and exits if allocation fails.
-	(*cd)->home_user += 5; // I move the home/username-pointer to skip "HOME=" and go directly to the name itself.
 	if (chdir((*cd)->home_user) == -1) // Changing the current working directory to "/home/<username>".
 		perror("minishell: cd");
 }
 
+// Moves to a subdirectory or an absolute path.
+// First checks if it is a valid absolute path ("cd /home/natalierh"). In that 
+// case it changes current working directory to that.
+// Otherwise moves on to change to a defined subdirectory.
+//
+// Throws an error if the defined subdirectory doesn't exist.
 void	cd_one_down(t_cd **cd, char *cwd)
 {
 	char	*input;
@@ -98,7 +112,20 @@ void	cd_one_down(t_cd **cd, char *cwd)
 	free(input);
 }
 
-int	cd(char *input, char **envp)
+// Works like the "cd"-command in bash.
+// 
+// Does not accept:
+// -More than one argument.
+// -Non-existing file or directory.
+// 
+// Does accept:
+// -Whitespaces in the beginning/end.
+// -Both relative and absolute paths ("cd .." or "cd /home/nholbroo").
+// -Go to home ("cd" or "cd ~").
+// -Go to root ("cd /" or even "cd ///////////").
+// -Go to subdirectory (type "cd" followed by a subdirectory or press tab-key 
+// to see a list of different available subdirectories.)
+int	cd(char *input, t_env *envp_temp)
 {
 	char		cwd[4096];
 	t_cd		*cd;
@@ -110,9 +137,9 @@ int	cd(char *input, char **envp)
 	if (!getcwd(cwd, sizeof(cwd))) // Get the current working directory.
 		perror("minishell: cd");
 	if (cd->component[1] == NULL) // If "cd" is the only input, without any components.
-		cd_to_home_user(&cd, envp); // Changing directory to /home/user.
+		cd_to_home_user(&cd, envp_temp); // Changing directory to /home/user.
 	else if (!ft_strcmp(cd->component[1], "~")) // If "cd ~" is the only input.
-		cd_to_home_user(&cd, envp); // Changing directory to /home/user.
+		cd_to_home_user(&cd, envp_temp); // Changing directory to /home/user.
 	else if (is_only_duplicates(cd->component[1], '/')) // If "cd /" is the only input.
 	{
 		if (chdir("/") == -1) // Changing directory to root.

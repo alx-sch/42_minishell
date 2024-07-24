@@ -1,0 +1,11 @@
+{
+	"name": "My Codespace",
+	"image": "mcr.microsoft.com/vscode/devcontainers/python:3",
+	"postCreateCommand": "python3 -m pip install --upgrade pip setuptools && python3 -m pip install norminette",
+	"extensions": [
+		"ms-python.python"
+	],
+	"settings": {
+		"python.pythonPath": "/usr/local/bin/python3"
+	}
+}

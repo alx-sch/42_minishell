@@ -1,18 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   exit_test.c                                        :+:      :+:    :+:   */
+/*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/25 10:35:04 by natalierh         #+#    #+#             */
-/*   Updated: 2024/07/23 15:07:12 by nholbroo         ###   ########.fr       */
+/*   Updated: 2024/07/23 15:16:28 by nholbroo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-// Fun fact: *data->input is equivalent to *(data->input), not (*data)->input.
 
 // Checks if there are multiple '+' or '-' signs in the argument of the "exit"-
 //command, e.g. "exit --123".
@@ -47,15 +45,15 @@ unsigned int	exit_with_code(t_data *data)
 	char			*exit_arg;
 
 	exit_arg = data->input;
-	while (*exit_arg && (*exit_arg < '0' || *exit_arg > '9') // This loop is skipping the input string until the exit number is getting defined. E.g. "exit     -123".
+	while (*exit_arg && (*exit_arg < '0' || *exit_arg > '9')
 		&& *exit_arg != '-' && *exit_arg != '+')
 		exit_arg++;
 	if (check_multiple_signs_exit_code(exit_arg))
 		print_error_exit(data);
-	exit_code = (unsigned int) ft_atoi(exit_arg); // Converting the numeral part of the string to an unsigned int.
+	exit_code = (unsigned int) ft_atoi(exit_arg);
 	free_data(data, 1);
-	printf("exit\n"); // Prints "exit" on the STOUT.
-	return (exit_code); // Returning the exit code.
+	printf("exit\n");
+	return (exit_code);
 }
 
 // Checks if the input is "exit". Ignores whitespaces in the beginning/end.
@@ -71,9 +69,9 @@ int	is_exit(t_data *data)
 	int	i;
 
 	i = 0;
-	while (is_whitespace(data->input[i])) // Skipping all whitespaces in the beginning
+	while (is_whitespace(data->input[i]))
 		i++;
-	if (data->input[i++] != 'e') // Hard-checking for "exit".
+	if (data->input[i++] != 'e')
 		return (0);
 	if (data->input[i++] != 'x')
 		return (0);
@@ -84,11 +82,11 @@ int	is_exit(t_data *data)
 	if (data->input[i] && !is_whitespace(data->input[i]))
 		return (0);
 	while ((data->input[i]) && (is_whitespace(data->input[i]) 
-		|| data->input[i] == '+' || data->input[i] == '-' 
-		|| (data->input[i] >= '0' && data->input[i] <= '9'))) // Checking if what comes after "exit" is either numerical, '+', '-' or whitespaces. If it's not, then it's not valid.
+			|| data->input[i] == '+' || data->input[i] == '-' 
+			|| (data->input[i] >= '0' && data->input[i] <= '9')))
 		i++;
-	exit_check_argc(data); // Checking if there are more than one argument to the "exit" command -> in that case it prints an error message and exits.
-	if (data->input[i] != '\0') // If something that comes after 'exit' is not whitespace or a number, printing an error message, and exiting the process.
+	exit_check_argc(data);
+	if (data->input[i] != '\0')
 		print_error_exit(data);
 	return (1);
 }
