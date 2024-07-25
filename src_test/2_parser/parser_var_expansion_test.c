@@ -6,7 +6,7 @@
 /*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 22:40:57 by aschenk           #+#    #+#             */
-/*   Updated: 2024/06/27 19:30:24 by aschenk          ###   ########.fr       */
+/*   Updated: 2024/07/25 18:55:04 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,9 @@ TBD
 From pipex project.
 Extracts the value of a specified environment variable ('env_var_search')
 from the given environment variable array ('env').
+
+Used instead of the much more straightforward getenv(), as to pass the
+minishell-specific env var array.
 
 Returns:
 - A pointer to the value part of the environmenta variable, if found.
@@ -40,7 +43,7 @@ static char	*get_env_values(const char *env_var_search, char **env)
 		env_var = ft_substr(env[i], 0, len);
 		if (!env_var)
 		{
-			perror(ERR_MALLOC);
+			print_err_msg(ERR_MALLOC);
 			return (NULL);
 		}
 		if (ft_strcmp(env_var, env_var_search) == 0)
