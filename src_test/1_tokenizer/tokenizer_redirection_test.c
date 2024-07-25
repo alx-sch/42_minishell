@@ -6,7 +6,7 @@
 /*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/17 13:00:24 by aschenk           #+#    #+#             */
-/*   Updated: 2024/07/25 17:28:22 by aschenk          ###   ########.fr       */
+/*   Updated: 2024/07/25 17:51:27 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -139,7 +139,7 @@ static int	check_operand(const char *input, int *i, int j)
 			print_redir_err_msg(invalid_op, input, "-1", j);
 			if (ft_strcmp(invalid_op, "ERR") != 0) // check if invalid_op was dynamically allocated
 				free(invalid_op);
-			return (0); // Invalid operand was found, 'pos: -1' used due to malloc failure
+			return (0); // Invalid syntax was found, pos: -1
 		}
 		print_redir_err_msg(invalid_op, input, str_j, j);
 		if (ft_strcmp(invalid_op, "ERR") != 0) // check if invalid_op was dynamically allocated

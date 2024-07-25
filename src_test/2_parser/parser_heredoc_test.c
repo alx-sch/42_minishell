@@ -6,7 +6,7 @@
 /*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/24 22:36:32 by aschenk           #+#    #+#             */
-/*   Updated: 2024/07/25 17:01:24 by aschenk          ###   ########.fr       */
+/*   Updated: 2024/07/25 17:53:41 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,5 +77,4 @@ void	print_heredoc_found(t_data *data)
 		}
 		current_node = current_node->next;
 	}
-	printf("number of pipes found: %d\n", data->pipe_nr);
 }

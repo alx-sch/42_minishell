@@ -6,7 +6,7 @@
 /*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/24 22:36:32 by aschenk           #+#    #+#             */
-/*   Updated: 2024/07/01 18:45:15 by aschenk          ###   ########.fr       */
+/*   Updated: 2024/07/25 18:07:46 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,28 @@ message into the standard error output.
 // FUNCTION IN FILE
 
 int	is_quotation_closed(t_data *data);
+
+/*
+Used in is_closed().
+
+Prints an error message for unclosed quotations including the
+position of the invalid synatax (position '-1' used if ft_itoa fails).
+
+Parameters:
+- char *str_j:	Quotation symbol (' or ").
+- char *i_str:	The string representation of position of piping syntax error.
+*/
+static void	print_open_quotation_err_msg(char *char_str, char *i_str)
+{
+	ft_putstr_fd(ERR_COLOR, STDERR_FILENO); // Set error color for the output
+	ft_putstr_fd(ERR_PREFIX, STDERR_FILENO);
+	ft_putstr_fd(ERR_NOT_CLOSED_PRE, STDERR_FILENO);
+	ft_putstr_fd(char_str, STDERR_FILENO);
+	ft_putstr_fd(ERR_NOT_CLOSED_SUF, STDERR_FILENO);
+	ft_putstr_fd(i_str, STDERR_FILENO);
+	ft_putstr_fd(")\n", STDERR_FILENO);
+	ft_putstr_fd(RESET, STDERR_FILENO); // Reset the output style to default
+}
 
 /*
 Checks if the quotation mark at a given position has a corresponding closing
@@ -47,14 +69,13 @@ static int	is_closed(t_data *data, int i, const char c)
 	char_str[0] = c;
 	char_str[1] = '\0';
 	i_str = ft_itoa(i);
-	ft_putstr_fd(ERR_COLOR, STDERR_FILENO); // Set error color for the output
-	ft_putstr_fd(ERR_PREFIX, STDERR_FILENO);
-	ft_putstr_fd(ERR_NOT_CLOSED_PRE, STDERR_FILENO);
-	ft_putstr_fd(char_str, STDERR_FILENO);
-	ft_putstr_fd(ERR_NOT_CLOSED_SUF, STDERR_FILENO);
-	ft_putstr_fd(i_str, STDERR_FILENO);
-	ft_putstr_fd(")\n", STDERR_FILENO);
-	ft_putstr_fd(RESET, STDERR_FILENO); // Reset the output style to default
+	if (!i_str)
+	{
+		print_err_msg(ERR_MALLOC);
+		print_open_quotation_err_msg(char_str, "-1");
+		return (0); // Quotation mark is not closed, pos: -1
+	}
+	print_open_quotation_err_msg(char_str, i_str);
 	free(i_str);
 	return (0); // Quotation mark is not closed
 }
