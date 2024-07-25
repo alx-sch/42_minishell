@@ -6,7 +6,7 @@
 /*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/13 12:12:15 by aschenk           #+#    #+#             */
-/*   Updated: 2024/07/24 20:19:43 by aschenk          ###   ########.fr       */
+/*   Updated: 2024/07/25 18:24:35 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,6 +73,28 @@ void	free_unlinked_token(t_data *data)
 	}
 }
 
+static void	delete_heredocs(t_data *data)
+{
+	int		pipe_nr;
+	char	*heredoc;
+
+	pipe_nr = 0;
+	while (pipe_nr <= data->pipe_nr)
+	{
+		heredoc = ft_itoa(pipe_nr);
+		if (!heredoc)
+		{
+			print_err_msg(ERR_MALLOC);
+			break ;
+		}
+		if (access(heredoc, F_OK) != -1)
+			if (unlink(heredoc) != 0)
+				print_err_msg(ERR_DEL_HEREDOC);
+		free(heredoc);
+		pipe_nr++;
+	}
+}
+
 // Frees/closes all resources allocated for the data structure.
 void	free_data(t_data *data, bool exit)
 {
@@ -81,7 +103,8 @@ void	free_data(t_data *data, bool exit)
 	ft_lstclear(&data->tok.tok_lst, del_token);
 	if (data->input)
 		free(data->input);
-	data->pipe_no = 0; // Reset number of pipes to default.
+	delete_heredocs(data);
+	data->pipe_nr = 0; // Reset number of pipes to default.
 	if (exit)
 	{
 		if (data->envp_temp)

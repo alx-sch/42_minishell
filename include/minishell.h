@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/06 12:08:35 by aschenk           #+#    #+#             */
-/*   Updated: 2024/07/23 15:14:58 by nholbroo         ###   ########.fr       */
+/*   Updated: 2024/07/25 16:59:26 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,7 @@ typedef struct s_data
 	char	*input;
 	char	*tmp;
 	char	quote;
-	int		pipe_no;
+	int		pipe_nr;
 	t_tok	tok;
 	t_cd	cd;
 	t_env	*envp_temp;

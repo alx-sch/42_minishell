@@ -6,7 +6,7 @@
 /*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/01 16:34:21 by aschenk           #+#    #+#             */
-/*   Updated: 2024/07/24 20:16:06 by aschenk          ###   ########.fr       */
+/*   Updated: 2024/07/25 17:58:40 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,7 +116,9 @@ static void	print_empty_pipe_err_msg(char *str_j)
 Used in is_pipe().
 
 Checks if the syntax before/after an encountered '|' valid.
-If syntax is invalid, it prints a custom error message.
+If syntax is invalid, it prints a custom error message including the
+position of the invalid synatax (position '-1' used if ft_itoa fails).
+
 
 Parameters:
 - t_data *data:	Data structure containing token-related info.
@@ -137,10 +139,11 @@ static int	check_syntax(t_data *data, int j)
 		str_j = ft_itoa(j);
 		if (!str_j)
 		{
+			print_err_msg(ERR_MALLOC);
+			print_empty_pipe_err_msg("-1");
 			if (ft_strcmp(invalid_syn, "ERR") != 0)
 				free(invalid_syn);
-			print_err_msg(ERR_MALLOC);
-			return (0); // Malloc allocation failure
+			return (0); // Invalid syntax was found, pos: -1
 		}
 		if (data->tok.tok_lst == NULL)
 			print_empty_pipe_err_msg(str_j);
