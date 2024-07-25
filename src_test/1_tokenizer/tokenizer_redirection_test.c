@@ -6,7 +6,7 @@
 /*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/17 13:00:24 by aschenk           #+#    #+#             */
-/*   Updated: 2024/07/24 19:43:06 by aschenk          ###   ########.fr       */
+/*   Updated: 2024/07/25 17:28:22 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ static char	*is_valid_operand(const char *inp, int *i)
 		invalid_op = malloc(sizeof(char) * 8); // Allocate for "newline" + null terminator
 		if (!invalid_op)
 		{
-			perror(ERR_MALLOC);
+			print_err_msg(ERR_MALLOC);
 			return ("ERR"); // Default invalid operand, if memory allocation failed
 		}
 		// Construct the invalid operand string
@@ -112,7 +112,8 @@ static void	print_redir_err_msg(char *invalid_op, const char *input,
 Used in is_redirection().
 
 Checks if the operand in the 'input' string is valid starting from the index *i.
-If an invalid operand is found, it prints a custom error message.
+If an invalid operand is found, it prints a custom error message including the
+position of the invalid synatax (position '-1' used if ft_itoa fails).
 
 Parameters:
 - char *input: The input string containing the command line input.
@@ -134,11 +135,15 @@ static int	check_operand(const char *input, int *i, int j)
 		str_j = ft_itoa(j);
 		if (!str_j)
 		{
-			perror(ERR_MALLOC);
-			return (0); // Malloc allocation failure
+			print_err_msg(ERR_MALLOC);
+			print_redir_err_msg(invalid_op, input, "-1", j);
+			if (ft_strcmp(invalid_op, "ERR") != 0) // check if invalid_op was dynamically allocated
+				free(invalid_op);
+			return (0); // Invalid operand was found, 'pos: -1' used due to malloc failure
 		}
 		print_redir_err_msg(invalid_op, input, str_j, j);
-		free(invalid_op);
+		if (ft_strcmp(invalid_op, "ERR") != 0) // check if invalid_op was dynamically allocated
+			free(invalid_op);
 		free(str_j);
 		return (0); // Invalid operand was found
 	}
