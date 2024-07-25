@@ -1,26 +1,12 @@
 {
-    "version": "2.0.0",
-    "tasks": [
-        {
-            "label": "build minishell tests",
-            "type": "shell",
-            "command": "/usr/bin/gcc",
-            "args": [
-                "-Iinclude",              // Include directory for headers
-                "-Ilbft",                 // Include directory for libft
-                "-Llibft",                // Link directory for libft
-                "-lft",                   // Link libft
-                "-lreadline",             // Link readline library
-                "-lhistory",              // Link history library
-                "-g",                     // Debug flag
-                "-o", "${workspaceFolder}/minishell_test", // Output file
-                "${workspaceFolder}/src_test/main_test.c", // List of test source files
-                "${workspaceFolder}/src_test/free_test.c",
-                "${workspaceFolder}/src_test/utils_test.c",
-                "${workspaceFolder}/src_test/0_check_input/check_quotation_test.c",
-                "${workspaceFolder}/src_test/1_tokenizer/tokenizer_get_tokens_test.c",
-                "${workspaceFolder}/src_test/1_tokenizer/tokenizer_redirection_test.c",
-                "${workspaceFolder}/src_test/1_tokenizer/tokenizer_pipe_test.c",
-                "${workspaceFolder}/src_test/1_tokenizer/tokenizer_utils_test.c",
-                "${workspaceFolder}/src_test/2_parser/parser_var_expansion_test.c",
-                "${workspaceFolder}/src_test/2_parser/parser_heredoc
+	// See https://go.microsoft.com/fwlink/?LinkId=733558
+	// for the documentation about the tasks.json format
+	"version": "2.0.0",
+	"tasks": [
+		{
+			"label": "make",
+			"type": "shell",
+			"command": "make"
+		}
+	]
+}
