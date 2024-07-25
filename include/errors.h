@@ -6,7 +6,7 @@
 /*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/16 17:26:08 by aschenk           #+#    #+#             */
-/*   Updated: 2024/07/23 17:28:40 by aschenk          ###   ########.fr       */
+/*   Updated: 2024/07/25 18:19:05 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,5 +26,6 @@ e.g. consistency, easier management, clearer code structure and maintenance.
 # define ERR_EMPTY_PIPE		"syntax error before '|': 'missing input'"
 # define ERR_NOT_CLOSED_PRE	"quotation "
 # define ERR_NOT_CLOSED_SUF " is not closed (position: "
+# define ERR_DEL_HEREDOC	"ERROR: Failed to delete heredoc file"
 
 #endif
