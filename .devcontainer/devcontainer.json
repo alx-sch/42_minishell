@@ -4,6 +4,7 @@
 	"postCreateCommand": [
 		"sudo apt-get update",
 		"sudo apt-get install -y bc",
+		"sudo apt-get install valgrind",
 		"python3 -m pip install --upgrade pip setuptools",
 		"python3 -m pip install norminette"
 	],
