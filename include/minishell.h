@@ -6,7 +6,7 @@
 /*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/06 12:08:35 by aschenk           #+#    #+#             */
-/*   Updated: 2024/07/26 18:10:21 by aschenk          ###   ########.fr       */
+/*   Updated: 2024/07/26 22:42:26 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,6 +105,10 @@ void			print_token_list(t_list *lst); // TESTING ONLY
 
 int				is_input_empty(char *input);
 int				is_quotation_closed(t_data *data);
+
+// 2_parser
+
+char			*expand_variables(char *str, t_env *env_list);
 
 // free.c
 

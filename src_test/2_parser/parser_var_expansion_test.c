@@ -6,7 +6,7 @@
 /*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 22:40:57 by aschenk           #+#    #+#             */
-/*   Updated: 2024/07/25 18:55:04 by aschenk          ###   ########.fr       */
+/*   Updated: 2024/07/26 23:04:32 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,48 +17,62 @@ TBD
 #include "minishell.h"
 
 /*
-From pipex project.
-Extracts the value of a specified environment variable ('env_var_search')
-from the given environment variable array ('env').
-
-Used instead of the much more straightforward getenv(), as to pass the
-minishell-specific env var array.
+Used in XXX().
 
 Returns:
-- A pointer to the value part of the environmenta variable, if found.
-- NULL if the specified environmental variable is not found in the envp array.
+- The value length of the specified environmental variable, if found.
+- '0' if the specified environmental variable is not found.
 */
-static char	*get_env_values(const char *env_var_search, char **env)
+static size_t	get_env_value_length(const char *env_var_search,
+	t_env *env_node)
 {
-	size_t	i;
-	size_t	len;
-	char	*env_var;
+	t_env	*current_node;
+	size_t	val_length;
 
-	i = 0;
-	while (env[i])
+	current_node = env_node;
+	while (current_node)
 	{
-		len = 0;
-		while (env[i][len] != '=' && env[i][len])
-			len++;
-		env_var = ft_substr(env[i], 0, len);
-		if (!env_var)
+		if (ft_strcmp(env_var_search, current_node->e_var) == 0)
 		{
-			print_err_msg(ERR_MALLOC);
-			return (NULL);
+			if (current_node->value)
+			{
+				val_length = ft_strlen(current_node->value);
+				return (val_length);
+			}
 		}
-		if (ft_strcmp(env_var, env_var_search) == 0)
+		current_node = current_node->next;
+	}
+	return (0);
+}
+
+/*
+Used in XXX().
+
+Extracts the value of a specified environment variable ('env_var_search')
+from the minishell-specific environmental variables linked list (t_env).
+
+Returns:
+- The value the environmental variable, if found.
+- NULL if the specified environmental variable is not found.
+*/
+static char	*get_env_value(const char *env_var_search, t_env *env_list)
+{
+	t_env	*current_node;
+
+	current_node = env_list;
+	while (current_node)
+	{
+		if (ft_strcmp(env_var_search, current_node->e_var) == 0)
 		{
-			free(env_var);
-			return (env[i] + len + 1);
+			printf("length of value: %ld\n", get_env_value_length(env_var_search, env_list));
+			return (current_node->value);
 		}
-		free(env_var);
-		i++;
+		current_node = current_node->next;
 	}
 	return (NULL);
 }
 
-
-char	*expand_variables(t_data *data)
+char	*expand_variables(char *str, t_env *env_list) //
 {
 	char		*expanded;
 	int			expanded_len;
@@ -69,14 +83,18 @@ char	*expand_variables(t_data *data)
 	char		var_name[MAX_VAR_NAME];
 	char		*var_value;
 
-	expanded = malloc(ft_strlen(data->input) + 1); // Allocate mmeory for expanded str
+
+	//free(next_token->lexeme);
+	//next_token->lexeme = ft_strdup(heredoc);
+
+	expanded = malloc(ft_strlen(str) + 1); // Allocate mmeory for expanded str
 	if (!expanded)
 	{
 		perror(ERR_MALLOC);
 		return (NULL);
 	}
 	expanded_len = 0;
-	ptr = data->input;
+	ptr = str;
 	while (*ptr != '\0')
 	{
 		if (*ptr == '$' && *(ptr + 1) != '\0')
@@ -88,7 +106,7 @@ char	*expand_variables(t_data *data)
 				var_end++;
 			var_len = var_end - var_start;
 			ft_strlcpy(var_name, var_start, var_len + 1);
-			var_value = get_env_values(var_name, data->envp);
+			var_value = get_env_value(var_name, env_list);
 			if (var_value != NULL) {
 				printf("var value of '%s': %s\n", var_name, var_value);
 			} else {
