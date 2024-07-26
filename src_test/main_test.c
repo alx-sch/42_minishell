@@ -6,7 +6,7 @@
 /*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/06 12:05:14 by aschenk           #+#    #+#             */
-/*   Updated: 2024/07/26 22:43:13 by aschenk          ###   ########.fr       */
+/*   Updated: 2024/07/26 23:42:29 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,6 +75,7 @@ and executing them until the user decides to exit it.
 int	main(int argc, char **argv, char **envp)
 {
 	t_data	data;
+	char	*tmp;
 
 	print_logo();
 	init_data_struct(&data, argc, argv, envp);
@@ -89,7 +90,9 @@ int	main(int argc, char **argv, char **envp)
 				if (get_tokens(&data)) // continue if tokenziation is sucessful
 					if (parse_tokens(&data))
 					{
-						expand_variables(data.input, data.envp_temp);
+						tmp = expand_variables(data.input, data.envp_temp);
+						if (tmp)
+							free(tmp);
 						parsing(&data); // Checking if the input matches any of the builtins.
 					}
 		}
