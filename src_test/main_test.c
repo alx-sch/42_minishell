@@ -6,7 +6,7 @@
 /*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/06 12:05:14 by aschenk           #+#    #+#             */
-/*   Updated: 2024/07/25 19:37:15 by aschenk          ###   ########.fr       */
+/*   Updated: 2024/07/26 16:17:43 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,29 +69,6 @@ static void	print_logo(void)
 }
 
 /*
-Checks if the user input is empty or consists only of whitespace.
-
-Returns:
-- 0 if the user input is not empty.
-- 1 if the user input is empty, consists only of whitespace or is NULL.
-*/
-static int	is_input_empty(char *input)
-{
-	int	i;
-
-	i = 0;
-	if (!input)
-		return (1);
-	while (input[i])
-	{
-		if (!is_whitespace(input[i]))
-			return (0);
-		i++;
-	}
-	return (1);
-}
-
-/*
 main is first of all a loop that runs the shell taking inputs from the user
 and executing them until the user decides to exit it.
 */
@@ -109,13 +86,9 @@ int	main(int argc, char **argv, char **envp)
 			if (!is_whitespace(data.input[0]))
 				add_history(data.input);
 			if (is_quotation_closed(&data)) // check if user input is valid (quotations closed, correct redirection)
-			{
 				if (get_tokens(&data)) // continue if tokenziation is sucessful
-				{
-					parsing(&data); // Checking if the input matches any of the builtins.
-					print_heredoc_found(&data);
-				}
-			}
+					if (parse_tokens(&data))
+						parsing(&data); // Checking if the input matches any of the builtins.
 		}
 		// Maybe as a check completely in the end, if nothing else worked, we can mimic the "Command <some_command> not found"?
 		print_token_list(data.tok.tok_lst); // TESTING ONLY

@@ -217,13 +217,15 @@ TEST_DIR :=		src_test
 TEST_FILES :=	main_test.c \
 				free_test.c \
 				utils_test.c \
-				0_check_input/check_quotation_test.c \
-				1_tokenizer/tokenizer_get_tokens_test.c \
+				0_check_input/check_input_test.c \
+				1_tokenizer/tokenizer_test.c \
 				1_tokenizer/tokenizer_redirection_test.c \
 				1_tokenizer/tokenizer_pipe_test.c \
 				1_tokenizer/tokenizer_utils_test.c \
+				2_parser/parser_test.c \
 				2_parser/parser_var_expansion_test.c \
 				2_parser/parser_heredoc_test.c \
+				2_parser/parser_heredoc_utils_test.c \
 				builtins/cd_test.c \
 				builtins/echo_test.c \
 				builtins/env_test.c \

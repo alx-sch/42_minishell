@@ -6,104 +6,136 @@
 /*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/24 22:36:32 by aschenk           #+#    #+#             */
-/*   Updated: 2024/07/25 20:11:54 by aschenk          ###   ########.fr       */
+/*   Updated: 2024/07/26 18:03:48 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 /*
-TBD
+This file contains functions for processing HEREDOC tokens.
+It utilizes functions found in parser_heredoc_utils.c.
 */
 
 #include "minishell.h"
 
 // FUNCTION IN FILE
 
-static void	count_pipes(t_data *data, t_token *node)
-{
-	//printf("token type: %d\n", node->type);
-	if (node->type == PIPE)
-		data->pipe_nr += 1;
-}
-
-static void	trim_newline(char *str)
-{
-	size_t	len;
-
-	len = ft_strlen(str);
-	if (len > 0 && str[len - 1] == '\n')
-		str[len - 1] = '\0';
-}
+int	process_heredocs(t_data *data);
 
 /*
-Used in XXXX().
+Used in process_single_heredoc().
 
-Updates a HEREDOC token to REDIR_IN and changes the lexeme of the next token
-to the created heredoc file.
+Converts HEREDOC tokens ('<< EOF') into REDIR_IN tokens ('< heredoc-file'),
+where the 'EOF' lexeme is replaced by the actual filename created for heredoc.
+This simplifies further processing by ensuring that HEREDOC tokens are processed
+in the same way as REDIR_IN tokens.
 
-This converts '<< EOF' into '< heredoc-file', where 'EOF' is replaced by the
-actual file created for the heredoc.
+Returns:
+- 1 if HEREDOC token conversion succeeded.
+- 0 if HEREDOC token conversion failed.
 */
-static void	update_current_and_next_token(t_token *current_token,
-	t_token *next_token, char *heredoc)
+static int	convert_tokens(t_data *data, t_token *current_token,
+	t_token *next_token)
 {
+	char	*heredoc;
+
+	heredoc = get_heredoc(data);
+	if (!heredoc)
+		return (0);
 	current_token->type = REDIR_IN;
 	free(next_token->lexeme);
 	next_token->lexeme = ft_strdup(heredoc);
+	free(heredoc);
 	if (!next_token->lexeme)
-	{
-		print_err_msg(ERR_MALLOC);
-		/// THINK OF STH HERE!
-	}
+		return (0);
+	return (1);
 }
 
-void	print_heredoc_found(t_data *data)
+/*
+Handles input for a HEREDOC token by reading lines from stdin until the delimiter
+is encountered. Writes each line to the specified file descriptor.
+
+Returns:
+- 1 if input handling succeeded.
+- 0 if input handling failed (write operation failed).
+*/
+static int	handle_heredoc_input(int fd, const char *delimiter)
+{
+	char	*input_line;
+	int		bytes_written_1;
+	int		bytes_written_2;
+
+	ft_printf(HEREDOC_P);
+	input_line = get_next_line(STDIN_FILENO);
+	trim_newline(input_line);
+	while (input_line != NULL && ft_strcmp(input_line, delimiter) != 0)
+	{
+		bytes_written_1 = write(fd, input_line, ft_strlen(input_line));
+		bytes_written_2 = write(fd, "\n", 1);
+		free(input_line);
+		if (bytes_written_1 == -1 || bytes_written_2 == -1) // check if writing into file was successful
+			return (0);
+		ft_printf(HEREDOC_P);
+		input_line = get_next_line(STDIN_FILENO);
+		trim_newline(input_line);
+	}
+	if (input_line)
+		free(input_line);
+	return (1);
+}
+
+/*
+Processes a single HEREDOC token by creating a file for the heredoc, handling
+the input from the user, and converting the HEREDOC into REDIR_IN tokens.
+
+Returns:
+- 1 if the HEREDOC processing succeeded.
+- 0 if the HEREDOC processing failed.
+*/
+static int	process_single_heredoc(t_data *data, t_token *current_token,
+	t_token *next_token)
+{
+	int	fd;
+
+	fd = get_heredoc_fd(data);
+	if (fd < 0)
+		return (0);
+	if (!handle_heredoc_input(fd, next_token->lexeme))
+	{
+		close(fd);
+		return (0);
+	}
+	close(fd);
+	if (!convert_tokens(data, current_token, next_token))
+		return (0);
+	return (1);
+}
+
+/*
+Processes all HEREDOC tokens in the token list. Traverses the list,
+converts HEREDOC tokens to REDIR_IN tokens, and handles HEREDOC input.
+
+Returns:
+- 1 if all HEREDOCs were processed successfully.
+- 0 if any HEREDOC processing failed.
+*/
+int	process_heredocs(t_data *data)
 {
 	t_list	*current_node;
 	t_token	*current_token;
-	t_token *next_token;
-	char	*input_line;
-	int		fd;
-	char	*heredoc;
+	t_token	*next_token;
 
 	current_node = data->tok.tok_lst;
-	while (current_node != NULL) // traverse the token list
+	while (current_node != NULL) // traverse the token linked list
 	{
 		current_token = (t_token *)current_node->content;
 		count_pipes(data, current_token); // increase pipe counter if token is 'PIPE'
 		if (current_token->type == HEREDOC)
 		{
 		 	next_token = (t_token *)current_node->next->content; // Delimiter is the token after the HEREDOC token.
-			heredoc = ft_itoa(data->pipe_nr);
-			if (!heredoc)
-			{
-				print_err_msg(ERR_CREATE_HEREDOC);
-				break ;
-			}
-			fd = open(heredoc, O_WRONLY | O_CREAT | O_TRUNC, 0666);
-			if (fd < 0)
-			{
-				print_err_msg(ERR_CREATE_HEREDOC);
-				free(heredoc);
-				break ;
-			}
-			ft_printf(HEREDOC_P); // weirdly enough, printf() 'lags' here, thus ft_printf() is used
-			input_line = get_next_line(0);	// Use get_next_line to read input from stdin (fd = 0)
-			trim_newline(input_line);
-			while (input_line != NULL && ft_strcmp(input_line, next_token->lexeme) != 0)
-			{
-				write(fd, input_line, ft_strlen(input_line));
-				write(fd, "\n", 1);
-				free(input_line);
-				ft_printf(HEREDOC_P);
-				input_line = get_next_line(0); // Read input again
-				trim_newline(input_line);
-			}
-			if (input_line)
-				free(input_line);
-			close(fd);
-			update_current_and_next_token(current_token, next_token, heredoc);
-			free(heredoc);
+			if (!process_single_heredoc(data, current_token, next_token))
+				return (0);
 		}
 		current_node = current_node->next;
 	}
+	return (1);
 }

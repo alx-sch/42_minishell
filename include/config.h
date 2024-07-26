@@ -6,7 +6,7 @@
 /*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/07 16:54:03 by aschenk           #+#    #+#             */
-/*   Updated: 2024/07/25 14:55:37 by aschenk          ###   ########.fr       */
+/*   Updated: 2024/07/26 16:15:19 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,8 @@ used for terminal formatting, prompt definitions, history configurations etc.
 // 'make CFLAGS+="-DHIST_FILE='new_path' -DHIST_SIZE=42"
 # define HIST_FILE	"/.minishell_history"
 # define HIST_SIZE	1000
+
+# define HEREDOC_PREFIX	".heredoc_"
 
 # define MAX_VAR_NAME	1024
 
