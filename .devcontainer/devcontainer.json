@@ -2,7 +2,7 @@
 	"name": "My Codespace",
 	"image": "mcr.microsoft.com/vscode/devcontainers/python:3",
 	"postCreateCommand":
-		"sudo apt-get update && sudo apt-get install -y bc valgrind && sudo python3 -m pip install --upgrade pip setuptools && sudo python3 -m pip install norminette && source ~/.bashrc",
+		"sudo apt-get update && sudo apt-get install -y bc valgrind && sudo python3 -m pip install --upgrade pip setuptools && sudo python3 -m pip install norminette",
 	"extensions": [
 		"ms-python.python"
 	],
