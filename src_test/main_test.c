@@ -6,41 +6,13 @@
 /*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/06 12:05:14 by aschenk           #+#    #+#             */
-/*   Updated: 2024/07/26 23:42:29 by aschenk          ###   ########.fr       */
+/*   Updated: 2024/07/27 13:08:09 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-/*
-main is first of all a loop that runs the shell taking inputs from the user
-and executing them until the user decides to exit it.
-*/
-// int	main(int argc, char **argv, char **envp)
-// {
-// 	char	*input;
-// 	t_list	*token_list;
-
-// 	argc = 0;
-// 	argv = NULL;
-// 	while (1)
-// 	{
-// 		input = readline(PROMPT); // Display prompt and read input
-// 		// Process input (this will be implemented later)
-// 		if (input) // Checking if input is not NULL.
-// 			add_history(input); // Adding to input-history.
-// 		parsing(input, envp);
-// 		token_list = get_tokens(input);
-// 		free(input);
-// 		ft_lstclear(&token_list, del_token);
-// 	}
-// 	exit(EXIT_SUCCESS);
-// }
-/*
-Used in main().
-
-Prints a custom, color-coded logo for the minishell project.
-*/
+// Prints a custom, color-coded logo for the minishell project.
 static void	print_logo(void)
 {
 	printf("%s%s _  _   ", BOLD, L_RED);
@@ -75,7 +47,6 @@ and executing them until the user decides to exit it.
 int	main(int argc, char **argv, char **envp)
 {
 	t_data	data;
-	char	*tmp;
 
 	print_logo();
 	init_data_struct(&data, argc, argv, envp);
@@ -90,10 +61,8 @@ int	main(int argc, char **argv, char **envp)
 				if (get_tokens(&data)) // continue if tokenziation is sucessful
 					if (parse_tokens(&data))
 					{
-						tmp = expand_variables(data.input, data.envp_temp);
-						if (tmp)
-							free(tmp);
 						parsing(&data); // Checking if the input matches any of the builtins.
+						expand_first_variable(&data.input, data.envp_temp);
 					}
 		}
 		// Maybe as a check completely in the end, if nothing else worked, we can mimic the "Command <some_command> not found"?

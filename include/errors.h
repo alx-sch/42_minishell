@@ -6,7 +6,7 @@
 /*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/16 17:26:08 by aschenk           #+#    #+#             */
-/*   Updated: 2024/07/26 16:14:23 by aschenk          ###   ########.fr       */
+/*   Updated: 2024/07/27 12:08:50 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,5 +28,6 @@ e.g. consistency, easier management, clearer code structure and maintenance.
 # define ERR_NOT_CLOSED_SUF " is not closed (position: "
 # define ERR_PARSE_HEREDOC 	"ERROR: Heredoc parsing failed"
 # define ERR_DEL_HEREDOC	"ERROR: Failed to delete heredoc file"
+# define ERR_VAR_EXP 		"ERROR: Variable expansion failed"
 
 #endif
