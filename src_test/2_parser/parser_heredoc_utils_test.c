@@ -6,7 +6,7 @@
 /*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/24 22:36:32 by aschenk           #+#    #+#             */
-/*   Updated: 2024/07/26 17:52:28 by aschenk          ###   ########.fr       */
+/*   Updated: 2024/07/27 20:02:02 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ creation of heredoc files and processing  heredoc input.
 
 #include "minishell.h"
 
-// FUNCTION IN FILE
+// IN FILE:
 
 void	count_pipes(t_data *data, t_token *node);
 void	trim_newline(char *str);
@@ -34,7 +34,7 @@ void	count_pipes(t_data *data, t_token *node)
 /*
 Trims the trailing newline character from a heredoc string.
 This makes comparing the heredoc delimiter with the heredoc input
-more straightforward
+more straightforward.
 */
 void	trim_newline(char *str)
 {

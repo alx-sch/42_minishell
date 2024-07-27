@@ -6,7 +6,7 @@
 /*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/24 22:36:32 by aschenk           #+#    #+#             */
-/*   Updated: 2024/07/26 16:29:00 by aschenk          ###   ########.fr       */
+/*   Updated: 2024/07/27 19:59:39 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ This file contains a functions to initially check the user's input:
 
 #include "minishell.h"
 
-// FUNCTION IN FILE
+// IN FILE:
 
 int	is_input_empty(char *input);
 int	is_quotation_closed(t_data *data);

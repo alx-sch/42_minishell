@@ -6,7 +6,7 @@
 /*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/24 22:36:32 by aschenk           #+#    #+#             */
-/*   Updated: 2024/07/27 09:11:23 by aschenk          ###   ########.fr       */
+/*   Updated: 2024/07/27 19:59:54 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ It utilizes functions found in parser_heredoc_utils.c.
 
 #include "minishell.h"
 
-// FUNCTION IN FILE
+// IN FILE:
 
 int	process_heredocs(t_data *data);
 
@@ -115,7 +115,7 @@ Processes all HEREDOC tokens in the token list. Traverses the list,
 converts HEREDOC tokens to REDIR_IN tokens, and handles HEREDOC input.
 
 Returns:
-- 1 if all HEREDOCs were processed successfully.
+- 1 if all HEREDOCs were processed successfully or none were encountered.
 - 0 if any HEREDOC processing failed.
 */
 int	process_heredocs(t_data *data)
