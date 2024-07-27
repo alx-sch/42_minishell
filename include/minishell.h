@@ -6,7 +6,7 @@
 /*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/06 12:08:35 by aschenk           #+#    #+#             */
-/*   Updated: 2024/07/25 16:59:26 by aschenk          ###   ########.fr       */
+/*   Updated: 2024/07/27 13:07:49 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,8 @@ TBD
 # include "libft.h" // libft
 # include "errors.h" // prompt, etc.
 # include "config.h" // error messages
-# include "tokenizer.h" // prompt, etc.
+# include "tokenizer.h"
+# include "parser.h"
 
 # include <stdlib.h> // malloc, free, exit
 # include <fcntl.h> // open, close, read, write, access, unlink
@@ -69,17 +70,17 @@ TBD
 */
 typedef struct s_data
 {
-	int		argc;
-	char	**argv;
-	char	**envp;
-	char	*input;
-	char	*tmp;
-	char	quote;
-	int		pipe_nr;
-	t_tok	tok;
-	t_cd	cd;
-	t_env	*envp_temp;
-	t_env	*export_list;
+	int			argc;
+	char		**argv;
+	char		**envp;
+	char		*input;
+	char		*tmp;
+	char		quote;
+	int			pipe_nr;
+	t_tok		tok;
+	t_cd		cd;
+	t_env		*envp_temp;
+	t_env		*export_list;
 }	t_data;
 
 //	+++++++++++++++
@@ -96,41 +97,18 @@ int argc, char **argv, char **envp);
 
 // utils.c
 
-void			print_heredoc_found(t_data *data);
+int				is_whitespace(int c);
 void			print_err_msg(char *msg);
 void			print_token_list(t_list *lst); // TESTING ONLY
 
-// 0_check_input/check_quotation.c
+//	0_check_input/check_input.c
 
+int				is_input_empty(char *input);
 int				is_quotation_closed(t_data *data);
 
-// 0_tokenizer/tokenizer_redirection.c
+// 2_parser
 
-int				is_redirection(t_data *data, int *i);
-
-int				is_pipe(t_data *data, int *i);
-
-// FOR TESTING!!
-void			print_string_array(char **array);
-
-// free.c
-
-void			free_str_arr(char ***array_ptr);
-
-// 0_tokenizer/tokenizer_expansion.c
-
-char			*expand_variables(t_data *data);
-
-// 0_lexer/lexer_main.c
-
-char			**parser(char *input);
-
-// tokenizer_utils.c
-
-void			print_token(const t_list *current);
-void			print_token_list(t_list *token_list);
-int				is_whitespace(int c);
-int				is_delimiter(t_data *data, const char c);
+int				expand_first_variable(char **str, t_env *env_list);
 
 // free.c
 

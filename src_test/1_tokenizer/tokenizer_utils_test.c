@@ -6,14 +6,12 @@
 /*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 14:04:08 by aschenk           #+#    #+#             */
-/*   Updated: 2024/07/01 19:30:48 by aschenk          ###   ########.fr       */
+/*   Updated: 2024/07/26 16:33:32 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 /*
-This source file contains utility functions used in the tokenization process.
-Specifically, it includes functions to identify whitespace characters and
-token delimiters.
+This source file contains a function to identify token delimiters.
 */
 
 #include "minishell.h"
@@ -71,32 +69,3 @@ int	is_delimiter(t_data *data, const char c)
 	}
 	return (0);
 }
-
-// /*
-// FOR TESTING ONLY!!
-// */
-// void	print_token(const t_list *current)
-// {
-// 	t_token	*token;
-
-// 	token = (t_token *)(current)->content;
-// 	printf("token type :%u, lexeme: %s position %d", token->type, token->lexeme,
-// 		token->position);
-// 	return ;
-// }
-
-// /*
-// FOR TESTING ONLY!!
-// */
-// void	print_token_list(t_list *token_list)
-// {
-// 	t_list	*current;
-
-// 	current = token_list;
-// 	while (current != NULL)
-// 	{
-// 		print_token(current);
-// 		current = current->next;
-// 	}
-// 	return ;
-// }

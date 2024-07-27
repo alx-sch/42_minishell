@@ -400,3 +400,6 @@ FodyWeavers.xsd
 # Programs
 minishell_test
 minishell
+
+# Codespace
+vgcore*

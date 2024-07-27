@@ -1,26 +1,50 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   check_quotation_test.c                             :+:      :+:    :+:   */
+/*   check_input_test.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/24 22:36:32 by aschenk           #+#    #+#             */
-/*   Updated: 2024/07/25 18:07:46 by aschenk          ###   ########.fr       */
+/*   Updated: 2024/07/27 19:59:39 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 /*
-This file contains a function that checks an input string for both single and
-double quotations. If a quotation is not closed, the function prints an error
-message into the standard error output.
+This file contains a functions to initially check the user's input:
+-	Checks if input is emty (or only consists of whitespace)
+-	Checks if input contains unclosed quotations.
 */
 
 #include "minishell.h"
 
-// FUNCTION IN FILE
+// IN FILE:
 
+int	is_input_empty(char *input);
 int	is_quotation_closed(t_data *data);
+
+/*
+Checks if the user input is empty or consists only of whitespace.
+
+Returns:
+- 0 if the user input is not empty.
+- 1 if the user input is empty, consists only of whitespace or is NULL.
+*/
+int	is_input_empty(char *input)
+{
+	int	i;
+
+	i = 0;
+	if (!input)
+		return (1);
+	while (input[i])
+	{
+		if (!is_whitespace(input[i]))
+			return (0);
+		i++;
+	}
+	return (1);
+}
 
 /*
 Used in is_closed().

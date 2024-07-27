@@ -6,7 +6,7 @@
 /*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/13 12:12:15 by aschenk           #+#    #+#             */
-/*   Updated: 2024/07/25 18:24:35 by aschenk          ###   ########.fr       */
+/*   Updated: 2024/07/26 16:19:35 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,23 +75,22 @@ void	free_unlinked_token(t_data *data)
 
 static void	delete_heredocs(t_data *data)
 {
-	int		pipe_nr;
+	int		pipe_nr_max;
 	char	*heredoc;
 
-	pipe_nr = 0;
-	while (pipe_nr <= data->pipe_nr)
+	pipe_nr_max = data->pipe_nr;
+	data->pipe_nr = 0;
+	while (data->pipe_nr <= pipe_nr_max)
 	{
-		heredoc = ft_itoa(pipe_nr);
-		if (!heredoc)
+		heredoc = get_heredoc(data);
+		if (heredoc)
 		{
-			print_err_msg(ERR_MALLOC);
-			break ;
+			if (access(heredoc, F_OK) != -1)
+				if (unlink(heredoc) != 0)
+					print_err_msg(ERR_DEL_HEREDOC);
+			free(heredoc);
 		}
-		if (access(heredoc, F_OK) != -1)
-			if (unlink(heredoc) != 0)
-				print_err_msg(ERR_DEL_HEREDOC);
-		free(heredoc);
-		pipe_nr++;
+		data->pipe_nr++;
 	}
 }
 
