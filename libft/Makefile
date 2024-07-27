@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+         #
+#    By: vscode <vscode@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/11/13 11:41:06 by aschenk           #+#    #+#              #
-#    Updated: 2024/05/06 14:22:35 by aschenk          ###   ########.fr        #
+#    Updated: 2024/07/27 18:30:35 by vscode           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -78,7 +78,7 @@ SRC_NUM :=		0
 # Define ANSI escape codes for colors and styles
 RESET =		\033[0m
 BOLD =		\033[1m
-RED =		\033[31;2m
+RED =		\033[91m
 GREEN =		\033[32m
 YELLOW =	\033[33m
 

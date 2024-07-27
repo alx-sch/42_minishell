@@ -188,12 +188,12 @@ $(OBJS_DIR)/%.o:	$(SRCS_DIR)/%.c $(HDRS)
 # Rule to remove all generated object files.
 clean:
 	@rm -rf $(OBJS_DIR)
-	@echo "$(BOLD)$(RED)$(NAME) object files removed.$(RESET)"
+	@echo "$(BOLD)$(L_RED)$(NAME) object files removed.$(RESET)"
 
 # Rule to remove all generated object files and the program executable.
 fclean:	clean
 	@rm -f $(NAME) $(NAME_TEST)
-	@echo "$(BOLD)$(RED)$(NAME) removed.$(RESET)"
+	@echo "$(BOLD)$(L_RED)$(NAME) removed.$(RESET)"
 
 # Rule to remove all generated object files, the program executable,
 # and then rebuild the program.
@@ -224,6 +224,7 @@ TEST_FILES :=	main_test.c \
 				1_tokenizer/tokenizer_utils_test.c \
 				2_parser/parser_test.c \
 				2_parser/parser_var_expansion_test.c \
+				2_parser/parser_var_expansion_utils_test.c \
 				2_parser/parser_heredoc_test.c \
 				2_parser/parser_heredoc_utils_test.c \
 				builtins/cd_test.c \
