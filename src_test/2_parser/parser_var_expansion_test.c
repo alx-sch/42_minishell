@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser_var_expansion_test.c                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vscode <vscode@student.42.fr>              +#+  +:+       +#+        */
+/*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 22:40:57 by aschenk           #+#    #+#             */
-/*   Updated: 2024/07/27 18:28:00 by vscode           ###   ########.fr       */
+/*   Updated: 2024/07/27 21:16:31 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,7 +108,6 @@ char	*get_var_name(char *str, int i)
 	ft_strlcpy(var_name, var_start, var_len + 1);
 	return (var_name);
 }
-
 
 int	join_var_value_w_string(char **str, int i, char *var_name, t_env *env_list)
 {
