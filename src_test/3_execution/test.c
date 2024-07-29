@@ -6,7 +6,7 @@
 /*   By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/24 12:15:35 by nholbroo          #+#    #+#             */
-/*   Updated: 2024/07/29 18:08:29 by nholbroo         ###   ########.fr       */
+/*   Updated: 2024/07/29 18:44:24 by nholbroo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,31 +78,25 @@ static void	create_child_processes(t_data *data, t_exec *exec)
 	int		curr_child;
 	pid_t	pid;
 	int		*stat_loc;
-	bool	test;
-	char	*test_flag;
-	char	**test_array_flag;
 
 	curr_child = 0;
-	pid = 0;
+	pid = 1;
 	stat_loc = NULL;
-	test = 0;
-	test_flag = ft_strdup("echo hi");
-	test_array_flag = ft_split(test_flag, ' ');
 	while (curr_child < data->pipe_no + 1)
 	{
-		if (pid || !test)
+		if (pid)
 		{
-			test = 1;
 			pid = fork();
 			exec->child->nbr[curr_child++] = pid;
 			waitpid(pid, stat_loc, 0);
 		}
-		else
+		if (!pid)
 			break ;
 	}
 	if (!pid)
 	{
-		// execution(data, exec);
+		//execution(data, exec);
+		printf("%d\n", curr_child);
 		free_exec(exec);
 		free_data(data, 1);
 		exit(0);
