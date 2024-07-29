@@ -6,7 +6,7 @@
 /*   By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/06 12:08:35 by aschenk           #+#    #+#             */
-/*   Updated: 2024/07/23 15:14:58 by nholbroo         ###   ########.fr       */
+/*   Updated: 2024/07/29 14:44:57 by nholbroo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,6 +82,22 @@ typedef struct s_data
 	t_env	*export_list;
 }	t_data;
 
+typedef struct s_child
+{
+	pid_t	**nbr;
+}	t_child;
+
+typedef struct s_exec
+{
+	//int		fd[2];
+	char	**all_paths;
+	char	*current_path;
+	char	**input;
+	char	*cmd;
+	char	**flags;
+	t_child	*child;
+}	t_exec;
+
 //	+++++++++++++++
 //	++ FUNCTIONS ++
 //	+++++++++++++++
@@ -135,7 +151,11 @@ int				is_delimiter(t_data *data, const char c);
 void			del_token(void *content);
 void			free_data(t_data *data, bool exit);
 
-// Parsing:
+// Execution:
+
+void			init_exec(t_data *data);
+
+// Parsing builtins:
 
 void			parsing(t_data *data);
 int				is_pwd(char *input);
