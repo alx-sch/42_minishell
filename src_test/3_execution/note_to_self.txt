@@ -1,8 +1,8 @@
 PLAN FOR EXECUTION:
 
 1. Make sure all the child processes are being created properly, according
-to amount of pipes.
+to amount of pipes. (DONE)
 2. Make it possible to execute commands in all child processes -> use the input
 to call execve correctly.
 3. Then fix the pipes so it gets the correct input and output.
-4. 
+4. Check for redirections and in which end/which file it is happening to.
