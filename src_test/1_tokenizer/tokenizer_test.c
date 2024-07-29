@@ -6,7 +6,7 @@
 /*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 16:59:48 by aschenk           #+#    #+#             */
-/*   Updated: 2024/07/29 18:30:35 by aschenk          ###   ########.fr       */
+/*   Updated: 2024/07/29 20:40:34 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -132,7 +132,7 @@ static int	add_other_token(t_data *data, int *i)
 	return (1); // Token added or no token added as *i points to whitespace or '\0'
 }
 
-/**
+/*
 Parses the input string to extract tokens and builds a token list (t_list type).
 
 This function iterates over the input string and extracts tokens based on

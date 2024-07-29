@@ -6,7 +6,7 @@
 /*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 16:36:37 by aschenk           #+#    #+#             */
-/*   Updated: 2024/07/29 18:46:40 by aschenk          ###   ########.fr       */
+/*   Updated: 2024/07/29 18:57:07 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,30 +31,32 @@ typedef struct s_data	t_data;
 //	++++++++++++++++
 
 /**
-Data type `enum` defines a set of constants via integer (starting with 0).
-Categorizes tokens / lexemes:
-- OTHER:		Lexemes to be passed to execve(), may contain quotes and vars.
+Data type `enum` defines a set of constants via integers (starting with 0).
+Categorizes tokens:
+
 - PIPE:			'|' ; pipeline between two commands.
 - REDIR_IN:		'<'	; redirects input of a command from a file instead of STDIN.
 - REDIR_OUT:	'>' ; redirects output of a command into file instead of STDOUT.
 - REDIR_APPEND:	'>>'; appends cmd output to a file without truncating it.
 - HEREDOC:		'<<'; creates a here-document, directly input via CL.
+- OTHER:		All other types.
 */
 typedef enum e_token_type
 {
-	OTHER,
 	PIPE,
 	REDIR_IN,
 	REDIR_OUT,
 	APPEND_OUT,
 	HEREDOC,
+	OTHER,
 }	t_token_type;
 
-/*
+/**
 Represents a single token.
-- t_token type:	Type of the token (e.g., PIPE, REDIR_IN, etc.).
-- char *lexeme:	The actual string value of the token extracted from the input.
-- int position:	The position (index) of the token in the input string.
+
+- type [t_token]:	Type of the token (e.g., PIPE, REDIR_IN, etc.).
+- lexeme [char *]:	The actual string value of the token extracted from the input.
+- position [int]:	The position (index) of the token in the input string.
 */
 typedef struct s_token
 {
@@ -63,17 +65,17 @@ typedef struct s_token
 	int				position;
 }	t_token;
 
-/*
+/**
 Holds all information for managing tokens and the linked list of tokens.
 
 Tokens of type `t_token` are stored in a `t_list` node via the 'content'
 member (of type void*), using the ft_lstnew() function.
 
-- t_token tok:		The current token being processed, containing its type,
+- tok [t_token]:	The current token being processed, containing its type,
 					lexeme, and position.
-- t_list new_node:	Pointer to the new node to be added to the token list,
-					created from the current token.
-- t_list tok_lst:	Pointer to the head of the linked list of tokens, which
+- new_node [t_list]:	Pointer to the new node to be added to the token list,
+						created from the current token.
+- tok_lst [t_list]:	Pointer to the head of the linked list of tokens, which
 					stores all tokens parsed from the input.
 */
 typedef struct s_tok

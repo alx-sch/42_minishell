@@ -6,7 +6,7 @@
 /*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/06 12:08:35 by aschenk           #+#    #+#             */
-/*   Updated: 2024/07/29 17:07:47 by aschenk          ###   ########.fr       */
+/*   Updated: 2024/07/29 19:26:19 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,7 +108,7 @@ int				is_quotation_closed(t_data *data);
 
 // 2_parser
 
-int				expand_first_variable(char **str, t_env *env_list);
+int				expand_variables(char **str, t_env *env_list);
 
 // free.c
 

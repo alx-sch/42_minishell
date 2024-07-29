@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/13 13:51:10 by nholbroo          #+#    #+#             */
-/*   Updated: 2024/07/23 16:46:45 by nholbroo         ###   ########.fr       */
+/*   Updated: 2024/07/29 19:07:53 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ static void	cd_one_up(t_cd **cd, char *cwd)
 }
 
 // Changes current working directory to "home".
-// Iterates through the environmental variables to find correct "home"-
+// Iterates through the environment variables to find correct "home"-
 // directory.
 // Throws an error message if it doesn't exist (it has been removed).
 static void	cd_to_home_user(t_cd **cd, t_env *envp_temp)
@@ -85,7 +85,7 @@ static void	cd_to_home_user(t_cd **cd, t_env *envp_temp)
 }
 
 // Moves to a subdirectory or an absolute path.
-// First checks if it is a valid absolute path ("cd /home/natalierh"). In that 
+// First checks if it is a valid absolute path ("cd /home/natalierh"). In that
 // case it changes current working directory to that.
 // Otherwise moves on to change to a defined subdirectory.
 //
@@ -113,17 +113,17 @@ void	cd_one_down(t_cd **cd, char *cwd)
 }
 
 // Works like the "cd"-command in bash.
-// 
+//
 // Does not accept:
 // -More than one argument.
 // -Non-existing file or directory.
-// 
+//
 // Does accept:
 // -Whitespaces in the beginning/end.
 // -Both relative and absolute paths ("cd .." or "cd /home/nholbroo").
 // -Go to home ("cd" or "cd ~").
 // -Go to root ("cd /" or even "cd ///////////").
-// -Go to subdirectory (type "cd" followed by a subdirectory or press tab-key 
+// -Go to subdirectory (type "cd" followed by a subdirectory or press tab-key
 // to see a list of different available subdirectories.)
 int	cd(char *input, t_env *envp_temp)
 {

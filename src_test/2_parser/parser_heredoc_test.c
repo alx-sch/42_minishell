@@ -6,7 +6,7 @@
 /*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/24 22:36:32 by aschenk           #+#    #+#             */
-/*   Updated: 2024/07/29 18:38:27 by aschenk          ###   ########.fr       */
+/*   Updated: 2024/07/29 19:34:10 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ is encountered. Writes each line to the specified file descriptor.
  @return `1` if input handling succeeded.
 		 `0` if input handling failed (write operation failed).
 */
-static int	handle_heredoc_input(int fd, const char *delimiter)
+static int	handle_heredoc_input(int fd, const char *delimiter, t_data *data)
 {
 	char	*input_line;
 	int		bytes_written_1;
@@ -65,7 +65,8 @@ static int	handle_heredoc_input(int fd, const char *delimiter)
 	ft_printf(HEREDOC_P);
 	input_line = get_next_line(STDIN_FILENO);
 	trim_newline(input_line);
-	while (input_line != NULL && ft_strcmp(input_line, delimiter) != 0)
+	while (expand_variables(&input_line, data->envp_temp) == 1
+		&& ft_strcmp(input_line, delimiter) != 0)
 	{
 		bytes_written_1 = write(fd, input_line, ft_strlen(input_line));
 		bytes_written_2 = write(fd, "\n", 1);
@@ -96,7 +97,7 @@ static int	process_single_heredoc(t_data *data, t_token *current_token,
 	fd = get_heredoc_fd(data);
 	if (fd < 0)
 		return (0);
-	if (!handle_heredoc_input(fd, next_token->lexeme))
+	if (!handle_heredoc_input(fd, next_token->lexeme, data))
 	{
 		close(fd);
 		return (0);
