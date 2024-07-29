@@ -6,26 +6,25 @@
 /*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 22:40:57 by aschenk           #+#    #+#             */
-/*   Updated: 2024/07/27 21:16:31 by aschenk          ###   ########.fr       */
+/*   Updated: 2024/07/29 18:45:26 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-/*
+/**
 TBD
 */
 
 #include "minishell.h"
 
-/*
-Used in XXX().
+/**
+Used in expand_first_variable().
 
-Extracts the value of a specified environment variable ('env_var_search')
+Extracts the value of a specified environment variable (`env_var_search`)
 from the minishell-specific environmental variables linked list (t_env).
 
-Returns:
-- The value the environmental variable, if found.
-- an empty string, if the specified environmental variable is not found.
-- NULL if memory allocation for the empty string failed.
+ @return The value the environmental variable, if found.
+		 An empty string, if the specified environmental variable is not found.
+		 `NULL` if memory allocation for the empty string failed.
 
 If an empty string is returned, it is the user's responsibilty to free it
 when done using.
@@ -47,15 +46,14 @@ static char	*get_env_value(const char *env_var_search, t_env *env_list)
 		return (NULL);
 	return (empty_str);
 }
-/*
-Checks if a valid variable is encountered at position `i` in the string `str`.
-A valid variable is identified by a '$' character that is not followed by:
-- whitespace or null terminator
-- another '$' character
 
-Returns:
-- 1 if a valid variable is encountered at position `i`.
-- 0 if no valid variable is encountered at position `i`.
+/**
+Checks if a valid variable is encountered at position `i` in the string `str`.
+A valid variable is identified by a '$' character that is not followed by
+whitespace, the null terminator, or another '$' character.
+
+ @return `1` if a valid variable is encountered.
+		 `0` if no valid variable is encountered.
 */
 int	is_variable(char *str, int i)
 {
@@ -66,7 +64,7 @@ int	is_variable(char *str, int i)
 		return (0);
 }
 
-/*
+/**
 This function extracts the variable name following a '$' character.
 Variable names are delimited by:
 - Whitespace or the null terminator
@@ -76,13 +74,12 @@ Variable names are delimited by:
 If the variable is the special case '$?', the function returns a string
 containing "?".
 
-Parameters:
-- str: The string from which to extract the variable name.
-- i: The position in the string where the '$' character is located.
+ @param str The string from which to extract the variable name.
+ @param i The position in the string where the '$' character is located.
 
-Returns:
-- A newly allocated string containing the variable name (excluding the '$').
-- NULL if memory allocation fails.
+ @return A newly allocated string containing the variable name
+ 		 (excluding the '$').
+		 `NULL` if memory allocation fails.
 */
 char	*get_var_name(char *str, int i)
 {

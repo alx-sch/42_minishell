@@ -6,7 +6,7 @@
 /*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/27 19:58:01 by aschenk           #+#    #+#             */
-/*   Updated: 2024/07/27 21:14:41 by aschenk          ###   ########.fr       */
+/*   Updated: 2024/07/29 17:09:24 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,14 +28,14 @@ void	free_vars(char **var_val, char **str_l, char **str_r);
 
 /**
  Extracts a substring from the beginning of the given string up to a
- specified index. The extracted substring is stored in 'substr_left'.
+ specified index. The extracted substring is stored in `substr_left`.
 
  @param str Pointer to the original string.
  @param i Index up to which the substring will be extracted.
  @param substr_left Pointer to a char* where the extracted substring will
  					be stored.
  @return	1 on success (substring extraction and memory allocation successful),
- 			0 on failure (memory allocation failure).
+			0 on failure (memory allocation failure).
 */
 int	get_str_l(char **str, int i, char **substr_left)
 {
@@ -49,7 +49,7 @@ int	get_str_l(char **str, int i, char **substr_left)
 /**
  Extracts a substring from a specified index to the end of the string,
  excluding the given variable name. The extracted substring is stored in
- 'substr_right'.
+ `substr_right`.
 
  @param str Pointer to the original string.
  @param i Index from which to start the substring extraction.
@@ -70,7 +70,7 @@ int	get_str_r(char **str, int i, char *var_name, char **substr_right)
 }
 
 /**
- Concatenates 'str_l' with 'var_value' and replaces 'str' with this
+ Concatenates `str_l` with `var_value` and replaces `str` with this
  concatenation.
 
  @param str Pointer to the existing string which will be replaced by the
@@ -93,7 +93,7 @@ int	join_str_l(char **str, char *str_l, char *var_value)
 }
 
 /**
- Concatenates 'str_r' to the end of 'str'.
+ Concatenates `str_r` to the end of `str`.
 
  @param str Pointer to the existing string which will be replaced by the
 			concatenated result.

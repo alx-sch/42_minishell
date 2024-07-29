@@ -6,11 +6,11 @@
 /*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/16 17:26:08 by aschenk           #+#    #+#             */
-/*   Updated: 2024/07/27 12:08:50 by aschenk          ###   ########.fr       */
+/*   Updated: 2024/07/29 17:07:41 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-/*
+/**
 This header file defines error messages and formatting constants.
 By centralizing error messages in one place, it provides several advantages,
 e.g. consistency, easier management, clearer code structure and maintenance.

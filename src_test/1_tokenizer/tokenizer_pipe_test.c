@@ -6,11 +6,11 @@
 /*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/01 16:34:21 by aschenk           #+#    #+#             */
-/*   Updated: 2024/07/25 17:58:40 by aschenk          ###   ########.fr       */
+/*   Updated: 2024/07/29 18:34:36 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-/*
+/**
 This file contains a function to check the input string for a pipe symbol ('|')
 and creates the corresponding token if the syntax before and after the piping
 is valid.
@@ -24,24 +24,22 @@ Returns an error message if the piping syntax is not valid.
 
 int	is_pipe(t_data *data, int *i);
 
-/*
+/**
 Used in check_syntax().
 Mostly a simplified version of is_valid_operand() in tokenizer_redirection.c.
 
 Scans the input string starting from the current index (*i).
 Skips any leading whitespace and checks if the encountered character is valid.
-- Valid syntax after a pipe: Anything but '|' and end of input ('\0').
+Valid syntax after a pipe: Anything but '|' and end of input ('\0').
 
-Parameters:
-- char *inp: The input string containing the command line input.
-- int *i: The current index in the input string.
+ @param inp The input string containing the command line input.
+ @param i The current index in the input string.
 
-Returns:
-- The dynamically allocated string containing the invalid syntax symbol
-  ('newline' for '\0' to mirror the behavior of invalid redirections).
-- NULL if the syntax is valid.
-- "ERR" string literal, if memory allocation fails while attempting to
-  allocate space for the invalid syntax.
+ @return The dynamically allocated string containing the invalid syntax symbol
+  		 ('newline' for '\0' to mirror the behavior of invalid redirections).
+		 `NULL` if the syntax is valid.
+		 `"ERR"` string literal as fallback, if memory allocation fails while
+		 attempting to allocate space for the invalid syntax.
 */
 static char	*is_valid_syntax(const char *inp, int j)
 {
@@ -71,14 +69,13 @@ static char	*is_valid_syntax(const char *inp, int j)
 	return (NULL); // Valid syntax was encountered
 }
 
-/*
+/**
 Used in check_syntax().
 
 Prints an error message for invalid syntax encountered after a pipe symbol ('|').
 
-Parameters:
-- char *invalid_syn:	The invalid operand encountered in the input.
-- char *str_j:	The string representation of int j (position of failed piping).
+ @param invalid_syn The invalid operand encountered in the input.
+ @param str_j The string representation of int j (position of failed piping).
 */
 static void	print_pipe_err_msg(char *invalid_syn, char *str_j)
 {
@@ -93,13 +90,12 @@ static void	print_pipe_err_msg(char *invalid_syn, char *str_j)
 	ft_putstr_fd(RESET, STDERR_FILENO); // Reset the output style to default
 }
 
-/*
+/**
 Used in check_syntax().
 
 Prints an error message for missing input before the first pipe ('|').
 
-Parameters:
-- char *str_j:	The string representation of int j (position of failed piping).
+ @param str_j The string representation of int j (position of failed piping).
 */
 static void	print_empty_pipe_err_msg(char *str_j)
 {
@@ -112,21 +108,19 @@ static void	print_empty_pipe_err_msg(char *str_j)
 	ft_putstr_fd(RESET, STDERR_FILENO); // Reset the output style to default
 }
 
-/*
+/**
 Used in is_pipe().
 
 Checks if the syntax before/after an encountered '|' valid.
 If syntax is invalid, it prints a custom error message including the
 position of the invalid synatax (position '-1' used if ft_itoa fails).
 
+ @param data Data structure containing token-related info.
+ @param j The index of the piping symbol ('|').
 
-Parameters:
-- t_data *data:	Data structure containing token-related info.
-- int j:		The index of the piping symbol ('|').
-
-Returns:
-- 0: If syntax is invalid and an error message was printed OR malloc fail.
-- 1: If the syntax is valid.
+ @returns `0` if syntax is invalid and an error message was printed
+		   or malloc fail.
+		  `1` if the syntax is valid.
 */
 static int	check_syntax(t_data *data, int j)
 {
@@ -157,22 +151,21 @@ static int	check_syntax(t_data *data, int j)
 	return (1); // Syntax is valid.
 }
 
-/*
+/**
 If the character at index *i in the input string is a pipe symbol ('|'),
-the function checks if the syntax before and after the '|' is valid:
-- Input before and after a pipe cannot be empty.
-- Note: Our minishell interprets '||' as "empty input between pipes" not as "OR".
+the function checks if the syntax before and after the '|' is valid.
+Input before and after a pipe cannot be empty.
+Our minishell interprets '||' as "empty input between pipes" not as
+"OR" operator.
 
 If the syntax is valid, it creates the corresponding token and adds
 it to the token list.
 
-Parameters:
-- t_data *data:	Data structure containing input string and token list.
-- int *i:		Pointer to the current index in the input string.
+ @param data Data structure containing input string and token list.
+ @param i Pointer to the current index in the input string.
 
-Returns:
-- 0 if the syntax is invalid or if token creation failed.
-- 1 if a pipe token was added to the token list or if input[*i] is not a pipe.
+ @return `0` if the syntax is invalid or if token creation failed.
+		 `1` if a pipe token was added to the token list or if input[*i] is not a pipe.
 */
 int	is_pipe(t_data *data, int *i)
 {

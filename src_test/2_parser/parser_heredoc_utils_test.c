@@ -6,11 +6,11 @@
 /*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/24 22:36:32 by aschenk           #+#    #+#             */
-/*   Updated: 2024/07/27 20:02:02 by aschenk          ###   ########.fr       */
+/*   Updated: 2024/07/29 18:39:23 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-/*
+/**
 This file contains utility functions for processing heredocs, namely the
 creation of heredoc files and processing  heredoc input.
 */
@@ -31,7 +31,7 @@ void	count_pipes(t_data *data, t_token *node)
 		data->pipe_nr += 1;
 }
 
-/*
+/**
 Trims the trailing newline character from a heredoc string.
 This makes comparing the heredoc delimiter with the heredoc input
 more straightforward.
@@ -47,9 +47,9 @@ void	trim_newline(char *str)
 		str[len - 1] = '\0';
 }
 
-/*
-Returns a heredoc filename based on current pipe count,
-or NULL on malloc failure.
+/**
+ @return A heredoc filename based on current pipe count or
+		 `NULL` on malloc failure.
 */
 char	*get_heredoc(t_data *data)
 {
@@ -64,9 +64,11 @@ char	*get_heredoc(t_data *data)
 	return (heredoc);
 }
 
-/*
-Creates and opens a heredoc file, returning its file descriptor,
-or -1 on malloc/open failure.
+/**
+Creates and opens a heredoc file
+
+ @return The heredoc's file descriptor or
+ 		 `-1` on malloc/open failure.
 */
 int	get_heredoc_fd(t_data *data)
 {

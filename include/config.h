@@ -6,11 +6,11 @@
 /*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/07 16:54:03 by aschenk           #+#    #+#             */
-/*   Updated: 2024/07/26 16:15:19 by aschenk          ###   ########.fr       */
+/*   Updated: 2024/07/29 17:07:37 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-/*
+/**
 This header file defines configuration constants and ANSI escape codes, e.g.
 used for terminal formatting, prompt definitions, history configurations etc.
 */

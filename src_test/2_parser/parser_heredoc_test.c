@@ -6,11 +6,11 @@
 /*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/24 22:36:32 by aschenk           #+#    #+#             */
-/*   Updated: 2024/07/27 19:59:54 by aschenk          ###   ########.fr       */
+/*   Updated: 2024/07/29 18:38:27 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-/*
+/**
 This file contains functions for processing HEREDOC tokens.
 It utilizes functions found in parser_heredoc_utils.c.
 */
@@ -21,17 +21,16 @@ It utilizes functions found in parser_heredoc_utils.c.
 
 int	process_heredocs(t_data *data);
 
-/*
+/**
 Used in process_single_heredoc().
 
-Converts HEREDOC tokens ('<< EOF') into REDIR_IN tokens ('< heredoc-file'),
-where the 'EOF' lexeme is replaced by the actual filename created for heredoc.
+Converts HEREDOC tokens (`<< EOF`) into REDIR_IN tokens (`< heredoc-file`),
+where the delimiter is replaced by the actual filename created for the heredoc.
 This simplifies further processing by ensuring that HEREDOC tokens are processed
 in the same way as REDIR_IN tokens.
 
-Returns:
-- 1 if HEREDOC token conversion succeeded.
-- 0 if HEREDOC token conversion failed.
+ @return `1` if HEREDOC token conversion succeeded.
+		 `0` if HEREDOC token conversion failed.
 */
 static int	convert_tokens(t_data *data, t_token *current_token,
 	t_token *next_token)
@@ -50,13 +49,12 @@ static int	convert_tokens(t_data *data, t_token *current_token,
 	return (1);
 }
 
-/*
+/**
 Handles input for a HEREDOC token by reading lines from stdin until the delimiter
 is encountered. Writes each line to the specified file descriptor.
 
-Returns:
-- 1 if input handling succeeded.
-- 0 if input handling failed (write operation failed).
+ @return `1` if input handling succeeded.
+		 `0` if input handling failed (write operation failed).
 */
 static int	handle_heredoc_input(int fd, const char *delimiter)
 {
@@ -83,13 +81,12 @@ static int	handle_heredoc_input(int fd, const char *delimiter)
 	return (1);
 }
 
-/*
+/**
 Processes a single HEREDOC token by creating a file for the heredoc, handling
 the input from the user, and converting the HEREDOC into REDIR_IN tokens.
 
-Returns:
-- 1 if the HEREDOC processing succeeded.
-- 0 if the HEREDOC processing failed.
+ @return `1` if the HEREDOC processing succeeded.
+		 `0` if the HEREDOC processing failed.
 */
 static int	process_single_heredoc(t_data *data, t_token *current_token,
 	t_token *next_token)
@@ -110,13 +107,13 @@ static int	process_single_heredoc(t_data *data, t_token *current_token,
 	return (1);
 }
 
-/*
+/**
 Processes all HEREDOC tokens in the token list. Traverses the list,
 converts HEREDOC tokens to REDIR_IN tokens, and handles HEREDOC input.
 
-Returns:
-- 1 if all HEREDOCs were processed successfully or none were encountered.
-- 0 if any HEREDOC processing failed.
+ @return `1` if all HEREDOCs were processed successfully or
+ 		 none were encountered.
+		 `0` if any HEREDOC processing failed.
 */
 int	process_heredocs(t_data *data)
 {

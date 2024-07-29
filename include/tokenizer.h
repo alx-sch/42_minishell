@@ -6,11 +6,11 @@
 /*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 16:36:37 by aschenk           #+#    #+#             */
-/*   Updated: 2024/07/26 18:08:29 by aschenk          ###   ########.fr       */
+/*   Updated: 2024/07/29 18:46:40 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-/*
+/**
 This header file defines the structures and functions used for tokenizing
 input commands in our minishell. It includes definitions for token types,
 the token structure, and a structure to manage tokens.
@@ -30,7 +30,7 @@ typedef struct s_data	t_data;
 //	++ STRUCTURES ++
 //	++++++++++++++++
 
-/*
+/**
 Data type `enum` defines a set of constants via integer (starting with 0).
 Categorizes tokens / lexemes:
 - OTHER:		Lexemes to be passed to execve(), may contain quotes and vars.
