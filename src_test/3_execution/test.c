@@ -6,7 +6,7 @@
 /*   By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/24 12:15:35 by nholbroo          #+#    #+#             */
-/*   Updated: 2024/07/29 15:30:20 by nholbroo         ###   ########.fr       */
+/*   Updated: 2024/07/29 18:08:29 by nholbroo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,11 +20,7 @@ static void	free_children(t_child *child)
 	if (child)
 	{
 		if (child->nbr)
-		{
-			while (child->nbr[i])
-				free(child->nbr[i++]);
 			free(child->nbr);
-		}
 		free(child);
 	}
 }
@@ -74,10 +70,46 @@ t_exec	*set_exec_members_to_null(t_exec *exec)
 
 // static void	execution(t_data *data, t_exec *exec)
 // {
-// 	int	curr_child;
-
-// 	curr_child = 0;
+	
 // }
+
+static void	create_child_processes(t_data *data, t_exec *exec)
+{
+	int		curr_child;
+	pid_t	pid;
+	int		*stat_loc;
+	bool	test;
+	char	*test_flag;
+	char	**test_array_flag;
+
+	curr_child = 0;
+	pid = 0;
+	stat_loc = NULL;
+	test = 0;
+	test_flag = ft_strdup("echo hi");
+	test_array_flag = ft_split(test_flag, ' ');
+	while (curr_child < data->pipe_no + 1)
+	{
+		if (pid || !test)
+		{
+			test = 1;
+			pid = fork();
+			exec->child->nbr[curr_child++] = pid;
+			waitpid(pid, stat_loc, 0);
+		}
+		else
+			break ;
+	}
+	if (!pid)
+	{
+		// execution(data, exec);
+		free_exec(exec);
+		free_data(data, 1);
+		exit(0);
+	}
+	else
+		return ;
+}
 
 void	init_exec(t_data *data)
 {
@@ -93,18 +125,11 @@ void	init_exec(t_data *data)
 	if (!exec->child)
 		exec_errors(data, exec, 1);
 	if (data->pipe_no == 0)
-	{
-		exec->child->nbr = malloc(sizeof(pid_t *) * 2);
-		exec->child->nbr[0] = NULL;
-	}
+		exec->child->nbr = malloc(sizeof(pid_t) * 2);
 	else
-	{
-		exec->child->nbr = malloc(sizeof(pid_t *) * (data->pipe_no + 1));
-		while (exec->child->nbr[i])
-			exec->child->nbr[i++] = NULL;
-	}
+		exec->child->nbr = malloc(sizeof(pid_t) * (data->pipe_no + 2));
 	if (!exec->child->nbr)
 		exec_errors(data, exec, 1);
-	//execution(data, exec);
+	create_child_processes(data, exec);
 	free_exec(exec);
 }

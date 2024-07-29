@@ -6,7 +6,7 @@
 /*   By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/06 12:08:35 by aschenk           #+#    #+#             */
-/*   Updated: 2024/07/29 14:44:57 by nholbroo         ###   ########.fr       */
+/*   Updated: 2024/07/29 17:03:44 by nholbroo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,7 @@ typedef struct s_data
 
 typedef struct s_child
 {
-	pid_t	**nbr;
+	pid_t	*nbr;
 }	t_child;
 
 typedef struct s_exec
