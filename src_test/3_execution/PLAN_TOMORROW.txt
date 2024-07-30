@@ -1,0 +1,3 @@
+1. Fix Norminette errors in the file get_flags_and_command_test.c
+2. Do the redirections.
+3. Fix pipes.
