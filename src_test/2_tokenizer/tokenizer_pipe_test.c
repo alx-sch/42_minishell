@@ -6,7 +6,7 @@
 /*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/01 16:34:21 by aschenk           #+#    #+#             */
-/*   Updated: 2024/07/29 18:34:36 by aschenk          ###   ########.fr       */
+/*   Updated: 2024/07/30 17:33:41 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,31 +37,31 @@ Valid syntax after a pipe: Anything but '|' and end of input ('\0').
 
  @return The dynamically allocated string containing the invalid syntax symbol
   		 ('newline' for '\0' to mirror the behavior of invalid redirections).
-		 `NULL` if the syntax is valid.
+		 `NULL` if the syntax is valid or no input before '|' (invalid syntax).
 		 `"ERR"` string literal as fallback, if memory allocation fails while
 		 attempting to allocate space for the invalid syntax.
 */
-static char	*is_valid_syntax(const char *inp, int j)
+static char	*is_valid_syntax(t_data *data, int j)
 {
 	char	*invalid_syn; // dynamically allocated string to store the invalid syntax symbol
 
-	j += 1;
+	j += 1; // go to position after '|'
 	invalid_syn = NULL;
-	while (is_whitespace(inp[j])) // Skip leading whitespace
+	while (is_whitespace(data->input[j])) // Skip leading whitespace
 		j++;
 	// Check for invalid syntax ('empty' string after '|')
-	if (inp[j] == '|' || inp[j] == '\0')
+	if (data->input[j] == '|' || data->input[j] == '\0')
 	{
 		// Allocate memory for the invalid syntax string
 		invalid_syn = malloc(sizeof(char) * 8); // Allocate for "newline" + null terminator
 		if (!invalid_syn)
-			return ("ERR"); // Default invalid syntax, if memory allocation failed
+			return ("ERR"); // Used as fallback, if memory allocation failed
 		// Construct the invalid syntax string
-		if (inp[j] == '\0')
+		if (data->input[j] == '\0')
 			ft_strlcpy(invalid_syn, "newline", 8);
 		else
 		{
-			invalid_syn[0] = inp[j]; // Invalid operand is the encountered char
+			invalid_syn[0] = data->input[j]; // Invalid operand is the encountered char
 			invalid_syn[1] = '\0';
 		}
 		return (invalid_syn); // Invalid operand (str) or NULL if malloc failed
@@ -88,6 +88,7 @@ static void	print_pipe_err_msg(char *invalid_syn, char *str_j)
 	ft_putstr_fd(str_j, STDERR_FILENO); // Print the position of failed redirection
 	ft_putstr_fd(")\n", STDERR_FILENO);
 	ft_putstr_fd(RESET, STDERR_FILENO); // Reset the output style to default
+	errno = ENOENT;
 }
 
 /**
@@ -106,6 +107,7 @@ static void	print_empty_pipe_err_msg(char *str_j)
 	ft_putstr_fd(str_j, STDERR_FILENO); // Print the position of failed redirection
 	ft_putstr_fd(")\n", STDERR_FILENO);
 	ft_putstr_fd(RESET, STDERR_FILENO); // Reset the output style to default
+	errno = ENOENT;
 }
 
 /**
@@ -113,7 +115,8 @@ Used in is_pipe().
 
 Checks if the syntax before/after an encountered '|' valid.
 If syntax is invalid, it prints a custom error message including the
-position of the invalid synatax (position '-1' used if ft_itoa fails).
+position of the invalid synatax (position '-1' used as fallback
+if ft_itoa() fails).
 
  @param data Data structure containing token-related info.
  @param j The index of the piping symbol ('|').
@@ -127,25 +130,20 @@ static int	check_syntax(t_data *data, int j)
 	char	*invalid_syn; // String for the invalid syntax.
 	char	*str_j; // String to hold the position of failed piping.
 
-	invalid_syn = is_valid_syntax(data->input, j); // Check if the syntax is valid.
+	invalid_syn = is_valid_syntax(data, j); // Check if the syntax is valid.
 	if (invalid_syn != NULL || data->tok.tok_lst == NULL) // If invalid syntax is found OR if 'pipe' token would be the first token.
 	{
 		str_j = ft_itoa(j);
 		if (!str_j)
-		{
-			print_err_msg(ERR_MALLOC);
-			print_empty_pipe_err_msg("-1");
-			if (ft_strcmp(invalid_syn, "ERR") != 0)
-				free(invalid_syn);
-			return (0); // Invalid syntax was found, pos: -1
-		}
+			str_j = "-1"; // set to position to '-1' if malloc in ft_itoa() fails
 		if (data->tok.tok_lst == NULL)
 			print_empty_pipe_err_msg(str_j);
 		else
 			print_pipe_err_msg(invalid_syn, str_j);
-		if (ft_strcmp(invalid_syn, "ERR") != 0)
+		if (invalid_syn && ft_strcmp(invalid_syn, "ERR") != 0)
 			free(invalid_syn);
-		free(str_j);
+		if (ft_strcmp(str_j, "-1") != 0)
+			free(str_j);
 		return (0); // Invalid syntax was found.
 	}
 	return (1); // Syntax is valid.

@@ -217,16 +217,16 @@ TEST_DIR :=		src_test
 TEST_FILES :=	main_test.c \
 				free_test.c \
 				utils_test.c \
-				0_check_input/check_input_test.c \
-				1_tokenizer/tokenizer_test.c \
-				1_tokenizer/tokenizer_redirection_test.c \
-				1_tokenizer/tokenizer_pipe_test.c \
-				1_tokenizer/tokenizer_utils_test.c \
-				2_parser/parser_test.c \
-				2_parser/parser_var_expansion_test.c \
-				2_parser/parser_var_expansion_utils_test.c \
-				2_parser/parser_heredoc_test.c \
-				2_parser/parser_heredoc_utils_test.c \
+				1_check_input/check_input_test.c \
+				2_tokenizer/tokenizer_test.c \
+				2_tokenizer/tokenizer_redirection_test.c \
+				2_tokenizer/tokenizer_pipe_test.c \
+				2_tokenizer/tokenizer_utils_test.c \
+				3_parser/parser_test.c \
+				3_parser/parser_var_expansion_test.c \
+				3_parser/parser_var_expansion_utils_test.c \
+				3_parser/parser_heredoc_test.c \
+				3_parser/parser_heredoc_utils_test.c \
 				builtins/cd_test.c \
 				builtins/echo_test.c \
 				builtins/env_test.c \
@@ -245,10 +245,10 @@ TEST_FILES :=	main_test.c \
 				standard_functions/count_test.c \
 				standard_functions/free_functions_test.c \
 				standard_functions/modified_standards_test.c \
-				struct_inits/init_cd_test.c \
-				struct_inits/init_data_test.c \
-				struct_inits/init_env_test.c \
-				struct_inits/init_export_test.c
+				0_init_structs/init_cd_test.c \
+				0_init_structs/init_data_test.c \
+				0_init_structs/init_env_test.c \
+				0_init_structs/init_export_test.c
 
 TEST_SRCS :=	$(addprefix $(TEST_DIR)/, $(TEST_FILES))
 TEST_OBJS :=	$(TEST_SRCS:$(TEST_DIR)/%.c=$(OBJS_DIR)/%.o)

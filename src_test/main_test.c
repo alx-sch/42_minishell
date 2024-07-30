@@ -6,7 +6,7 @@
 /*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/06 12:05:14 by aschenk           #+#    #+#             */
-/*   Updated: 2024/07/30 14:32:52 by aschenk          ###   ########.fr       */
+/*   Updated: 2024/07/30 15:46:33 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,8 @@ int	main(int argc, char **argv, char **envp)
 		}
 		// Maybe as a check completely in the end, if nothing else worked, we can mimic the "Command <some_command> not found"?
 		print_token_list(data.tok.tok_lst); // TESTING ONLY
+		data.exit_status = errno; // update exit status
+		printf("exit status: %d\n", data.exit_status);
 		free_data(&data, 0);
 	}
 }

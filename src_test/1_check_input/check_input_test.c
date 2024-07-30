@@ -6,14 +6,15 @@
 /*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/24 22:36:32 by aschenk           #+#    #+#             */
-/*   Updated: 2024/07/29 18:09:47 by aschenk          ###   ########.fr       */
+/*   Updated: 2024/07/30 15:50:39 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 /**
 This file contains a functions to initially check the user's input:
--	Checks if input is emty (or only consists of whitespace)
--	Checks if input contains unclosed quotations.
+-	Checks if input is empty (or only consists of whitespace)
+-	Checks if input contains unclosed quotations and prints an error message
+	and sets a custom exit code if that's the case.
 */
 
 #include "minishell.h"
@@ -51,6 +52,7 @@ Used in is_closed().
 Prints an error message for unclosed quotations including the
 position of the invalid synatax (position '-1' used as fallback if
 ft_itoa fails).
+Also sets the error number to a custom '420' ('42' already in use).
 
  @param str_j Quotation symbol (' or ").
  @param i_str The string representation of position of piping syntax error.
@@ -65,6 +67,7 @@ static void	print_open_quotation_err_msg(char *char_str, char *i_str)
 	ft_putstr_fd(i_str, STDERR_FILENO);
 	ft_putstr_fd(")\n", STDERR_FILENO);
 	ft_putstr_fd(RESET, STDERR_FILENO); // Reset the output style to default
+	errno = 420; // custom minishell exit status, bash would not return an error for unclosed quotations
 }
 
 /**
