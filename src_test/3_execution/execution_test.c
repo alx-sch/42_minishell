@@ -6,16 +6,19 @@
 /*   By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/30 12:32:53 by nholbroo          #+#    #+#             */
-/*   Updated: 2024/07/30 14:09:37 by nholbroo         ###   ########.fr       */
+/*   Updated: 2024/07/30 19:39:53 by nholbroo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	execution(t_data *data, t_exec *exec)
+/*The main function of the execution. Prepares for execution, executes the
+program and exits.*/
+void	execution(t_data *data, t_exec *exec, int position)
 {
-	prep_execution(data, exec);
+	prep_execution(data, exec, position);
+	execve(exec->current_path, exec->flags, exec->envp_temp_arr);
 	free_exec(exec);
 	free_data(data, 1);
-	exit(0);
+	exit(errno);
 }

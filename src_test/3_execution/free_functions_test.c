@@ -6,12 +6,13 @@
 /*   By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/30 12:31:04 by nholbroo          #+#    #+#             */
-/*   Updated: 2024/07/30 13:36:15 by nholbroo         ###   ########.fr       */
+/*   Updated: 2024/07/30 19:36:35 by nholbroo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+/*Frees all the pid-values of the array in the child-struct.*/
 void	free_children(t_child *child)
 {
 	int	i;
@@ -25,6 +26,7 @@ void	free_children(t_child *child)
 	}
 }
 
+/*Frees all allocated memory in the exec-struct.*/
 void	free_exec(t_exec *exec)
 {
 	if (exec)
@@ -43,6 +45,10 @@ void	free_exec(t_exec *exec)
 			ft_freearray(exec->input);
 		if (exec->envp_temp_arr)
 			ft_freearray(exec->envp_temp_arr);
+		if (exec->infile)
+			free(exec->infile);
+		if (exec->outfile)
+			free(exec->outfile);
 		free(exec);
 	}
 }

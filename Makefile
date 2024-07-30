@@ -229,6 +229,9 @@ TEST_FILES :=	main_test.c \
 				3_execution/free_functions_test.c \
 				3_execution/init_exec_test.c \
 				3_execution/prep_execution_test.c \
+				3_execution/check_redirections_test.c \
+				3_execution/get_path_test.c \
+				3_execution/get_flags_and_command_test.c \
 				builtins/cd_test.c \
 				builtins/echo_test.c \
 				builtins/env_test.c \

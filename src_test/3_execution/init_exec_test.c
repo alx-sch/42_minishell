@@ -6,12 +6,13 @@
 /*   By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/24 12:15:35 by nholbroo          #+#    #+#             */
-/*   Updated: 2024/07/30 13:35:08 by nholbroo         ###   ########.fr       */
+/*   Updated: 2024/07/30 19:12:42 by nholbroo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+/*A part of initializing the exec struct, setting all members to NULL.*/
 t_exec	*set_exec_members_to_null(t_exec *exec)
 {
 	exec->all_paths = NULL;
@@ -21,9 +22,14 @@ t_exec	*set_exec_members_to_null(t_exec *exec)
 	exec->input = NULL;
 	exec->child = NULL;
 	exec->envp_temp_arr = NULL;
+	exec->redir_in = 0;
+	exec->redir_out = 0;
+	exec->infile = NULL;
+	exec->outfile = NULL;
 	return (exec);
 }
 
+/*Creates the necessary child processes, one per command.*/
 static void	create_child_processes(t_data *data, t_exec *exec)
 {
 	int		curr_child;
@@ -39,7 +45,7 @@ static void	create_child_processes(t_data *data, t_exec *exec)
 	{
 		pid = fork();
 		if (!pid)
-			execution(data, exec);
+			execution(data, exec, data->tok.tok->position);
 		exec->child->nbr[curr_child++] = pid;
 		while (data->tok.tok->type != PIPE && current)
 		{
@@ -53,6 +59,8 @@ static void	create_child_processes(t_data *data, t_exec *exec)
 	}
 }
 
+/*Initializes the exec struct. Allocates memory for an int array that will store
+the pid's of the child processes.*/
 void	init_exec(t_data *data)
 {
 	t_exec	*exec;

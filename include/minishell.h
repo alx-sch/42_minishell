@@ -6,7 +6,7 @@
 /*   By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/06 12:08:35 by aschenk           #+#    #+#             */
-/*   Updated: 2024/07/30 14:09:51 by nholbroo         ###   ########.fr       */
+/*   Updated: 2024/07/30 19:46:50 by nholbroo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,6 +96,10 @@ typedef struct s_exec
 	char	**input;
 	char	*cmd;
 	char	**flags;
+	char	*infile;
+	char	*outfile;
+	bool	redir_in;
+	bool	redir_out;
 	t_child	*child;
 }	t_exec;
 
@@ -156,16 +160,22 @@ void			free_data(t_data *data, bool exit);
 
 void			init_exec(t_data *data);
 int				count_env_list(t_data *data);
-void			prep_execution(t_data *data, t_exec *exec);
-void			execution(t_data *data, t_exec *exec);
+void			conv_env_tmp_to_arr(t_data *data, t_exec *exec);
+void			get_all_paths(t_data *data, t_exec *exec);
+void			get_correct_path(t_data *data, t_exec *exec);
+void			prep_execution(t_data *data, t_exec *exec, int position);
+void			check_redirections(t_data *data, t_exec *exec, int position);
+void			get_flags_and_command(t_data *data, t_exec *exec, int position);
+void			execution(t_data *data, t_exec *exec, int position);
 void			free_children(t_child *child);
 void			free_exec(t_exec *exec);
 void			exec_errors(t_data *data, t_exec *exec, int error_code);
 void			conversion_errors(t_data *data, t_exec *exec, int i);
+void			error_incorrect_path(t_data *data, t_exec *exec);
 
 // Parsing builtins:
 
-void			parsing(t_data *data);
+int				parsing(t_data *data);
 int				is_pwd(char *input);
 int				is_cd(char *input);
 int				is_exit(t_data *data);

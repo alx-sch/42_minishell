@@ -6,7 +6,7 @@
 /*   By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/13 14:51:02 by nholbroo          #+#    #+#             */
-/*   Updated: 2024/07/23 13:36:51 by nholbroo         ###   ########.fr       */
+/*   Updated: 2024/07/30 19:45:59 by nholbroo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 // Checking if the input is a builtin command, and checks if the arguments are
 // valid.
-void	parsing(t_data *data) // instead of input the data_struct can be passed (which contains a cd struct; initializatio for cd struct can also be added to init_data_strcut() in main.c; this helps to make cd fcts more concise)
+int	parsing(t_data *data) // instead of input the data_struct can be passed (which contains a cd struct; initializatio for cd struct can also be added to init_data_strcut() in main.c; this helps to make cd fcts more concise)
 {
 	if (is_pwd(data->input)) // Checking if the input is "pwd". Ignores extra junk after pwd, like bash, but not handling options. Might implement error message with "invalid option".
 		pwd(); // Calls the pwd-function that is working as the command.
@@ -36,4 +36,7 @@ void	parsing(t_data *data) // instead of input the data_struct can be passed (wh
 		export(data); // Adds an environmental variable to the export and env list if it is assigned a value, or only to export list if it's not assigned a value. Also assigns a value a variable if it already exists.
 	else if (is_echo(data->input)) // Checks if the input is "echo", accepts the option '-n', but no other options. Accepts all arguments.
 		minishell_echo(data); // Outputs the input, with or without newline.
+	else
+		return (1);
+	return (0);
 }
