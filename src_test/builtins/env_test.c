@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env_test.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/25 09:38:05 by natalierh         #+#    #+#             */
-/*   Updated: 2024/07/23 13:48:08 by nholbroo         ###   ########.fr       */
+/*   Updated: 2024/07/29 19:09:36 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 // Prints an error in the case of "env dsafgasg" or "env -dsdasf" or something.
 
 // Checks if the input is "env". Ignores whitespaces in the beginning/end.
-// Does not accept arguments or options, and will throw error messages in 
+// Does not accept arguments or options, and will throw error messages in
 // those cases.
 //
 // Returns 0 if there is an error.
@@ -45,7 +45,7 @@ int	is_env(char *input)
 	return (1);
 }
 
-// Prints out a list of environmental variables, sorted after "last modified".
+// Prints out a list of environment variables, sorted after "last modified".
 // Acts like the "env"-command in bash.
 void	env(t_env *envp_temp)
 {

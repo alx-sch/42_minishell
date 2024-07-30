@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/26 15:50:31 by nholbroo          #+#    #+#             */
-/*   Updated: 2024/07/23 15:22:05 by nholbroo         ###   ########.fr       */
+/*   Updated: 2024/07/29 19:08:35 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ static t_env	*check_if_envar_exists(t_env *env_list, char *arg)
 }
 
 /*Adds the new environmental variable into export_list, maintaining the
-alphabetical order. Also handles the case where the new node is of the 
+alphabetical order. Also handles the case where the new node is of the
 lowest alphabetical value.
 @param head Beginning of the export_list.
 @param node The new node (environmental variable) to be added.*/
@@ -60,7 +60,7 @@ static void	add_to_export_list_alphabetical(t_env **head, t_env *node)
 
 /*Adds an environmental variable to the export-list with no value.
 -If the environmental variable already exists, nothing happens.
--Otherwise a new environmental variable is created and added to the end of the 
+-Otherwise a new environmental variable is created and added to the end of the
 list.
 @param arg The argument to the "export"-command (the name of the new
 variable).*/
@@ -88,9 +88,9 @@ value.
 -If the environmental variable already exists, give it a new value.
 -Otherwise create a new environmental variable, assign it a value, and
 add it to the end of the list.
-@param arg The argument to the "export"-command, either a new variable or 
+@param arg The argument to the "export"-command, either a new variable or
 a variable + value (separated by a '='). A new variable would look like this:
-"export GROUP", and assigning a value to an already existing variable: "export 
+"export GROUP", and assigning a value to an already existing variable: "export
 NAME=JOE".*/
 void	add_env_var_export_with_value(t_data *data, char *arg)
 {
@@ -125,9 +125,9 @@ value.
 -If the environmental variable already exists, give it a new value.
 -Otherwise create a new environmental variable, assign it a value, and
 add it to the end of the list.
-@param arg The argument to the "export"-command, either a new variable or 
+@param arg The argument to the "export"-command, either a new variable or
 a variable + value (separated by a '='). A new variable would look like this:
-"export GROUP", and assigning a value to an already existing variable: "export 
+"export GROUP", and assigning a value to an already existing variable: "export
 NAME=JOE".*/
 void	add_env_var_envp_with_value(t_data *data, char *arg)
 {

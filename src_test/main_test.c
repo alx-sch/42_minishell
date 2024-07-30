@@ -6,7 +6,7 @@
 /*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/06 12:05:14 by aschenk           #+#    #+#             */
-/*   Updated: 2024/07/27 17:54:11 by aschenk          ###   ########.fr       */
+/*   Updated: 2024/07/30 14:32:52 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,13 +57,12 @@ int	main(int argc, char **argv, char **envp)
 		{
 			if (!is_whitespace(data.input[0]))
 				add_history(data.input);
-			if (is_quotation_closed(&data)) // check if user input is valid (quotations closed, correct redirection)
-				if (get_tokens(&data)) // continue if tokenziation is sucessful
-					if (parse_tokens(&data))
-					{
-						parsing(&data); // Checking if the input matches any of the builtins.
-						expand_first_variable(&data.input, data.envp_temp);
-					}
+			if (is_quotation_closed(&data) && get_tokens(&data)
+				&& parse_tokens(&data))
+				{
+					printf("expanded input: %s\n", data.input);
+					parsing(&data); // Checking if the input matches any of the builtins.
+				}
 		}
 		// Maybe as a check completely in the end, if nothing else worked, we can mimic the "Command <some_command> not found"?
 		print_token_list(data.tok.tok_lst); // TESTING ONLY

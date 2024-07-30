@@ -6,13 +6,11 @@
 /*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 14:04:08 by aschenk           #+#    #+#             */
-/*   Updated: 2024/07/26 16:33:32 by aschenk          ###   ########.fr       */
+/*   Updated: 2024/07/30 12:58:59 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-/*
-This source file contains a function to identify token delimiters.
-*/
+// This source file contains a function to identify token delimiters.
 
 #include "minishell.h"
 
@@ -26,42 +24,40 @@ Used in is_delimiter().
 Checks if a character in the input string is a quotation mark and sets
 the quote state.
 
-If no quote is currently set in the `quote` member of the `data` structure and
+If no quote is currently set in the 'quote' member of the data structure and
 the input character is a single (') or double (") quotation mark, it sets the
-`quote` member to that character.
+'quote' member to that character.
 If the input character matches the currently set quotation mark, it unsets
-the `quote` member.
+the 'quote' member.
 */
 static void	is_quotation(t_data *data, const char c)
 {
-	if (!data->quote)
+	if (!data->tok.quote)
 	{
 		if (c == '\'' || c == '\"')
-			data->quote = c;
+			data->tok.quote = c;
 	}
-	else if (c == data->quote)
-		data->quote = '\0';
+	else if (c == data->tok.quote)
+		data->tok.quote = '\0';
 }
 
-/*
+/**
 Checks if a character is a delimiter during tokenization.
 
 The function first checks if the character is a quotation mark by calling
 is_quotation(), which sets or unsets the quote state in the provided `t_data`
 struct. If a quote is open, delimiters are ignored (as part of quotation).
 
-Parameters:
-- t_data *data: A pointer to the `t_data` structure.
-- char c: The character to check.
+ @param data A pointer to the `t_data` structure.
+ @param c The character to check.
 
-Returns:
-- 1 if the character is a delimiter and not within a quotation.
-- 0 otherwise.
+ @return `1` if the character is a delimiter and not within a quotation.
+		 `0` otherwise.
 */
 int	is_delimiter(t_data *data, const char c)
 {
 	is_quotation(data, c);
-	if (!data->quote) // if not within quote
+	if (!data->tok.quote) // if not within quote
 	{
 		if (is_whitespace(c) || c == '>' || c == '<' || c == '|' || c == '\n'
 			|| c == '\0')

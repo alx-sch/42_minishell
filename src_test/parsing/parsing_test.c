@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing_test.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/13 14:51:02 by nholbroo          #+#    #+#             */
-/*   Updated: 2024/07/23 13:36:51 by nholbroo         ###   ########.fr       */
+/*   Updated: 2024/07/29 19:10:07 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,11 +29,11 @@ void	parsing(t_data *data) // instead of input the data_struct can be passed (wh
 	}
 	else if (is_unset(data->input)) // Checks if the input is "unset", accepts arguments, but not options.
 	{
-		unset(data->input, &data->envp_temp); // Unsets an environmental variable if it exists. If it doesn't, nothing happens.
-		unset(data->input, &data->export_list); // Unsets an environmental variable if it exists. If it doesn't, nothing happens.
+		unset(data->input, &data->envp_temp); // Unsets an environment variable if it exists. If it doesn't, nothing happens.
+		unset(data->input, &data->export_list); // Unsets an environment variable if it exists. If it doesn't, nothing happens.
 	}
 	else if (is_export(data->input)) // Checks if the input is "export", accepts arguments, but no options.
-		export(data); // Adds an environmental variable to the export and env list if it is assigned a value, or only to export list if it's not assigned a value. Also assigns a value a variable if it already exists.
+		export(data); // Adds an environment variable to the export and env list if it is assigned a value, or only to export list if it's not assigned a value. Also assigns a value a variable if it already exists.
 	else if (is_echo(data->input)) // Checks if the input is "echo", accepts the option '-n', but no other options. Accepts all arguments.
 		minishell_echo(data); // Outputs the input, with or without newline.
 }

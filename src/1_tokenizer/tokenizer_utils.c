@@ -6,7 +6,7 @@
 /*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 14:04:08 by aschenk           #+#    #+#             */
-/*   Updated: 2024/07/01 20:21:51 by aschenk          ###   ########.fr       */
+/*   Updated: 2024/07/30 12:55:24 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,13 +36,13 @@ the `quote` member.
 */
 static void	is_quotation(t_data *data, const char c)
 {
-	if (!data->quote)
+	if (!data.tok->quote)
 	{
 		if (c == '\'' || c == '\"')
-			data->quote = c;
+			data.tok->quote = c;
 	}
-	else if (c == data->quote)
-		data->quote = '\0';
+	else if (c == data.tok->quote)
+		data.tok->quote = '\0';
 }
 
 /*
@@ -63,7 +63,7 @@ Returns:
 int	is_delimiter(t_data *data, const char c)
 {
 	is_quotation(data, c);
-	if (!data->quote)
+	if (!data.tok->quote)
 	{
 		if (is_whitespace(c) || c == '>' || c == '<' || c == '|' || c == '\n'
 			|| c == '\0')

@@ -6,11 +6,11 @@
 /*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/24 22:36:32 by aschenk           #+#    #+#             */
-/*   Updated: 2024/07/27 19:59:39 by aschenk          ###   ########.fr       */
+/*   Updated: 2024/07/29 18:09:47 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-/*
+/**
 This file contains a functions to initially check the user's input:
 -	Checks if input is emty (or only consists of whitespace)
 -	Checks if input contains unclosed quotations.
@@ -23,12 +23,11 @@ This file contains a functions to initially check the user's input:
 int	is_input_empty(char *input);
 int	is_quotation_closed(t_data *data);
 
-/*
+/**
 Checks if the user input is empty or consists only of whitespace.
 
-Returns:
-- 0 if the user input is not empty.
-- 1 if the user input is empty, consists only of whitespace or is NULL.
+ @return `0` if the user input is not empty.
+		 `1` if the user input is empty, consists only of whitespace or is NULL.
 */
 int	is_input_empty(char *input)
 {
@@ -46,15 +45,15 @@ int	is_input_empty(char *input)
 	return (1);
 }
 
-/*
+/**
 Used in is_closed().
 
 Prints an error message for unclosed quotations including the
-position of the invalid synatax (position '-1' used if ft_itoa fails).
+position of the invalid synatax (position '-1' used as fallback if
+ft_itoa fails).
 
-Parameters:
-- char *str_j:	Quotation symbol (' or ").
-- char *i_str:	The string representation of position of piping syntax error.
+ @param str_j Quotation symbol (' or ").
+ @param i_str The string representation of position of piping syntax error.
 */
 static void	print_open_quotation_err_msg(char *char_str, char *i_str)
 {
@@ -68,13 +67,12 @@ static void	print_open_quotation_err_msg(char *char_str, char *i_str)
 	ft_putstr_fd(RESET, STDERR_FILENO); // Reset the output style to default
 }
 
-/*
+/**
 Checks if the quotation mark at a given position has a corresponding closing
 quotation mark and its position in the input string.
 
-Returns:
-- The position of the closing quotation mark if found.
-- 0 if the closing quotation mark is not found; also prints an error message
+ @return The position of the closing quotation mark if found (as string literal).
+		 `0` if the closing quotation mark is not found; also prints an error message
 */
 static int	is_closed(t_data *data, int i, const char c)
 {
@@ -104,13 +102,13 @@ static int	is_closed(t_data *data, int i, const char c)
 	return (0); // Quotation mark is not closed
 }
 
-/*
+/**
 Checks if the current character in the input string is a quotation mark
 and if so, checks if it is properly closed.
 
-Returns:
-- 1 if no quotation mark is found or if the quotation mark is properly closed.
-- 0 if a quotation mark is found but not properly closed.
+ @return `1` if no quotation mark is found or if the quotation mark is properly
+ 		 closed.
+		 `0` if a quotation mark is found but not properly closed.
  */
 int	is_quotation_closed(t_data *data)
 {
