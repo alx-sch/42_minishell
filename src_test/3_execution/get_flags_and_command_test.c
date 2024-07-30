@@ -6,7 +6,7 @@
 /*   By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/30 19:03:40 by nholbroo          #+#    #+#             */
-/*   Updated: 2024/07/30 19:35:59 by nholbroo         ###   ########.fr       */
+/*   Updated: 2024/07/30 20:03:42 by nholbroo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ void	helper_function(t_data *data, t_exec *exec, int position, int count)
 	exec->cmd = ft_strdup(token->lexeme);
 	if (!exec->cmd)
 		exec_errors(data, exec, 1);
-	while (i < count)
+	while (i < count && token->type != REDIR_IN && token->type != REDIR_OUT)
 	{
 		exec->flags[i] = ft_strdup(token->lexeme);
 		if (!exec->flags[i])

@@ -6,7 +6,7 @@
 /*   By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/30 18:09:36 by nholbroo          #+#    #+#             */
-/*   Updated: 2024/07/30 19:44:33 by nholbroo         ###   ########.fr       */
+/*   Updated: 2024/07/30 19:55:31 by nholbroo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,8 @@ t_token *token)
 	exec->redir_out = 1;
 	current = current->next;
 	token = (t_token *)current->content;
+	if (exec->outfile)
+		free(exec->outfile);
 	exec->outfile = ft_strdup(token->lexeme);
 	if (!exec->outfile)
 		exec_errors(data, exec, 1);
@@ -36,6 +38,8 @@ t_token *token)
 	exec->redir_in = 1;
 	current = current->next;
 	token = (t_token *)current->content;
+	if (exec->infile)
+		free(exec->infile);
 	exec->infile = ft_strdup(token->lexeme);
 	if (!exec->infile)
 		exec_errors(data, exec, 1);
