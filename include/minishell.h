@@ -6,7 +6,7 @@
 /*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/06 12:08:35 by aschenk           #+#    #+#             */
-/*   Updated: 2024/07/29 19:26:19 by aschenk          ###   ########.fr       */
+/*   Updated: 2024/07/30 12:57:02 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,22 +65,36 @@ typedef struct s_env
 	bool			printed;
 }	t_env;
 
-/*
-TBD
+/**
+- argc [int]:	Number of arguments given to minishell .
+- argv [char**]:	An array of argument variables passed to minishell.
+- envp [char**]:	An array containing the initial state of the environment
+					variables.
+- input [char *]:	User input into prompt.
+- tmp [char*]:	Saves substring of the input string during tokenization
+				(content of OTHER token).
+- quote [char]
+- envp_temp:	Used for "env"-command. A linked list containing the
+				continously modified state of the environment variables.
+- export_list	Used for "export"-command. A linked list containing the
+					continously modified state of the environment variables
+					that have been marked for export (also the ones
+					withoutvalue).
 */
 typedef struct s_data
 {
-	int			argc;
-	char		**argv;
-	char		**envp;
-	char		*input;
-	char		*tmp;
-	char		quote;
-	int			pipe_nr;
-	t_tok		tok;
-	t_cd		cd;
-	t_env		*envp_temp;
-	t_env		*export_list;
+	int		argc;
+	char	**argv;
+	char	**envp;
+	char	*input;
+	char	*tmp;
+	//char	quote;
+	int		pipe_nr;
+	int		exit_status;
+	t_tok	tok;
+	t_cd	cd;
+	t_env	*envp_temp;
+	t_env	*export_list;
 }	t_data;
 
 //	+++++++++++++++

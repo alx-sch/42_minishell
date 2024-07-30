@@ -6,7 +6,7 @@
 /*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 16:59:48 by aschenk           #+#    #+#             */
-/*   Updated: 2024/07/29 20:40:34 by aschenk          ###   ########.fr       */
+/*   Updated: 2024/07/30 13:03:59 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,21 +113,21 @@ static int	add_other_token(t_data *data, int *i)
 	{
 		while (!is_delimiter(data, data->input[*i])) // Find the end of the token
 			(*i)++;
-		data->tmp = ft_substr(data->input, start, (*i) - start); // Extract the token substring
-		if (!data->tmp)
+		data->tok.tmp = ft_substr(data->input, start, (*i) - start); // Extract the token substring
+		if (!data->tok.tmp)
 		{
 			print_err_msg(ERR_MALLOC);
 			return (0); // Substring extraction failed.
 		}
-		data->tok.new_node = create_tok(data, OTHER, data->tmp, &start); // Create a new token node and add it to the token list
+		data->tok.new_node = create_tok(data, OTHER, data->tok.tmp, &start); // Create a new token node and add it to the token list
 		if (!data->tok.new_node)
 		{
-			free(data->tmp);
+			free(data->tok.tmp);
 			free_unlinked_token(data); // Frees dangling token not added to linked list
 			return (0); // Token creation failed.
 		}
 		ft_lstadd_back(&data->tok.tok_lst, data->tok.new_node);
-		free(data->tmp);
+		free(data->tok.tmp);
 	}
 	return (1); // Token added or no token added as *i points to whitespace or '\0'
 }

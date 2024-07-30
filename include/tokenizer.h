@@ -6,7 +6,7 @@
 /*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 16:36:37 by aschenk           #+#    #+#             */
-/*   Updated: 2024/07/29 18:57:07 by aschenk          ###   ########.fr       */
+/*   Updated: 2024/07/30 13:01:43 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,6 +83,8 @@ typedef struct s_tok
 	t_token	*tok;
 	t_list	*new_node;
 	t_list	*tok_lst;
+	char	*tmp;
+	char	quote;
 }	t_tok;
 
 //	+++++++++++++++

@@ -6,7 +6,7 @@
 /*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 14:04:08 by aschenk           #+#    #+#             */
-/*   Updated: 2024/07/29 18:34:05 by aschenk          ###   ########.fr       */
+/*   Updated: 2024/07/30 12:58:59 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,13 +32,13 @@ the 'quote' member.
 */
 static void	is_quotation(t_data *data, const char c)
 {
-	if (!data->quote)
+	if (!data->tok.quote)
 	{
 		if (c == '\'' || c == '\"')
-			data->quote = c;
+			data->tok.quote = c;
 	}
-	else if (c == data->quote)
-		data->quote = '\0';
+	else if (c == data->tok.quote)
+		data->tok.quote = '\0';
 }
 
 /**
@@ -57,7 +57,7 @@ struct. If a quote is open, delimiters are ignored (as part of quotation).
 int	is_delimiter(t_data *data, const char c)
 {
 	is_quotation(data, c);
-	if (!data->quote) // if not within quote
+	if (!data->tok.quote) // if not within quote
 	{
 		if (is_whitespace(c) || c == '>' || c == '<' || c == '|' || c == '\n'
 			|| c == '\0')
