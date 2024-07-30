@@ -6,7 +6,7 @@
 /*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 16:36:37 by aschenk           #+#    #+#             */
-/*   Updated: 2024/07/30 13:01:43 by aschenk          ###   ########.fr       */
+/*   Updated: 2024/07/30 13:08:52 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ typedef enum e_token_type
 Represents a single token.
 
 - type [t_token]:	Type of the token (e.g., PIPE, REDIR_IN, etc.).
-- lexeme [char *]:	The actual string value of the token extracted from the input.
+- lexeme [char*]:	The actual string value of the token extracted from the input.
 - position [int]:	The position (index) of the token in the input string.
 */
 typedef struct s_token
@@ -68,15 +68,19 @@ typedef struct s_token
 /**
 Holds all information for managing tokens and the linked list of tokens.
 
-Tokens of type `t_token` are stored in a `t_list` node via the 'content'
-member (of type void*), using the ft_lstnew() function.
+This structure is used to maintain the state while processing tokens. Each token
+of type `t_token` is stored in a `t_list` node via the 'content' member
+(of type void*), using the ft_lstnew() function.
 
-- tok [t_token]:	The current token being processed, containing its type,
+Fields:
+- tok [t_token*]:	The current token being processed, containing its type,
 					lexeme, and position.
-- new_node [t_list]:	Pointer to the new node to be added to the token list,
+- new_node [t_list*]:	Pointer to the new node to be added to the token list,
 						created from the current token.
-- tok_lst [t_list]:	Pointer to the head of the linked list of tokens, which
-					stores all tokens parsed from the input.
+- tok_lst [t_list*]:	Pointer to the head of the linked list of tokens, which
+						stores all tokens parsed from the input.
+- tmp [char*]:	Substring to extract content for OTHER tokens.
+- quote [char]:	Saves encountered quotation symbols.
 */
 typedef struct s_tok
 {

@@ -6,7 +6,7 @@
 /*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/06 12:08:35 by aschenk           #+#    #+#             */
-/*   Updated: 2024/07/30 12:57:02 by aschenk          ###   ########.fr       */
+/*   Updated: 2024/07/30 14:19:53 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,35 +66,41 @@ typedef struct s_env
 }	t_env;
 
 /**
-- argc [int]:	Number of arguments given to minishell .
+Holds all necessary information for managing the state of the minishell.
+
+This structure encapsulates the state and context required for the minishell
+to operate, including command-line arguments, environment variables, user input,
+token management, and built-in command states.
+
+Fields:
+- argc [int]:		Number of arguments given to minishell.
 - argv [char**]:	An array of argument variables passed to minishell.
 - envp [char**]:	An array containing the initial state of the environment
 					variables.
-- input [char *]:	User input into prompt.
-- tmp [char*]:	Saves substring of the input string during tokenization
-				(content of OTHER token).
-- quote [char]
-- envp_temp:	Used for "env"-command. A linked list containing the
-				continously modified state of the environment variables.
-- export_list	Used for "export"-command. A linked list containing the
-					continously modified state of the environment variables
-					that have been marked for export (also the ones
-					withoutvalue).
+- input [char*]:	User input entered into the prompt.
+- pipe_nr [int]:		The number of pipes in the current command.
+- exit_status [unsigned int]:	The exit status of the last executed command.
+- tok [t_tok]:			Manages token status and holds the linked list of tokens.
+- envp_temp [t_env*]:	A linked list containing the continuously modified state
+						of the environment variables, used for the "env" command.
+- export_list [t_env*]:	A linked list containing the continuously modified state
+						of the environment variables that have been marked for
+						export, including those without values, used for the
+						'export' command.
+- cd [t_cd]:			Used for the "cd" built-in command.
 */
 typedef struct s_data
 {
-	int		argc;
-	char	**argv;
-	char	**envp;
-	char	*input;
-	char	*tmp;
-	//char	quote;
-	int		pipe_nr;
-	int		exit_status;
-	t_tok	tok;
-	t_cd	cd;
-	t_env	*envp_temp;
-	t_env	*export_list;
+	int				argc;
+	char			**argv;
+	char			**envp;
+	char			*input;
+	int				pipe_nr;
+	unsigned int	exit_status;
+	t_tok			tok;
+	t_env			*envp_temp;
+	t_env			*export_list;
+	t_cd			cd;
 }	t_data;
 
 //	+++++++++++++++
@@ -122,7 +128,7 @@ int				is_quotation_closed(t_data *data);
 
 // 2_parser
 
-int				expand_variables(char **str, t_env *env_list);
+int				expand_variables(char **str, t_data *data);
 
 // free.c
 

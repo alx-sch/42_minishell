@@ -6,7 +6,7 @@
 /*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/26 16:13:14 by aschenk           #+#    #+#             */
-/*   Updated: 2024/07/29 20:02:05 by aschenk          ###   ########.fr       */
+/*   Updated: 2024/07/30 14:19:31 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ int	parse_tokens(t_data *data)
 		print_err_msg(ERR_PARSE_HEREDOC);
 		return (0);
 	}
-	if (!expand_variables(&data->input, data->envp_temp))
+	if (!expand_variables(&data->input, data))
 	{
 		print_err_msg(ERR_VAR_EXP);
 		return (0);

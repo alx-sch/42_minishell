@@ -6,7 +6,7 @@
 /*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 22:40:57 by aschenk           #+#    #+#             */
-/*   Updated: 2024/07/29 20:30:23 by aschenk          ###   ########.fr       */
+/*   Updated: 2024/07/30 14:37:32 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ TBD
 
 // IN FILE:
 
-int	expand_variables(char **str, t_env *env_list);
+int	expand_variables(char **str, t_data *data);
 
 /**
 Used in expand_variables().
@@ -69,7 +69,7 @@ static char	*get_var_name(char *str, int i)
 	if (*var_start == '?') // is special variable 'exit status'
 	{
 		var_name = ft_strdup("?");
-		return (var_name); // returns NULL if ft_strdup above failes
+		return (var_name);
 	}
 	var_end = var_start;
 	while (*var_end && !is_whitespace(*var_end) && *var_end != '$'
@@ -88,23 +88,30 @@ Used in replace_var_with_val().
 
 Extracts the value of a specified environment variable (`env_var_search`)
 from the minishell-specific environment variables linked list (t_env).
+Also extracts the last exit status for '$?'.
 
  @return The value the environment variable, if found.
 		 An empty string, if the specified environment variable is not found.
-		 `NULL` if memory allocation for the empty string failed.
+		 `NULL` if memory allocation for the empty or exit status string failed.
 
-If an empty string is returned, it is the user's responsibilty to free it
-when done using.
+If an exit status string is returned, it is the user's responsibilty to
+free it when done using.
 */
-static char	*get_env_value(const char *env_var_search, t_env *env_list)
+static char	*get_env_value(const char *var_name, t_data *data)
 {
 	t_env	*current_node;
+	char	*exit_status;
 	char	*empty_str;
 
-	current_node = env_list;
+	current_node = data->envp_temp;
+	if (ft_strcmp(var_name, "?") == 0)
+	{
+		exit_status = ft_itoa(data->exit_status);
+		return (exit_status);
+	}
 	while (current_node) // traverse the minishell-specific environment var list
 	{
-		if (ft_strcmp(env_var_search, current_node->e_var) == 0)
+		if (ft_strcmp(var_name, current_node->e_var) == 0)
 			return (current_node->value);
 		current_node = current_node->next;
 	}
@@ -138,7 +145,7 @@ after the variable. These parts are then concatenated into a new string.
 		 does not exist in the environment list.
  */
 static int	replace_var_with_val(char **str, int i, char *var_name,
-	t_env *env_list)
+		t_data *data)
 {
 	char	*var_val;
 	char	*str_l;
@@ -146,7 +153,7 @@ static int	replace_var_with_val(char **str, int i, char *var_name,
 
 	str_l = NULL;
 	str_r = NULL;
-	var_val = get_env_value(var_name, env_list);
+	var_val = get_env_value(var_name, data);
 	if (!var_val)
 		return (0); // memory allocation for empty string failed.
 	if (!get_str_l(str, i, &str_l) || !get_str_r(str, i, var_name, &str_r))
@@ -160,6 +167,8 @@ static int	replace_var_with_val(char **str, int i, char *var_name,
 		return (0); // allocating memory when joining left or right substring failed
 	}
 	free_vars(&var_val, &str_l, &str_r);
+	if (ft_strcmp(var_name, "?") == 0) // free strin allocated for exit status
+		free(var_val);
 	return (1);
 }
 
@@ -181,7 +190,7 @@ allocation error occurs.
  @return `1` if all variables were successfully expanded.
 		 `0` if an error occurred during memory allocation or if no string was passed.
  */
-int	expand_variables(char **str, t_env *env_list)
+int	expand_variables(char **str, t_data *data)
 {
 	char	*var_name;
 	int		i;
@@ -194,7 +203,7 @@ int	expand_variables(char **str, t_env *env_list)
 		if (is_variable(*str, i)) // is str[i] start of valid variable? if so, continue.
 		{
 			var_name = get_var_name(*str, i); // get the variable name
-			if (!var_name || !replace_var_with_val(str, i, var_name, env_list))
+			if (!var_name || !replace_var_with_val(str, i, var_name, data))
 			{
 				free(var_name);
 				return (0); // malloc fail in get_var_name
