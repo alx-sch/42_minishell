@@ -223,7 +223,12 @@ TEST_FILES :=	main_test.c \
 				1_tokenizer/tokenizer_utils_test.c \
 				2_parser/parser_var_expansion_test.c \
 				2_parser/parser_heredoc_test.c \
-				3_execution/test.c \
+				3_execution/errors_test.c \
+				3_execution/execution_test.c \
+				3_execution/execution_utils_test.c \
+				3_execution/free_functions_test.c \
+				3_execution/init_exec_test.c \
+				3_execution/prep_execution_test.c \
 				builtins/cd_test.c \
 				builtins/echo_test.c \
 				builtins/env_test.c \

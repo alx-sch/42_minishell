@@ -6,7 +6,7 @@
 /*   By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/06 12:08:35 by aschenk           #+#    #+#             */
-/*   Updated: 2024/07/29 17:03:44 by nholbroo         ###   ########.fr       */
+/*   Updated: 2024/07/30 14:09:51 by nholbroo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,6 +90,7 @@ typedef struct s_child
 typedef struct s_exec
 {
 	//int		fd[2];
+	char	**envp_temp_arr;
 	char	**all_paths;
 	char	*current_path;
 	char	**input;
@@ -154,6 +155,13 @@ void			free_data(t_data *data, bool exit);
 // Execution:
 
 void			init_exec(t_data *data);
+int				count_env_list(t_data *data);
+void			prep_execution(t_data *data, t_exec *exec);
+void			execution(t_data *data, t_exec *exec);
+void			free_children(t_child *child);
+void			free_exec(t_exec *exec);
+void			exec_errors(t_data *data, t_exec *exec, int error_code);
+void			conversion_errors(t_data *data, t_exec *exec, int i);
 
 // Parsing builtins:
 

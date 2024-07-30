@@ -1,61 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   test.c                                             :+:      :+:    :+:   */
+/*   init_exec_test.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/24 12:15:35 by nholbroo          #+#    #+#             */
-/*   Updated: 2024/07/29 18:46:14 by nholbroo         ###   ########.fr       */
+/*   Updated: 2024/07/30 13:35:08 by nholbroo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-static void	free_children(t_child *child)
-{
-	int	i;
-
-	i = 0;
-	if (child)
-	{
-		if (child->nbr)
-			free(child->nbr);
-		free(child);
-	}
-}
-
-static void	free_exec(t_exec *exec)
-{
-	if (exec)
-	{
-		if (exec->all_paths)
-			ft_freearray(exec->all_paths);
-		if (exec->child)
-			free_children(exec->child);
-		if (exec->cmd)
-			free(exec->cmd);
-		if (exec->current_path)
-			free(exec->current_path);
-		if (exec->flags)
-			ft_freearray(exec->flags);
-		if (exec->input)
-			ft_freearray(exec->input);
-		free(exec);
-	}
-}
-
-static void	exec_errors(t_data *data, t_exec *exec, int error_code)
-{
-	if (error_code == 1)
-	{
-		ft_putstr_fd(ERR_COLOR, STDERR_FILENO);
-		ft_putstr_fd("minishell: exec: Cannot allocate memory\n", STDERR_FILENO);
-		free_exec(exec);
-		free_data(data, 1);
-		exit(errno);
-	}
-}
 
 t_exec	*set_exec_members_to_null(t_exec *exec)
 {
@@ -65,44 +20,37 @@ t_exec	*set_exec_members_to_null(t_exec *exec)
 	exec->flags = NULL;
 	exec->input = NULL;
 	exec->child = NULL;
+	exec->envp_temp_arr = NULL;
 	return (exec);
 }
-
-// static void	execution(t_data *data, t_exec *exec)
-// {
-	
-// }
 
 static void	create_child_processes(t_data *data, t_exec *exec)
 {
 	int		curr_child;
 	pid_t	pid;
 	int		*stat_loc;
+	t_list	*current;
 
 	curr_child = 0;
-	pid = 1;
 	stat_loc = NULL;
+	current = (t_list *)data->tok.tok_lst;
+	data->tok.tok = (t_token *)current->content;
 	while (curr_child < data->pipe_no + 1)
 	{
-		if (pid)
-		{
-			pid = fork();
-			exec->child->nbr[curr_child++] = pid;
-			waitpid(pid, stat_loc, 0);
-		}
+		pid = fork();
 		if (!pid)
-			break ;
+			execution(data, exec);
+		exec->child->nbr[curr_child++] = pid;
+		while (data->tok.tok->type != PIPE && current)
+		{
+			current = current->next;
+			if (current)
+				data->tok.tok = (t_token *)current->content;
+		}
+		if (current && current->next)
+			data->tok.tok = (t_token *)current->next->content;
+		waitpid(pid, stat_loc, 0);
 	}
-	if (!pid)
-	{
-		//execution(data, exec);
-		printf("%d\n", curr_child);
-		free_exec(exec);
-		free_data(data, 1);
-		exit(0);
-	}
-	else
-		return ;
 }
 
 void	init_exec(t_data *data)
