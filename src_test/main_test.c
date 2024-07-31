@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main_test.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
+/*   By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/06 12:05:14 by aschenk           #+#    #+#             */
-/*   Updated: 2024/07/30 15:46:33 by aschenk          ###   ########.fr       */
+/*   Updated: 2024/07/31 16:07:53 by nholbroo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,8 @@ int	main(int argc, char **argv, char **envp)
 				&& parse_tokens(&data))
 				{
 					printf("expanded input: %s\n", data.input);
-					parsing(&data); // Checking if the input matches any of the builtins.
+					if (parsing(&data)) // Checking if the input matches any of the builtins.
+						init_exec(&data);
 				}
 		}
 		// Maybe as a check completely in the end, if nothing else worked, we can mimic the "Command <some_command> not found"?

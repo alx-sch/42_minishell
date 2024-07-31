@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_data.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
+/*   By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/24 12:46:41 by nholbroo          #+#    #+#             */
-/*   Updated: 2024/07/30 12:38:14 by aschenk          ###   ########.fr       */
+/*   Updated: 2024/07/31 16:07:20 by nholbroo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ void	init_data_struct(t_data *data, int argc, char **argv, char **envp)
 {
 	data->argc = argc;
 	data->argv = argv;
-	data->pipe_no = 0;
+	data->pipe_nr = 0;
 	data->envp = envp;
 	data->envp_temp = NULL;
 	data->envp_temp = init_env_tmp(envp);

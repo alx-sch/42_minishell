@@ -217,16 +217,24 @@ TEST_DIR :=		src_test
 TEST_FILES :=	main_test.c \
 				free_test.c \
 				utils_test.c \
-				1_check_input/check_input_test.c \
+				1_check_input/check_quotation_test.c \
 				2_tokenizer/tokenizer_test.c \
 				2_tokenizer/tokenizer_redirection_test.c \
 				2_tokenizer/tokenizer_pipe_test.c \
 				2_tokenizer/tokenizer_utils_test.c \
-				3_parser/parser_test.c \
 				3_parser/parser_var_expansion_test.c \
-				3_parser/parser_var_expansion_utils_test.c \
 				3_parser/parser_heredoc_test.c \
-				3_parser/parser_heredoc_utils_test.c \
+				4_execution/errors_test.c \
+				4_execution/execution_prep_test.c \
+				4_execution/execution_test.c \
+				4_execution/execution_utils_test.c \
+				4_execution/free_functions_test.c \
+				4_execution/get_flags_and_command_test.c \
+				4_execution/get_path_test.c \
+				4_execution/init_exec_test.c \
+				4_execution/pipes_test.c \
+				4_execution/redirections_check_test.c \
+				4_execution/redirections_do_test.c \
 				builtins/cd_test.c \
 				builtins/echo_test.c \
 				builtins/env_test.c \
