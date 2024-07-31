@@ -217,6 +217,11 @@ TEST_DIR :=		src_test
 TEST_FILES :=	main_test.c \
 				free_test.c \
 				utils_test.c \
+				parsing/parsing_test.c \
+				0_init/init_cd_test.c \
+				0_init/init_data_test.c \
+				0_init/init_env_test.c \
+				0_init/init_export_test.c
 				1_check_input/check_input_test.c \
 				2_tokenizer/tokenizer_test.c \
 				2_tokenizer/tokenizer_redirection_test.c \
@@ -255,11 +260,6 @@ TEST_FILES :=	main_test.c \
 				4_builtins/standard_functions/count_test.c \
 				4_builtins/standard_functions/free_functions_test.c \
 				4_builtins/standard_functions/modified_standards_test.c \
-				parsing/parsing_test.c \
-				0_init/init_cd_test.c \
-				0_init/init_data_test.c \
-				0_init/init_env_test.c \
-				0_init/init_export_test.c
 
 TEST_SRCS :=	$(addprefix $(TEST_DIR)/, $(TEST_FILES))
 TEST_OBJS :=	$(TEST_SRCS:$(TEST_DIR)/%.c=$(OBJS_DIR)/%.o)
