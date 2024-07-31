@@ -222,8 +222,11 @@ TEST_FILES :=	main_test.c \
 				2_tokenizer/tokenizer_redirection_test.c \
 				2_tokenizer/tokenizer_pipe_test.c \
 				2_tokenizer/tokenizer_utils_test.c \
+				3_parser/parser_test.c \
 				3_parser/parser_var_expansion_test.c \
+				3_parser/parser_var_expansion_utils_test.c \
 				3_parser/parser_heredoc_test.c \
+				3_parser/parser_heredoc_utils_test.c \
 				4_execution/errors_test.c \
 				4_execution/execution_prep_test.c \
 				4_execution/execution_test.c \
