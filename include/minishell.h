@@ -6,7 +6,7 @@
 /*   By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/06 12:08:35 by aschenk           #+#    #+#             */
-/*   Updated: 2024/07/31 12:13:38 by nholbroo         ###   ########.fr       */
+/*   Updated: 2024/07/31 13:48:11 by nholbroo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,9 +89,11 @@ typedef struct s_child
 
 typedef struct s_exec
 {
-	//int		fd[2];
+	int		pipe_fd[2];
+	int		prev_pipe_fd[2];
 	int		infile_fd;
 	int		outfile_fd;
+	int		curr_child;
 	char	**envp_temp_arr;
 	char	**all_paths;
 	char	*current_path;
@@ -179,6 +181,7 @@ void			free_exec(t_exec *exec);
 void			exec_errors(t_data *data, t_exec *exec, int error_code);
 void			conversion_errors(t_data *data, t_exec *exec, int i);
 void			error_incorrect_path(t_data *data, t_exec *exec);
+void			redirections_errors(t_data *data, t_exec *exec, int std);
 
 // Parsing builtins:
 

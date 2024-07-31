@@ -1,4 +1,22 @@
 1. Fix Norminette errors in the file get_flags_and_command_test.c (FINISHED)
 2. Do the redirections. (FINISHED)
-3. Fix pipes.
-4. Handle if there was a Heredoc found.
+3. Fix pipes. (FINISHED)
+4. Figure out a way to make sure all child processes are actually killed in the
+case of one of the previous ones not working.
+5. Handle if there was a Heredoc found.
+
+Pipes:
+
+ls -l | grep "Makefile"
+
+Takes the output of the first command into the pipe.
+Second command uses pipe as input.
+
+pipe_fd[0] is READ.
+pipe_fd[1] is WRITE.
+
+prev_pipe_fd[0] is PREVIOUS READ.
+prev_pipe_fd[1] is PREVIOUS WRITE.
+
+I store the previous read and write to get the information from the previous
+pipe.

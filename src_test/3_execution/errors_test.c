@@ -6,11 +6,25 @@
 /*   By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/30 12:32:25 by nholbroo          #+#    #+#             */
-/*   Updated: 2024/07/30 20:05:15 by nholbroo         ###   ########.fr       */
+/*   Updated: 2024/07/31 13:47:53 by nholbroo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+void	redirections_errors(t_data *data, t_exec *exec, int std)
+{
+	ft_putstr_fd(ERR_PREFIX, 2);
+	if (!std)
+		ft_putstr_fd(exec->infile, 2);
+	else if (std)
+		ft_putstr_fd(exec->outfile, 2);
+	ft_putstr_fd(": ", 2);
+	perror("");
+	free_exec(exec);
+	free_data(data, 1);
+	exit(errno);
+}
 
 /*Prints an error message an exits the process if the command is not found*/
 void	error_incorrect_path(t_data *data, t_exec *exec)
@@ -47,6 +61,12 @@ void	exec_errors(t_data *data, t_exec *exec, int error_code)
 		ft_putstr_fd(exec->cmd, 2);
 		ft_putstr_fd(": ", 2);
 		errno = ENOENT;
+		perror("");
+	}
+	if (error_code == 3)
+	{
+		ft_putstr_fd(ERR_PREFIX, 2);
+		ft_putstr_fd("Piping failed", 2);
 		perror("");
 	}
 	free_exec(exec);
