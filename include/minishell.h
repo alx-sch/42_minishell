@@ -6,7 +6,7 @@
 /*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/06 12:08:35 by aschenk           #+#    #+#             */
-/*   Updated: 2024/07/31 19:59:34 by aschenk          ###   ########.fr       */
+/*   Updated: 2024/07/31 20:07:29 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,10 +37,6 @@ TBD
 # include <readline/readline.h> // reading/editing input lines
 # include <readline/history.h> // tracking/accessing previous command lines
 # include <signal.h> // signal/sig fcts, kill
-
-//	+++++++++++++++
-//	++ FUNCTIONS ++
-//	+++++++++++++++
 
 // 0: Initialization of Data Structures -> see init.h
 // 1: Validation of user input (empty? open quotes?) -> see input_check.h
