@@ -6,20 +6,11 @@
 /*   By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/30 19:03:40 by nholbroo          #+#    #+#             */
-/*   Updated: 2024/07/31 11:15:24 by nholbroo         ###   ########.fr       */
+/*   Updated: 2024/07/31 12:16:01 by nholbroo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-/*Moves current, which is the current node of the list. Updates token
-with the content of the node.*/
-static void	move_current_and_update_token(t_list **current, t_token **token)
-{
-	*current = (*current)->next;
-	if (*current)
-		*token = (t_token *)(*current)->content;
-}
 
 /*Allocates memory for exec->flags depending on count (cmd + flags). Moves until
 the position of where the command starts (which has been updated to start
@@ -72,7 +63,7 @@ void	get_flags_and_command(t_data *data, t_exec *exec, int position)
 		move_current_and_update_token(&current, &token);
 	while (current && token->type != PIPE)
 	{
-		if (token->type == REDIR_IN || token->type == REDIR_OUT)
+		if (token->type == 2 || token->type == 3 || token->type == 4)
 			move_current_and_update_token(&current, &token);
 		else
 		{

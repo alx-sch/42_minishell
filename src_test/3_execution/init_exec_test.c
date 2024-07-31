@@ -6,7 +6,7 @@
 /*   By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/24 12:15:35 by nholbroo          #+#    #+#             */
-/*   Updated: 2024/07/31 11:55:37 by nholbroo         ###   ########.fr       */
+/*   Updated: 2024/07/31 12:10:21 by nholbroo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@ t_exec	*set_exec_members_to_null(t_exec *exec)
 	exec->envp_temp_arr = NULL;
 	exec->redir_in = 0;
 	exec->redir_out = 0;
+	exec->append_out = 0;
 	exec->infile = NULL;
 	exec->outfile = NULL;
 	exec->first = 1;

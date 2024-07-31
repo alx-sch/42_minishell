@@ -6,11 +6,20 @@
 /*   By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/30 14:06:58 by nholbroo          #+#    #+#             */
-/*   Updated: 2024/07/30 20:04:24 by nholbroo         ###   ########.fr       */
+/*   Updated: 2024/07/31 12:13:15 by nholbroo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+/*Moves current, which is the current node of the list. Updates token
+with the content of the node.*/
+void	move_current_and_update_token(t_list **current, t_token **token)
+{
+	*current = (*current)->next;
+	if (*current)
+		*token = (t_token *)(*current)->content;
+}
 
 /*Counts the length (how many nodes) of the env_temp-list. Returns the count.*/
 int	count_env_list(t_data *data)

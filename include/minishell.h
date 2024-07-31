@@ -6,7 +6,7 @@
 /*   By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/06 12:08:35 by aschenk           #+#    #+#             */
-/*   Updated: 2024/07/31 11:44:23 by nholbroo         ###   ########.fr       */
+/*   Updated: 2024/07/31 12:13:38 by nholbroo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,6 +102,7 @@ typedef struct s_exec
 	char	*outfile;
 	bool	redir_in;
 	bool	redir_out;
+	bool	append_out;
 	bool	first;
 	t_child	*child;
 }	t_exec;
@@ -164,6 +165,8 @@ void			free_data(t_data *data, bool exit);
 void			init_exec(t_data *data);
 int				count_env_list(t_data *data);
 void			conv_env_tmp_to_arr(t_data *data, t_exec *exec);
+void			move_current_and_update_token(t_list **current, t_token **\
+token);
 void			get_all_paths(t_data *data, t_exec *exec);
 void			get_correct_path(t_data *data, t_exec *exec);
 void			prep_execution(t_data *data, t_exec *exec, int position);
