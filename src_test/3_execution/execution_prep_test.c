@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   prep_execution_test.c                              :+:      :+:    :+:   */
+/*   execution_prep_test.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/30 14:06:04 by nholbroo          #+#    #+#             */
-/*   Updated: 2024/07/30 19:51:55 by nholbroo         ###   ########.fr       */
+/*   Updated: 2024/07/31 11:44:37 by nholbroo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,4 +27,5 @@ void	prep_execution(t_data *data, t_exec *exec, int position)
 	get_flags_and_command(data, exec, position);
 	get_all_paths(data, exec);
 	get_correct_path(data, exec);
+	redirections(data, exec);
 }

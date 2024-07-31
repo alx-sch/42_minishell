@@ -6,7 +6,7 @@
 /*   By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/06 12:08:35 by aschenk           #+#    #+#             */
-/*   Updated: 2024/07/31 11:05:57 by nholbroo         ###   ########.fr       */
+/*   Updated: 2024/07/31 11:44:23 by nholbroo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,6 +90,8 @@ typedef struct s_child
 typedef struct s_exec
 {
 	//int		fd[2];
+	int		infile_fd;
+	int		outfile_fd;
 	char	**envp_temp_arr;
 	char	**all_paths;
 	char	*current_path;
@@ -166,6 +168,7 @@ void			get_all_paths(t_data *data, t_exec *exec);
 void			get_correct_path(t_data *data, t_exec *exec);
 void			prep_execution(t_data *data, t_exec *exec, int position);
 void			check_redirections(t_data *data, t_exec *exec, int position);
+void			redirections(t_data *data, t_exec *exec);
 void			get_flags_and_command(t_data *data, t_exec *exec, int position);
 void			execution(t_data *data, t_exec *exec, int position);
 void			free_children(t_child *child);
