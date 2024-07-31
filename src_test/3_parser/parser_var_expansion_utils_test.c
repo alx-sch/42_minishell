@@ -6,7 +6,7 @@
 /*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/27 19:58:01 by aschenk           #+#    #+#             */
-/*   Updated: 2024/07/29 20:06:43 by aschenk          ###   ########.fr       */
+/*   Updated: 2024/07/31 22:10:45 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ specified index. The extracted substring is stored in `substr_left`.
  @param i Index up to which the substring will be extracted.
  @param substr_left Pointer to a char* where the extracted substring will
  					be stored.
- @return	`1` on success (substring extraction and memory allocation successful),
+ @return	`1` on success,
 			`0` on failure (memory allocation failure).
 */
 int	get_str_l(char **str, int i, char **substr_left)
@@ -57,7 +57,7 @@ int	get_str_l(char **str, int i, char **substr_left)
  @param substr_right Pointer to a char* where the extracted substring will
 					 be stored.
 
- @return	`1` on success (substring extraction and memory allocation successful),
+ @return	`1` on success.
 			`0` on failure (memory allocation failure).
 */
 int	get_str_r(char **str, int i, char *var_name, char **substr_right)

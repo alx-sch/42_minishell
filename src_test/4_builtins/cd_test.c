@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd_test.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/13 13:51:10 by nholbroo          #+#    #+#             */
-/*   Updated: 2024/07/31 16:02:05 by nholbroo         ###   ########.fr       */
+/*   Updated: 2024/07/31 22:05:42 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ static void	cd_one_up(t_cd **cd, char *cwd)
 		return ;
 	eol = ft_strrchr_index(cwd, '/'); // Locating the end of line of parent directory.
 	(*cd)->parentdirectory = malloc(eol + 2); // Allocating memory for the parent directory.
-	if (!(*cd)->parentdirectory) // Protecting the malloc
+	if (!(*cd)->parentdirectory) // Protecting the malloc @Busedame: Still reachables; if malloc fails, also exits program
 		print_error_cd(1, cd); // Prints an error and exits if allocation fails.
 	while (i < eol) // We iterate through the whole path to the current working directory, until we have reached the path to the parent directory.
 	{
@@ -57,7 +57,7 @@ static void	cd_one_up(t_cd **cd, char *cwd)
 		(*cd)->parentdirectory[i++] = '/'; // In that case, I hardset the parent directory to root.
 	(*cd)->parentdirectory[i] = '\0'; // Null-terminating the new string containing the path to the parent directory.
 	if (chdir((*cd)->parentdirectory) == -1) // Changing directory to parent directory.
-		perror("minishell: cd");
+		print_err_msg_prefix("cd");
 }
 
 // Changes current working directory to "home".
@@ -74,14 +74,15 @@ static void	cd_to_home_user(t_cd **cd, t_env *envp_temp)
 	}
 	if (!envp_temp)
 	{
-		write(2, "minishell: cd: HOME not set\n", 28);
+		print_err_msg_custom("cd: HOME not set");
+		errno = EPERM;
 		return ;
 	}
-	(*cd)->home_user = ft_strdup(envp_temp->value); // I store the "HOME="-line in its own variable.
+	(*cd)->home_user = ft_strdup(envp_temp->value); // I store the "HOME="-line in its own variable. @Busedame: Still reachabels detected when malloc fail!
 	if (!(*cd)->home_user) // Protecting the malloc.
 		print_error_cd(1, cd); // Prints an error and exits if allocation fails.
 	if (chdir((*cd)->home_user) == -1) // Changing the current working directory to "/home/<username>".
-		perror("minishell: cd");
+		print_err_msg_prefix("cd");
 }
 
 // Moves to a subdirectory or an absolute path.
@@ -135,7 +136,7 @@ int	cd(char *input, t_env *envp_temp)
 	if (count_array_length(cd->component) > 2)
 		return (too_many_args_cd(&cd));
 	if (!getcwd(cwd, sizeof(cwd))) // Get the current working directory.
-		perror("minishell: cd");
+		print_err_msg_prefix("cd");
 	if (cd->component[1] == NULL) // If "cd" is the only input, without any components.
 		cd_to_home_user(&cd, envp_temp); // Changing directory to /home/user.
 	else if (!ft_strcmp(cd->component[1], "~")) // If "cd ~" is the only input.
