@@ -6,7 +6,7 @@
 /*   By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/30 19:03:40 by nholbroo          #+#    #+#             */
-/*   Updated: 2024/07/31 16:14:29 by nholbroo         ###   ########.fr       */
+/*   Updated: 2024/07/31 16:30:41 by nholbroo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,6 +70,7 @@ void	get_flags_and_command(t_data *data, t_exec *exec, int position)
 			{
 				position = token->position;
 				exec->first = 0;
+				exec->cmd_found = 1;
 			}
 			exec->count_flags++;
 		}

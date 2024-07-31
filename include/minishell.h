@@ -6,7 +6,7 @@
 /*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/06 12:08:35 by aschenk           #+#    #+#             */
-/*   Updated: 2024/07/31 19:25:11 by aschenk          ###   ########.fr       */
+/*   Updated: 2024/07/31 19:59:34 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ TBD
 // 2: Tokenization of user input into distinct syntactic unit -> see tokenizer.h
 // 3: Parsing of tokens (handling of heredocs and var expansion) -> see parser.h
 // 4: Custoum built-in fcts for our minishell -> see builtins.h
-// 4: 
+// 4:
 
 // utils.c
 

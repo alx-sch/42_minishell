@@ -6,7 +6,7 @@
 /*   By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/30 12:32:25 by nholbroo          #+#    #+#             */
-/*   Updated: 2024/07/31 13:47:53 by nholbroo         ###   ########.fr       */
+/*   Updated: 2024/07/31 16:36:46 by nholbroo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,13 +29,19 @@ void	redirections_errors(t_data *data, t_exec *exec, int std)
 /*Prints an error message an exits the process if the command is not found*/
 void	error_incorrect_path(t_data *data, t_exec *exec)
 {
-	ft_putstr_fd(ERR_PREFIX, 2);
-	ft_putstr_fd("Command '", 2);
-	ft_putstr_fd(exec->cmd, 2);
-	ft_putstr_fd("' not found\n", 2);
+	if (exec->cmd_found)
+	{
+		ft_putstr_fd(ERR_PREFIX, 2);
+		ft_putstr_fd("Command '", 2);
+		ft_putstr_fd(exec->cmd, 2);
+		ft_putstr_fd("' not found\n", 2);
+		free_exec(exec);
+		free_data(data, 1);
+		exit(errno);
+	}
 	free_exec(exec);
 	free_data(data, 1);
-	exit(errno);
+	exit(0);
 }
 
 /*Makes sure to NULL-terminate the envp_temp_arr in case of memory allocation
