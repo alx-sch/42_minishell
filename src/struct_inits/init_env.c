@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_env.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 16:28:08 by nholbroo          #+#    #+#             */
-/*   Updated: 2024/07/23 15:36:03 by nholbroo         ###   ########.fr       */
+/*   Updated: 2024/07/31 22:36:38 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,8 @@ void	ft_env_tmp_add_back(t_env **head, t_env *new)
 static t_env	*init_node_of_env(char *envp, t_env *node)
 {
 	node->e_var = ft_substr(envp, 0, ft_strrchr_index(envp, '='));
+	free(node->e_var);
+	node->e_var = NULL;
 	if (!node->e_var)
 		mem_alloc_fail_env(&node);
 	node->value = ft_substr(envp, ft_strrchr_index(envp, '=') + 1, \

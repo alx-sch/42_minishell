@@ -6,7 +6,7 @@
 /*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 16:28:08 by nholbroo          #+#    #+#             */
-/*   Updated: 2024/07/31 16:44:23 by aschenk          ###   ########.fr       */
+/*   Updated: 2024/07/31 22:52:33 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ void	ft_env_tmp_add_back(t_env **head, t_env *new)
 static t_env	*init_node_of_env(char *envp, t_env *node)
 {
 	node->e_var = ft_substr(envp, 0, ft_strrchr_index(envp, '='));
-	if (!node->e_var)
+	if (!node->e_var) // @Busedame: Conditional jump if malloc fail
 		mem_alloc_fail_env(&node);
 	node->value = ft_substr(envp, ft_strrchr_index(envp, '=') + 1, \
 	ft_strlen(envp));
