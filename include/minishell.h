@@ -6,7 +6,7 @@
 /*   By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/06 12:08:35 by aschenk           #+#    #+#             */
-/*   Updated: 2024/07/31 14:13:36 by nholbroo         ###   ########.fr       */
+/*   Updated: 2024/07/31 14:25:27 by nholbroo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -163,25 +163,38 @@ int				is_delimiter(t_data *data, const char c);
 void			del_token(void *content);
 void			free_data(t_data *data, bool exit);
 
-// Execution:
+// 3_Execution:
+void			execution(t_data *data, t_exec *exec, int position);
+
+// 3_Exeuction_prep:
 
 void			init_exec(t_data *data);
-void			create_pipe(t_data *data, t_exec *exec);
-void			handle_pipe_in_parent(t_data *data, t_exec *exec);
-void			close_pipe_in_parent(t_data *data, t_exec *exec);
 int				count_env_list(t_data *data);
 void			conv_env_tmp_to_arr(t_data *data, t_exec *exec);
 void			move_current_and_update_token(t_list **current, t_token **\
 token);
+void			prep_execution(t_data *data, t_exec *exec, int position);
+void			get_flags_and_command(t_data *data, t_exec *exec, int position);
 void			get_all_paths(t_data *data, t_exec *exec);
 void			get_correct_path(t_data *data, t_exec *exec);
-void			prep_execution(t_data *data, t_exec *exec, int position);
+
+// 3_Execution_piping:
+
+void			create_pipe(t_data *data, t_exec *exec);
+void			handle_pipe_in_parent(t_data *data, t_exec *exec);
+void			close_pipe_in_parent(t_data *data, t_exec *exec);
+
+// 3_Execution_redirections:
+
 void			check_redirections(t_data *data, t_exec *exec, int position);
 void			redirections(t_data *data, t_exec *exec);
-void			get_flags_and_command(t_data *data, t_exec *exec, int position);
-void			execution(t_data *data, t_exec *exec, int position);
+
+// 3_Execution_freeing_functions:
 void			free_children(t_child *child);
 void			free_exec(t_exec *exec);
+
+// 3_Execution_errors:
+
 void			exec_errors(t_data *data, t_exec *exec, int error_code);
 void			conversion_errors(t_data *data, t_exec *exec, int i);
 void			error_incorrect_path(t_data *data, t_exec *exec);

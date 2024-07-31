@@ -6,7 +6,7 @@
 /*   By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/30 19:03:40 by nholbroo          #+#    #+#             */
-/*   Updated: 2024/07/31 14:16:46 by nholbroo         ###   ########.fr       */
+/*   Updated: 2024/07/31 14:20:37 by nholbroo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,8 +61,8 @@ void	get_flags_and_command(t_data *data, t_exec *exec, int position)
 		move_current_and_update_token(&current, &token);
 	while (current && token->type != PIPE)
 	{
-		if (token->type == 2 || token->type == 3 || token->type == 4 || 
-			token->type == 5)
+		if (token->type == REDIR_IN || token->type == REDIR_OUT 
+			|| token->type == APPEND_OUT || token->type == HEREDOC)
 			move_current_and_update_token(&current, &token);
 		else
 		{

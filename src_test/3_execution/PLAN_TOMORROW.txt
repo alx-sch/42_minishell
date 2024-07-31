@@ -3,7 +3,7 @@
 3. Fix pipes. (FINISHED)
 4. Figure out a way to make sure all child processes are actually killed in the
 case of one of the previous ones not working.
-5. Handle if there was a Heredoc found.
+5. Handle if there was a Heredoc found. (FINISHED)
 
 Pipes:
 
