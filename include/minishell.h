@@ -6,7 +6,7 @@
 /*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/06 12:08:35 by aschenk           #+#    #+#             */
-/*   Updated: 2024/07/31 20:07:29 by aschenk          ###   ########.fr       */
+/*   Updated: 2024/07/31 21:58:17 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,12 +43,13 @@ TBD
 // 2: Tokenization of user input into distinct syntactic unit -> see tokenizer.h
 // 3: Parsing of tokens (handling of heredocs and var expansion) -> see parser.h
 // 4: Custoum built-in fcts for our minishell -> see builtins.h
-// 4:
 
 // utils.c
 
 int				is_whitespace(int c);
 void			print_err_msg(char *msg);
+void			print_err_msg_prefix(char *msg);
+void			print_err_msg_custom(char *msg);
 void			print_token_list(t_list *lst); // TESTING ONLY
 
 // free.c

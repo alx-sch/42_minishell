@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_path_test.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/30 18:58:47 by nholbroo          #+#    #+#             */
-/*   Updated: 2024/07/31 16:33:52 by nholbroo         ###   ########.fr       */
+/*   Updated: 2024/07/31 22:20:02 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,10 +51,10 @@ void	get_all_paths(t_data *data, t_exec *exec)
 			if (!tmp)
 				exec_errors(data, exec, 1);
 			exec->all_paths = ft_split(tmp, ':');
-			free(tmp);
 			if (!exec->all_paths)
 				exec_errors(data, exec, 1);
 			add_slash_at_end_of_all_paths(data, exec, tmp);
+			free(tmp);
 			return ;
 		}
 		i++;
@@ -62,7 +62,7 @@ void	get_all_paths(t_data *data, t_exec *exec)
 	exec_errors(data, exec, 2);
 }
 
-/*Iterates through all the paths in the environmental variable $PATH, 
+/*Iterates through all the paths in the environmental variable $PATH,
 and checks if that path + the command would be executable. If that's not
 the case after iterating through all the paths, it throws an error message
 and exits the process.*/

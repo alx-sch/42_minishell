@@ -19,6 +19,7 @@
 		"fcntl.h": "c",
 		"stdbool.h": "c",
 		"builtins.h": "c",
-		"tokenizer.h": "c"
+		"tokenizer.h": "c",
+		"*.tcc": "c"
 	}
 }

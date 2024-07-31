@@ -6,7 +6,7 @@
 /*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/31 17:09:56 by aschenk           #+#    #+#             */
-/*   Updated: 2024/07/31 18:39:43 by aschenk          ###   ########.fr       */
+/*   Updated: 2024/07/31 23:51:25 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,6 @@ Declarations for built-in minishell commands and their utility functions:
 
 // Builtins:
 
-void			init_cd_struct(t_cd **cd, char *input);
-t_env			*init_env_tmp(char **envp);
 int				cd(char *input, t_env *envp_temp);
 void			pwd(void);
 void			env(t_env *env_temp);

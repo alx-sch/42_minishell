@@ -3,17 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   modified_standards_test.c                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 17:16:54 by nholbroo          #+#    #+#             */
-/*   Updated: 2024/07/22 16:37:57 by nholbroo         ###   ########.fr       */
+/*   Updated: 2024/07/31 23:51:55 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 // Iterates through a string, from start to end, to search for a character.
-// It returns its index if it is found. If it's not found, the 
+// It returns its index if it is found. If it's not found, the
 // function returns -1.
 int	ft_strchr_index(const char *s, int c)
 {
@@ -30,7 +30,7 @@ int	ft_strchr_index(const char *s, int c)
 }
 
 // Iterates through a string, from end to start, to search for a character.
-// It returns its index if it is found. If it's not found, the 
+// It returns its index if it is found. If it's not found, the
 // function returns -1.
 int	ft_strrchr_index(const char *s, int c)
 {

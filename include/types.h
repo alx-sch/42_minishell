@@ -6,7 +6,7 @@
 /*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/31 17:40:14 by aschenk           #+#    #+#             */
-/*   Updated: 2024/07/31 18:30:31 by aschenk          ###   ########.fr       */
+/*   Updated: 2024/07/31 19:30:31 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -141,6 +141,7 @@ typedef struct s_exec
 	bool	redir_out;
 	bool	append_out;
 	bool	first;
+	bool	cmd_found;
 	t_child	*child;
 }	t_exec;
 
