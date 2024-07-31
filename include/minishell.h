@@ -6,7 +6,7 @@
 /*   By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/06 12:08:35 by aschenk           #+#    #+#             */
-/*   Updated: 2024/07/31 16:07:20 by nholbroo         ###   ########.fr       */
+/*   Updated: 2024/07/31 16:27:45 by nholbroo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -128,6 +128,7 @@ typedef struct s_exec
 	bool	redir_out;
 	bool	append_out;
 	bool	first;
+	bool	cmd_found;
 	t_child	*child;
 }	t_exec;
 

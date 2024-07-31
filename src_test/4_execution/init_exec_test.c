@@ -6,7 +6,7 @@
 /*   By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/24 12:15:35 by nholbroo          #+#    #+#             */
-/*   Updated: 2024/07/31 16:06:04 by nholbroo         ###   ########.fr       */
+/*   Updated: 2024/07/31 16:27:56 by nholbroo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@ t_exec	*set_exec_members_to_null(t_exec *exec)
 	exec->first = 1;
 	exec->infile_fd = 0;
 	exec->outfile_fd = 1;
+	exec->cmd_found = 0;
 	return (exec);
 }
 
