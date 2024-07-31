@@ -6,7 +6,7 @@
 /*   By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/06 12:08:35 by aschenk           #+#    #+#             */
-/*   Updated: 2024/07/31 13:48:11 by nholbroo         ###   ########.fr       */
+/*   Updated: 2024/07/31 13:59:18 by nholbroo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -165,6 +165,9 @@ void			free_data(t_data *data, bool exit);
 // Execution:
 
 void			init_exec(t_data *data);
+void			create_pipe(t_data *data, t_exec *exec);
+void			handle_pipe_in_parent(t_data *data, t_exec *exec);
+void			close_pipe_in_parent(t_data *data, t_exec *exec);
 int				count_env_list(t_data *data);
 void			conv_env_tmp_to_arr(t_data *data, t_exec *exec);
 void			move_current_and_update_token(t_list **current, t_token **\

@@ -18,5 +18,5 @@ pipe_fd[1] is WRITE.
 prev_pipe_fd[0] is PREVIOUS READ.
 prev_pipe_fd[1] is PREVIOUS WRITE.
 
-I store the previous read and write to get the information from the previous
-pipe.
+I store the previous read and write in two pointers, to get the information 
+from the previous pipe.

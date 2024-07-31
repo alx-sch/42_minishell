@@ -231,6 +231,7 @@ TEST_FILES :=	main_test.c \
 				3_execution/get_flags_and_command_test.c \
 				3_execution/get_path_test.c \
 				3_execution/init_exec_test.c \
+				3_execution/pipes_test.c \
 				3_execution/redirections_check_test.c \
 				3_execution/redirections_do_test.c \
 				builtins/cd_test.c \

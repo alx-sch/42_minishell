@@ -6,7 +6,7 @@
 /*   By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/24 12:15:35 by nholbroo          #+#    #+#             */
-/*   Updated: 2024/07/31 13:45:41 by nholbroo         ###   ########.fr       */
+/*   Updated: 2024/07/31 14:02:58 by nholbroo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,40 +34,9 @@ t_exec	*set_exec_members_to_null(t_exec *exec)
 	return (exec);
 }
 
-static void	handle_pipe_in_parent(t_data *data, t_exec *exec)
-{
-	if (exec->curr_child > 0) // If this is not the first pipe, I want to close the previous pipe, as it is not needed in parent process.
-	{
-		close(exec->prev_pipe_fd[0]);
-		close(exec->prev_pipe_fd[1]);
-	}
-	if (exec->curr_child < data->pipe_no) // If there are more children to come, I want to store the currrent pipe for the next child. 
-	// This is in order to don't lose the data when next child is created.
-	{
-		exec->prev_pipe_fd[0] = exec->pipe_fd[0];
-		exec->prev_pipe_fd[1] = exec->pipe_fd[1];
-	}
-}
-
-static void	close_pipe_in_parent(t_data *data, t_exec *exec)
-{
-	if (data->pipe_no > 0) // If there was indeed an existing pipe.
-	{
-		close(exec->pipe_fd[0]);
-		close(exec->pipe_fd[1]);
-	}
-}
-
-static void	create_pipe(t_data *data, t_exec *exec)
-{
-	if (exec->curr_child < data->pipe_no)
-	{
-		if (pipe(exec->pipe_fd) == -1)
-			exec_errors(data, exec, 3);
-	}
-}
-
-/*Creates the necessary child processes, one per command.*/
+/*Creates the necessary child processes, one per command. Creates one common 
+pipe for all the processes, while always saving a pointer to each side of the
+pipe in a different variable. */
 static void	create_child_processes(t_data *data, t_exec *exec)
 {
 	pid_t	pid;
@@ -80,7 +49,7 @@ static void	create_child_processes(t_data *data, t_exec *exec)
 	while (exec->curr_child < data->pipe_no + 1)
 	{
 		create_pipe(data, exec);
-		pid = fork();
+		pid = fork(); // Remember to protect!
 		if (!pid)
 			execution(data, exec, data->tok.tok->position);
 		handle_pipe_in_parent(data, exec);
