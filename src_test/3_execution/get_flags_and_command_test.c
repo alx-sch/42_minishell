@@ -6,7 +6,7 @@
 /*   By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/30 19:03:40 by nholbroo          #+#    #+#             */
-/*   Updated: 2024/07/31 12:16:01 by nholbroo         ###   ########.fr       */
+/*   Updated: 2024/07/31 14:16:46 by nholbroo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,16 +54,15 @@ void	get_flags_and_command(t_data *data, t_exec *exec, int position)
 {
 	t_list	*current;
 	t_token	*token;
-	int		count;
 
 	current = (t_list *)data->tok.tok_lst;
 	token = (t_token *)current->content;
-	count = 0;
 	while (token->position != position)
 		move_current_and_update_token(&current, &token);
 	while (current && token->type != PIPE)
 	{
-		if (token->type == 2 || token->type == 3 || token->type == 4)
+		if (token->type == 2 || token->type == 3 || token->type == 4 || 
+			token->type == 5)
 			move_current_and_update_token(&current, &token);
 		else
 		{
@@ -72,9 +71,9 @@ void	get_flags_and_command(t_data *data, t_exec *exec, int position)
 				position = token->position;
 				exec->first = 0;
 			}
-			count++;
+			exec->count_flags++;
 		}
 		move_current_and_update_token(&current, &token);
 	}
-	set_flags_and_cmd(data, exec, position, count);
+	set_flags_and_cmd(data, exec, position, exec->count_flags);
 }

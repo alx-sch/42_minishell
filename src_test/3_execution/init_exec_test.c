@@ -6,7 +6,7 @@
 /*   By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/24 12:15:35 by nholbroo          #+#    #+#             */
-/*   Updated: 2024/07/31 14:02:58 by nholbroo         ###   ########.fr       */
+/*   Updated: 2024/07/31 14:13:51 by nholbroo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 t_exec	*set_exec_members_to_null(t_exec *exec)
 {
 	exec->curr_child = 0;
+	exec->count_flags = 0;
 	exec->all_paths = NULL;
 	exec->cmd = NULL;
 	exec->current_path = NULL;

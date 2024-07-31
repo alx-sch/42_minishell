@@ -6,7 +6,7 @@
 /*   By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/06 12:08:35 by aschenk           #+#    #+#             */
-/*   Updated: 2024/07/31 13:59:18 by nholbroo         ###   ########.fr       */
+/*   Updated: 2024/07/31 14:13:36 by nholbroo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,6 +94,7 @@ typedef struct s_exec
 	int		infile_fd;
 	int		outfile_fd;
 	int		curr_child;
+	int		count_flags;
 	char	**envp_temp_arr;
 	char	**all_paths;
 	char	*current_path;
