@@ -6,11 +6,18 @@
 /*   By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/30 19:03:40 by nholbroo          #+#    #+#             */
-/*   Updated: 2024/07/30 20:04:18 by nholbroo         ###   ########.fr       */
+/*   Updated: 2024/07/31 11:06:26 by nholbroo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+static void	move_current_and_update_token(t_list **current, t_token **token)
+{
+	*current = (*current)->next;
+	if (*current)
+		*token = (t_token *)(*current)->content;
+}
 
 void	helper_function(t_data *data, t_exec *exec, int position, int count)
 {
@@ -25,11 +32,7 @@ void	helper_function(t_data *data, t_exec *exec, int position, int count)
 	current = (t_list *)data->tok.tok_lst;
 	token = (t_token *)current->content;
 	while (current && token->position != position)
-	{
-		current = current->next;
-		if (current)
-			token = (t_token *)current->content;
-	}
+		move_current_and_update_token(&current, &token);
 	exec->cmd = ft_strdup(token->lexeme);
 	if (!exec->cmd)
 		exec_errors(data, exec, 1);
@@ -38,9 +41,7 @@ void	helper_function(t_data *data, t_exec *exec, int position, int count)
 		exec->flags[i] = ft_strdup(token->lexeme);
 		if (!exec->flags[i])
 			exec_errors(data, exec, 1);
-		current = current->next;
-		if (current)
-			token = (t_token *)current->content;
+		move_current_and_update_token(&current, &token);
 		i++;
 	}
 	exec->flags[i] = NULL;
@@ -51,37 +52,26 @@ void	get_flags_and_command(t_data *data, t_exec *exec, int position)
 	t_list	*current;
 	t_token	*token;
 	int		count;
-	bool	first;
 
 	current = (t_list *)data->tok.tok_lst;
 	token = (t_token *)current->content;
 	count = 0;
-	first = 1;
 	while (token->position != position)
-	{
-		current = current->next;
-		token = (t_token *)current->content;
-	}
+		move_current_and_update_token(&current, &token);
 	while (current && token->type != PIPE)
 	{
 		if (token->type == REDIR_IN || token->type == REDIR_OUT)
-		{
-			current = current->next;
-			if (current)
-				token = (t_token *)current->content;
-		}
+			move_current_and_update_token(&current, &token);
 		else
 		{
-			if (first)
+			if (exec->first)
 			{
 				position = token->position;
-				first = 0;
+				exec->first = 0;
 			}
 			count++;
 		}
-		current = current->next;
-		if (current)
-			token = (t_token *)current->content;
+		move_current_and_update_token(&current, &token);
 	}
 	helper_function(data, exec, position, count);
 }
