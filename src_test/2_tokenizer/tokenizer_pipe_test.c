@@ -6,7 +6,7 @@
 /*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/01 16:34:21 by aschenk           #+#    #+#             */
-/*   Updated: 2024/07/30 17:33:41 by aschenk          ###   ########.fr       */
+/*   Updated: 2024/07/31 16:31:53 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,8 @@ static char	*is_valid_syntax(t_data *data, int j)
 /**
 Used in check_syntax().
 
-Prints an error message for invalid syntax encountered after a pipe symbol ('|').
+Prints an error message for invalid syntax encountered after a pipe symbol ('|')
+and updates the `errno` accordingly.
 
  @param invalid_syn The invalid operand encountered in the input.
  @param str_j The string representation of int j (position of failed piping).
@@ -94,7 +95,8 @@ static void	print_pipe_err_msg(char *invalid_syn, char *str_j)
 /**
 Used in check_syntax().
 
-Prints an error message for missing input before the first pipe ('|').
+Prints an error message for missing input before the first pipe ('|')
+and updates the `errno` accordingly.
 
  @param str_j The string representation of int j (position of failed piping).
 */

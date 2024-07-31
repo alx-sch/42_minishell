@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main_test.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/06 12:05:14 by aschenk           #+#    #+#             */
-/*   Updated: 2024/07/31 16:17:24 by nholbroo         ###   ########.fr       */
+/*   Updated: 2024/07/31 19:40:45 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ static void	print_logo(void)
 	printf("%s(____) %s\\____/ ", L_RED, ORANGE);
 	printf("%s\\____/\n\n", YELLOW);
 	printf("%s%s", RESET, BOLD);
-	printf("by Natalie Holbrook & Alex Schenk @42 Berlin, July 2024\n\n");
+	printf("by Natalie Holbrook & Alex Schenk @42 Berlin, August 2024\n\n");
 	printf("%s", RESET);
 }
 
@@ -69,6 +69,6 @@ int	main(int argc, char **argv, char **envp)
 		print_token_list(data.tok.tok_lst); // TESTING ONLY
 		data.exit_status = errno; // update exit status
 		printf("exit status: %d\n", data.exit_status);
-		free_data(&data, 0);
+		free_data(&data, 0); // why exit status hardcoded here? In what instances are 
 	}
 }

@@ -6,12 +6,13 @@
 /*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/10 16:51:05 by aschenk           #+#    #+#             */
-/*   Updated: 2024/07/26 18:06:35 by aschenk          ###   ########.fr       */
+/*   Updated: 2024/07/31 19:48:14 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 /*
-This file contains utility functions used throughout the minishell project.
+This file contains utility functions used throughout the minishell project,
+including functions for character classification and error message printing.
 */
 
 #include "minishell.h"
@@ -21,13 +22,14 @@ This file contains utility functions used throughout the minishell project.
 int		is_whitespace(int c);
 void	print_err_msg(char *msg);
 
-/*
+/**
 Checks if a character is a whitespace character:
 space, tab, newline, vertical tab, form feed, or carriage return.
 
-Returns:
-- 1 if character is a whitespace character.
-- 0 otherwise.
+ @param c The character to check.
+
+ @return `1` if the character is one of the whitespace characters.
+ 		 `0` otherwise.
 */
 int	is_whitespace(int c)
 {
@@ -37,6 +39,15 @@ int	is_whitespace(int c)
 		return (0);
 }
 
+/**
+Prints an error message to the standard error stream (stderr),
+with additional formatting applied.
+The actual error description is obtained using `perror`, which
+appends a system-generated message based on the current `errno`.
+
+ @param msg The error message to be printed. This should be a
+			descriptive string about the error that occurred.
+*/
 void	print_err_msg(char *msg)
 {
 	ft_putstr_fd(ERR_COLOR, STDERR_FILENO);

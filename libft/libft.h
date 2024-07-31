@@ -6,15 +6,15 @@
 /*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/13 11:55:49 by aschenk           #+#    #+#             */
-/*   Updated: 2024/05/17 17:45:26 by aschenk          ###   ########.fr       */
+/*   Updated: 2024/07/31 18:50:13 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef LIBFT_H
 # define LIBFT_H
 
-# include <stdlib.h> // malloc()
-# include <unistd.h> // read()
+# include <stdlib.h> // malloc, free, exit
+# include <unistd.h> // read, fork, pipe, execve, macros 'STDERR_FILENO' etc.
 # include <stddef.h> // size_t
 # include <stdint.h> // SIZE_MAX
 # include <stdarg.h> // variadic fcts

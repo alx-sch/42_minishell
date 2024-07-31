@@ -6,12 +6,14 @@
 /*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 22:40:57 by aschenk           #+#    #+#             */
-/*   Updated: 2024/07/30 15:27:05 by aschenk          ###   ########.fr       */
+/*   Updated: 2024/07/31 19:34:41 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 /**
-TBD
+This file contains functions for expanding environment variables within strings.
+It provides utilities to identify variables, extract their names, and replace
+them with corresponding values from the environment.
 */
 
 #include "minishell.h"

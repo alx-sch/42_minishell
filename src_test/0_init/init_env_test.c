@@ -3,14 +3,19 @@
 /*                                                        :::      ::::::::   */
 /*   init_env_test.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 16:28:08 by nholbroo          #+#    #+#             */
-/*   Updated: 2024/07/22 19:46:00 by nholbroo         ###   ########.fr       */
+/*   Updated: 2024/07/31 16:44:23 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+// IN FILE:
+
+void	ft_env_tmp_add_back(t_env **head, t_env *new);
+t_env	*init_env_tmp(char **envp);
 
 // Adding a new node to the envp_temp list.
 void	ft_env_tmp_add_back(t_env **head, t_env *new)

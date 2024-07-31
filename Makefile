@@ -217,7 +217,7 @@ TEST_DIR :=		src_test
 TEST_FILES :=	main_test.c \
 				free_test.c \
 				utils_test.c \
-				1_check_input/check_quotation_test.c \
+				1_check_input/check_input_test.c \
 				2_tokenizer/tokenizer_test.c \
 				2_tokenizer/tokenizer_redirection_test.c \
 				2_tokenizer/tokenizer_pipe_test.c \
@@ -227,39 +227,39 @@ TEST_FILES :=	main_test.c \
 				3_parser/parser_var_expansion_utils_test.c \
 				3_parser/parser_heredoc_test.c \
 				3_parser/parser_heredoc_utils_test.c \
-				4_execution/errors_test.c \
-				4_execution/execution_prep_test.c \
-				4_execution/execution_test.c \
-				4_execution/execution_utils_test.c \
-				4_execution/free_functions_test.c \
-				4_execution/get_flags_and_command_test.c \
-				4_execution/get_path_test.c \
-				4_execution/init_exec_test.c \
-				4_execution/pipes_test.c \
-				4_execution/redirections_check_test.c \
-				4_execution/redirections_do_test.c \
-				builtins/cd_test.c \
-				builtins/echo_test.c \
-				builtins/env_test.c \
-				builtins/exit_test.c \
-				builtins/export_test.c \
-				builtins/export_utils_test.c \
-				builtins/pwd_test.c \
-				builtins/unset_test.c \
-				errors/cd_errors_test.c \
-				errors/env_errors_test.c \
-				errors/exit_errors_test.c \
-				errors/export_errors_test.c \
-				errors/pwd_errors_test.c \
-				errors/unset_errors_test.c \
+				5_execution/errors_test.c \
+				5_execution/execution_prep_test.c \
+				5_execution/execution_test.c \
+				5_execution/execution_utils_test.c \
+				5_execution/free_functions_test.c \
+				5_execution/get_flags_and_command_test.c \
+				5_execution/get_path_test.c \
+				5_execution/init_exec_test.c \
+				5_execution/pipes_test.c \
+				5_execution/redirections_check_test.c \
+				5_execution/redirections_do_test.c \
+				4_builtins/cd_test.c \
+				4_builtins/echo_test.c \
+				4_builtins/env_test.c \
+				4_builtins/exit_test.c \
+				4_builtins/export_test.c \
+				4_builtins/export_utils_test.c \
+				4_builtins/pwd_test.c \
+				4_builtins/unset_test.c \
+				4_builtins/errors/cd_errors_test.c \
+				4_builtins/errors/env_errors_test.c \
+				4_builtins/errors/exit_errors_test.c \
+				4_builtins/errors/export_errors_test.c \
+				4_builtins/errors/pwd_errors_test.c \
+				4_builtins/errors/unset_errors_test.c \
+				4_builtins/standard_functions/count_test.c \
+				4_builtins/standard_functions/free_functions_test.c \
+				4_builtins/standard_functions/modified_standards_test.c \
 				parsing/parsing_test.c \
-				standard_functions/count_test.c \
-				standard_functions/free_functions_test.c \
-				standard_functions/modified_standards_test.c \
-				0_init_structs/init_cd_test.c \
-				0_init_structs/init_data_test.c \
-				0_init_structs/init_env_test.c \
-				0_init_structs/init_export_test.c
+				0_init/init_cd_test.c \
+				0_init/init_data_test.c \
+				0_init/init_env_test.c \
+				0_init/init_export_test.c
 
 TEST_SRCS :=	$(addprefix $(TEST_DIR)/, $(TEST_FILES))
 TEST_OBJS :=	$(TEST_SRCS:$(TEST_DIR)/%.c=$(OBJS_DIR)/%.o)

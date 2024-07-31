@@ -6,7 +6,7 @@
 /*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/17 13:00:24 by aschenk           #+#    #+#             */
-/*   Updated: 2024/07/29 18:09:16 by aschenk          ###   ########.fr       */
+/*   Updated: 2024/07/31 16:31:41 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,8 @@ static char	*is_valid_operand(const char *inp, int *i)
 /**
 Used in check_operand().
 
-Prints an error message for invalid redirection operands in the input string.
+Prints an error message for invalid redirection operands in the input string
+and updates the `errno` accordingly.
 
  @param invalid_op The invalid operand encountered in the input.
  @param input The input string containing the command line input.
@@ -103,6 +104,7 @@ static void	print_redir_err_msg(char *invalid_op, const char *input,
 	ft_putstr_fd(str_j, STDERR_FILENO); // Print the position of failed redirection
 	ft_putstr_fd(")\n", STDERR_FILENO);
 	ft_putstr_fd(RESET, STDERR_FILENO); // Reset the output style to default
+	errno = ENOENT;
 }
 
 /**

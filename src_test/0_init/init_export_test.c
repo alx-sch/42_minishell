@@ -3,14 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   init_export_test.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/24 12:43:52 by nholbroo          #+#    #+#             */
-/*   Updated: 2024/07/23 16:30:54 by nholbroo         ###   ########.fr       */
+/*   Updated: 2024/07/31 16:45:29 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+// IN FILE:
+
+t_env	*init_export_list(t_data *data);
 
 // Checks the length of the envp_temp list (how many nodes).
 static int	list_length(t_env *envp_temp)
@@ -44,7 +48,7 @@ static t_env	*init_head_export_list(t_data *data, t_env *lowest_node)
 	return (data->export_list);
 }
 
-// Adds the current lowest alphabetical value environmental variable 
+// Adds the current lowest alphabetical value environmental variable
 // from envp_temp to export_list.
 // If export_list doesn't exist, meaning it is the lowest_node is the first
 // node to be added, the functin initializes export_list.
@@ -73,7 +77,7 @@ static t_env	*build_export_list(t_data *data, t_env *lowest_node)
 // Initializes the export_list.
 // A sorting algorithm to sort the environmental variables alphabetically.
 // Iterates through the envp_temp-list, taking the element
-// with the lowest alphabetical value that has NOT been stored yet, 
+// with the lowest alphabetical value that has NOT been stored yet,
 // and adds it to the export_list. Goes through the envp_temp-list until all
 // elements have been added to export_list.
 t_env	*init_export_list(t_data *data)

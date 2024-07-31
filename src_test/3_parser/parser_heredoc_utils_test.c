@@ -6,7 +6,7 @@
 /*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/24 22:36:32 by aschenk           #+#    #+#             */
-/*   Updated: 2024/07/29 18:39:23 by aschenk          ###   ########.fr       */
+/*   Updated: 2024/07/31 19:31:07 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,8 +48,8 @@ void	trim_newline(char *str)
 }
 
 /**
- @return A heredoc filename based on current pipe count or
-		 `NULL` on malloc failure.
+ @return A heredoc filename based on the HEREDOC_PREFIX and the
+ 		 current pipe count or `NULL` on malloc failure.
 */
 char	*get_heredoc(t_data *data)
 {

@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   check_input_test.c                                 :+:      :+:    :+:   */
+/*   check_quotation_test.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/24 22:36:32 by aschenk           #+#    #+#             */
-/*   Updated: 2024/07/30 15:50:39 by aschenk          ###   ########.fr       */
+/*   Updated: 2024/07/31 16:52:31 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,8 +51,7 @@ Used in is_closed().
 
 Prints an error message for unclosed quotations including the
 position of the invalid synatax (position '-1' used as fallback if
-ft_itoa fails).
-Also sets the error number to a custom '420' ('42' already in use).
+ft_itoa fails). Also updates the `errno` to a custom `errno`.
 
  @param str_j Quotation symbol (' or ").
  @param i_str The string representation of position of piping syntax error.

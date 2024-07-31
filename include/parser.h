@@ -6,16 +6,25 @@
 /*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/03 17:57:57 by aschenk           #+#    #+#             */
-/*   Updated: 2024/07/29 17:07:54 by aschenk          ###   ########.fr       */
+/*   Updated: 2024/07/31 18:43:17 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 /**
-TBD
+This header file defines functions for parsing and processing tokens generated
+by the tokenizer. It includes functionalities for handling various aspects of the
+shell's input, such as managing here-documents, performing variable expansions,
+and counting pipes.
+
+The parsing process prepares the tokens for execution by organizing and
+transforming them into a structured format suitable for further processing
+by the shell.
 */
 
 #ifndef PARSER_H
 # define PARSER_H
+
+# include "types.h"
 
 // 2_parser/parser.c
 
@@ -31,6 +40,10 @@ void	count_pipes(t_data *data, t_token *node);
 void	trim_newline(char *str);
 char	*get_heredoc(t_data *data);
 int		get_heredoc_fd(t_data *data);
+
+// 2_parser/parser_var_expansion.c
+
+int		expand_variables(char **str, t_data *data);
 
 // 2_parser/parser_var_expansion_utils.c
 

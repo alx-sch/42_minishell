@@ -3,16 +3,20 @@
 /*                                                        :::      ::::::::   */
 /*   init_cd_test.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/24 12:47:06 by nholbroo          #+#    #+#             */
-/*   Updated: 2024/07/22 19:40:09 by nholbroo         ###   ########.fr       */
+/*   Updated: 2024/07/31 16:43:08 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-// Initializes the cd-struct.
+// IN FILE:
+
+void	init_cd_struct(t_cd **cd, char *input);
+
+// Initializes the cd-struct (built-in).
 void	init_cd_struct(t_cd **cd, char *input)
 {
 	*cd = malloc(sizeof(t_cd));

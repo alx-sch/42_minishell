@@ -6,9 +6,14 @@
 /*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/13 12:12:15 by aschenk           #+#    #+#             */
-/*   Updated: 2024/07/26 16:19:35 by aschenk          ###   ########.fr       */
+/*   Updated: 2024/07/31 19:45:27 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+/**
+This file provides functions for freeing memory and cleaning up resources
+used in the minishell, including tokens, heredoc files, and data structures.
+*/
 
 #include "minishell.h"
 
@@ -17,30 +22,6 @@
 void	del_token(void *content);
 void	free_unlinked_token(t_data *data);
 void	free_data(t_data *data, bool exit);
-
-/*
-USED AT ALL?
-Frees the memory allocated for a matrix of strings
-and sets all pointers to NULL.
-*/
-void	free_str_arr(char ***array_ptr)
-{
-	int		i;
-	char	**array;
-
-	i = 0;
-	array = *array_ptr;
-	if (!array)
-		return ;
-	while (array[i])
-	{
-		free(array[i]);
-		array[i] = NULL;
-		i++;
-	}
-	free(array);
-	*array_ptr = NULL;
-}
 
 /*
 Function used within the wrapper function ft_lstclear() to delete and
@@ -73,6 +54,10 @@ void	free_unlinked_token(t_data *data)
 	}
 }
 
+/**
+Deletes any temporary heredoc files created during shell operation.
+It iterates through potential heredoc files and removes them if they exist.
+*/
 static void	delete_heredocs(t_data *data)
 {
 	int		pipe_nr_max;
@@ -94,7 +79,17 @@ static void	delete_heredocs(t_data *data)
 	}
 }
 
-// Frees/closes all resources allocated for the data structure.
+/**
+Frees all resources allocated within the minishell program.
+This includes deallocating memory for tokens, input strings, and temporary
+files used for heredocs.
+
+Optionally, it also frees environment variables and export lists if exit is true.
+
+ @param data Pointer to the t_data structure containing all allocated resources.
+ @param exit Boolean flag indicating whether to free environment variables and
+ 			 export lists.
+*/
 void	free_data(t_data *data, bool exit)
 {
 	if (!data)
