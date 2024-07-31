@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free_functions_test.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/30 12:31:04 by nholbroo          #+#    #+#             */
-/*   Updated: 2024/07/30 19:36:35 by nholbroo         ###   ########.fr       */
+/*   Updated: 2024/07/31 22:19:06 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,9 +15,9 @@
 /*Frees all the pid-values of the array in the child-struct.*/
 void	free_children(t_child *child)
 {
-	int	i;
+	// int	i;
 
-	i = 0;
+	// i = 0;
 	if (child)
 	{
 		if (child->nbr)

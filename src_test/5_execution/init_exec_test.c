@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_exec_test.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/24 12:15:35 by nholbroo          #+#    #+#             */
-/*   Updated: 2024/07/31 16:27:56 by nholbroo         ###   ########.fr       */
+/*   Updated: 2024/07/31 22:20:28 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ t_exec	*set_exec_members_to_null(t_exec *exec)
 	return (exec);
 }
 
-/*Creates the necessary child processes, one per command. Creates one common 
+/*Creates the necessary child processes, one per command. Creates one common
 pipe for all the processes, while always saving a pointer to each side of the
 pipe in a different variable. */
 static void	create_child_processes(t_data *data, t_exec *exec)
@@ -79,9 +79,9 @@ the pid's of the child processes.*/
 void	init_exec(t_data *data)
 {
 	t_exec	*exec;
-	int		i;
+	// int		i;
 
-	i = 0;
+	// i = 0;
 	exec = malloc(sizeof(t_exec));
 	if (!exec)
 		exec_errors(data, exec, 1);
