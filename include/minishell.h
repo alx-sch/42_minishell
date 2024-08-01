@@ -6,12 +6,16 @@
 /*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/06 12:08:35 by aschenk           #+#    #+#             */
-/*   Updated: 2024/07/31 21:58:17 by aschenk          ###   ########.fr       */
+/*   Updated: 2024/08/01 06:32:52 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 /**
-TBD
+The  header file serves as the primary inclusion point for the project,
+aggregating necessary headers and declarations. As it centralizes all the
+essential includes, function prototypes, and data structs, this file ensures
+that  each source file within the minishell projecthas access to the necessary
+functionality without redundant includes.
 */
 
 #ifndef MINISHELL_H
@@ -46,27 +50,27 @@ TBD
 
 // utils.c
 
-int				is_whitespace(int c);
-void			print_err_msg(char *msg);
-void			print_err_msg_prefix(char *msg);
-void			print_err_msg_custom(char *msg);
-void			print_token_list(t_list *lst); // TESTING ONLY
+int		is_whitespace(int c);
+void	print_err_msg(char *msg);
+void	print_err_msg_prefix(char *msg);
+void	print_err_msg_custom(char *msg);
+void	print_token_list(t_list *lst); // TESTING ONLY
 
 // free.c
 
-void			del_token(void *content);
-void			free_unlinked_token(t_data *data);
-void			free_data(t_data *data, bool exit);
+void	del_token(void *content);
+void	free_unlinked_token(t_data *data);
+void	free_data(t_data *data, bool exit);
 
 // Parsing builtins:
 
-int				parsing(t_data *data);
-int				is_pwd(char *input);
-int				is_cd(char *input);
-int				is_exit(t_data *data);
-int				is_env(char *input);
-int				is_unset(char *input);
-int				is_export(char *input);
-int				is_echo(char *input);
+int		parsing(t_data *data);
+int		is_pwd(char *input);
+int		is_cd(char *input);
+int		is_exit(t_data *data);
+int		is_env(char *input);
+int		is_unset(char *input);
+int		is_export(char *input);
+int		is_echo(char *input);
 
 #endif
