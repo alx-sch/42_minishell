@@ -6,7 +6,7 @@
 /*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/10 16:51:05 by aschenk           #+#    #+#             */
-/*   Updated: 2024/07/31 21:58:25 by aschenk          ###   ########.fr       */
+/*   Updated: 2024/08/01 10:56:56 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ including functions for character classification and error message printing.
 int		is_whitespace(int c);
 void	print_err_msg(char *msg);
 void	print_err_msg_prefix(char *msg);
-void	print_err_msg_custom(char *msg);
+void	print_err_msg_custom(char *msg, unsigned int print_newline);
 
 /**
 Checks if a character is a whitespace character:
@@ -80,13 +80,16 @@ not covered by an errno, thus does not use perror().
 
  @param msg The error message to be printed. This should be a
 			descriptive string about the error that occurred.
+ @param print_newline Flag to print the newline character after
+					  the error message (`0` does not, otherwise does).
 */
-void	print_err_msg_custom(char *msg)
+void	print_err_msg_custom(char *msg, unsigned int print_newline)
 {
 	ft_putstr_fd(ERR_COLOR, STDERR_FILENO);
 	ft_putstr_fd(ERR_PREFIX, STDERR_FILENO);
 	ft_putstr_fd(msg, STDERR_FILENO);
-	ft_putstr_fd("\n", STDERR_FILENO);
+	if (print_newline)
+		ft_putstr_fd("\n", STDERR_FILENO);
 	ft_putstr_fd(RESET, STDERR_FILENO); // Reset the output style to default
 }
 

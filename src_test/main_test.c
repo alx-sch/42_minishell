@@ -6,7 +6,7 @@
 /*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/06 12:05:14 by aschenk           #+#    #+#             */
-/*   Updated: 2024/08/01 07:05:30 by aschenk          ###   ########.fr       */
+/*   Updated: 2024/08/01 10:53:34 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,16 +60,17 @@ int	main(int argc, char **argv, char **envp)
 			if (is_quotation_closed(&data) && get_tokens(&data)
 				&& parse_tokens(&data))
 				{
-					printf("expanded input: %s\n", data.input);
-					if (parsing(&data)) // Checking if the input matches any of the builtins.
+					//printf("expanded input: %s\n", data.input);
+					parsing(&data);
+					//if (parsing(&data)) // Checking if the input matches any of the builtins.
 						//init_exec(&data);
-						printf("EXEC\n");
+						//printf("EXEC\n");
 				}
 		}
 		// Maybe as a check completely in the end, if nothing else worked, we can mimic the "Command <some_command> not found"?
-		print_token_list(data.tok.tok_lst); // TESTING ONLY
+		//print_token_list(data.tok.tok_lst); // TESTING ONLY
 		data.exit_status = errno; // update exit status
-		printf("exit status: %d\n", data.exit_status);
+		//printf("exit status: %d\n", data.exit_status);
 		free_data(&data, 0); // why exit status hardcoded here? In what instances are
 	}
 }

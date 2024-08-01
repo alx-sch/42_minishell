@@ -6,7 +6,7 @@
 /*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/06 12:08:35 by aschenk           #+#    #+#             */
-/*   Updated: 2024/08/01 06:32:52 by aschenk          ###   ########.fr       */
+/*   Updated: 2024/08/01 10:57:09 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ functionality without redundant includes.
 int		is_whitespace(int c);
 void	print_err_msg(char *msg);
 void	print_err_msg_prefix(char *msg);
-void	print_err_msg_custom(char *msg);
+void	print_err_msg_custom(char *msg, unsigned int print_newline);
 void	print_token_list(t_list *lst); // TESTING ONLY
 
 // free.c

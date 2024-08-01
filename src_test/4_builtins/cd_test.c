@@ -6,7 +6,7 @@
 /*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/13 13:51:10 by nholbroo          #+#    #+#             */
-/*   Updated: 2024/07/31 22:05:42 by aschenk          ###   ########.fr       */
+/*   Updated: 2024/08/01 10:58:27 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,7 @@ static void	cd_to_home_user(t_cd **cd, t_env *envp_temp)
 	}
 	if (!envp_temp)
 	{
-		print_err_msg_custom("cd: HOME not set");
+		print_err_msg_custom("cd: HOME not set", 1);
 		errno = EPERM;
 		return ;
 	}

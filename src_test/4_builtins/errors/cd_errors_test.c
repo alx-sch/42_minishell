@@ -6,7 +6,7 @@
 /*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/24 11:48:26 by nholbroo          #+#    #+#             */
-/*   Updated: 2024/07/31 22:01:53 by aschenk          ###   ########.fr       */
+/*   Updated: 2024/08/01 10:58:08 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 // Prints an error message if there are too many arguments to cd command.
 int	too_many_args_cd(t_cd **cd)
 {
-	print_err_msg_custom("cd: too many arguments");
+	print_err_msg_custom("cd: too many arguments", 1);
 	free_cd_struct(cd); // Freeing the struct.
 	errno = EPERM;
 	return (0);
