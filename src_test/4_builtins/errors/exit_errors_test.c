@@ -6,7 +6,7 @@
 /*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/24 11:48:41 by nholbroo          #+#    #+#             */
-/*   Updated: 2024/08/01 11:22:08 by aschenk          ###   ########.fr       */
+/*   Updated: 2024/08/01 11:27:34 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ static void	mem_alloc_fail_exit(t_data *data, char *tmp_error_msg)
 		free(tmp_error_msg);
 	print_err_msg_prefix("exit");
 	free_data(data, 1);
-	exit(ENOMEM); // @Busedame: errno specified here, as errno set by failed ft_split seems to be overwritten by some other errno '2' happening in free_data()
+	exit(ENOMEM); // @Busedame: errno specified here, as errno set by failed ft_split is overwritten by some error '2' happening in free_data(); free_data() also does not seem to clean up any memory and may be superflous here (removing it fixes the weirdly set errno)
 }
 
 /*Prints an error message when the exit command is used, if there is more
