@@ -6,7 +6,7 @@
 /*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/24 12:09:25 by nholbroo          #+#    #+#             */
-/*   Updated: 2024/07/31 23:48:17 by aschenk          ###   ########.fr       */
+/*   Updated: 2024/08/01 10:39:36 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ void	mem_alloc_fail_env(t_env **head)
 static void	print_env_err_unrecognzied(char *input, int i)
 {
 	ft_putstr_fd(ERR_COLOR, STDERR_FILENO);
-	ft_putstr_fd("unrecognized option '", STDERR_FILENO);
+	ft_putstr_fd("env: unrecognized option '", STDERR_FILENO);
 	while (input[i] && !is_whitespace(input[i]))
 		write(STDERR_FILENO, &input[i++], 1);
 	ft_putstr_fd("'\n", STDERR_FILENO);
@@ -58,10 +58,19 @@ which is not accepted*/
 int	env_error_messages(char *input, int i)
 {
 	if (input[i] == '-' && input[i + 1] == '-' && !is_whitespace(input[i + 2]))
+	{
 		print_env_err_unrecognzied(input, i);
+		return (0);
+	}
 	else if (input[i] == '-' && !is_whitespace(input[i + 1]))
+	{
 		print_env_err_invalid(input, i);
+		return (0);
+	}
 	else if (input[i] != '-' && ft_isprint(input[i]))
+	{
 		print_env_err_not_exist(input, i);
-	return (0);
+		return (0);
+	}
+	return (1);
 }

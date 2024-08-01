@@ -3,21 +3,21 @@
 /*                                                        :::      ::::::::   */
 /*   echo_test.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/26 16:05:17 by nholbroo          #+#    #+#             */
-/*   Updated: 2024/07/22 19:23:42 by nholbroo         ###   ########.fr       */
+/*   Updated: 2024/08/01 07:59:08 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 // Prints whatever argument passed to "echo"-command.
-// 
+//
 // print_newline:
 // -If true, it means echo is called with no options, and a newline should be
 // printed.
-// -If false, it means echo is called with "-n" option, and a newline 
+// -If false, it means echo is called with "-n" option, and a newline
 // should NOT be printed.
 void	print_echo(char *input, bool print_newline)
 {
@@ -39,12 +39,12 @@ void	print_echo(char *input, bool print_newline)
 			while (input[i] && is_whitespace(input[i]))
 				i++;
 			if (input[i])
-				write(1, " ", 1);
+				write(STDOUT_FILENO, " ", 1);
 		}
-		write(1, &input[i++], 1);
+		write(STDOUT_FILENO, &input[i++], 1);
 	}
 	if (print_newline)
-		write(1, "\n", 1);
+		write(STDOUT_FILENO, "\n", 1);
 }
 
 // Checking if there is an option or not for the "echo"-command.
@@ -80,9 +80,13 @@ static int	echo_err_invalid_option(char *input, int i)
 {
 	if (input[i] == '-' && input[i + 1] && input[i + 1] != 'n')
 	{
-		write(2, "minishell: echo: invalid option: -- '", 38);
-		write(2, &input[i + 1], 1);
-		write(2, "'\n", 2);
+		ft_putstr_fd(ERR_COLOR, STDERR_FILENO);
+		ft_putstr_fd(ERR_PREFIX, STDERR_FILENO);
+		ft_putstr_fd("echo: invalid option: -- '", STDERR_FILENO);
+		write(STDERR_FILENO, &input[i + 1], 1);
+		ft_putstr_fd("'\n", STDERR_FILENO);
+		ft_putstr_fd(RESET, STDERR_FILENO);
+		errno = ECANCELED;
 		return (0);
 	}
 	return (1);
@@ -91,7 +95,7 @@ static int	echo_err_invalid_option(char *input, int i)
 // Checking if the input is "echo". Ignores whitespaces in beginning/end.
 // Throws an error message if there is an invalid option (not -n).
 // Accepts several arguments.
-// 
+//
 // Returns 0 upon error.
 // Returns 1 upon success.
 int	is_echo(char *input)

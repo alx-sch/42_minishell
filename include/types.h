@@ -6,7 +6,7 @@
 /*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/31 17:40:14 by aschenk           #+#    #+#             */
-/*   Updated: 2024/07/31 19:30:31 by aschenk          ###   ########.fr       */
+/*   Updated: 2024/08/01 06:26:49 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,8 @@ Represents a single token.
 
 Fields:
 - type [t_token]:	Type of the token (e.g., PIPE, REDIR_IN, etc.).
-- lexeme [char*]:	The actual string value of the token extracted from the input.
+- lexeme [char*]:	The actual string value of the token extracted from
+					the input.
 - position [int]:	The position (index) of the token in the input string.
 */
 typedef struct s_token

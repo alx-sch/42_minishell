@@ -3,25 +3,25 @@
 /*                                                        :::      ::::::::   */
 /*   export_test.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/20 14:14:17 by nholbroo          #+#    #+#             */
-/*   Updated: 2024/07/22 20:00:19 by nholbroo         ###   ########.fr       */
+/*   Updated: 2024/08/01 12:09:35 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 // Note to self:
-// When you use the export command without assigning a value, you're declaring the variable to be exported, but you're not giving it a value. 
-// So, it exists, but it's empty. When you run env, it shows you all the environment variables that have been set and their values. 
+// When you use the export command without assigning a value, you're declaring the variable to be exported, but you're not giving it a value.
+// So, it exists, but it's empty. When you run env, it shows you all the environment variables that have been set and their values.
 // Since the variable you exported doesn't have a value, it doesn't appear in the output of env.
 // On the other hand, when you use export with an assignment, you're both declaring the variable and giving it a value. So, it does appear in the output of env.
 // In short, env shows variables and their values. If a variable doesn't have a value, it won't appear in the output of env, even if it has been exported.
 
-// When you unset PATH, you're not creating a new variable or changing the value of an existing one. 
-// Instead, you're removing an existing variable from the environment. 
-// This action affects the current shell session and any child processes it starts after the unset command is executed. 
+// When you unset PATH, you're not creating a new variable or changing the value of an existing one.
+// Instead, you're removing an existing variable from the environment.
+// This action affects the current shell session and any child processes it starts after the unset command is executed.
 // The shell doesn't need to export the unset action because it directly modifies the environment of the current shell session.
 
 // You only need to use export to:
@@ -29,7 +29,7 @@
 // -> Create a new variable.
 // You do this in order to export the environmental variables to child processes.
 
-// Prints a list of the current exported environmental variables, mimicking the 
+// Prints a list of the current exported environmental variables, mimicking the
 // behavior of the "export"-command in bash without arguments/options.
 // It is sorted in alphabetical order.
 void	print_export(t_env *export_list)
@@ -81,7 +81,7 @@ static int	export_check_option(char *input, int i)
 {
 	while (input[i] != '\0')
 	{
-		if (input[i] == '-')
+		if (input[i] == '-') // @Busedame: It would eventually check if there is any other entry in the 'command array'
 			return (export_err_invalid_option(input, i));
 		i++;
 	}
@@ -89,7 +89,7 @@ static int	export_check_option(char *input, int i)
 }
 
 // Checking if input is "export".
-// Returns 0 if it's not "export" (e.g. "exportt") or if it is followed by an 
+// Returns 0 if it's not "export" (e.g. "exportt") or if it is followed by an
 // option (e.g. "export -p").
 // Otherwise returns 1.
 int	is_export(char *input)

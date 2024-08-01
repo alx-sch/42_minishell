@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing_test.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/13 14:51:02 by nholbroo          #+#    #+#             */
-/*   Updated: 2024/07/31 16:02:16 by nholbroo         ###   ########.fr       */
+/*   Updated: 2024/08/01 10:42:35 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ int	parsing(t_data *data) // instead of input the data_struct can be passed (whi
 		env(data->envp_temp); // Calls the env-function that works like the command.
 	else if (is_exit(data)) // Checks if the input is "exit". It accepts whitespaces before and after, and and exit code like "12", "+32" or "-213".
 	{
-		get_next_line(-1); // cleans gnl stash, if existen
+		get_next_line(-1); // cleans gnl stash, if exists
 		exit(exit_with_code(data)); // Exits minishell with correct exit code.
 	}
 	else if (is_unset(data->input)) // Checks if the input is "unset", accepts arguments, but not options.

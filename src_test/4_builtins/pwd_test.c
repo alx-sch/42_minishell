@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pwd_test.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/13 14:41:46 by nholbroo          #+#    #+#             */
-/*   Updated: 2024/07/22 18:33:55 by nholbroo         ###   ########.fr       */
+/*   Updated: 2024/08/01 12:08:55 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,5 +48,5 @@ void	pwd(void)
 	if (getcwd(cwd, sizeof(cwd))) // Checking that getcwd-function works. It is used to find current working directory.
 		printf("%s\n", cwd); // Printing the current working directory.
 	else
-		perror("minishell: pwd"); // If getcwd fails, this function will print an error.
+		print_err_msg_prefix("pwd"); // If getcwd fails, this function will print an error.
 }
