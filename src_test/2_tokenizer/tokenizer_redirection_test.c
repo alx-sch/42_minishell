@@ -6,7 +6,7 @@
 /*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/17 13:00:24 by aschenk           #+#    #+#             */
-/*   Updated: 2024/07/31 16:31:41 by aschenk          ###   ########.fr       */
+/*   Updated: 2024/08/01 14:52:08 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,10 +56,7 @@ static char	*is_valid_operand(const char *inp, int *i)
 		// Allocate memory for the invalid operand string
 		invalid_op = malloc(sizeof(char) * 8); // Allocate for "newline" + null terminator
 		if (!invalid_op)
-		{
-			print_err_msg(ERR_MALLOC);
 			return ("ERR"); // Default invalid operand, if memory allocation failed
-		}
 		// Construct the invalid operand string
 		if (inp[j] == '\0')
 			ft_strlcpy(invalid_op, "newline", 8);
@@ -112,8 +109,9 @@ Used in is_redirection().
 
 Checks if the operand in the input string is valid starting from the index *i.
 If an invalid operand is found, it prints a custom error message including the
-position of the invalid synatax (position '-1' used as fallback
-if ft_itoa fails).
+position of the invalid synatax (position '-1'and 'ERR' syntax error
+used as fallback if malloc fails; ERR_MALLOC printend to indicate malloc failure
+in these cases).
 
  @param input The input string containing the command line input.
  @param i Pointer to the current index in the input string.
@@ -131,9 +129,10 @@ static int	check_operand(const char *input, int *i, int j)
 	if (invalid_op) // If an invalid operand is found
 	{
 		str_j = ft_itoa(j);
+		if (!str_j || ft_strcmp(invalid_op, "ERR") == 0) // print ERR_MALLOC if fallback values are used
+			print_err_msg(ERR_MALLOC);
 		if (!str_j)
 		{
-			print_err_msg(ERR_MALLOC);
 			print_redir_err_msg(invalid_op, input, "-1", j);
 			if (ft_strcmp(invalid_op, "ERR") != 0) // check if invalid_op was dynamically allocated
 				free(invalid_op);
@@ -183,9 +182,10 @@ redirection operator.
  @param data Data structure containing input string and token list.
  @param int Pointer to the current index in the input string.
 
- @return `0` if an invalid operand is found or if token creation failed.
-		 `1` if the redirection and its operand are valid or if no redirection
+ @return `1` if the redirection and its operand are valid or if no redirection
 		 is found.
+ 		 `0` token creation failed (malloc failure).
+		 `-1` if the syntax is invalid.
 */
 int	is_redirection(t_data *data, int *i)
 {
@@ -205,8 +205,10 @@ int	is_redirection(t_data *data, int *i)
 	// Check if a redirection was found and validate its operand
 	if (j != *i) // If *i has been incremented, it means a redirection was found
 	{
-		if (!check_operand(data->input, i, j) || token_created == 0)
-			return (0); // The operand is invalid or token creation failed.
+		if (!check_operand(data->input, i, j))
+			return (-1); // The operand is invalid or token creation failed
+		if (token_created == 0)
+			return (0); // Malloc fail during token creation
 	}
 	return (1); // No redirection found or operand is valid
 }

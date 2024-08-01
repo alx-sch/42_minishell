@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tokenizer_test.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 16:59:48 by aschenk           #+#    #+#             */
-/*   Updated: 2024/07/31 16:01:37 by nholbroo         ###   ########.fr       */
+/*   Updated: 2024/08/01 14:57:42 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,10 +115,7 @@ static int	add_other_token(t_data *data, int *i)
 			(*i)++;
 		data->tok.tmp = ft_substr(data->input, start, (*i) - start); // Extract the token substring
 		if (!data->tok.tmp)
-		{
-			print_err_msg(ERR_MALLOC);
 			return (0); // Substring extraction failed.
-		}
 		data->tok.new_node = create_tok(data, OTHER, data->tok.tmp, &start); // Create a new token node and add it to the token list
 		if (!data->tok.new_node)
 		{
@@ -152,18 +149,24 @@ stops processing further tokens.
 int	get_tokens(t_data *data)
 {
 	int	i;
+	int return_redir;
+	int	return_pipe;
+	int	return_other;
 
 	i = 0;
 	while (data->input[i]) // Iterate through the input string
 	{
 		while (is_whitespace(data->input[i])) // Skip leading whitespace
 			i++;
-		if (!is_redirection(data, &i)) // Check if redirection and if so, create respective token
-			return (0); // Memory allocation failed or invalid redirection operand (file)
-		else if (!is_pipe(data, &i)) // Check if pipe and if so, create respective token
-			return (0);  // Memory allocation failed
-		else if (!add_other_token(data, &i)) // check if not end of string or whitespace and if not, create OTHER token.
-			return (0); // Memory allocation failed
+		return_redir = is_redirection(data, &i);
+		return_pipe = is_pipe(data, &i);
+		return_other = add_other_token(data, &i);
+		if (return_redir <= 0 || return_pipe <= 0|| return_other == 0) // Check if redirection, pipe or OTHER type and if so, create respective token
+		{
+			if (return_redir == 0 || return_pipe == 0 || return_other == 0)
+				print_err_msg(ERR_TOKEN); // no ERR_TOK err message printed when syntax error (return '-1')
+			return (0); // token creation failed (invalid syntax or malloc fail during token creation)
+		}
 	}
 	return (1);
 }
