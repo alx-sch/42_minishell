@@ -6,7 +6,7 @@
 /*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/01 16:34:21 by aschenk           #+#    #+#             */
-/*   Updated: 2024/07/31 16:31:53 by aschenk          ###   ########.fr       */
+/*   Updated: 2024/08/01 14:46:02 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ static char	*is_valid_syntax(t_data *data, int j)
 	if (data->input[j] == '|' || data->input[j] == '\0')
 	{
 		// Allocate memory for the invalid syntax string
-		invalid_syn = malloc(sizeof(char) * 8); // Allocate for "newline" + null terminator
+		invalid_syn = malloc(sizeof(char) * (ft_strlen("newline") + 1)); // Allocate for "newline" + null terminator
 		if (!invalid_syn)
 			return ("ERR"); // Used as fallback, if memory allocation failed
 		// Construct the invalid syntax string
@@ -117,8 +117,9 @@ Used in is_pipe().
 
 Checks if the syntax before/after an encountered '|' valid.
 If syntax is invalid, it prints a custom error message including the
-position of the invalid synatax (position '-1' used as fallback
-if ft_itoa() fails).
+position of the invalid synatax (position '-1'and 'ERR' syntax error
+used as fallback if malloc fails; ERR_MALLOC printend to indicate malloc failure
+in these cases).
 
  @param data Data structure containing token-related info.
  @param j The index of the piping symbol ('|').
@@ -138,6 +139,8 @@ static int	check_syntax(t_data *data, int j)
 		str_j = ft_itoa(j);
 		if (!str_j)
 			str_j = "-1"; // set to position to '-1' if malloc in ft_itoa() fails
+		if (ft_strcmp(str_j, "-1") == 0 || ft_strcmp(invalid_syn, "ERR") == 0) // print ERR_MALLOC if fallback values are used
+			print_err_msg(ERR_MALLOC);
 		if (data->tok.tok_lst == NULL)
 			print_empty_pipe_err_msg(str_j);
 		else
@@ -164,8 +167,9 @@ it to the token list.
  @param data Data structure containing input string and token list.
  @param i Pointer to the current index in the input string.
 
- @return `0` if the syntax is invalid or if token creation failed.
-		 `1` if a pipe token was added to the token list or if input[*i] is not a pipe.
+ @return  `1` if a pipe token was added to the token list or if input[*i] is not a pipe.
+ 		 `0` if token creation failed (malloc failure).
+		 `-1` if the syntax is invalid.
 */
 int	is_pipe(t_data *data, int *i)
 {
@@ -186,7 +190,7 @@ int	is_pipe(t_data *data, int *i)
 			return (1); // Pipe token added to token list.
 		}
 		else
-			return (0); // Syntax is invalid.
+			return (-1); // Syntax is invalid.
 	}
 	else
 		return (1); // No pipe symbol found.
