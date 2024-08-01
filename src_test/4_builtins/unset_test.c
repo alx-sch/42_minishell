@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   unset_test.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/19 13:30:29 by nholbroo          #+#    #+#             */
-/*   Updated: 2024/07/22 18:31:10 by nholbroo         ###   ########.fr       */
+/*   Updated: 2024/08/01 12:25:30 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,8 +37,8 @@ static void	unset_remove_variable(t_env **current, t_env **envp_temp, char *arg)
 	}
 }
 
-/*Removes one or more environmental variable(s) from the env-list or 
-export-list. The function is called twice in the file parsing.c, making sure 
+/*Removes one or more environmental variable(s) from the env-list or
+export-list. The function is called twice in the file parsing.c, making sure
 both lists are updated. If no variables are specified or the variable doesn't
 exist, nothing happens.*/
 void	unset(char *input, t_env **envp_temp)
@@ -50,7 +50,7 @@ void	unset(char *input, t_env **envp_temp)
 	current = *envp_temp;
 	i = 1;
 	args = ft_split(input, ' ');
-	if (!args)
+	if (!args) // @Busedame: lost memory and still reachables, when ft_split fails
 		unset_err_memalloc_fail(envp_temp);
 	if (!args[i])
 	{
@@ -66,7 +66,7 @@ void	unset(char *input, t_env **envp_temp)
 	ft_freearray(args);
 }
 
-/*Checking if the input is "unset", ignoring whitespaces before "unset", 
+/*Checking if the input is "unset", ignoring whitespaces before "unset",
 and not accepting options.*/
 int	is_unset(char *input)
 {
