@@ -6,7 +6,7 @@
 /*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/24 22:36:32 by aschenk           #+#    #+#             */
-/*   Updated: 2024/07/30 14:20:18 by aschenk          ###   ########.fr       */
+/*   Updated: 2024/08/02 20:11:16 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,7 @@ static int	convert_tokens(t_data *data, t_token *current_token,
 	return (1);
 }
 
+
 /**
 Handles input for a HEREDOC token by reading lines from stdin until the delimiter
 is encountered. Writes each line to the specified file descriptor.
@@ -65,7 +66,7 @@ static int	handle_heredoc_input(int fd, const char *delimiter, t_data *data)
 	ft_printf(HEREDOC_P);
 	input_line = get_next_line(STDIN_FILENO);
 	trim_newline(input_line);
-	while (expand_variables(&input_line, data) == 1
+	while (g_interrupted == 0 && expand_variables(&input_line, data) == 1
 		&& ft_strcmp(input_line, delimiter) != 0)
 	{
 		bytes_written_1 = write(fd, input_line, ft_strlen(input_line));

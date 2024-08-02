@@ -6,11 +6,13 @@
 /*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/06 12:05:14 by aschenk           #+#    #+#             */
-/*   Updated: 2024/08/01 14:05:30 by aschenk          ###   ########.fr       */
+/*   Updated: 2024/08/02 20:12:13 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+volatile __sig_atomic_t	g_interrupted; // Define the global variable
 
 // Prints a custom, color-coded logo for the minishell project.
 static void	print_logo(void)
@@ -48,11 +50,14 @@ int	main(int argc, char **argv, char **envp)
 {
 	t_data	data;
 
+	signal(SIGINT, handle_sigint);
 	print_logo();
 	init_data_struct(&data, argc, argv, envp);
 	while (1)
 	{
 		data.input = readline(PROMPT);
+		g_interrupted = 0; // in case previous line was created by signal_handler
+		printf("TEST1\n");
 		if (data.input && !is_input_empty(data.input))
 		{
 			if (!is_whitespace(data.input[0]))
@@ -70,7 +75,8 @@ int	main(int argc, char **argv, char **envp)
 		// Maybe as a check completely in the end, if nothing else worked, we can mimic the "Command <some_command> not found"?
 		print_token_list(data.tok.tok_lst); // TESTING ONLY
 		data.exit_status = errno; // update exit status
-		//printf("exit status: %d\n", data.exit_status);
+		// /printf("interrup status: %d\n", g_interrupted);
+		g_interrupted = 0;
 		free_data(&data, 0); // why exit status hardcoded here? In what instances are
 	}
 }

@@ -6,7 +6,7 @@
 /*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/06 12:08:35 by aschenk           #+#    #+#             */
-/*   Updated: 2024/08/01 10:57:09 by aschenk          ###   ########.fr       */
+/*   Updated: 2024/08/02 19:13:36 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@ functionality without redundant includes.
 # include "parser.h" // proccesses tokens (handling of heredoc and variables)
 # include "builtins.h" // `cd`, `pwd`, `env`, `unset`, `export`, `echo` as fcts
 # include "execution.h" // TBD
+# include "signals.h" // TBD
 
 # include <fcntl.h> // open, close, access, unlink
 # include <stdio.h> // perror, printf
@@ -72,5 +73,10 @@ int		is_env(char *input);
 int		is_unset(char *input);
 int		is_export(char *input);
 int		is_echo(char *input);
+
+/**
+Global variable
+*/
+extern volatile __sig_atomic_t	g_interrupted;
 
 #endif

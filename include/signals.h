@@ -1,41 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parser_test.c                                      :+:      :+:    :+:   */
+/*   signals.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/07/26 16:13:14 by aschenk           #+#    #+#             */
-/*   Updated: 2024/08/02 19:48:35 by aschenk          ###   ########.fr       */
+/*   Created: 2024/08/02 14:51:04 by aschenk           #+#    #+#             */
+/*   Updated: 2024/08/02 17:06:51 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-/*
+/**
 TBD
 */
 
-#include "minishell.h"
+#ifndef SIGNALS_H
+# define SIGNALS_H
 
-// FUNCTION IN FILE
+void	handle_sigint(int sig);
+void	handle_sigquit(int sig);
 
-int	parse_tokens(t_data *data);
-
-/**
-SSSS
-*/
-int	parse_tokens(t_data *data)
-{
-	if (!process_heredocs(data))
-	{
-		print_err_msg(ERR_PARSE_HEREDOC);
-		return (0);
-	}
-	if (g_interrupted)
-		printf("HEREDOC TO BE CLEANED!\n");
-	if (!expand_variables(&data->input, data))
-	{
-		print_err_msg(ERR_VAR_EXP);
-		return (0);
-	}
-	return (1);
-}
+#endif
