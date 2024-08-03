@@ -6,7 +6,7 @@
 /*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/24 12:46:41 by nholbroo          #+#    #+#             */
-/*   Updated: 2024/07/31 16:44:57 by aschenk          ###   ########.fr       */
+/*   Updated: 2024/08/03 08:30:21 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ void	init_data_struct(t_data *data, int argc, char **argv, char **envp)
 	data->envp = envp;
 	data->input = NULL;
 	data->pipe_nr = 0;
-	data->exit_status = 0;
+	data->exit_status = errno;
 	data->tok.tok = NULL;
 	data->tok.tmp = NULL;
 	data->tok.quote = '\0';

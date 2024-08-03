@@ -222,7 +222,7 @@ TEST_FILES :=	main_test.c \
 				0_init/init_data_test.c \
 				0_init/init_env_test.c \
 				0_init/init_export_test.c \
-				1_check_input/check_input_test.c \
+				1_check_input/check_quotation_test.c \
 				2_tokenizer/tokenizer_test.c \
 				2_tokenizer/tokenizer_redirection_test.c \
 				2_tokenizer/tokenizer_pipe_test.c \

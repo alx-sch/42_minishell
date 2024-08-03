@@ -6,7 +6,7 @@
 /*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/02 18:33:19 by aschenk           #+#    #+#             */
-/*   Updated: 2024/08/02 23:57:35 by aschenk          ###   ########.fr       */
+/*   Updated: 2024/08/03 09:17:42 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,18 +31,23 @@ prompt is displayed
 void	handle_sigint(int sig)
 {
 	(void)sig;
-	if (g_heredoc_mode) // heredoch prompt / interactive mode
-	{
-		g_heredoc_mode = 0;
-		ioctl(STDIN_FILENO, TIOCSTI, "\n");
-	}
-	else // minishell prompt / interactive mode
-	{
-		rl_replace_line("", 0); // Clear current line
-		printf("\n"); // Print a newline
-		rl_on_new_line(); // Move to new line
-		rl_redisplay(); // Refresh the prompt
-	}
+	g_heredoc_mode = 1;
+	rl_replace_line("", 0); // Clear current line
+	printf("\n"); // Print a newline
+	rl_on_new_line(); // Move to new line
+	rl_redisplay(); // Refresh the prompt
+}
+
+void	handle_sigint_heredoc(int sig)
+{
+	(void)sig;
+	g_heredoc_mode = 1;
+	ioctl(STDIN_FILENO, TIOCSTI, "\n");
+}
+
+void	set_handler(void (*handler)(int))
+{
+	signal(SIGINT, handler);
 }
 
 /**

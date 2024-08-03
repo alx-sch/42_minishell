@@ -6,7 +6,7 @@
 /*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/10 16:51:05 by aschenk           #+#    #+#             */
-/*   Updated: 2024/08/01 10:56:56 by aschenk          ###   ########.fr       */
+/*   Updated: 2024/08/03 07:40:30 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@ including functions for character classification and error message printing.
 // IN FILE:
 
 int		is_whitespace(int c);
+int		is_empty(char *input);
 void	print_err_msg(char *msg);
 void	print_err_msg_prefix(char *msg);
 void	print_err_msg_custom(char *msg, unsigned int print_newline);
@@ -39,6 +40,28 @@ int	is_whitespace(int c)
 		return (1);
 	else
 		return (0);
+}
+
+/**
+Checks if the user input is empty or consists only of whitespace.
+
+ @return `0` if the user input is not empty.
+		 `1` if the user input is empty, consists only of whitespace or is NULL.
+*/
+int	is_empty(char *input)
+{
+	int	i;
+
+	i = 0;
+	if (!input)
+		return (1);
+	while (input[i])
+	{
+		if (!is_whitespace(input[i]))
+			return (0);
+		i++;
+	}
+	return (1);
 }
 
 /**
