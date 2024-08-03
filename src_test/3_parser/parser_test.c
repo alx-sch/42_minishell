@@ -6,7 +6,7 @@
 /*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/26 16:13:14 by aschenk           #+#    #+#             */
-/*   Updated: 2024/08/02 19:48:35 by aschenk          ###   ########.fr       */
+/*   Updated: 2024/08/02 20:42:59 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,8 +30,6 @@ int	parse_tokens(t_data *data)
 		print_err_msg(ERR_PARSE_HEREDOC);
 		return (0);
 	}
-	if (g_interrupted)
-		printf("HEREDOC TO BE CLEANED!\n");
 	if (!expand_variables(&data->input, data))
 	{
 		print_err_msg(ERR_VAR_EXP);

@@ -6,7 +6,7 @@
 /*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/13 12:12:15 by aschenk           #+#    #+#             */
-/*   Updated: 2024/07/31 19:45:27 by aschenk          ###   ########.fr       */
+/*   Updated: 2024/08/02 23:52:13 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,7 @@ static void	delete_heredocs(t_data *data)
 
 	pipe_nr_max = data->pipe_nr;
 	data->pipe_nr = 0;
+	g_heredoc_mode = 0; // reset to minishell prompt / interactive mode
 	while (data->pipe_nr <= pipe_nr_max)
 	{
 		heredoc = get_heredoc(data);

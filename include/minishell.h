@@ -6,16 +6,16 @@
 /*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/06 12:08:35 by aschenk           #+#    #+#             */
-/*   Updated: 2024/08/02 19:13:36 by aschenk          ###   ########.fr       */
+/*   Updated: 2024/08/02 23:45:17 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 /**
-The  header file serves as the primary inclusion point for the project,
+This header file serves as the primary inclusion point for the project,
 aggregating necessary headers and declarations. As it centralizes all the
-essential includes, function prototypes, and data structs, this file ensures
-that  each source file within the minishell projecthas access to the necessary
-functionality without redundant includes.
+essential includes, function prototypes, data structs, and the global variable
+used for signal handling, this file ensures that each source file within the
+minishell projecthas access to the necessary functionality without redundancies.
 */
 
 #ifndef MINISHELL_H
@@ -42,6 +42,26 @@ functionality without redundant includes.
 # include <readline/readline.h> // reading/editing input lines
 # include <readline/history.h> // tracking/accessing previous command lines
 # include <signal.h> // signal/sig fcts, kill
+
+/**
+Global variable used to differentiate the behavior of the SIGINT (Ctrl+C)
+signal handler based on the interactive mode in which the signal is
+received (minishell prompt or heredoc prompt).
+
+Declared as `volatile` so that the compiler always reads the latest value
+directly from memory, as the variable may be changed by different parts
+of the program.
+
+The type `__sig_atomic_t` is designed for variables that are accessed and
+modified by signal handlers: It guarantees atomic operations, preventing race
+conditions and ensuring consistency when the variable is accessed from
+different contexts.
+*/
+extern volatile __sig_atomic_t	g_heredoc_mode;
+
+//	+++++++++++++++
+//	++ FUNCTIONS ++
+//	+++++++++++++++
 
 // 0: Initialization of Data Structures -> see init.h
 // 1: Validation of user input (empty? open quotes?) -> see input_check.h
@@ -73,10 +93,5 @@ int		is_env(char *input);
 int		is_unset(char *input);
 int		is_export(char *input);
 int		is_echo(char *input);
-
-/**
-Global variable
-*/
-extern volatile __sig_atomic_t	g_interrupted;
 
 #endif

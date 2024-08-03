@@ -6,13 +6,13 @@
 /*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/06 12:05:14 by aschenk           #+#    #+#             */
-/*   Updated: 2024/08/02 20:12:13 by aschenk          ###   ########.fr       */
+/*   Updated: 2024/08/02 23:50:48 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-volatile __sig_atomic_t	g_interrupted; // Define the global variable
+volatile __sig_atomic_t	g_heredoc_mode = 0; // Define the global variable
 
 // Prints a custom, color-coded logo for the minishell project.
 static void	print_logo(void)
@@ -42,6 +42,39 @@ static void	print_logo(void)
 	printf("%s", RESET);
 }
 
+void	check_for_heredocs_s(t_data *data)
+{
+	int		i;
+	char	*heredoc_input;
+	int		fd;
+
+	fd = get_heredoc_fd(data);
+	i = 0;
+	while (data->input[i])
+	{	if (data->input[i] == '<' && data->input[i+1] == '<')
+		{
+			ft_printf(HEREDOC_P);
+			heredoc_input = get_next_line(STDIN_FILENO); // interactive mode
+			trim_newline(heredoc_input);
+			while (g_heredoc_mode == 1 && expand_variables(&heredoc_input, data) == 1
+				&& ft_strcmp(heredoc_input, "EOF") != 0)
+			{
+				write(fd, heredoc_input, ft_strlen(heredoc_input));
+				write(fd, "\n", 1);
+				free(heredoc_input);
+				ft_printf(HEREDOC_P);
+				heredoc_input = get_next_line(STDIN_FILENO); // interactive mode -> signal
+				trim_newline(heredoc_input);
+			}
+			if (heredoc_input)
+				free(heredoc_input);
+		}
+
+		i++;
+	}
+}
+
+
 /*
 main is first of all a loop that runs the shell taking inputs from the user
 and executing them until the user decides to exit it.
@@ -55,8 +88,16 @@ int	main(int argc, char **argv, char **envp)
 	init_data_struct(&data, argc, argv, envp);
 	while (1)
 	{
-		data.input = readline(PROMPT);
-		g_interrupted = 0; // in case previous line was created by signal_handler
+		data.input = readline(PROMPT); // interactive mode
+		g_heredoc_mode = 1;
+		check_for_heredocs_s(&data);
+		while (g_heredoc_mode == 0)
+		{
+			data.input = readline(PROMPT);
+			g_heredoc_mode = 1;
+			check_for_heredocs_s(&data);
+		}
+
 		printf("TEST1\n");
 		if (data.input && !is_input_empty(data.input))
 		{
@@ -75,8 +116,7 @@ int	main(int argc, char **argv, char **envp)
 		// Maybe as a check completely in the end, if nothing else worked, we can mimic the "Command <some_command> not found"?
 		print_token_list(data.tok.tok_lst); // TESTING ONLY
 		data.exit_status = errno; // update exit status
-		// /printf("interrup status: %d\n", g_interrupted);
-		g_interrupted = 0;
+		// printf("interrup status: %d\n", g_interrupted);
 		free_data(&data, 0); // why exit status hardcoded here? In what instances are
 	}
 }
