@@ -6,7 +6,7 @@
 /*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/06 12:08:35 by aschenk           #+#    #+#             */
-/*   Updated: 2024/08/03 07:40:41 by aschenk          ###   ########.fr       */
+/*   Updated: 2024/08/04 21:16:37 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,9 +44,9 @@ minishell projecthas access to the necessary functionality without redundancies.
 # include <signal.h> // signal/sig fcts, kill
 
 /**
-Global variable used to differentiate the behavior of the SIGINT (Ctrl+C)
-signal handler based on the interactive mode in which the signal is
-received (minishell prompt or heredoc prompt).
+Global variable used to indicate if and which signal was received.
+ - `0`: No signal received
+ - `1`: CTRL+C (SIGINT) signal received
 
 Declared as `volatile` so that the compiler always reads the latest value
 directly from memory, as the variable may be changed by different parts
@@ -57,7 +57,7 @@ modified by signal handlers: It guarantees atomic operations, preventing race
 conditions and ensuring consistency when the variable is accessed from
 different contexts.
 */
-extern volatile __sig_atomic_t	g_heredoc_mode;
+extern volatile __sig_atomic_t	g_signal;
 
 //	+++++++++++++++
 //	++ FUNCTIONS ++

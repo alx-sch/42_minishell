@@ -6,7 +6,7 @@
 /*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/27 19:58:01 by aschenk           #+#    #+#             */
-/*   Updated: 2024/07/31 22:10:45 by aschenk          ###   ########.fr       */
+/*   Updated: 2024/08/04 21:51:09 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,6 +70,19 @@ int	get_str_r(char **str, int i, char *var_name, char **substr_right)
 	return (1);
 }
 
+char *concat_strings(const char *s1, const char *s2)
+{
+    size_t len1 = strlen(s1);
+    size_t len2 = strlen(s2);
+    size_t buffer_size = len1 + len2 + 1; // +1 for null terminator
+
+    char *result = (char *)malloc(buffer_size);
+    if (!result) return NULL; // Allocation failed
+
+    snprintf(result, buffer_size, "%s%s", s1, s2);
+    return result;
+}
+
 /**
 Concatenates `str_l` with `var_value` and replaces `str` with this
 concatenation.
@@ -86,7 +99,9 @@ int	join_str_l(char **str, char *str_l, char *var_value)
 {
 	char	*tmp_str;
 
+	(void)**str;
 	tmp_str = ft_strjoin(str_l, var_value);
+	// tmp_str = concat_strings(str_l, var_value);
 	if (!tmp_str)
 		return (0); // allocation fails
 	free(*str); // free old string (not expanded)
@@ -108,7 +123,7 @@ int	join_str_r(char **str, char *str_r)
 {
 	char	*tmp_str;
 
-	tmp_str = ft_strjoin(*str, str_r);
+	tmp_str = concat_strings(*str, str_r);
 	if (!tmp_str)
 		return (0); // allocation fails
 	free(*str);

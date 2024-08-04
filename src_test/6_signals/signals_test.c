@@ -6,7 +6,7 @@
 /*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/02 18:33:19 by aschenk           #+#    #+#             */
-/*   Updated: 2024/08/03 09:17:42 by aschenk          ###   ########.fr       */
+/*   Updated: 2024/08/04 20:55:11 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ prompt is displayed
 void	handle_sigint(int sig)
 {
 	(void)sig;
-	g_heredoc_mode = 1;
+	g_signal= 1;
 	rl_replace_line("", 0); // Clear current line
 	printf("\n"); // Print a newline
 	rl_on_new_line(); // Move to new line
@@ -41,7 +41,7 @@ void	handle_sigint(int sig)
 void	handle_sigint_heredoc(int sig)
 {
 	(void)sig;
-	g_heredoc_mode = 1;
+	g_signal= 1;
 	ioctl(STDIN_FILENO, TIOCSTI, "\n");
 }
 

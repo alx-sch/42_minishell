@@ -6,7 +6,7 @@
 /*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/13 12:12:15 by aschenk           #+#    #+#             */
-/*   Updated: 2024/08/02 23:52:13 by aschenk          ###   ########.fr       */
+/*   Updated: 2024/08/04 20:19:55 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,15 +65,18 @@ static void	delete_heredocs(t_data *data)
 
 	pipe_nr_max = data->pipe_nr;
 	data->pipe_nr = 0;
-	g_heredoc_mode = 0; // reset to minishell prompt / interactive mode
 	while (data->pipe_nr <= pipe_nr_max)
 	{
 		heredoc = get_heredoc(data);
 		if (heredoc)
 		{
+			data->exit_status = errno; // temp save errno, as access sets it to '2' if file does not exist
 			if (access(heredoc, F_OK) != -1)
+			{
 				if (unlink(heredoc) != 0)
 					print_err_msg(ERR_DEL_HEREDOC);
+			}
+			errno = data->exit_status;
 			free(heredoc);
 		}
 		data->pipe_nr++;
@@ -97,7 +100,6 @@ void	free_data(t_data *data, bool exit)
 		return ;
 	ft_lstclear(&data->tok.tok_lst, del_token);
 	if (data->input)
-		free(data->input);
 	delete_heredocs(data);
 	data->pipe_nr = 0; // Reset number of pipes to default.
 	if (exit)

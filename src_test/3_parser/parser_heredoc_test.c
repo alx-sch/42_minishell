@@ -6,7 +6,7 @@
 /*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/24 22:36:32 by aschenk           #+#    #+#             */
-/*   Updated: 2024/08/02 23:47:10 by aschenk          ###   ########.fr       */
+/*   Updated: 2024/08/04 21:00:44 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,7 @@ is encountered. Writes each line to the specified file descriptor.
 
  @return `1` if input handling succeeded.
 		 `0` if input handling failed (write operation failed).
+		 `-1` if heredoc prompt was interrupted by CTRL+C.
 */
 static int	handle_heredoc_input(int fd, const char *delimiter, t_data *data)
 {
@@ -65,7 +66,7 @@ static int	handle_heredoc_input(int fd, const char *delimiter, t_data *data)
 	ft_printf(HEREDOC_P);
 	input_line = get_next_line(STDIN_FILENO);
 	trim_newline(input_line);
-	while (g_heredoc_mode == 0 && expand_variables(&input_line, data) == 1
+	while (!g_signal && expand_variables(&input_line, data) == 1
 		&& ft_strcmp(input_line, delimiter) != 0)
 	{
 		bytes_written_1 = write(fd, input_line, ft_strlen(input_line));
@@ -79,6 +80,8 @@ static int	handle_heredoc_input(int fd, const char *delimiter, t_data *data)
 	}
 	if (input_line)
 		free(input_line);
+	if (g_signal)
+		return (-1);
 	return (1);
 }
 
@@ -88,23 +91,26 @@ the input from the user, and converting the HEREDOC into REDIR_IN tokens.
 
  @return `1` if the HEREDOC processing succeeded.
 		 `0` if the HEREDOC processing failed.
+		 `-1` if the HEREDOC processing was interrupted by CTRL+C.
 */
 static int	process_single_heredoc(t_data *data, t_token *current_token,
 	t_token *next_token)
 {
 	int	fd;
+	int	return_val;
 
 	fd = get_heredoc_fd(data);
 	if (fd < 0)
 		return (0);
-	if (!handle_heredoc_input(fd, next_token->lexeme, data))
+	return_val = handle_heredoc_input(fd, next_token->lexeme, data);
+	if (return_val <= 0)
 	{
 		close(fd);
-		return (0);
+		return (return_val);
 	}
 	close(fd);
 	if (!convert_tokens(data, current_token, next_token))
-		return (0);
+		return (1);
 	return (1);
 }
 
@@ -115,12 +121,14 @@ converts HEREDOC tokens to REDIR_IN tokens, and handles HEREDOC input.
  @return `1` if all HEREDOCs were processed successfully or
  		 none were encountered.
 		 `0` if any HEREDOC processing failed.
+		 `-1` if any HEREDOC processing was interrupted by CTRL+C.
 */
 int	process_heredocs(t_data *data)
 {
 	t_list	*current_node;
 	t_token	*current_token;
 	t_token	*next_token;
+	int		return_val;
 
 	current_node = data->tok.tok_lst;
 	while (current_node != NULL) // traverse the token linked list
@@ -130,8 +138,10 @@ int	process_heredocs(t_data *data)
 		if (current_token->type == HEREDOC)
 		{
 		 	next_token = (t_token *)current_node->next->content; // Delimiter is the token after the HEREDOC token.
-			if (!process_single_heredoc(data, current_token, next_token))
-				return (0);
+			return_val = process_single_heredoc(data, current_token,
+					next_token);
+			if (return_val <= 0)
+				return (return_val);
 		}
 		current_node = current_node->next;
 	}
