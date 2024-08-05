@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
+/*   By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/31 19:12:38 by aschenk           #+#    #+#             */
-/*   Updated: 2024/07/31 19:25:52 by aschenk          ###   ########.fr       */
+/*   Updated: 2024/08/05 19:03:42 by nholbroo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@ void	conv_env_tmp_to_arr(t_data *data, t_exec *exec);
 void	move_current_and_update_token(t_list **current, t_token **token);
 void	prep_execution(t_data *data, t_exec *exec, int position);
 void	get_flags_and_command(t_data *data, t_exec *exec, int position);
+int		cmd_is_path(t_data *data, t_exec *exec);
 void	get_all_paths(t_data *data, t_exec *exec);
 void	get_correct_path(t_data *data, t_exec *exec);
 

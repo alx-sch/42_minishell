@@ -6,7 +6,7 @@
 /*   By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/30 12:32:25 by nholbroo          #+#    #+#             */
-/*   Updated: 2024/07/31 16:36:46 by nholbroo         ###   ########.fr       */
+/*   Updated: 2024/08/05 18:41:11 by nholbroo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,12 +61,13 @@ void	exec_errors(t_data *data, t_exec *exec, int error_code)
 		ft_putstr_fd(ERR_COLOR, STDERR_FILENO);
 		ft_putstr_fd("minishell: exec: Cannot allocate memory\n", STDERR_FILENO);
 	}
-	if (error_code == 2)
+	if (error_code == 2 || error_code == 4)
 	{
 		ft_putstr_fd(ERR_PREFIX, 2);
 		ft_putstr_fd(exec->cmd, 2);
 		ft_putstr_fd(": ", 2);
-		errno = ENOENT;
+		if (error_code == 2)
+			errno = ENOENT;
 		perror("");
 	}
 	if (error_code == 3)

@@ -3,14 +3,26 @@
 /*                                                        :::      ::::::::   */
 /*   get_path_test.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
+/*   By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/30 18:58:47 by nholbroo          #+#    #+#             */
-/*   Updated: 2024/07/31 22:20:02 by aschenk          ###   ########.fr       */
+/*   Updated: 2024/08/05 19:05:09 by nholbroo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+int	cmd_is_path(t_data *data, t_exec *exec)
+{
+	if (ft_strchr(exec->cmd, '/'))
+	{
+		exec->current_path = ft_strdup(exec->cmd);
+		if (!exec->current_path)
+			exec_errors(data, exec, 1);
+		return (1);
+	}
+	return (0);
+}
 
 /*Uses ft_strjoin to add a "/"-sign at the end of each path, so it can easily
 be executed later on.*/
