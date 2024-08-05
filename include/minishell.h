@@ -6,7 +6,7 @@
 /*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/06 12:08:35 by aschenk           #+#    #+#             */
-/*   Updated: 2024/08/01 10:57:09 by aschenk          ###   ########.fr       */
+/*   Updated: 2024/08/05 11:32:33 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@ functionality without redundant includes.
 # include "parser.h" // proccesses tokens (handling of heredoc and variables)
 # include "builtins.h" // `cd`, `pwd`, `env`, `unset`, `export`, `echo` as fcts
 # include "execution.h" // TBD
+# include "signals.h" // TBD
 
 # include <fcntl.h> // open, close, access, unlink
 # include <stdio.h> // perror, printf
@@ -41,6 +42,26 @@ functionality without redundant includes.
 # include <readline/readline.h> // reading/editing input lines
 # include <readline/history.h> // tracking/accessing previous command lines
 # include <signal.h> // signal/sig fcts, kill
+
+/**
+Global variable used to indicate if and which signal was received.
+ - `0`: No signal received
+ - `1`: CTRL+C (SIGINT) signal received
+
+Declared as `volatile` so that the compiler always reads the latest value
+directly from memory, as the variable may be changed by different parts
+of the program.
+
+The type `__sig_atomic_t` is designed for variables that are accessed and
+modified by signal handlers: It guarantees atomic operations, preventing race
+conditions and ensuring consistency when the variable is accessed from
+different contexts.
+*/
+extern volatile __sig_atomic_t	g_signal;
+
+//	+++++++++++++++
+//	++ FUNCTIONS ++
+//	+++++++++++++++
 
 // 0: Initialization of Data Structures -> see init.h
 // 1: Validation of user input (empty? open quotes?) -> see input_check.h

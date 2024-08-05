@@ -6,11 +6,15 @@
 /*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/06 12:05:14 by aschenk           #+#    #+#             */
-/*   Updated: 2024/08/01 14:05:30 by aschenk          ###   ########.fr       */
+/*   Updated: 2024/08/05 11:54:53 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+// Define the global variable:
+
+volatile __sig_atomic_t	g_signal = 0;
 
 // Prints a custom, color-coded logo for the minishell project.
 static void	print_logo(void)
@@ -52,7 +56,13 @@ int	main(int argc, char **argv, char **envp)
 	init_data_struct(&data, argc, argv, envp);
 	while (1)
 	{
+		set_sig_handler(handle_sigint, handle_sigquit);
+		//printf("data.exit: %d, errno: %d");
 		data.input = readline(PROMPT);
+		if (g_signal)
+			data.exit_status = EOWNERDEAD;
+		g_signal = 0; // reset signal variable for heredoc prompt
+		set_sig_handler(handle_sigint_heredoc, handle_sigquit);
 		if (data.input && !is_input_empty(data.input))
 		{
 			if (!is_whitespace(data.input[0]))
@@ -60,7 +70,7 @@ int	main(int argc, char **argv, char **envp)
 			if (is_quotation_closed(&data) && get_tokens(&data)
 				&& parse_tokens(&data))
 				{
-					//printf("expanded input: %s\n", data.input);
+					printf("expanded input: %s\n", data.input);
 					parsing(&data);
 					//if (parsing(&data)) // Checking if the input matches any of the builtins.
 						//init_exec(&data);
