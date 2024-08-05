@@ -6,7 +6,7 @@
 /*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 22:40:57 by aschenk           #+#    #+#             */
-/*   Updated: 2024/07/31 19:34:41 by aschenk          ###   ########.fr       */
+/*   Updated: 2024/08/05 19:17:38 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,8 +29,8 @@ Checks if a valid variable is encountered at position `i` in the string `str`.
 A valid variable is identified by a '$' character that is not followed by
 whitespace, the null terminator, or another '$' character.
 
- @return `1` if a valid variable is encountered.
-		 `0` if no valid variable is encountered.
+ @return	`1` if a valid variable is encountered.
+			`0` if no valid variable is encountered.
 */
 static int	is_variable(char *str, int i)
 {
@@ -53,12 +53,12 @@ Variable names are delimited by:
 If the variable is the special case '$?', the function returns a string
 containing "?".
 
- @param str The string from which to extract the variable name.
- @param i The position in the string where the '$' character is located.
+ @param str 	The string from which to extract the variable name.
+ @param i 		The position in the string where the '$' character is located.
 
- @return A newly allocated string containing the variable name
- 		 (excluding the '$').
-		 `NULL` if memory allocation fails.
+ @return	A newly allocated string containing the variable name
+ 			(excluding the '$').
+			`NULL` if memory allocation fails.
 */
 static char	*get_var_name(char *str, int i)
 {
@@ -92,9 +92,9 @@ Extracts the value of a specified environment variable (`env_var_search`)
 from the minishell-specific environment variables linked list (t_env).
 Also extracts the last exit status for '$?'.
 
- @return The value the environment variable, if found.
-		 An empty string, if the specified environment variable is not found.
-		 `NULL` if memory allocation for the empty or exit status string failed.
+ @return	The value the environment variable, if found.
+			An empty string, if the specified environment variable is not found.
+			`NULL` if memory allocation for the empty or exit status string failed.
 
 If an exit status string is returned, it is the user's responsibilty to
 free it when done using.
@@ -135,16 +135,16 @@ the variable in the string with its value. The string is split into three parts:
 the left part before the variable, the variable value, and the right part
 after the variable. These parts are then concatenated into a new string.
 
- @param str The original string containing the variable to be replaced.
- @param i The position in the string where the '$' character of the variable
- 		  is located.
- @param var_name The name of the variable to be replaced (excluding the '$').
- @param env_list The environment list containing variable names and their
- 				 corresponding values.
+ @param str 		The original string containing the variable to be replaced.
+ @param i 			The position in the string where the '$' character of the variable
+ 					is located.
+ @param var_name 	The name of the variable to be replaced (excluding the '$').
+ @param env_list 	The environment list containing variable names and their
+ 					corresponding values.
 
- @return `1` if the variable was successfully replaced with its value.
-		 `0` if an error occurred during memory allocation or if the variable
-		 does not exist in the environment list.
+ @return	`1` if the variable was successfully replaced with its value.
+			`0` if an error occurred during memory allocation or if the variable
+			does not exist in the environment list.
  */
 static int	replace_var_with_val(char **str, int i, char *var_name,
 		t_data *data)
@@ -185,12 +185,13 @@ function resets the traversal index to handle nested variables by re-traversing
 the newly modified string from the beginning. The function stops if a memory
 allocation error occurs.
 
- @param str A pointer to the original string containing variables to be expanded.
- @param env_list The environment list containing variable names and their
- 				corresponding values.
+ @param str 		A pointer to the original string containing variables
+ 					to be expanded.
+ @param env_list 	The environment list containing variable names and their
+ 					corresponding values.
 
- @return `1` if all variables were successfully expanded.
-		 `0` if an error occurred during memory allocation or if no string was passed.
+ @return	`1` if all variables were successfully expanded.
+			`0` if an error occurred during memory allocation or if no string was passed.
  */
 int	expand_variables(char **str, t_data *data)
 {

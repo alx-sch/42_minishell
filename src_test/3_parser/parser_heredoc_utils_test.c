@@ -6,7 +6,7 @@
 /*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/24 22:36:32 by aschenk           #+#    #+#             */
-/*   Updated: 2024/07/31 19:31:07 by aschenk          ###   ########.fr       */
+/*   Updated: 2024/08/05 19:07:37 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,8 +48,8 @@ void	trim_newline(char *str)
 }
 
 /**
- @return A heredoc filename based on the HEREDOC_PREFIX and the
- 		 current pipe count or `NULL` on malloc failure.
+ @return	A heredoc filename based on the HEREDOC_PREFIX and the
+ 			current pipe count or `NULL` on malloc failure.
 */
 char	*get_heredoc(t_data *data)
 {
@@ -67,8 +67,8 @@ char	*get_heredoc(t_data *data)
 /**
 Creates and opens a heredoc file
 
- @return The heredoc's file descriptor or
- 		 `-1` on malloc/open failure.
+ @return	The heredoc's file descriptor or
+ 			`-1` on malloc/open failure.
 */
 int	get_heredoc_fd(t_data *data)
 {
@@ -81,4 +81,29 @@ int	get_heredoc_fd(t_data *data)
 	fd = open(heredoc, O_WRONLY | O_CREAT | O_TRUNC, 0666);
 	free(heredoc);
 	return (fd);
+}
+
+/**
+Trims the quotes from around a delimiter string and returns a newly allocated
+string containing the trimmed delimiter.
+
+ @param delimiter 	The original delimiter string, which may be surrounded
+ 					by quotes or empty.
+ @return 	A newly allocated string with the surrounding quotes removed.
+ 			If the original delimiter is empty, an empty string is returned.
+			Returns `NULL` if memory allocation fails.
+*/
+char	*trim_delimiter(const char *delimiter)
+{
+	size_t	len;
+	char	*trimmed_delim;
+
+	len = ft_strlen(delimiter); // length of untrimmed delimiter
+	trimmed_delim = NULL;
+	trimmed_delim = malloc(len * sizeof(char) - 1); // len - 2 (remove beginning and end quote) + 1  (for null terminator)
+	if (!trimmed_delim)
+		return (NULL);
+	ft_strlcpy(trimmed_delim, delimiter + 1, len - 1); // Copy the substring excluding the first and last characters
+	trimmed_delim[len - 2] = '\0'; // Null-terminate
+	return (trimmed_delim);
 }

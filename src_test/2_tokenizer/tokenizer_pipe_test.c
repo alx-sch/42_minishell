@@ -6,7 +6,7 @@
 /*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/01 16:34:21 by aschenk           #+#    #+#             */
-/*   Updated: 2024/08/01 14:46:02 by aschenk          ###   ########.fr       */
+/*   Updated: 2024/08/05 19:11:30 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,14 +32,14 @@ Scans the input string starting from the current index (*i).
 Skips any leading whitespace and checks if the encountered character is valid.
 Valid syntax after a pipe: Anything but '|' and end of input ('\0').
 
- @param inp The input string containing the command line input.
- @param i The current index in the input string.
+ @param inp 	The input string containing the command line input.
+ @param i 		The current index in the input string.
 
- @return The dynamically allocated string containing the invalid syntax symbol
-  		 ('newline' for '\0' to mirror the behavior of invalid redirections).
-		 `NULL` if the syntax is valid or no input before '|' (invalid syntax).
-		 `"ERR"` string literal as fallback, if memory allocation fails while
-		 attempting to allocate space for the invalid syntax.
+ @return	The dynamically allocated string containing the invalid syntax symbol
+  			('newline' for '\0' to mirror the behavior of invalid redirections).
+			`NULL` if the syntax is valid or no input before '|' (invalid syntax).
+			`"ERR"` string literal as fallback, if memory allocation fails while
+			attempting to allocate space for the invalid syntax.
 */
 static char	*is_valid_syntax(t_data *data, int j)
 {
@@ -76,7 +76,7 @@ Prints an error message for invalid syntax encountered after a pipe symbol ('|')
 and updates the `errno` accordingly.
 
  @param invalid_syn The invalid operand encountered in the input.
- @param str_j The string representation of int j (position of failed piping).
+ @param str_j 		The string representation of int j (position of failed piping).
 */
 static void	print_pipe_err_msg(char *invalid_syn, char *str_j)
 {
@@ -121,12 +121,12 @@ position of the invalid synatax (position '-1'and 'ERR' syntax error
 used as fallback if malloc fails; ERR_MALLOC printend to indicate malloc failure
 in these cases).
 
- @param data Data structure containing token-related info.
- @param j The index of the piping symbol ('|').
+ @param data 	Data structure containing token-related info.
+ @param j 		The index of the piping symbol ('|').
 
- @returns `0` if syntax is invalid and an error message was printed
-		   or malloc fail.
-		  `1` if the syntax is valid.
+ @returns	`0` if syntax is invalid and an error message was printed
+			or malloc fail.
+			`1` if the syntax is valid.
 */
 static int	check_syntax(t_data *data, int j)
 {
@@ -164,12 +164,13 @@ Our minishell interprets '||' as "empty input between pipes" not as
 If the syntax is valid, it creates the corresponding token and adds
 it to the token list.
 
- @param data Data structure containing input string and token list.
- @param i Pointer to the current index in the input string.
+ @param data 	Data structure containing input string and token list.
+ @param i 		Pointer to the current index in the input string.
 
- @return  `1` if a pipe token was added to the token list or if input[*i] is not a pipe.
- 		 `0` if token creation failed (malloc failure).
-		 `-1` if the syntax is invalid.
+ @return	`1` if a pipe token was added to the token list or if input[*i]
+ 			is not a pipe.
+ 			`0` if token creation failed (malloc failure).
+			`-1` if the syntax is invalid.
 */
 int	is_pipe(t_data *data, int *i)
 {

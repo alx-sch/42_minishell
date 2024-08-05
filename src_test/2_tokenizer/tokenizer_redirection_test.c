@@ -6,7 +6,7 @@
 /*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/17 13:00:24 by aschenk           #+#    #+#             */
-/*   Updated: 2024/08/01 14:52:08 by aschenk          ###   ########.fr       */
+/*   Updated: 2024/08/05 19:13:08 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,13 +33,13 @@ Redirection cannot be the last part of the input string, a valid operand
 is needed.
 Valid operands (files) cannot be or start with `>`, `<`, or `|`.
 
- @param inp The input string containing the command line input.
- @param i The current index in the input string.
+ @param inp 	The input string containing the command line input.
+ @param i 		The current index in the input string.
 
- @return The dynamically allocated string containing the invalid operand.
-		 `NULL` if the operand is valid
-		 `"ERR"` string literal as fallback, if memory allocation fails while
-		 attempting to allocate space for the invalid operand.
+ @return	The dynamically allocated string containing the invalid operand.
+			`NULL` if the operand is valid
+			`"ERR"` string literal as fallback, if memory allocation fails while
+			attempting to allocate space for the invalid operand.
 */
 static char	*is_valid_operand(const char *inp, int *i)
 {
@@ -76,10 +76,10 @@ Used in check_operand().
 Prints an error message for invalid redirection operands in the input string
 and updates the `errno` accordingly.
 
- @param invalid_op The invalid operand encountered in the input.
- @param input The input string containing the command line input.
- @param str_j The string representation of int j.
- @param j Position index of the failed redirection in the input string.
+ @param invalid_op 	The invalid operand encountered in the input.
+ @param input 		The input string containing the command line input.
+ @param str_j 		The string representation of int j.
+ @param j 			Position index of the failed redirection in the input string.
 */
 static void	print_redir_err_msg(char *invalid_op, const char *input,
 	char *str_j, int j)
@@ -113,12 +113,12 @@ position of the invalid synatax (position '-1'and 'ERR' syntax error
 used as fallback if malloc fails; ERR_MALLOC printend to indicate malloc failure
 in these cases).
 
- @param input The input string containing the command line input.
- @param i Pointer to the current index in the input string.
- @param j The index of the redirection operator in the input string.
+ @param input 	The input string containing the command line input.
+ @param i 		Pointer to the current index in the input string.
+ @param j 		The index of the redirection operator in the input string.
 
- @return `0` if an invalid operand is found and an error message is printed.
-		 `1` if the operand is valid.
+ @return	`0` if an invalid operand is found and an error message is printed.
+			`1` if the operand is valid.
 */
 static int	check_operand(const char *input, int *i, int j)
 {
@@ -152,13 +152,13 @@ Used in is_redirection().
 
 Function to create redirection tokens and add them to the token list.
 
- @param data Data structure containing input string and token list.
- @param i Pointer to the current index in the input string.
- @param type The type of redirection token to be created.
- @param symbol The string representation of the redirection symbol.
+ @param data 	Data structure containing input string and token list.
+ @param i 		Pointer to the current index in the input string.
+ @param type 	The type of redirection token to be created.
+ @param symbol 	The string representation of the redirection symbol.
 
- @return `0` if the token creation failed.
-		 `1` if the token creation was successful.
+ @return	`0` if the token creation failed.
+			`1` if the token creation was successful.
 */
 static int	create_redirection_token(t_data *data, int *i, t_token_type type,
 	const char *symbol)
@@ -179,13 +179,13 @@ If a redirection operator is found, it creates the corresponding token and adds
 it to the token list. It also checks for a valid operand (file) after the
 redirection operator.
 
- @param data Data structure containing input string and token list.
- @param int Pointer to the current index in the input string.
+ @param data 	Data structure containing input string and token list.
+ @param int 	Pointer to the current index in the input string.
 
- @return `1` if the redirection and its operand are valid or if no redirection
-		 is found.
- 		 `0` token creation failed (malloc failure).
-		 `-1` if the syntax is invalid.
+ @return	`1` if the redirection and its operand are valid or if no redirection
+			is found.
+ 			`0` token creation failed (malloc failure).
+			`-1` if the syntax is invalid.
 */
 int	is_redirection(t_data *data, int *i)
 {

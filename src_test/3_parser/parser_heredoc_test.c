@@ -6,7 +6,7 @@
 /*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/24 22:36:32 by aschenk           #+#    #+#             */
-/*   Updated: 2024/08/05 13:40:35 by aschenk          ###   ########.fr       */
+/*   Updated: 2024/08/05 19:03:21 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,8 +29,8 @@ where the delimiter is replaced by the actual filename created for the heredoc.
 This simplifies further processing by ensuring that HEREDOC tokens are processed
 in the same way as REDIR_IN tokens.
 
- @return `1` if HEREDOC token conversion succeeded.
-		 `0` if HEREDOC token conversion failed.
+ @return	`1` if HEREDOC token conversion succeeded.
+			`0` if HEREDOC token conversion failed.
 */
 static int	convert_tokens(t_data *data, t_token *current_token,
 	t_token *next_token)
@@ -50,11 +50,21 @@ static int	convert_tokens(t_data *data, t_token *current_token,
 }
 
 /**
-Handles input for a HEREDOC token by reading lines from stdin until the delimiter
-is encountered. Writes each line to the specified file descriptor.
+Handles the heredoc prompt (if delimiter not in quotes).
 
- @return `1` if input handling succeeded.
-		 `0` if input handling failed (write operation failed).
+Reads lines from stdin and writes them to the specified file descriptor
+(heredoc) until the specified delimiter is encountered. Each line isbprocessed
+by expanding any variables before being written to the file descriptor.
+The function also handles interruptions by CTRL+C.
+
+ @param fd 			The file descriptor to which the input lines will be written.
+ @param delimiter 	The delimiter that signals the end of input.
+ @param data 		Pointer to data used for variable expansion.
+
+ @return	`1` if input handling succeeded and the delimiter was encountered.
+			`0` if input handling failed due to a write operation error.
+			`-1` if the heredoc input was interrupted by CTRL+C
+			(indicated by `g_signal`).
 */
 static int	handle_heredoc_input(int fd, const char *delimiter, t_data *data)
 {
@@ -85,22 +95,74 @@ static int	handle_heredoc_input(int fd, const char *delimiter, t_data *data)
 }
 
 /**
+Handles the heredoc prompt (if delimiter is in quotes).
+
+Reads lines from stdin and writes them to the specified file descriptor
+until the specified delimiter is encountered. No variable expansion is performed
+on the input lines. The function also handles interruptions by CTRL+C.
+
+ @param fd 			The file descriptor to which the input lines will be written.
+ @param delimiter 	The delimiter that signals the end of input.
+ @param data 		Pointer to data used for variable expansion.
+
+ @return	`1` if input handling succeeded and the delimiter was encountered.
+			`0` if input handling failed due to a write operation error.
+			`-1` if the heredoc input was interrupted by CTRL+C
+			(indicated by `g_signal`).
+*/
+static int	handle_heredoc_input_no_expansion(int fd, const char *trimmed_delim)
+{
+	char	*input_line;
+	int		bytes_written_1;
+	int		bytes_written_2;
+
+	ft_printf(HEREDOC_P);
+	input_line = get_next_line(STDIN_FILENO);
+	trim_newline(input_line);
+	while (!g_signal && ft_strcmp(input_line, trimmed_delim) != 0)
+	{
+		bytes_written_1 = write(fd, input_line, ft_strlen(input_line));
+		bytes_written_2 = write(fd, "\n", 1);
+		free(input_line);
+		if (bytes_written_1 == -1 || bytes_written_2 == -1) // check if writing into file was successful
+			return (0);
+		ft_printf(HEREDOC_P);
+		input_line = get_next_line(STDIN_FILENO);
+		trim_newline(input_line);
+	}
+	if (input_line)
+		free(input_line);
+	if (g_signal)
+		return (-1);
+	return (1);
+}
+
+/**
 Processes a single HEREDOC token by creating a file for the heredoc, handling
 the input from the user, and converting the HEREDOC into REDIR_IN tokens.
 
- @return `1` if the HEREDOC processing succeeded.
-		 `0` if the HEREDOC processing failed.
+ @return	`1` if the HEREDOC processing succeeded.
+			`0` if the HEREDOC processing failed.
+			`-1` if heredoc prompt was interrupted by CTRL+C.
 */
 static int	process_single_heredoc(t_data *data, t_token *current_token,
 	t_token *next_token)
 {
-	int	fd;
-	int	return_val;
+	int		fd;
+	int		return_val;
+	char	*trimmed_delim;
 
 	fd = get_heredoc_fd(data);
 	if (fd < 0)
 		return (0);
-	return_val = handle_heredoc_input(fd, next_token->lexeme, data);
+	if (next_token->lexeme[0] == '\'' || next_token->lexeme[0] == '\"') // check if delimiter is in quotes
+	{
+		trimmed_delim = trim_delimiter(next_token->lexeme); // trim leading and trailing quote from delimiter
+		return_val = handle_heredoc_input_no_expansion(fd, trimmed_delim);
+		free(trimmed_delim);
+	}
+	else
+		return_val = handle_heredoc_input(fd, next_token->lexeme, data);
 	if (return_val <= 0)
 	{
 		close(fd);
@@ -116,9 +178,10 @@ static int	process_single_heredoc(t_data *data, t_token *current_token,
 Processes all HEREDOC tokens in the token list. Traverses the list,
 converts HEREDOC tokens to REDIR_IN tokens, and handles HEREDOC input.
 
- @return `1` if all HEREDOCs were processed successfully or
- 		 none were encountered.
-		 `0` if any HEREDOC processing failed.
+ @return	`1` if all HEREDOCs were processed successfully or
+ 			none were encountered.
+			`0` if any HEREDOC processing failed.
+			`-1` if heredoc prompt was interrupted by CTRL+C.
 */
 int	process_heredocs(t_data *data)
 {

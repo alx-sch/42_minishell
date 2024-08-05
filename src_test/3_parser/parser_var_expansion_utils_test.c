@@ -6,7 +6,7 @@
 /*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/27 19:58:01 by aschenk           #+#    #+#             */
-/*   Updated: 2024/07/31 22:10:45 by aschenk          ###   ########.fr       */
+/*   Updated: 2024/08/05 19:21:22 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,10 +30,10 @@ void	free_vars(char **var_val, char **str_l, char **str_r);
 Extracts a substring from the beginning of the given string up to a
 specified index. The extracted substring is stored in `substr_left`.
 
- @param str Pointer to the original string.
- @param i Index up to which the substring will be extracted.
- @param substr_left Pointer to a char* where the extracted substring will
- 					be stored.
+ @param str 			Pointer to the original string.
+ @param i 				Index up to which the substring will be extracted.
+ @param substr_left 	Pointer to a char* where the extracted substring will
+ 						be stored.
  @return	`1` on success,
 			`0` on failure (memory allocation failure).
 */
@@ -51,11 +51,11 @@ int	get_str_l(char **str, int i, char **substr_left)
  excluding the given variable name. The extracted substring is stored in
  `substr_right`.
 
- @param str Pointer to the original string.
- @param i Index from which to start the substring extraction.
- @param var_name The variable name to exclude from the substring.
- @param substr_right Pointer to a char* where the extracted substring will
-					 be stored.
+ @param str 			Pointer to the original string.
+ @param i 				Index from which to start the substring extraction.
+ @param var_name 		The variable name to exclude from the substring.
+ @param substr_right 	Pointer to a char* where the extracted substring will
+					 	be stored.
 
  @return	`1` on success.
 			`0` on failure (memory allocation failure).
@@ -74,13 +74,13 @@ int	get_str_r(char **str, int i, char *var_name, char **substr_right)
 Concatenates `str_l` with `var_value` and replaces `str` with this
 concatenation.
 
- @param str Pointer to the existing string which will be replaced by the
- 			  concatenated result.
- @param str_l The first string to concatenate.
- @param var_value The second string to concatenate.
+ @param str 		Pointer to the existing string which will be replaced by the
+ 					concatenated result.
+ @param str_l 		The first string to concatenate.
+ @param var_value 	The second string to concatenate.
 
- @return `1` on success (concatenation and memory allocation successful),
-		 `0` on failure (memory allocation failure).
+ @return	`1` on success (concatenation and memory allocation successful),
+			`0` on failure (memory allocation failure).
 */
 int	join_str_l(char **str, char *str_l, char *var_value)
 {
@@ -97,12 +97,12 @@ int	join_str_l(char **str, char *str_l, char *var_value)
 /**
 Concatenates `str_r` to the end of `str`.
 
- @param str Pointer to the existing string which will be replaced by the
-			concatenated result.
- @param str_r The string to concatenate to the end of the existing string.
+ @param str 	Pointer to the existing string which will be replaced by the
+				concatenated result.
+ @param str_r 	The string to concatenate to the end of the existing string.
 
- @return `1` on success (concatenation and memory allocation successful),
-		 `0` on failure (memory allocation failure).
+ @return	`1` on success (concatenation and memory allocation successful),
+			`0` on failure (memory allocation failure).
 */
 int	join_str_r(char **str, char *str_r)
 {
@@ -121,12 +121,12 @@ Frees dynamically allocated memory for variable values and substrings.
 Ensures that only allocated memory is freed and avoids freeing memory
 that was not dynamically allocated.
 
- @param var_val Pointer to the dynamically allocated variable value which
- 				may need freeing.
- @param str_l Pointer to the dynamically allocated substring which may
- 			  need freeing.
- @param str_r Pointer to the dynamically allocated substring which may
- 			  need freeing.
+ @param var_val 	Pointer to the dynamically allocated variable value which
+ 					may need freeing.
+ @param str_l 		Pointer to the dynamically allocated substring which may
+ 					need freeing.
+ @param str_r 		Pointer to the dynamically allocated substring which may
+ 					need freeing.
 */
 void	free_vars(char **var_val, char **str_l, char **str_r)
 {

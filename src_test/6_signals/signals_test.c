@@ -6,7 +6,7 @@
 /*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/02 18:33:19 by aschenk           #+#    #+#             */
-/*   Updated: 2024/08/05 07:14:39 by aschenk          ###   ########.fr       */
+/*   Updated: 2024/08/05 15:34:38 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ void	handle_sigint_heredoc(int sig)
 {
 	(void)sig;
 	g_signal = 1;
-	ioctl(STDIN_FILENO, TIOCSTI, "\n");
+	ioctl(STDIN_FILENO, TIOCSTI, "\n"); // simulates user input of pressing enter
 }
 
 void	handle_sigquit(int sig)
@@ -68,8 +68,8 @@ void	handle_sigquit(int sig)
 
 void	set_sig_handler(void (*handler_int)(int), void (*handler_quit)(int))
 {
-	signal(SIGINT, handler_int);
-	signal(SIGQUIT, handler_quit);
+	signal(SIGINT, handler_int); // CTRL + C
+	signal(SIGQUIT, handler_quit); // CTRL + '\'
 }
 
 /**
