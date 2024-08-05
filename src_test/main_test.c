@@ -6,7 +6,7 @@
 /*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/06 12:05:14 by aschenk           #+#    #+#             */
-/*   Updated: 2024/08/05 11:54:53 by aschenk          ###   ########.fr       */
+/*   Updated: 2024/08/05 15:46:30 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,7 @@ int	main(int argc, char **argv, char **envp)
 				&& parse_tokens(&data))
 				{
 					printf("expanded input: %s\n", data.input);
+					printf("before parsing -- exit status: %d\n", data.exit_status);
 					parsing(&data);
 					//if (parsing(&data)) // Checking if the input matches any of the builtins.
 						//init_exec(&data);
@@ -80,7 +81,7 @@ int	main(int argc, char **argv, char **envp)
 		// Maybe as a check completely in the end, if nothing else worked, we can mimic the "Command <some_command> not found"?
 		print_token_list(data.tok.tok_lst); // TESTING ONLY
 		data.exit_status = errno; // update exit status
-		//printf("exit status: %d\n", data.exit_status);
+		printf("after parsing -- exit status: %d\n", data.exit_status);
 		free_data(&data, 0); // why exit status hardcoded here? In what instances are
 	}
 }

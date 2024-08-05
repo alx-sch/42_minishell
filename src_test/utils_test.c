@@ -6,7 +6,7 @@
 /*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/10 16:51:05 by aschenk           #+#    #+#             */
-/*   Updated: 2024/08/01 10:56:56 by aschenk          ###   ########.fr       */
+/*   Updated: 2024/08/05 19:24:13 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,8 +30,8 @@ space, tab, newline, vertical tab, form feed, or carriage return.
 
  @param c The character to check.
 
- @return `1` if the character is one of the whitespace characters.
- 		 `0` otherwise.
+ @return	`1` if the character is one of the whitespace characters.
+ 			`0` otherwise.
 */
 int	is_whitespace(int c)
 {
@@ -47,8 +47,8 @@ with additional formatting applied.
 The actual error description is obtained using `perror`, which
 appends a system-generated message based on the current `errno`.
 
- @param msg The error message to be printed. This should be a
-			descriptive string about the error that occurred.
+ @param msg 	The error message to be printed. This should be a
+				descriptive string about the error that occurred.
 */
 void	print_err_msg(char *msg)
 {
@@ -62,8 +62,8 @@ Prints formatted error message with leading ERR_PREFIX.
 The actual error description is obtained using `perror`, which
 appends a system-generated message based on the current `errno`.
 
- @param msg The error message to be printed. This should be a
-			descriptive string about the error that occurred.
+ @param msg 	The error message to be printed. This should be a
+				descriptive string about the error that occurred.
 */
 void	print_err_msg_prefix(char *msg)
 {
@@ -78,10 +78,10 @@ Prints an error message to the standard error stream (stderr),
 with additional formatting applied. Prints custom error messages
 not covered by an errno, thus does not use perror().
 
- @param msg The error message to be printed. This should be a
-			descriptive string about the error that occurred.
- @param print_newline Flag to print the newline character after
-					  the error message (`0` does not, otherwise does).
+ @param msg 			The error message to be printed. This should be a
+						descriptive string about the error that occurred.
+ @param print_newline 	Flag to print the newline character after
+						the error message (`0` does not, otherwise does).
 */
 void	print_err_msg_custom(char *msg, unsigned int print_newline)
 {
@@ -94,7 +94,7 @@ void	print_err_msg_custom(char *msg, unsigned int print_newline)
 }
 
 // Function to print the list of tokens
-// FOR TESTING ONLY
+// FOR TESTING ONLY; use `print_token_list(data.tok.tok_lst)` in main().
 void	print_token_list(t_list *lst)
 {
 	while (lst)

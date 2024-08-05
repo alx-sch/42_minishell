@@ -6,7 +6,7 @@
 /*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/31 17:40:14 by aschenk           #+#    #+#             */
-/*   Updated: 2024/08/01 06:26:49 by aschenk          ###   ########.fr       */
+/*   Updated: 2024/08/05 19:33:14 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,14 +74,14 @@ of type `t_token` is stored in a `t_list` node via the 'content' member
 (of type void*), using the ft_lstnew() function.
 
 Fields:
-- tok [t_token*]:	The current token being processed, containing its type,
-					lexeme, and position.
+- tok [t_token*]:		The current token being processed, containing its type,
+						lexeme, and position.
 - new_node [t_list*]:	Pointer to the new node to be added to the token list,
 						created from the current token.
 - tok_lst [t_list*]:	Pointer to the head of the linked list of tokens, which
 						stores all tokens parsed from the input.
-- tmp [char*]:	Substring to extract content for OTHER tokens.
-- quote [char]:	Saves encountered quotation symbols.
+- tmp [char*]:			Substring to extract content for OTHER tokens.
+- quote [char]:			Saves encountered quotation symbols.
 */
 typedef struct s_tok
 {
@@ -158,11 +158,11 @@ to operate, including command-line arguments, environment variables, user input,
 token management, and built-in command states.
 
 Fields:
-- argc [int]:		Number of arguments given to minishell.
-- argv [char**]:	An array of argument variables passed to minishell.
-- envp [char**]:	An array containing the initial state of the environment
-					variables.
-- input [char*]:	User input entered into the prompt.
+- argc [int]:			Number of arguments given to minishell.
+- argv [char**]:		An array of argument variables passed to minishell.
+- envp [char**]:		An array containing the initial state of the environment
+						variables.
+- input [char*]:		User input entered into the prompt.
 - pipe_nr [int]:		The number of pipes in the current command.
 - exit_status [unsigned int]:	The exit status of the last executed command.
 - tok [t_tok]:			Manages token status and holds the linked list of tokens.

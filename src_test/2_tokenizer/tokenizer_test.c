@@ -6,7 +6,7 @@
 /*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 16:59:48 by aschenk           #+#    #+#             */
-/*   Updated: 2024/08/01 14:57:42 by aschenk          ###   ########.fr       */
+/*   Updated: 2024/08/05 19:14:43 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,13 +55,13 @@ The token contains information about its type, lexeme, and position.
 If the token creation is successful, the index *i is updated to point to the
 position immediately after the lexeme in the input string.
 
- @param data Pointer to the data structure containing token-related info.
- @param type The type of the token.
- @param lexeme The content of the token (substring of input string)
- @param i Pointer to the current index in the input string.
+ @param data 	Pointer to the data structure containing token-related info.
+ @param type 	The type of the token.
+ @param lexeme 	The content of the token (substring of input string)
+ @param i 		Pointer to the current index in the input string.
 
- @return A pointer to the newly created `t_list` node if successful.
-		 `NULL` if memory allocation or creating the linked list node fails.
+ @return	A pointer to the newly created `t_list` node if successful.
+			`NULL` if memory allocation or creating the linked list node fails.
 */
 t_list	*create_tok(t_data *data, t_token_type type, const char *lexeme, int *i)
 {
@@ -99,10 +99,10 @@ Used in get_tokens().
 Extracts a token from the input string starting at position *i until a
 delimiter is encountered.
 
- @return `0` if memory allocation fails during substring creation or token node
- 		 creation.
-		 `1` if the token is successfully added OR if no token was added as
-		 data->input[*i] is whitespace or is at the end of the input string.
+ @return	`0` if memory allocation fails during substring creation or token
+ 			node creation.
+			`1` if the token is successfully added OR if no token was added as
+			data->input[*i] is whitespace or is at the end of the input string.
 */
 static int	add_other_token(t_data *data, int *i)
 {
@@ -129,7 +129,7 @@ static int	add_other_token(t_data *data, int *i)
 	return (1); // Token added or no token added as *i points to whitespace or '\0'
 }
 
-/*
+/**
 Parses the input string to extract tokens and builds a token list (t_list type).
 
 This function iterates over the input string and extracts tokens based on
@@ -143,8 +143,8 @@ For each token, it creates a new token node and adds it to the token list.
 If a token cannot be created due to a memory allocation failure, the function
 stops processing further tokens.
 
- @return `0` if tokenization failed.
-		 `1` if tokenization was sucessful.
+ @return	`0` if tokenization failed.
+			`1` if tokenization was sucessful.
 */
 int	get_tokens(t_data *data)
 {

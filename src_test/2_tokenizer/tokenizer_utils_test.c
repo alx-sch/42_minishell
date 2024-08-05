@@ -6,7 +6,7 @@
 /*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/15 14:04:08 by aschenk           #+#    #+#             */
-/*   Updated: 2024/07/30 12:58:59 by aschenk          ###   ########.fr       */
+/*   Updated: 2024/08/05 19:15:04 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,11 +48,11 @@ The function first checks if the character is a quotation mark by calling
 is_quotation(), which sets or unsets the quote state in the provided `t_data`
 struct. If a quote is open, delimiters are ignored (as part of quotation).
 
- @param data A pointer to the `t_data` structure.
- @param c The character to check.
+ @param data 	A pointer to the `t_data` structure.
+ @param c 		The character to check.
 
- @return `1` if the character is a delimiter and not within a quotation.
-		 `0` otherwise.
+ @return	`1` if the character is a delimiter and not within a quotation.
+			`0` otherwise.
 */
 int	is_delimiter(t_data *data, const char c)
 {
