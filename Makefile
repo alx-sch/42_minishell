@@ -232,17 +232,6 @@ TEST_FILES :=	main_test.c \
 				3_parser/parser_var_expansion_utils_test.c \
 				3_parser/parser_heredoc_test.c \
 				3_parser/parser_heredoc_utils_test.c \
-				5_execution/errors_test.c \
-				5_execution/execution_prep_test.c \
-				5_execution/execution_test.c \
-				5_execution/execution_utils_test.c \
-				5_execution/free_functions_test.c \
-				5_execution/get_flags_and_command_test.c \
-				5_execution/get_path_test.c \
-				5_execution/init_exec_test.c \
-				5_execution/pipes_test.c \
-				5_execution/redirections_check_test.c \
-				5_execution/redirections_do_test.c \
 				4_builtins/cd_test.c \
 				4_builtins/echo_test.c \
 				4_builtins/env_test.c \
@@ -260,6 +249,18 @@ TEST_FILES :=	main_test.c \
 				4_builtins/standard_functions/count_test.c \
 				4_builtins/standard_functions/free_functions_test.c \
 				4_builtins/standard_functions/modified_standards_test.c \
+				5_execution/errors_test.c \
+				5_execution/execution_prep_test.c \
+				5_execution/execution_test.c \
+				5_execution/execution_utils_test.c \
+				5_execution/free_functions_test.c \
+				5_execution/get_flags_and_command_test.c \
+				5_execution/get_path_test.c \
+				5_execution/init_exec_test.c \
+				5_execution/pipes_test.c \
+				5_execution/redirections_check_test.c \
+				5_execution/redirections_do_test.c \
+				6_signals/signals_test.c
 
 TEST_SRCS :=	$(addprefix $(TEST_DIR)/, $(TEST_FILES))
 TEST_OBJS :=	$(TEST_SRCS:$(TEST_DIR)/%.c=$(OBJS_DIR)/%.o)
