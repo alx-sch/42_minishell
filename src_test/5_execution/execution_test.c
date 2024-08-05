@@ -6,7 +6,7 @@
 /*   By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/30 12:32:53 by nholbroo          #+#    #+#             */
-/*   Updated: 2024/07/31 16:33:47 by nholbroo         ###   ########.fr       */
+/*   Updated: 2024/08/05 18:26:02 by nholbroo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,6 @@ void	execution(t_data *data, t_exec *exec, int position)
 {
 	prep_execution(data, exec, position);
 	execve(exec->current_path, exec->flags, exec->envp_temp_arr);
-	free_exec(exec);
-	free_data(data, 1);
+	exec_errors(data, exec, 4);
 	exit(errno);
 }

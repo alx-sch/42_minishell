@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
+/*   By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/31 19:12:38 by aschenk           #+#    #+#             */
-/*   Updated: 2024/07/31 19:25:52 by aschenk          ###   ########.fr       */
+/*   Updated: 2024/08/05 18:33:14 by nholbroo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,5 +57,6 @@ void	exec_errors(t_data *data, t_exec *exec, int error_code);
 void	conversion_errors(t_data *data, t_exec *exec, int i);
 void	error_incorrect_path(t_data *data, t_exec *exec);
 void	redirections_errors(t_data *data, t_exec *exec, int std);
+void	file_errors(t_data *data, t_exec *exec);
 
 #endif

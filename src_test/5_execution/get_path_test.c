@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_path_test.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
+/*   By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/30 18:58:47 by nholbroo          #+#    #+#             */
-/*   Updated: 2024/07/31 22:20:02 by aschenk          ###   ########.fr       */
+/*   Updated: 2024/08/05 18:36:06 by nholbroo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,11 @@ void	get_correct_path(t_data *data, t_exec *exec)
 	int	i;
 
 	i = 0;
+	if (ft_strchr(exec->cmd, '/'))
+	{
+		exec->current_path = ft_strdup(exec->cmd);
+		return ;
+	}
 	while (exec->all_paths[i])
 	{
 		if (exec->current_path)
