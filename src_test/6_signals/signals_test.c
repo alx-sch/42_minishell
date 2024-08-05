@@ -6,7 +6,7 @@
 /*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/02 18:33:19 by aschenk           #+#    #+#             */
-/*   Updated: 2024/08/04 20:55:11 by aschenk          ###   ########.fr       */
+/*   Updated: 2024/08/05 07:14:39 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,26 @@
 • Handle ctrl-C (SIGINT), ctrl-D and ctrl-\ (SIGQUITwhich should behave like in bash.
 • In interactive mode:
 ◦ ctrl-C (SIGINT): displays a new prompt on a new line.
-◦ ctrl-D exits the shell.
-◦ ctrl-\ does nothing
+◦ ctrl-D exits the shell;  Ctrl+D doesn't send a signal directly; instead,
+it affects the terminal input stream (ASCII 4 char)
+◦ ctrl-\ (SIGQUIT) does nothing
 
+int main()
+{
+    // Set up signal handler
+    struct sigaction sa;
+    sa.sa_handler = handle_sigint_heredoc;
+    sa.sa_flags = SA_RESTART;
+    sigemptyset(&sa.sa_mask);
+    sigaction(SIGINT, &sa, NULL);
+
+    // Handle input
+    handle_input();
+
+    return 0;
+}
 */
+
 
 #include "minishell.h"
 #include <sys/ioctl.h> // Include this header for ioctl and TIOCSTI
@@ -31,7 +47,7 @@ prompt is displayed
 void	handle_sigint(int sig)
 {
 	(void)sig;
-	g_signal= 1;
+	g_signal = 1;
 	rl_replace_line("", 0); // Clear current line
 	printf("\n"); // Print a newline
 	rl_on_new_line(); // Move to new line
@@ -41,13 +57,19 @@ void	handle_sigint(int sig)
 void	handle_sigint_heredoc(int sig)
 {
 	(void)sig;
-	g_signal= 1;
+	g_signal = 1;
 	ioctl(STDIN_FILENO, TIOCSTI, "\n");
 }
 
-void	set_handler(void (*handler)(int))
+void	handle_sigquit(int sig)
 {
-	signal(SIGINT, handler);
+	(void)sig;
+}
+
+void	set_sig_handler(void (*handler_int)(int), void (*handler_quit)(int))
+{
+	signal(SIGINT, handler_int);
+	signal(SIGQUIT, handler_quit);
 }
 
 /**

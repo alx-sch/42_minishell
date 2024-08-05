@@ -6,7 +6,7 @@
 /*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/06 12:05:14 by aschenk           #+#    #+#             */
-/*   Updated: 2024/08/04 21:32:06 by aschenk          ###   ########.fr       */
+/*   Updated: 2024/08/05 07:16:44 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,16 +52,18 @@ int	main(int argc, char **argv, char **envp)
 {
 	t_data	data;
 
+	//rl_catch_signals = 0;
+	//rl_catch_sigwinch = 0;
 	print_logo();
 	init_data_struct(&data, argc, argv, envp);
 	while (1)
 	{
-		set_handler(handle_sigint);
+		set_sig_handler(handle_sigint, handle_sigquit);
 		data.input = readline(PROMPT);
 		if (g_signal)
 			data.exit_status = EOWNERDEAD;
 		g_signal = 0; // reset signal variable for heredoc prompt
-		set_handler(handle_sigint_heredoc);
+		set_sig_handler(handle_sigint_heredoc, handle_sigquit);
 		if (data.input && !is_empty(data.input))
 		{
 			if (!is_whitespace(data.input[0]))
@@ -69,14 +71,14 @@ int	main(int argc, char **argv, char **envp)
 			if (is_quotation_closed(&data) && get_tokens(&data)
 				&& parse_tokens(&data))
 				{
-					printf("expansion: %s\n", data.input);
+					//printf("expansion: %s\n", data.input);
 					parsing(&data);
 					//if (parsing(&data)) // Checking if the input matches any of the builtins.
 						//init_exec(&data);
 						//printf("EXEC\n");
 				}
 		}
-		//print_token_list(data.tok.tok_lst); // TESTING ONLY
+		print_token_list(data.tok.tok_lst); // TESTING ONLY
 		free_data(&data, 0); // why exit status hardcoded here? In what instances are
 		data.exit_status = errno; // update exit status
 	}
