@@ -6,11 +6,30 @@
 /*   By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/13 14:51:02 by nholbroo          #+#    #+#             */
-/*   Updated: 2024/08/06 15:33:53 by nholbroo         ###   ########.fr       */
+/*   Updated: 2024/08/06 16:02:06 by nholbroo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+int	is_builtin(t_exec *exec)
+{
+	if (!ft_strcmp(exec->cmd, "unset") || !ft_strcmp(exec->cmd, "echo")
+		|| !ft_strcmp(exec->cmd, "exit") || !ft_strcmp(exec->cmd, "cd")
+		|| !ft_strcmp(exec->cmd, "export") || !ft_strcmp(exec->cmd, "env")
+		|| !ft_strcmp(exec->cmd, "pwd"))
+		return (1);
+	return (0);
+}
+
+int	is_parent_builtin(t_exec *exec)
+{
+	if (!ft_strcmp(exec->cmd, "cd") || !ft_strcmp(exec->cmd, "unset")
+		|| !ft_strcmp(exec->cmd, "exit") || (!ft_strcmp(exec->cmd, "export")
+			&& exec->flags[1]))
+		return (1);
+	return (0);
+}
 
 // Checking if the input is a builtin command, checks if the arguments are
 // valid and executes the builtin.

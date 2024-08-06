@@ -6,7 +6,7 @@
 /*   By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/26 16:05:17 by nholbroo          #+#    #+#             */
-/*   Updated: 2024/08/06 15:07:06 by nholbroo         ###   ########.fr       */
+/*   Updated: 2024/08/06 16:12:18 by nholbroo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,11 @@ void	print_echo(t_exec *exec, bool print_newline)
 	if (print_newline)
 		str = 1;
 	while (exec->flags[str])
+	{
 		printf("%s", exec->flags[str++]);
+		if (exec->flags[str])
+			printf(" ");
+	}
 	if (print_newline)
 		printf("\n");
 }

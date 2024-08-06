@@ -6,7 +6,7 @@
 /*   By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/13 14:41:46 by nholbroo          #+#    #+#             */
-/*   Updated: 2024/08/06 15:08:46 by nholbroo         ###   ########.fr       */
+/*   Updated: 2024/08/06 15:55:55 by nholbroo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,6 @@ int	pwd(t_exec *exec)
 	{
 		if (exec->flags[1][0] == '-')
 			pwd_invalid_option(exec->flags[1], 0);
-		return (1);
 	}
 	if (getcwd(cwd, sizeof(cwd))) // Checking that getcwd-function works. It is used to find current working directory.
 		printf("%s\n", cwd); // Printing the current working directory.

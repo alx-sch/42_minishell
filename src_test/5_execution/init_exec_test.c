@@ -6,7 +6,7 @@
 /*   By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/24 12:15:35 by nholbroo          #+#    #+#             */
-/*   Updated: 2024/08/06 15:18:57 by nholbroo         ###   ########.fr       */
+/*   Updated: 2024/08/06 15:54:48 by nholbroo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,6 +92,33 @@ void	reset_exec(t_exec *exec)
 	}
 }
 
+// void	only_builtin_redir(t_data *data, t_exec *exec)
+// {
+// 	pid_t	pid;
+// 	int		*stat_loc;
+
+// 	stat_loc = NULL;
+// 	check_redirections(data, exec, 0);
+// 	if (exec->redir_in || exec->redir_out || exec->append_out)
+// 	{
+// 		pid = fork();
+// 		if (!pid)
+// 		{
+// 			redirections(data, exec);
+// 			exit(0);
+// 		}
+// 		else
+// 		{
+// 			if (waitpid(pid, stat_loc, 0) == -1)
+// 			{
+// 				free_exec(exec);
+// 				free_data(data, 1);
+// 				exit(errno);
+// 			}
+// 		}
+// 	}
+// }
+
 /*Initializes the exec struct. Allocates memory for an int array that will store
 the pid's of the child processes.*/
 void	init_exec(t_data *data)
@@ -114,8 +141,9 @@ void	init_exec(t_data *data)
 	if (data->pipe_nr == 0)
 	{
 		get_flags_and_command(data, exec, 0);
-		if (builtin(data, exec))
+		if (is_parent_builtin(exec))
 		{
+			builtin(data, exec);
 			free_exec(exec);
 			return ;
 		}

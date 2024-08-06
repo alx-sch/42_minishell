@@ -6,7 +6,7 @@
 /*   By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/31 17:09:56 by aschenk           #+#    #+#             */
-/*   Updated: 2024/08/06 15:29:13 by nholbroo         ###   ########.fr       */
+/*   Updated: 2024/08/06 15:59:01 by nholbroo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,8 @@ Declarations for built-in minishell commands and their utility functions:
 
 // Builtins:
 
+int				is_parent_builtin(t_exec *exec);
+int				is_builtin(t_exec *exec);
 int				builtin(t_data *data, t_exec *exec);
 int				cd(t_data *data, t_exec *exec);
 int				pwd(t_exec *exec);
