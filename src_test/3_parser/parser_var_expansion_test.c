@@ -6,7 +6,7 @@
 /*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 22:40:57 by aschenk           #+#    #+#             */
-/*   Updated: 2024/08/05 19:17:38 by aschenk          ###   ########.fr       */
+/*   Updated: 2024/08/06 17:27:35 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,7 @@ Variable names are delimited by:
 - Whitespace or the null terminator
 - Another '$' character
 - The '?' character
+- Single or double quotation symbol (' & ")
 
 If the variable is the special case '$?', the function returns a string
 containing "?".
@@ -75,7 +76,7 @@ static char	*get_var_name(char *str, int i)
 	}
 	var_end = var_start;
 	while (*var_end && !is_whitespace(*var_end) && *var_end != '$'
-		&& *var_end != '?')
+		&& *var_end != '?' && *var_end != '\'' && *var_end != '\"')
 		var_end++; // find the end of the variable name
 	var_len = var_end - var_start;
 	var_name = malloc(var_len + 1); // +1 for null terminator
