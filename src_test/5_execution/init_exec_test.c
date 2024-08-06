@@ -6,7 +6,7 @@
 /*   By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/24 12:15:35 by nholbroo          #+#    #+#             */
-/*   Updated: 2024/08/06 15:54:48 by nholbroo         ###   ########.fr       */
+/*   Updated: 2024/08/06 16:34:47 by nholbroo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,32 +92,22 @@ void	reset_exec(t_exec *exec)
 	}
 }
 
-// void	only_builtin_redir(t_data *data, t_exec *exec)
-// {
-// 	pid_t	pid;
-// 	int		*stat_loc;
-
-// 	stat_loc = NULL;
-// 	check_redirections(data, exec, 0);
-// 	if (exec->redir_in || exec->redir_out || exec->append_out)
-// 	{
-// 		pid = fork();
-// 		if (!pid)
-// 		{
-// 			redirections(data, exec);
-// 			exit(0);
-// 		}
-// 		else
-// 		{
-// 			if (waitpid(pid, stat_loc, 0) == -1)
-// 			{
-// 				free_exec(exec);
-// 				free_data(data, 1);
-// 				exit(errno);
-// 			}
-// 		}
-// 	}
-// }
+void	check_file_exist_parent(t_data *data, t_exec *exec)
+{
+	if (exec->redir_in)
+	{
+		if (access(exec->infile, F_OK) == -1)
+			redirections_errors(data, exec, 0, 1);
+	}
+	if (exec->redir_out)
+	{
+		if (access(exec->outfile, F_OK == -1))
+		{
+			if (open(exec->outfile, O_CREAT) == -1)
+				redirections_errors(data, exec, 1, 1);
+		}
+	}
+}
 
 /*Initializes the exec struct. Allocates memory for an int array that will store
 the pid's of the child processes.*/
@@ -143,6 +133,8 @@ void	init_exec(t_data *data)
 		get_flags_and_command(data, exec, 0);
 		if (is_parent_builtin(exec))
 		{
+			check_redirections(data, exec, 0);
+			check_file_exist_parent(data, exec);
 			builtin(data, exec);
 			free_exec(exec);
 			return ;
