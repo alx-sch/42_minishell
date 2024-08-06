@@ -3,35 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   cd_test.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
+/*   By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/13 13:51:10 by nholbroo          #+#    #+#             */
-/*   Updated: 2024/08/01 10:58:27 by aschenk          ###   ########.fr       */
+/*   Updated: 2024/08/06 15:20:21 by nholbroo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-// Checks if input is "cd". Ignores whitespaces in the beginning/end.
-//
-// Returns 0 upon error (e.g. "cdd" instead of "cd").
-// Returns 1 upon success.
-// NB! SOME WEIRD ERROR HERE IF YOU TYPE ONLY "c".
-int	is_cd(char *input)
-{
-	int	i;
-
-	i = 0;
-	while (input[i] && is_whitespace(input[i])) // Skipping whitespaces in the beginning
-		i++;
-	if (input[i] && input[i++] != 'c') // Hard-checking for "cd"
-		return (0);
-	if (input[i] && input[i++] != 'd')
-		return (0);
-	if (input[i] && !is_whitespace(input[i])) // Only accepting a space after "cd" -> e.g. "cd /". Would not accept "cdd".
-		return (0);
-	return (1);
-}
 
 // Changes current working directory to parent directory ("cd ..").
 // Throws an error if memory allocation fails or something goes wrong with
@@ -91,15 +70,15 @@ static void	cd_to_home_user(t_cd **cd, t_env *envp_temp)
 // Otherwise moves on to change to a defined subdirectory.
 //
 // Throws an error if the defined subdirectory doesn't exist.
-void	cd_one_down(t_cd **cd, char *cwd)
+void	cd_one_down(t_cd **cd, char *cwd, t_exec *exec)
 {
 	char	*input;
 
-	if (chdir((*cd)->component[1]) == 0) // If it is an absolute path, then return.
+	if (chdir(exec->flags[1]) == 0) // If it is an absolute path, then return.
 		return ;
 	if (!cwd) // If cwd was actually NULL after getcwd-call.
 		return ;
-	input = ft_strjoin("/", (*cd)->component[1]); // Add a '/' in front of the input directory, to make it valid.
+	input = ft_strjoin("/", exec->flags[1]); // Add a '/' in front of the input directory, to make it valid.
 	if (!input) // Protecting the malloc.
 		print_error_cd(1, cd);
 	(*cd)->subdirectory = ft_strjoin(cwd, input); // Creating the new path by concatening the input directory to the current one.
@@ -126,29 +105,29 @@ void	cd_one_down(t_cd **cd, char *cwd)
 // -Go to root ("cd /" or even "cd ///////////").
 // -Go to subdirectory (type "cd" followed by a subdirectory or press tab-key
 // to see a list of different available subdirectories.)
-int	cd(char *input, t_env *envp_temp)
+int	cd(t_data *data, t_exec *exec)
 {
 	char		cwd[4096];
 	t_cd		*cd;
 
 	cd = NULL;
-	init_cd_struct(&cd, input);
-	if (count_array_length(cd->component) > 2)
+	init_cd_struct(&cd);
+	if (count_array_length(exec->flags) > 2)
 		return (too_many_args_cd(&cd));
 	if (!getcwd(cwd, sizeof(cwd))) // Get the current working directory.
 		print_err_msg_prefix("cd");
-	if (cd->component[1] == NULL) // If "cd" is the only input, without any components.
-		cd_to_home_user(&cd, envp_temp); // Changing directory to /home/user.
-	else if (!ft_strcmp(cd->component[1], "~")) // If "cd ~" is the only input.
-		cd_to_home_user(&cd, envp_temp); // Changing directory to /home/user.
-	else if (is_only_duplicates(cd->component[1], '/')) // If "cd /" is the only input.
+	if (exec->flags[1] == NULL) // If "cd" is the only input, without any components.
+		cd_to_home_user(&cd, data->envp_temp); // Changing directory to /home/user.
+	else if (!ft_strcmp(exec->flags[1], "~")) // If "cd ~" is the only input.
+		cd_to_home_user(&cd, data->envp_temp); // Changing directory to /home/user.
+	else if (is_only_duplicates(exec->flags[1], '/')) // If "cd /" is the only input.
 	{
 		if (chdir("/") == -1) // Changing directory to root.
 			print_error_cd(2, &cd);
 	}
-	else if (!ft_strcmp(cd->component[1], "..")) // If "cd .." is the only input.
+	else if (!ft_strcmp(exec->flags[1], "..")) // If "cd .." is the only input.
 		cd_one_up(&cd, cwd); // Changes the working directory to its parent directory.
 	else // If "cd" is followed by a path, change to that relative or absolute path.
-		cd_one_down(&cd, cwd); // Changes the working directory to a subdirectory or an absolute path.
+		cd_one_down(&cd, cwd, exec); // Changes the working directory to a subdirectory or an absolute path.
 	return (free_cd_struct(&cd)); // Freeing the struct.
 }

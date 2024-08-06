@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_exec_test.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
+/*   By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/24 12:15:35 by nholbroo          #+#    #+#             */
-/*   Updated: 2024/07/31 22:20:28 by aschenk          ###   ########.fr       */
+/*   Updated: 2024/08/06 15:18:57 by nholbroo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,26 +44,27 @@ static void	create_child_processes(t_data *data, t_exec *exec)
 	pid_t	pid;
 	int		*stat_loc;
 	t_list	*current;
+	t_token	*token;
 
 	stat_loc = NULL;
 	current = (t_list *)data->tok.tok_lst;
-	data->tok.tok = (t_token *)current->content;
+	token = (t_token *)current->content;
 	while (exec->curr_child < data->pipe_nr + 1)
 	{
 		create_pipe(data, exec);
 		pid = fork(); // Remember to protect!
 		if (!pid)
-			execution(data, exec, data->tok.tok->position);
+			execution(data, exec, token->position);
 		handle_pipe_in_parent(data, exec);
 		exec->child->nbr[exec->curr_child++] = pid;
-		while (data->tok.tok->type != PIPE && current)
+		while (token->type != PIPE && current)
 		{
 			current = current->next;
 			if (current)
-				data->tok.tok = (t_token *)current->content;
+				token = (t_token *)current->content;
 		}
 		if (current && current->next)
-			data->tok.tok = (t_token *)current->next->content;
+			token = (t_token *)current->next->content;
 	}
 	close_pipe_in_parent(data, exec);
 	if (waitpid(pid, stat_loc, 0) == -1)
@@ -74,14 +75,29 @@ static void	create_child_processes(t_data *data, t_exec *exec)
 	}
 }
 
+void	reset_exec(t_exec *exec)
+{
+	exec->count_flags = 0;
+	exec->cmd_found = 0;
+	exec->first = 1;
+	if (exec->cmd)
+	{
+		free(exec->cmd);
+		exec->cmd = NULL;
+	}
+	if (exec->flags)
+	{
+		ft_freearray(exec->flags);
+		exec->flags = NULL;
+	}
+}
+
 /*Initializes the exec struct. Allocates memory for an int array that will store
 the pid's of the child processes.*/
 void	init_exec(t_data *data)
 {
 	t_exec	*exec;
-	// int		i;
 
-	// i = 0;
 	exec = malloc(sizeof(t_exec));
 	if (!exec)
 		exec_errors(data, exec, 1);
@@ -95,6 +111,17 @@ void	init_exec(t_data *data)
 		exec->child->nbr = malloc(sizeof(pid_t) * (data->pipe_nr + 2));
 	if (!exec->child->nbr)
 		exec_errors(data, exec, 1);
+	if (data->pipe_nr == 0)
+	{
+		get_flags_and_command(data, exec, 0);
+		if (builtin(data, exec))
+		{
+			free_exec(exec);
+			return ;
+		}
+		else
+			reset_exec(exec);
+	}
 	create_child_processes(data, exec);
 	free_exec(exec);
 }

@@ -6,7 +6,7 @@
 /*   By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/30 14:06:04 by nholbroo          #+#    #+#             */
-/*   Updated: 2024/08/05 19:04:42 by nholbroo         ###   ########.fr       */
+/*   Updated: 2024/08/06 13:06:13 by nholbroo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,8 @@
 redirected to. 
 3. Extracts the command and its flags and stores the command in a string and 
 the command + flags in an array.
-4. Gets all the paths from the newly created envp_temp-array.
+4. Gets all the paths from the newly created envp_temp-array, if path is not
+defined in the command-input.
 5. Finds the correct path for the executable.*/
 void	prep_execution(t_data *data, t_exec *exec, int position)
 {

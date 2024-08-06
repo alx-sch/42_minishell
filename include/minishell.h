@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
+/*   By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/06 12:08:35 by aschenk           #+#    #+#             */
-/*   Updated: 2024/08/05 11:32:33 by aschenk          ###   ########.fr       */
+/*   Updated: 2024/08/06 15:21:01 by nholbroo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,16 +82,5 @@ void	print_token_list(t_list *lst); // TESTING ONLY
 void	del_token(void *content);
 void	free_unlinked_token(t_data *data);
 void	free_data(t_data *data, bool exit);
-
-// Parsing builtins:
-
-int		parsing(t_data *data);
-int		is_pwd(char *input);
-int		is_cd(char *input);
-int		is_exit(t_data *data);
-int		is_env(char *input);
-int		is_unset(char *input);
-int		is_export(char *input);
-int		is_echo(char *input);
 
 #endif

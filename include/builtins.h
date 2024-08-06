@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtins.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
+/*   By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/31 17:09:56 by aschenk           #+#    #+#             */
-/*   Updated: 2024/07/31 23:51:25 by aschenk          ###   ########.fr       */
+/*   Updated: 2024/08/06 15:29:13 by nholbroo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,13 +23,15 @@ Declarations for built-in minishell commands and their utility functions:
 
 // Builtins:
 
-int				cd(char *input, t_env *envp_temp);
-void			pwd(void);
-void			env(t_env *env_temp);
-void			unset(char *input, t_env **envp_temp);
-unsigned int	exit_with_code(t_data *data);
-void			export(t_data *data);
-void			minishell_echo(t_data *data);
+int				builtin(t_data *data, t_exec *exec);
+int				cd(t_data *data, t_exec *exec);
+int				pwd(t_exec *exec);
+int				env(t_exec *exec, t_env *env_temp);
+int				unset(t_exec *exec, t_env **envp_temp);
+int				is_exit(t_data *data, t_exec *exec);
+unsigned int	exit_with_code(t_data *data, t_exec *exec);
+int				export(t_data *data, t_exec *exec);
+int				minishell_echo(t_exec *exec);
 
 // Butiltins utils:
 
@@ -49,7 +51,7 @@ int				is_letter(char c);
 // Errors:
 
 void			print_error_cd(int error_code, t_cd **cd);
-void			print_error_exit(t_data *data);
+void			print_error_exit(t_data *data, t_exec *exec);
 int				env_error_messages(char *input, int i);
 void			mem_alloc_fail_env(t_env **head);
 void			exit_check_argc(t_data *data);

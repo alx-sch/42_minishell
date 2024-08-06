@@ -6,7 +6,7 @@
 /*   By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/06 12:05:14 by aschenk           #+#    #+#             */
-/*   Updated: 2024/08/05 18:59:36 by nholbroo         ###   ########.fr       */
+/*   Updated: 2024/08/06 15:03:05 by nholbroo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,18 +70,18 @@ int	main(int argc, char **argv, char **envp)
 			if (is_quotation_closed(&data) && get_tokens(&data)
 				&& parse_tokens(&data))
 				{
-					printf("expanded input: %s\n", data.input);
-					printf("before parsing -- exit status: %d\n", data.exit_status);
-					parsing(&data);
+					//printf("expanded input: %s\n", data.input);
+					//printf("before parsing -- exit status: %d\n", data.exit_status);
+				//	parsing(&data);
 					//if (parsing(&data)) // Checking if the input matches any of the builtins.
 						init_exec(&data);
 						//printf("EXEC\n");
 				}
 		}
 		// Maybe as a check completely in the end, if nothing else worked, we can mimic the "Command <some_command> not found"?
-		print_token_list(data.tok.tok_lst); // TESTING ONLY
+		//print_token_list(data.tok.tok_lst); // TESTING ONLY
 		data.exit_status = errno; // update exit status
-		printf("after parsing -- exit status: %d\n", data.exit_status);
+		//printf("after parsing -- exit status: %d\n", data.exit_status);
 		free_data(&data, 0); // why exit status hardcoded here? In what instances are
 	}
 }
