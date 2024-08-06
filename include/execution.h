@@ -6,7 +6,7 @@
 /*   By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/31 19:12:38 by aschenk           #+#    #+#             */
-/*   Updated: 2024/08/06 16:33:12 by nholbroo         ###   ########.fr       */
+/*   Updated: 2024/08/06 16:55:33 by nholbroo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ void	execution(t_data *data, t_exec *exec, int position);
 
 // 3_Exeuction_prep:
 
-void	init_exec(t_data *data);
+int		init_exec(t_data *data);
 int		count_env_list(t_data *data);
 void	conv_env_tmp_to_arr(t_data *data, t_exec *exec);
 void	move_current_and_update_token(t_list **current, t_token **token);
@@ -52,7 +52,7 @@ void	redirections(t_data *data, t_exec *exec);
 
 // 3_Execution_freeing_functions:
 void	free_children(t_child *child);
-void	free_exec(t_exec *exec);
+int		free_exec(t_exec *exec);
 
 // 3_Execution_errors:
 

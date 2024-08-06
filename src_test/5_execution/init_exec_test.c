@@ -6,7 +6,7 @@
 /*   By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/24 12:15:35 by nholbroo          #+#    #+#             */
-/*   Updated: 2024/08/06 16:47:35 by nholbroo         ###   ########.fr       */
+/*   Updated: 2024/08/06 16:56:09 by nholbroo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,9 +109,18 @@ void	check_file_exist_parent(t_data *data, t_exec *exec)
 	}
 }
 
+static int	execution_only_in_parent(t_data *data, t_exec *exec)
+{
+	check_redirections(data, exec, 0);
+	check_file_exist_parent(data, exec);
+	builtin(data, exec);
+	free_exec(exec);
+	return (0);
+}
+
 /*Initializes the exec struct. Allocates memory for an int array that will store
 the pid's of the child processes.*/
-void	init_exec(t_data *data)
+int	init_exec(t_data *data)
 {
 	t_exec	*exec;
 
@@ -132,16 +141,10 @@ void	init_exec(t_data *data)
 	{
 		get_flags_and_command(data, exec, 0);
 		if (is_parent_builtin(exec))
-		{
-			check_redirections(data, exec, 0);
-			check_file_exist_parent(data, exec);
-			builtin(data, exec);
-			free_exec(exec);
-			return ;
-		}
+			return (execution_only_in_parent(data, exec));
 		else
 			reset_exec(exec);
 	}
 	create_child_processes(data, exec);
-	free_exec(exec);
+	return (free_exec(exec));
 }
