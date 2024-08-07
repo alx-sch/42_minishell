@@ -6,7 +6,7 @@
 /*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 22:40:57 by aschenk           #+#    #+#             */
-/*   Updated: 2024/08/07 12:30:01 by aschenk          ###   ########.fr       */
+/*   Updated: 2024/08/07 13:13:11 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,16 +26,15 @@ int	expand_variables(char **str, t_data *data);
 Used in expand_variables().
 
 Checks if a valid variable is encountered at position `i` in the string `str`.
-A valid variable is identified by a '$' character that is not followed by
-whitespace, the null terminator, or another '$' character.
+A valid variable is identified by a '$' character that is followed by at least
+one alphanumerical character.
 
  @return	`1` if a valid variable is encountered.
 			`0` if no valid variable is encountered.
 */
 static int	is_variable(char *str, int i)
 {
-	if (str[i] == '$' && str[i + 1] != '\0' && is_whitespace(str[i + 1]) != 1
-		&& str[i + 1] != '$') // '$$' is a special variable not considered, thus not interpreted as variable (is escaped)
+	if (str[i] == '$' && ft_isalnum(str[i + 1]))
 		return (1);
 	else
 		return (0);
