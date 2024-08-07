@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free_functions_test.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
+/*   By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/30 12:31:04 by nholbroo          #+#    #+#             */
-/*   Updated: 2024/07/31 22:19:06 by aschenk          ###   ########.fr       */
+/*   Updated: 2024/08/06 16:55:23 by nholbroo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ void	free_children(t_child *child)
 }
 
 /*Frees all allocated memory in the exec-struct.*/
-void	free_exec(t_exec *exec)
+int	free_exec(t_exec *exec)
 {
 	if (exec)
 	{
@@ -51,4 +51,5 @@ void	free_exec(t_exec *exec)
 			free(exec->outfile);
 		free(exec);
 	}
+	return (0);
 }

@@ -6,13 +6,13 @@
 /*   By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/30 12:32:25 by nholbroo          #+#    #+#             */
-/*   Updated: 2024/08/05 18:41:11 by nholbroo         ###   ########.fr       */
+/*   Updated: 2024/08/06 16:32:05 by nholbroo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	redirections_errors(t_data *data, t_exec *exec, int std)
+void	redirections_errors(t_data *data, t_exec *exec, int std, int parent)
 {
 	ft_putstr_fd(ERR_PREFIX, 2);
 	if (!std)
@@ -21,9 +21,12 @@ void	redirections_errors(t_data *data, t_exec *exec, int std)
 		ft_putstr_fd(exec->outfile, 2);
 	ft_putstr_fd(": ", 2);
 	perror("");
-	free_exec(exec);
-	free_data(data, 1);
-	exit(errno);
+	if (!parent)
+	{
+		free_exec(exec);
+		free_data(data, 1);
+		exit(errno);
+	}
 }
 
 /*Prints an error message an exits the process if the command is not found*/

@@ -217,7 +217,6 @@ TEST_DIR :=		src_test
 TEST_FILES :=	main_test.c \
 				free_test.c \
 				utils_test.c \
-				parsing/parsing_test.c \
 				0_init/init_cd_test.c \
 				0_init/init_data_test.c \
 				0_init/init_env_test.c \
@@ -232,6 +231,7 @@ TEST_FILES :=	main_test.c \
 				3_parser/parser_var_expansion_utils_test.c \
 				3_parser/parser_heredoc_test.c \
 				3_parser/parser_heredoc_utils_test.c \
+				4_builtins/builtin_test.c \
 				4_builtins/cd_test.c \
 				4_builtins/echo_test.c \
 				4_builtins/env_test.c \

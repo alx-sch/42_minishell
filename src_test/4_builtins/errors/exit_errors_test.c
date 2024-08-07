@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit_errors_test.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
+/*   By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/24 11:48:41 by nholbroo          #+#    #+#             */
-/*   Updated: 2024/08/01 11:27:34 by aschenk          ###   ########.fr       */
+/*   Updated: 2024/08/06 14:09:50 by nholbroo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ void	exit_check_argc(t_data *data)
 
 /*Prints an error message when the exit command is used, if the argument is
 not numerical*/
-void	print_error_exit(t_data *data)
+void	print_error_exit(t_data *data, t_exec *exec)
 {
 	char	*tmp_error_msg;
 	char	*full_error_msg;
@@ -67,6 +67,7 @@ void	print_error_exit(t_data *data)
 	print_err_msg_custom(full_error_msg, 0);
 	free(tmp_error_msg);
 	free(full_error_msg); // Frees the error_msg - string.
+	free_exec(exec);
 	free_data(data, 1);
 	exit(ENOENT);
 }

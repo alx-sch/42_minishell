@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   types.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
+/*   By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/31 17:40:14 by aschenk           #+#    #+#             */
-/*   Updated: 2024/08/05 19:33:14 by aschenk          ###   ########.fr       */
+/*   Updated: 2024/08/06 12:49:02 by nholbroo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,7 +101,6 @@ typedef struct s_cd
 	char	*subdirectory;
 	char	*home_user;
 	char	*parentdirectory;
-	char	**component;
 }	t_cd;
 
 typedef struct s_env

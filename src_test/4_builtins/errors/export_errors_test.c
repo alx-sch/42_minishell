@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   export_errors_test.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
+/*   By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/24 12:11:29 by nholbroo          #+#    #+#             */
 /*   Updated: 2024/08/07 12:32:00 by aschenk          ###   ########.fr       */
@@ -55,7 +55,7 @@ invalid option, e.g. "export -b", and the other one in case of invalid
 identifier, e.g. "export ds-d"*/
 int	export_err_invalid_option(char *input, int i)
 {
-	if (input[i] == '-' && is_whitespace(input[i - 1]))
+	if (input[i] == '-')
 	{
 		print_exp_err_invalid_option(input, i);
 		return (0);

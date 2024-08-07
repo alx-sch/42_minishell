@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pwd_test.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
+/*   By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/13 14:41:46 by nholbroo          #+#    #+#             */
-/*   Updated: 2024/08/01 12:08:55 by aschenk          ###   ########.fr       */
+/*   Updated: 2024/08/06 15:55:55 by nholbroo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,12 +41,18 @@ int	is_pwd(char *input)
 /*Prints out the current working directory. If something goes wrong, it prints
 an error message with errno set to indicate the error.
 @param cwd "Current working directory"*/
-void	pwd(void)
+int	pwd(t_exec *exec)
 {
 	char	cwd[4096]; // It is hardset to 4096, as it is the max amount of characters allowed in a path.
 
+	if (exec->flags[1])
+	{
+		if (exec->flags[1][0] == '-')
+			pwd_invalid_option(exec->flags[1], 0);
+	}
 	if (getcwd(cwd, sizeof(cwd))) // Checking that getcwd-function works. It is used to find current working directory.
 		printf("%s\n", cwd); // Printing the current working directory.
 	else
 		print_err_msg_prefix("pwd"); // If getcwd fails, this function will print an error.
+	return (1);
 }

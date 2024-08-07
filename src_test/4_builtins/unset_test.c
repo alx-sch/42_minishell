@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   unset_test.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
+/*   By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/19 13:30:29 by nholbroo          #+#    #+#             */
-/*   Updated: 2024/08/01 12:25:30 by aschenk          ###   ########.fr       */
+/*   Updated: 2024/08/06 15:13:55 by nholbroo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,29 +41,20 @@ static void	unset_remove_variable(t_env **current, t_env **envp_temp, char *arg)
 export-list. The function is called twice in the file parsing.c, making sure
 both lists are updated. If no variables are specified or the variable doesn't
 exist, nothing happens.*/
-void	unset(char *input, t_env **envp_temp)
+int	unset(t_exec *exec, t_env **envp_temp)
 {
-	char	**args;
 	t_env	*current;
 	int		i;
 
 	current = *envp_temp;
 	i = 1;
-	args = ft_split(input, ' ');
-	if (!args) // @Busedame: lost memory and still reachables, when ft_split fails
-		unset_err_memalloc_fail(envp_temp);
-	if (!args[i])
-	{
-		ft_freearray(args);
-		return ;
-	}
-	while (args[i])
+	while (exec->flags[i])
 	{
 		current = *envp_temp;
-		unset_remove_variable(&current, envp_temp, args[i]);
+		unset_remove_variable(&current, envp_temp, exec->flags[i]);
 		i++;
 	}
-	ft_freearray(args);
+	return (1);
 }
 
 /*Checking if the input is "unset", ignoring whitespaces before "unset",

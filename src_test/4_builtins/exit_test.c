@@ -6,7 +6,7 @@
 /*   By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/25 10:35:04 by natalierh         #+#    #+#             */
-/*   Updated: 2024/07/23 15:07:12 by nholbroo         ###   ########.fr       */
+/*   Updated: 2024/08/06 15:07:46 by nholbroo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,18 +41,25 @@ static int	check_multiple_signs_exit_code(char *exit_arg)
 // 
 // Returns the defined exit code upon success, (e.g. "exit 123" will return 123
 // as an unsigned int).
-unsigned int	exit_with_code(t_data *data)
+unsigned int	exit_with_code(t_data *data, t_exec *exec)
 {
 	unsigned int	exit_code;
 	char			*exit_arg;
 
-	exit_arg = data->input;
-	while (*exit_arg && (*exit_arg < '0' || *exit_arg > '9') // This loop is skipping the input string until the exit number is getting defined. E.g. "exit     -123".
-		&& *exit_arg != '-' && *exit_arg != '+')
-		exit_arg++;
+	is_exit(data, exec);
+	if (exec->flags[1])
+		exit_arg = exec->flags[1];
+	else
+	{
+		free_exec(exec);
+		free_data(data, 1);
+		printf("exit\n");
+		return (0);
+	}
 	if (check_multiple_signs_exit_code(exit_arg))
-		print_error_exit(data);
+		print_error_exit(data, exec);
 	exit_code = (unsigned int) ft_atoi(exit_arg); // Converting the numeral part of the string to an unsigned int.
+	free_exec(exec);
 	free_data(data, 1);
 	printf("exit\n"); // Prints "exit" on the STOUT.
 	return (exit_code); // Returning the exit code.
@@ -66,29 +73,25 @@ unsigned int	exit_with_code(t_data *data)
 //
 // Returns 0 upon failure.
 // Returns 1 upon success.
-int	is_exit(t_data *data)
+int	is_exit(t_data *data, t_exec *exec)
 {
 	int	i;
 
 	i = 0;
-	while (is_whitespace(data->input[i])) // Skipping all whitespaces in the beginning
+	if (!exec->flags[1])
+		return (1);
+	if (exec->flags[1] && exec->flags[2])
+	{
+		print_err_msg_custom("exit: too many arguments", 1);
+		free_exec(exec);
+		free_data(data, 1);
+		exit(EPERM);
+	}
+	while ((exec->flags[1][i]) && (is_whitespace(exec->flags[1][i]) 
+		|| exec->flags[1][i] == '+' || exec->flags[1][i] == '-' 
+		|| (exec->flags[1][i] >= '0' && exec->flags[1][i] <= '9'))) // Checking if what comes after "exit" is either numerical, '+', '-' or whitespaces. If it's not, then it's not valid.
 		i++;
-	if (data->input[i++] != 'e') // Hard-checking for "exit".
-		return (0);
-	if (data->input[i++] != 'x')
-		return (0);
-	if (data->input[i++] != 'i')
-		return (0);
-	if (data->input[i++] != 't')
-		return (0);
-	if (data->input[i] && !is_whitespace(data->input[i]))
-		return (0);
-	while ((data->input[i]) && (is_whitespace(data->input[i]) 
-		|| data->input[i] == '+' || data->input[i] == '-' 
-		|| (data->input[i] >= '0' && data->input[i] <= '9'))) // Checking if what comes after "exit" is either numerical, '+', '-' or whitespaces. If it's not, then it's not valid.
-		i++;
-	exit_check_argc(data); // Checking if there are more than one argument to the "exit" command -> in that case it prints an error message and exits.
-	if (data->input[i] != '\0') // If something that comes after 'exit' is not whitespace or a number, printing an error message, and exiting the process.
-		print_error_exit(data);
+	if (exec->flags[1][i] != '\0') // If something that comes after 'exit' is not whitespace or a number, printing an error message, and exiting the process.
+		print_error_exit(data, exec);
 	return (1);
 }
