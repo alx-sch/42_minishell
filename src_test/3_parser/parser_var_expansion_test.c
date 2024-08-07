@@ -6,7 +6,7 @@
 /*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 22:40:57 by aschenk           #+#    #+#             */
-/*   Updated: 2024/08/05 19:17:38 by aschenk          ###   ########.fr       */
+/*   Updated: 2024/08/07 14:15:36 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,16 +26,15 @@ int	expand_variables(char **str, t_data *data);
 Used in expand_variables().
 
 Checks if a valid variable is encountered at position `i` in the string `str`.
-A valid variable is identified by a '$' character that is not followed by
-whitespace, the null terminator, or another '$' character.
+A valid variable is identified by a '$' character that is followed by at least
+one alphanumerical character.
 
  @return	`1` if a valid variable is encountered.
 			`0` if no valid variable is encountered.
 */
 static int	is_variable(char *str, int i)
 {
-	if (str[i] == '$' && str[i + 1] != '\0' && is_whitespace(str[i + 1]) != 1
-		&& str[i + 1] != '$') // '$$' is a special variable not considered, thus not interpreted as variable (is escaped)
+	if (str[i] == '$' && ft_isalnum(str[i + 1]))
 		return (1);
 	else
 		return (0);
@@ -45,13 +44,7 @@ static int	is_variable(char *str, int i)
 Used in expand_variables().
 
 This function extracts the variable name following a '$' character.
-Variable names are delimited by:
-- Whitespace or the null terminator
-- Another '$' character
-- The '?' character
-
-If the variable is the special case '$?', the function returns a string
-containing "?".
+Variable names are delimited by any character that is not alphanumerical.
 
  @param str 	The string from which to extract the variable name.
  @param i 		The position in the string where the '$' character is located.
@@ -74,8 +67,7 @@ static char	*get_var_name(char *str, int i)
 		return (var_name);
 	}
 	var_end = var_start;
-	while (*var_end && !is_whitespace(*var_end) && *var_end != '$'
-		&& *var_end != '?')
+	while (ft_isalnum(*var_end))
 		var_end++; // find the end of the variable name
 	var_len = var_end - var_start;
 	var_name = malloc(var_len + 1); // +1 for null terminator
@@ -218,3 +210,62 @@ int	expand_variables(char **str, t_data *data)
 	}
 	return (1);
 }
+
+//////////////////////////////////////////////////
+//////////////////////////////////////////////////
+//////////////////////////////////////////////////
+//////////////////////////////////////////////////
+//////////////////////////////////////////////////
+
+// static bool	is_double_quote(char c) {
+// 	return (c == '"');
+// }
+
+// static bool	is_single_quote(char c) {
+// 	return (c == '\'');
+// }
+
+
+// /**
+//  @param str 		A pointer to the original string containing variables
+//  					to be expanded.
+//  @param env_list 	The environment list containing variable names and their
+//  					corresponding values.
+
+//  @return	`1` if all variables were successfully expanded.
+// 			`0` if an error occurred during memory allocation or if no string was passed.
+//  */
+// int	expand_variables_selective(char **str, t_data *data)
+// {
+// 	char	*var_name;
+// 	int		i;
+// 	bool	inside_single_quotes = false;
+//     bool	inside_double_quotes = false;
+
+// 	i = 0;
+// 	if (!str || !*str)
+// 		return (0);
+// 	while ((*str)[i]) // traverse the string
+// 	{
+// 		// Toggle quote states based on current_char
+//         if (is_double_quote((*str)[i]) && !inside_single_quotes) // when current char is double quote nut not within a single quotatiopn
+// 			inside_double_quotes = !inside_double_quotes; // change status
+//         else if (is_single_quote((*str)[i]) && !inside_double_quotes)
+// 			inside_single_quotes = !inside_single_quotes; // change status
+
+// 		// Only expand variables when inside double quotes
+// 		if (!inside_single_quotes && is_variable(*str, i)) // is str[i] start of valid variable? if so, continue.
+// 		{
+// 			var_name = get_var_name(*str, i); // get the variable name
+// 			if (!var_name || !replace_var_with_val(str, i, var_name, data))
+// 			{
+// 				free(var_name);
+// 				return (0); // malloc fail in get_var_name
+// 			}
+// 			free(var_name);
+// 			i = -1; // reset index to traverse the newly expanded string from start again (to also expand nested variables)
+// 		}
+// 		i++;
+// 	}
+// 	return (1);
+// }

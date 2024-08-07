@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main_test.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/06 12:05:14 by aschenk           #+#    #+#             */
-/*   Updated: 2024/08/06 16:47:48 by nholbroo         ###   ########.fr       */
+/*   Updated: 2024/08/07 12:01:41 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,6 @@ int	main(int argc, char **argv, char **envp)
 	while (1)
 	{
 		set_sig_handler(handle_sigint, handle_sigquit);
-		//printf("data.exit: %d, errno: %d");
 		data.input = readline(PROMPT);
 		if (g_signal)
 			data.exit_status = EOWNERDEAD;
