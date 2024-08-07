@@ -6,7 +6,7 @@
 /*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/24 12:11:29 by nholbroo          #+#    #+#             */
-/*   Updated: 2024/08/01 11:51:16 by aschenk          ###   ########.fr       */
+/*   Updated: 2024/08/07 12:32:00 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@ static void	print_exp_err_invalid_option(char *input, int i)
 	else
 		write(STDERR_FILENO, &input[i], 1);
 	ft_putstr_fd(": invalid option\n", STDERR_FILENO);
+	ft_putstr_fd(RESET, STDERR_FILENO);
 	errno = ENOENT;
 }
 
@@ -45,6 +46,7 @@ static void	print_exp_err_invalid_identifier(char *input, int i)
 	while (input[i] && !is_whitespace(input[i]))
 			write(STDERR_FILENO, &input[i++], 1);
 	ft_putstr_fd("': not a valid identifier\n", STDERR_FILENO);
+	ft_putstr_fd(RESET, STDERR_FILENO);
 	errno = EPERM;
 }
 

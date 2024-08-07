@@ -6,7 +6,7 @@
 /*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/06 12:05:14 by aschenk           #+#    #+#             */
-/*   Updated: 2024/08/06 17:28:23 by aschenk          ###   ########.fr       */
+/*   Updated: 2024/08/07 12:01:41 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ int	main(int argc, char **argv, char **envp)
 				//parsing(&data);
 				if (parsing(&data)) // Checking if the input matches any of the builtins.
 					init_exec(&data);
-				//printf("EXEC\n");
+					//printf("EXEC\n");
 			}
 		}
 		// Maybe as a check completely in the end, if nothing else worked, we can mimic the "Command <some_command> not found"?
