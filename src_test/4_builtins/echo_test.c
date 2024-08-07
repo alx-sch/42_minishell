@@ -6,7 +6,7 @@
 /*   By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/26 16:05:17 by nholbroo          #+#    #+#             */
-/*   Updated: 2024/08/06 16:12:18 by nholbroo         ###   ########.fr       */
+/*   Updated: 2024/08/07 18:17:24 by nholbroo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,5 +45,5 @@ int	minishell_echo(t_exec *exec)
 		print_echo(exec, false);
 	else
 		print_echo(exec, true);
-	return (1);
+	return (0);
 }

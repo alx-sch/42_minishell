@@ -6,7 +6,7 @@
 /*   By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/30 12:32:25 by nholbroo          #+#    #+#             */
-/*   Updated: 2024/08/06 16:32:05 by nholbroo         ###   ########.fr       */
+/*   Updated: 2024/08/07 18:06:50 by nholbroo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ void	redirections_errors(t_data *data, t_exec *exec, int std, int parent)
 	{
 		free_exec(exec);
 		free_data(data, 1);
-		exit(errno);
+		exit(1);
 	}
 }
 
@@ -40,6 +40,7 @@ void	error_incorrect_path(t_data *data, t_exec *exec)
 		ft_putstr_fd("' not found\n", 2);
 		free_exec(exec);
 		free_data(data, 1);
+		errno = EKEYEXPIRED;
 		exit(errno);
 	}
 	free_exec(exec);

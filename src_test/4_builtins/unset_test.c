@@ -6,7 +6,7 @@
 /*   By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/19 13:30:29 by nholbroo          #+#    #+#             */
-/*   Updated: 2024/08/06 15:13:55 by nholbroo         ###   ########.fr       */
+/*   Updated: 2024/08/07 18:27:15 by nholbroo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,35 +54,5 @@ int	unset(t_exec *exec, t_env **envp_temp)
 		unset_remove_variable(&current, envp_temp, exec->flags[i]);
 		i++;
 	}
-	return (1);
-}
-
-/*Checking if the input is "unset", ignoring whitespaces before "unset",
-and not accepting options.*/
-int	is_unset(char *input)
-{
-	int	i;
-
-	i = 0;
-	while (is_whitespace(input[i]))
-		i++;
-	if (input[i++] != 'u')
-		return (0);
-	if (input[i++] != 'n')
-		return (0);
-	if (input[i++] != 's')
-		return (0);
-	if (input[i++] != 'e')
-		return (0);
-	if (input[i++] != 't')
-		return (0);
-	if (input[i] && !is_whitespace(input[i]))
-		return (0);
-	while (input[i] != '\0')
-	{
-		if (!is_whitespace(input[i]))
-			return (unset_err_invalid_option(input, i));
-		i++;
-	}
-	return (1);
+	return (0);
 }

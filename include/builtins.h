@@ -6,7 +6,7 @@
 /*   By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/31 17:09:56 by aschenk           #+#    #+#             */
-/*   Updated: 2024/08/07 16:44:03 by nholbroo         ###   ########.fr       */
+/*   Updated: 2024/08/07 18:51:26 by nholbroo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ int				ft_is_alphanumerical(char **str);
 
 // Errors:
 
-void			print_error_cd(int error_code, t_cd **cd);
+int				print_error_cd(int error_code, t_cd **cd);
 void			print_error_exit(t_data *data, t_exec *exec);
 int				env_error_messages(char *input, int i);
 void			mem_alloc_fail_env(t_env **head);
@@ -68,7 +68,7 @@ void			export_mem_alloc_failure(t_data *data);
 
 int				ft_freearray(char **arr);
 int				too_many_args_cd(t_cd **cd);
-int				free_cd_struct(t_cd **cd);
+int				free_cd_struct(t_cd **cd, int exit_status);
 void			free_env_struct(t_env **head);
 
 #endif

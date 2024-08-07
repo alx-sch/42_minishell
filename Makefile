@@ -250,6 +250,7 @@ TEST_FILES :=	main_test.c \
 				4_builtins/standard_functions/free_functions_test.c \
 				4_builtins/standard_functions/modified_standards_test.c \
 				5_execution/errors_test.c \
+				5_execution/execution_only_parent_test.c \
 				5_execution/execution_prep_test.c \
 				5_execution/execution_test.c \
 				5_execution/execution_utils_test.c \

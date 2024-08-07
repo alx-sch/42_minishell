@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   unset_errors_test.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
+/*   By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/24 12:25:29 by nholbroo          #+#    #+#             */
-/*   Updated: 2024/08/01 12:35:24 by aschenk          ###   ########.fr       */
+/*   Updated: 2024/08/07 18:28:52 by nholbroo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,8 +32,7 @@ int	unset_err_invalid_option(char *input, int i)
 		write(STDERR_FILENO, &input[i + 1], 1);
 		write(STDERR_FILENO, "'\n", 2);
 		ft_putstr_fd(RESET, STDERR_FILENO);
-		errno = ENOENT;
-		return (0);
+		return (1);
 	}
-	return (1);
+	return (0);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd_errors_test.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
+/*   By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/24 11:48:26 by nholbroo          #+#    #+#             */
-/*   Updated: 2024/08/01 10:58:08 by aschenk          ###   ########.fr       */
+/*   Updated: 2024/08/07 18:53:57 by nholbroo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,16 +16,16 @@
 int	too_many_args_cd(t_cd **cd)
 {
 	print_err_msg_custom("cd: too many arguments", 1);
-	free_cd_struct(cd); // Freeing the struct.
+	free_cd_struct(cd, 0); // Freeing the struct.
 	errno = EPERM;
-	return (0);
+	return (errno);
 }
 
 // Prints an error message if there is a memory allocation failure for t_cd
 // struct.
 static void	mem_alloc_fail_cd(t_cd **cd)
 {
-	free_cd_struct(cd); // Freeing the struct.
+	free_cd_struct(cd, 0); // Freeing the struct.
 	print_err_msg_prefix("cd");
 	exit(errno); // Exits with correct errno code. @Busedame: WHY EXIT AT ALL?
 }
@@ -34,7 +34,7 @@ static void	mem_alloc_fail_cd(t_cd **cd)
 // "No such file or directory"-message.
 // @param error_code Error_code = 1 means memory allocation fail, and
 // error_code = 2 means file/directory doesn't exist or similar.
-void	print_error_cd(int error_code, t_cd **cd)
+int	print_error_cd(int error_code, t_cd **cd)
 {
 	char	*error_msg;
 	char	*file_name;
@@ -50,4 +50,5 @@ void	print_error_cd(int error_code, t_cd **cd)
 		mem_alloc_fail_cd(cd); // In the case of a malloc error the process terminates.
 	print_err_msg(error_msg);
 	free(error_msg); // Frees the error_msg - string.
+	return (2);
 }
