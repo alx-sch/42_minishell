@@ -6,7 +6,7 @@
 /*   By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 15:59:31 by nholbroo          #+#    #+#             */
-/*   Updated: 2024/08/07 18:10:43 by nholbroo         ###   ########.fr       */
+/*   Updated: 2024/08/07 18:51:14 by nholbroo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ void	free_env_struct(t_env **head)
 }
 
 /*Frees the memory of a struct of type t_cd. See minishell.h for declaration*/
-int	free_cd_struct(t_cd **cd)
+int	free_cd_struct(t_cd **cd, int exit_status)
 {
 	if (*cd)
 	{
@@ -49,7 +49,7 @@ int	free_cd_struct(t_cd **cd)
 			free((*cd)->home_user);
 		free(*cd);
 	}
-	return (0);
+	return (exit_status);
 }
 
 /*Frees the memory of any char array.*/
