@@ -6,7 +6,7 @@
 /*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/24 22:36:32 by aschenk           #+#    #+#             */
-/*   Updated: 2024/08/05 19:07:37 by aschenk          ###   ########.fr       */
+/*   Updated: 2024/08/07 17:20:22 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,3 +107,67 @@ char	*trim_delimiter(const char *delimiter)
 	trimmed_delim[len - 2] = '\0'; // Null-terminate
 	return (trimmed_delim);
 }
+
+
+// Helper function to determine if a character is a quote
+// bool is_quote(char c) {
+//     return c == '"' || c == '\'';
+// }
+
+// char *trim_delimiter(const char *delimiter)
+// {
+//     if (!delimiter)
+//         return NULL;
+
+//     size_t len = strlen(delimiter);
+//     size_t start = 0;
+//     size_t end = len - 1;
+
+//     // Flags to keep track of whether we're inside a quote
+//     bool in_single_quote = false;
+//     bool in_double_quote = false;
+
+//     // Skip leading quotes
+//     while (start < len && is_quote(delimiter[start]))
+//     {
+//         if (delimiter[start] == '\'') {
+//             if (!in_double_quote)
+//                 in_single_quote = !in_single_quote;
+//         }
+//         else if (delimiter[start] == '"') {
+//             if (!in_single_quote)
+//                 in_double_quote = !in_double_quote;
+//         }
+//         start++;
+//     }
+
+//     // Skip trailing quotes
+//     while (end > start && is_quote(delimiter[end]))
+//     {
+//         if (delimiter[end] == '\'') {
+//             if (!in_double_quote)
+//                 in_single_quote = !in_single_quote;
+//         }
+//         else if (delimiter[end] == '"') {
+//             if (!in_single_quote)
+//                 in_double_quote = !in_double_quote;
+//         }
+//         end--;
+//     }
+
+//     // If end is less than start, it means there are no characters left
+//     if (end < start)
+//         return strdup(""); // Return an empty string
+
+//     // Allocate memory for the new string
+//     size_t new_len = end - start + 1;
+//     char *result = malloc(new_len + 1);
+//     if (!result)
+//         return NULL; // Memory allocation failed
+
+//     // Copy the trimmed content
+//     strncpy(result, delimiter + start, new_len);
+//     result[new_len] = '\0'; // Null-terminate
+
+//     return result;
+// }
