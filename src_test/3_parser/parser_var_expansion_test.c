@@ -6,7 +6,7 @@
 /*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 22:40:57 by aschenk           #+#    #+#             */
-/*   Updated: 2024/08/07 14:15:36 by aschenk          ###   ########.fr       */
+/*   Updated: 2024/08/07 17:36:27 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ one alphanumerical character.
 */
 static int	is_variable(char *str, int i)
 {
-	if (str[i] == '$' && ft_isalnum(str[i + 1]))
+	if (str[i] == '$' && (ft_isalnum(str[i + 1]) || str[i + 1] == '?'))
 		return (1);
 	else
 		return (0);

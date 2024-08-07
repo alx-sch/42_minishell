@@ -6,7 +6,7 @@
 /*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/24 22:36:32 by aschenk           #+#    #+#             */
-/*   Updated: 2024/08/07 14:18:25 by aschenk          ###   ########.fr       */
+/*   Updated: 2024/08/07 16:50:49 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -158,6 +158,7 @@ static int	process_single_heredoc(t_data *data, t_token *current_token,
 	if (next_token->lexeme[0] == '\'' || next_token->lexeme[0] == '\"') // check if delimiter is in quotes
 	{
 		trimmed_delim = trim_delimiter(next_token->lexeme); // trim leading and trailing quote from delimiter
+		printf("trimmed delim: %s\n", trimmed_delim);
 		return_val = handle_heredoc_input_no_expansion(fd, trimmed_delim);
 		free(trimmed_delim);
 	}
