@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/06 12:08:35 by aschenk           #+#    #+#             */
-/*   Updated: 2024/08/06 15:21:01 by nholbroo         ###   ########.fr       */
+/*   Updated: 2024/08/07 21:22:27 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,6 +72,7 @@ extern volatile __sig_atomic_t	g_signal;
 // utils.c
 
 int		is_whitespace(int c);
+int		contains_quotes(const char *str);
 void	print_err_msg(char *msg);
 void	print_err_msg_prefix(char *msg);
 void	print_err_msg_custom(char *msg, unsigned int print_newline);

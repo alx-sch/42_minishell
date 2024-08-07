@@ -6,7 +6,7 @@
 /*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/24 22:36:32 by aschenk           #+#    #+#             */
-/*   Updated: 2024/08/07 19:00:35 by aschenk          ###   ########.fr       */
+/*   Updated: 2024/08/07 20:22:25 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,17 +19,9 @@ creation of heredoc files and processing  heredoc input.
 
 // IN FILE:
 
-void	count_pipes(t_data *data, t_token *node);
 void	trim_newline(char *str);
 char	*get_heredoc(t_data *data);
 int		get_heredoc_fd(t_data *data);
-
-// Increments the pipe counter when a PIPE token is encountered.
-void	count_pipes(t_data *data, t_token *node)
-{
-	if (node->type == PIPE)
-		data->pipe_nr += 1;
-}
 
 /**
 Trims the trailing newline character from a heredoc string.
@@ -84,14 +76,40 @@ int	get_heredoc_fd(t_data *data)
 }
 
 /**
-This function processes a delimiter string by removing any closed single or
-double quotation chars. It ensures that only the 'paired' quotes are removed,
-while preserving any quotes that are nested inside.
+Toggles the state of quote flags based on the current character.
+If the character is a single quote (`'`) and not within a double quote,
+it toggles the `in_single_quote` flag. If the character is a double quote (`"`)
+and not within a single quote, it toggles the `in_double_quote` flag.
 
- @param str 	The original delimiter string, which may be surrounded
- 				by quotes or empty.
- @return 	A newly allocated string with the surrounding quotes removed.
- 			If the original delimiter is empty, an empty string is returned.
+ @param ch 					The current character being processed.
+ @param in_single_quote 	Flag indicating if single quotes are active.
+ @param in_double_quote 	Flag indicating if double quotes are active.
+
+ @return 					`true` if the character is a quote that is paired;
+ 							`false` otherwise.
+*/
+static bool	handle_quote(char ch, bool *in_single_quote, bool *in_double_quote)
+{
+	if (ch == '\'' && !*in_double_quote) // char is ' and not in double quote
+	{
+		*in_single_quote = !*in_single_quote;
+		return (true);
+	}
+	if (ch == '"' && !*in_single_quote) // char is " and not in single quote
+	{
+		*in_double_quote = !*in_double_quote;
+		return (true);
+	}
+	return (false);
+}
+
+/**
+Processes a heredoc delimiter string by removing paired single and double
+quotation characters. Nested quote characters are preserved.
+
+ @param str 	The original delimiter string, which may include paired quotes.
+
+ @return 	A newly allocated string with all paired quotes removed.
 			Returns `NULL` if memory allocation fails.
 */
 char	*trim_delimiter(const char *str)
@@ -102,7 +120,7 @@ char	*trim_delimiter(const char *str)
 	bool	in_single_quote;
 	bool	in_double_quote;
 
-	trimmed_str = malloc(sizeof(char)*(ft_strlen(str) + 1)); // Trimmed_str cannot be larger than the original one
+	trimmed_str = malloc(sizeof(char)*(ft_strlen(str) + 1)); // trimmed_str cannot be larger than the original str
 	if (!trimmed_str)
 		return (NULL);
 	i = 0;
@@ -111,21 +129,11 @@ char	*trim_delimiter(const char *str)
 	in_double_quote = false;
 	while (str[i])
 	{
-		if (str[i] == '\'' && !in_double_quote)
-		{
-			in_single_quote = !in_single_quote;
-			i++; // Skip the quotation char
-			continue ; // Skips the remaining part of the loop's body and moves to the next iteration of the while loop.
-		}
-		if (str[i] == '"' && !in_single_quote)
-		{
-			in_double_quote = !in_double_quote;
-			i++; // Skip the quote
-			continue ; // Skips the remaining part of the loop's body and moves to the next iteration of the while loop.
-		}
-		// If we are not inside quotes, or if we are inside quotes but not of the type currently handled, copy the character
-		trimmed_str[trimmed_i++] = str[i++];
+		if (handle_quote(str[i], &in_single_quote, &in_double_quote))
+			i++; // skip the paired quotation char
+		else
+			trimmed_str[trimmed_i++] = str[i++]; // copy all but paired quotation chars
 	}
-	trimmed_str[trimmed_i] = '\0'; // Null-terminate the trimmed string
+	trimmed_str[trimmed_i] = '\0'; // null-terminate the trimmed string
 	return (trimmed_str);
 }
