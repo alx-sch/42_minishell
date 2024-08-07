@@ -6,7 +6,7 @@
 /*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 22:40:57 by aschenk           #+#    #+#             */
-/*   Updated: 2024/08/07 13:13:11 by aschenk          ###   ########.fr       */
+/*   Updated: 2024/08/07 14:15:36 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -210,3 +210,62 @@ int	expand_variables(char **str, t_data *data)
 	}
 	return (1);
 }
+
+//////////////////////////////////////////////////
+//////////////////////////////////////////////////
+//////////////////////////////////////////////////
+//////////////////////////////////////////////////
+//////////////////////////////////////////////////
+
+// static bool	is_double_quote(char c) {
+// 	return (c == '"');
+// }
+
+// static bool	is_single_quote(char c) {
+// 	return (c == '\'');
+// }
+
+
+// /**
+//  @param str 		A pointer to the original string containing variables
+//  					to be expanded.
+//  @param env_list 	The environment list containing variable names and their
+//  					corresponding values.
+
+//  @return	`1` if all variables were successfully expanded.
+// 			`0` if an error occurred during memory allocation or if no string was passed.
+//  */
+// int	expand_variables_selective(char **str, t_data *data)
+// {
+// 	char	*var_name;
+// 	int		i;
+// 	bool	inside_single_quotes = false;
+//     bool	inside_double_quotes = false;
+
+// 	i = 0;
+// 	if (!str || !*str)
+// 		return (0);
+// 	while ((*str)[i]) // traverse the string
+// 	{
+// 		// Toggle quote states based on current_char
+//         if (is_double_quote((*str)[i]) && !inside_single_quotes) // when current char is double quote nut not within a single quotatiopn
+// 			inside_double_quotes = !inside_double_quotes; // change status
+//         else if (is_single_quote((*str)[i]) && !inside_double_quotes)
+// 			inside_single_quotes = !inside_single_quotes; // change status
+
+// 		// Only expand variables when inside double quotes
+// 		if (!inside_single_quotes && is_variable(*str, i)) // is str[i] start of valid variable? if so, continue.
+// 		{
+// 			var_name = get_var_name(*str, i); // get the variable name
+// 			if (!var_name || !replace_var_with_val(str, i, var_name, data))
+// 			{
+// 				free(var_name);
+// 				return (0); // malloc fail in get_var_name
+// 			}
+// 			free(var_name);
+// 			i = -1; // reset index to traverse the newly expanded string from start again (to also expand nested variables)
+// 		}
+// 		i++;
+// 	}
+// 	return (1);
+// }

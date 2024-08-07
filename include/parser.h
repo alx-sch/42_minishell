@@ -6,7 +6,7 @@
 /*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/03 17:57:57 by aschenk           #+#    #+#             */
-/*   Updated: 2024/08/05 15:03:54 by aschenk          ###   ########.fr       */
+/*   Updated: 2024/08/07 13:35:22 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,7 @@ char	*trim_delimiter(const char *delimiter);
 // 2_parser/parser_var_expansion.c
 
 int		expand_variables(char **str, t_data *data);
+int		expand_variables_selective(char **str, t_data *data);
 
 // 2_parser/parser_var_expansion_utils.c
 
