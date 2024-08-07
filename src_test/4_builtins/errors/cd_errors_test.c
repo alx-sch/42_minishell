@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd_errors_test.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
+/*   By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/24 11:48:26 by nholbroo          #+#    #+#             */
-/*   Updated: 2024/08/01 10:58:08 by aschenk          ###   ########.fr       */
+/*   Updated: 2024/08/07 18:12:19 by nholbroo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ int	too_many_args_cd(t_cd **cd)
 	print_err_msg_custom("cd: too many arguments", 1);
 	free_cd_struct(cd); // Freeing the struct.
 	errno = EPERM;
-	return (0);
+	return (errno);
 }
 
 // Prints an error message if there is a memory allocation failure for t_cd

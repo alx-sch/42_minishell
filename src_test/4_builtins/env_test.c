@@ -6,7 +6,7 @@
 /*   By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/25 09:38:05 by natalierh         #+#    #+#             */
-/*   Updated: 2024/08/06 15:07:28 by nholbroo         ###   ########.fr       */
+/*   Updated: 2024/08/07 18:19:30 by nholbroo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,14 +17,11 @@
 int	env(t_exec *exec, t_env *envp_temp)
 {
 	if (exec->flags[1] != NULL)
-	{
-		env_error_messages(exec->flags[1], 0);
-		return (1);
-	}
+		return (env_error_messages(exec->flags[1], 0));
 	while (envp_temp)
 	{
 		printf("%s=%s\n", envp_temp->e_var, envp_temp->value);
 		envp_temp = envp_temp->next;
 	}
-	return (1);
+	return (0);
 }

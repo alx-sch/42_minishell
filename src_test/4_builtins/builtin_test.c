@@ -6,7 +6,7 @@
 /*   By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/13 14:51:02 by nholbroo          #+#    #+#             */
-/*   Updated: 2024/08/06 16:50:13 by nholbroo         ###   ########.fr       */
+/*   Updated: 2024/08/07 18:29:29 by nholbroo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,8 +48,8 @@ int	builtin(t_data *data, t_exec *exec) // instead of input the data_struct can 
 	}
 	else if (!ft_strcmp(exec->cmd, "unset")) // Checks if the input is "unset", accepts arguments, but not options.
 	{
-		if (exec->flags[1] && !unset_err_invalid_option(exec->flags[1], 0))
-			return (1);
+		if (exec->flags[1] && unset_err_invalid_option(exec->flags[1], 0))
+			return (2);
 		unset(exec, &data->envp_temp); // Unsets an environment variable if it exists. If it doesn't, nothing happens.
 		return (unset(exec, &data->export_list)); // Unsets an environment variable if it exists. If it doesn't, nothing happens.
 	}

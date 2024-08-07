@@ -6,7 +6,7 @@
 /*   By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/20 14:14:17 by nholbroo          #+#    #+#             */
-/*   Updated: 2024/08/07 16:45:53 by nholbroo         ###   ########.fr       */
+/*   Updated: 2024/08/07 18:25:46 by nholbroo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@
 // Prints a list of the current exported environmental variables, mimicking the
 // behavior of the "export"-command in bash without arguments/options.
 // It is sorted in alphabetical order.
-void	print_export(t_env *export_list)
+int	print_export(t_env *export_list)
 {
 	while (export_list)
 	{
@@ -43,6 +43,7 @@ void	print_export(t_env *export_list)
 			printf("declare -x %s\n", export_list->e_var);
 		export_list = export_list->next;
 	}
+	return (0);
 }
 
 /*-If input is "export" WITHOUT arguments, the function prints a list.
@@ -57,15 +58,9 @@ int	export(t_data *data, t_exec *exec)
 
 	i = 1;
 	if (!exec->flags[1])
-	{
-		print_export(data->export_list);
-		return (1);
-	}
+		return (print_export(data->export_list));
 	if (ft_strchr(exec->flags[1], '-') || !ft_is_alphanumerical(exec->flags))
-	{
-		export_err_invalid_option(exec->flags[1], 0);
-		return (1);
-	}
+		return (export_err_invalid_option(exec->flags[1], 0));
 	while (exec->flags[i])
 	{
 		if (!ft_strchr(exec->flags[i], '='))
@@ -77,5 +72,5 @@ int	export(t_data *data, t_exec *exec)
 		}
 		i++;
 	}
-	return (1);
+	return (0);
 }

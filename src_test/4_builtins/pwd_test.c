@@ -6,37 +6,11 @@
 /*   By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/13 14:41:46 by nholbroo          #+#    #+#             */
-/*   Updated: 2024/08/06 15:55:55 by nholbroo         ###   ########.fr       */
+/*   Updated: 2024/08/07 18:26:17 by nholbroo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-// Checking if the input is "pwd". Accepts arguments (but they won't change the
-// behavior), and does NOT accept options.
-int	is_pwd(char *input)
-{
-	int	i;
-
-	i = 0;
-	while (is_whitespace(input[i])) // Skipping all whitespaces
-		i++;
-	if (input[i++] != 'p') // Hard-checking for p
-		return (0);
-	if (input[i++] != 'w') // And w
-		return (0);
-	if (input[i++] != 'd') // And d. Returning 0 if it's not exactly "pwd".
-		return (0);
-	if (!input[i]) // Input is only "pwd", and is valid.
-		return (1);
-	if (!is_whitespace(input[i])) // If there is still more input after "pwd" and it is not a space - that would mean e.g. "pwda" instead of "pwd a", and that should not be handled, so I return 0.
-		return (0);
-	while (input[i] && is_whitespace(input[i])) // Moving past spaces, while there is more input after "pwd".
-		i++;
-	if (input[i] && input[i] == '-') // If the first encounter after "pwd" and whitespaces is a '-' sign, it is an invalid option.
-			return (pwd_invalid_option(input, i));
-	return (1); // If the input has ended after "pwd" - or there is more left, but it's separated by at least one space - it is valid and I return 1.
-}
 
 /*Prints out the current working directory. If something goes wrong, it prints
 an error message with errno set to indicate the error.
@@ -48,11 +22,11 @@ int	pwd(t_exec *exec)
 	if (exec->flags[1])
 	{
 		if (exec->flags[1][0] == '-')
-			pwd_invalid_option(exec->flags[1], 0);
+			return (pwd_invalid_option(exec->flags[1], 0));
 	}
 	if (getcwd(cwd, sizeof(cwd))) // Checking that getcwd-function works. It is used to find current working directory.
 		printf("%s\n", cwd); // Printing the current working directory.
 	else
 		print_err_msg_prefix("pwd"); // If getcwd fails, this function will print an error.
-	return (1);
+	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/30 12:32:53 by nholbroo          #+#    #+#             */
-/*   Updated: 2024/08/06 16:26:10 by nholbroo         ###   ########.fr       */
+/*   Updated: 2024/08/07 18:14:10 by nholbroo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,8 @@ program and exits.*/
 void	execution(t_data *data, t_exec *exec, int position)
 {
 	prep_execution(data, exec, position);
-	if (builtin(data, exec))
-		exit(0);
+	if (is_builtin(exec))
+		exit(builtin(data, exec));
 	execve(exec->current_path, exec->flags, exec->envp_temp_arr);
 	exec_errors(data, exec, 4);
 	exit(errno);

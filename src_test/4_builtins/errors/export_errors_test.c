@@ -6,7 +6,7 @@
 /*   By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/24 12:11:29 by nholbroo          #+#    #+#             */
-/*   Updated: 2024/08/07 12:32:00 by aschenk          ###   ########.fr       */
+/*   Updated: 2024/08/07 18:24:37 by nholbroo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ void	export_mem_alloc_failure(t_data *data)
 	exit(ENOMEM); ; // @Busedame: errno specified here, as errno set by failed ft_split is overwritten by some error '2' happening in free_data()
 }
 
-static void	print_exp_err_invalid_option(char *input, int i)
+static int	print_exp_err_invalid_option(char *input, int i)
 {
 	ft_putstr_fd(ERR_COLOR, STDERR_FILENO);
 	ft_putstr_fd(ERR_PREFIX, STDERR_FILENO);
@@ -35,10 +35,10 @@ static void	print_exp_err_invalid_option(char *input, int i)
 		write(STDERR_FILENO, &input[i], 1);
 	ft_putstr_fd(": invalid option\n", STDERR_FILENO);
 	ft_putstr_fd(RESET, STDERR_FILENO);
-	errno = ENOENT;
+	return (2);
 }
 
-static void	print_exp_err_invalid_identifier(char *input, int i)
+static int	print_exp_err_invalid_identifier(char *input, int i)
 {
 	ft_putstr_fd(ERR_COLOR, STDERR_FILENO);
 	ft_putstr_fd(ERR_PREFIX, STDERR_FILENO);
@@ -48,6 +48,7 @@ static void	print_exp_err_invalid_identifier(char *input, int i)
 	ft_putstr_fd("': not a valid identifier\n", STDERR_FILENO);
 	ft_putstr_fd(RESET, STDERR_FILENO);
 	errno = EPERM;
+	return (errno);
 }
 
 /*Two different kinds of error messages for export, one in the case of
@@ -56,14 +57,6 @@ identifier, e.g. "export ds-d"*/
 int	export_err_invalid_option(char *input, int i)
 {
 	if (input[i] == '-')
-	{
-		print_exp_err_invalid_option(input, i);
-		return (0);
-	}
-	else
-	{
-		print_exp_err_invalid_identifier(input, i);
-		return (0);
-	}
-	return (1);
+		return (print_exp_err_invalid_option(input, i));
+	return (print_exp_err_invalid_identifier(input, i));
 }

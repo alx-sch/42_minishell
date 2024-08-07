@@ -6,7 +6,7 @@
 /*   By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/24 12:15:35 by nholbroo          #+#    #+#             */
-/*   Updated: 2024/08/07 14:24:34 by nholbroo         ###   ########.fr       */
+/*   Updated: 2024/08/07 18:16:01 by nholbroo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,11 +42,11 @@ pipe in a different variable. */
 static void	create_child_processes(t_data *data, t_exec *exec)
 {
 	pid_t	pid;
-	int		*stat_loc;
+	int		stat_loc;
+	int		exit_code;
 	t_list	*current;
 	t_token	*token;
 
-	stat_loc = NULL;
 	current = (t_list *)data->tok.tok_lst;
 	token = (t_token *)current->content;
 	while (exec->curr_child < data->pipe_nr + 1)
@@ -67,11 +67,16 @@ static void	create_child_processes(t_data *data, t_exec *exec)
 			token = (t_token *)current->next->content;
 	}
 	close_pipe_in_parent(data, exec);
-	if (waitpid(pid, stat_loc, 0) == -1)
+	if (waitpid(pid, &stat_loc, 0) == -1)
 	{
 		free_exec(exec);
 		free_data(data, 1);
 		exit(errno);
+	}
+	if (WIFEXITED(stat_loc))
+	{
+		exit_code = WEXITSTATUS(stat_loc);
+		data->exit_status = exit_code;
 	}
 }
 
@@ -113,7 +118,7 @@ static int	execution_only_in_parent(t_data *data, t_exec *exec)
 {
 	check_redirections(data, exec, 0);
 	check_file_exist_parent(data, exec);
-	builtin(data, exec);
+	data->exit_status = builtin(data, exec);
 	free_exec(exec);
 	return (0);
 }

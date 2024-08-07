@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pwd_errors_test.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
+/*   By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/24 13:12:56 by nholbroo          #+#    #+#             */
-/*   Updated: 2024/08/01 12:05:57 by aschenk          ###   ########.fr       */
+/*   Updated: 2024/08/07 18:26:09 by nholbroo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ int	pwd_invalid_option(char *input, int i)
 		ft_putstr_fd(": invalid option\n", STDERR_FILENO);
 		ft_putstr_fd(RESET, STDERR_FILENO);
 		errno = ENOENT;
-		return (0);
+		return (errno);
 	}
-	return (1);
+	return (0);
 }

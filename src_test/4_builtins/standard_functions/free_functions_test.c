@@ -6,7 +6,7 @@
 /*   By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 15:59:31 by nholbroo          #+#    #+#             */
-/*   Updated: 2024/08/06 15:06:53 by nholbroo         ###   ########.fr       */
+/*   Updated: 2024/08/07 18:10:43 by nholbroo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ int	free_cd_struct(t_cd **cd)
 			free((*cd)->home_user);
 		free(*cd);
 	}
-	return (1);
+	return (0);
 }
 
 /*Frees the memory of any char array.*/
