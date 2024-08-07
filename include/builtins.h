@@ -6,7 +6,7 @@
 /*   By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/31 17:09:56 by aschenk           #+#    #+#             */
-/*   Updated: 2024/08/06 15:59:01 by nholbroo         ###   ########.fr       */
+/*   Updated: 2024/08/07 16:44:03 by nholbroo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,7 @@ int				ft_strchr_index(const char *s, int c);
 int				ft_strrchr_index(const char *s, int c);
 bool			is_only_duplicates(char *s, char c);
 int				is_letter(char c);
+int				ft_is_alphanumerical(char **str);
 
 // Errors:
 

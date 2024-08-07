@@ -6,7 +6,7 @@
 /*   By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/20 14:14:17 by nholbroo          #+#    #+#             */
-/*   Updated: 2024/08/06 15:55:32 by nholbroo         ###   ########.fr       */
+/*   Updated: 2024/08/07 16:45:53 by nholbroo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ int	export(t_data *data, t_exec *exec)
 		print_export(data->export_list);
 		return (1);
 	}
-	if (ft_strchr(exec->flags[1], '-'))
+	if (ft_strchr(exec->flags[1], '-') || !ft_is_alphanumerical(exec->flags))
 	{
 		export_err_invalid_option(exec->flags[1], 0);
 		return (1);
