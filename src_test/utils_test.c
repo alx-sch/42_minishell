@@ -6,7 +6,7 @@
 /*   By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/10 16:51:05 by aschenk           #+#    #+#             */
-/*   Updated: 2024/08/07 18:40:35 by nholbroo         ###   ########.fr       */
+/*   Updated: 2024/08/07 20:23:32 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@ including functions for character classification and error message printing.
 // IN FILE:
 
 int		is_whitespace(int c);
+int		contains_quotes(const char *str);
 void	print_err_msg(char *msg);
 void	print_err_msg_prefix(char *msg);
 void	print_err_msg_custom(char *msg, unsigned int print_newline);
@@ -39,6 +40,25 @@ int	is_whitespace(int c)
 		return (1);
 	else
 		return (0);
+}
+
+/**
+Checks if a string contains either single or double quotes.
+
+ @param str 	The string to be checked.
+
+ @return		`1` if the string contains at least one single or double quote.
+				`0` otherwise.
+*/
+int	contains_quotes(const char *str)
+{
+	while (*str)
+	{
+		if (*str == '\'' || *str == '"')
+			return (1);
+		str++;
+	}
+	return (0);
 }
 
 /**

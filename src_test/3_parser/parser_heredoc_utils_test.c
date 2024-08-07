@@ -6,7 +6,7 @@
 /*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/24 22:36:32 by aschenk           #+#    #+#             */
-/*   Updated: 2024/08/07 17:20:22 by aschenk          ###   ########.fr       */
+/*   Updated: 2024/08/07 20:22:25 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,17 +19,9 @@ creation of heredoc files and processing  heredoc input.
 
 // IN FILE:
 
-void	count_pipes(t_data *data, t_token *node);
 void	trim_newline(char *str);
 char	*get_heredoc(t_data *data);
 int		get_heredoc_fd(t_data *data);
-
-// Increments the pipe counter when a PIPE token is encountered.
-void	count_pipes(t_data *data, t_token *node)
-{
-	if (node->type == PIPE)
-		data->pipe_nr += 1;
-}
 
 /**
 Trims the trailing newline character from a heredoc string.
@@ -84,90 +76,64 @@ int	get_heredoc_fd(t_data *data)
 }
 
 /**
-Trims the quotes from around a delimiter string and returns a newly allocated
-string containing the trimmed delimiter.
+Toggles the state of quote flags based on the current character.
+If the character is a single quote (`'`) and not within a double quote,
+it toggles the `in_single_quote` flag. If the character is a double quote (`"`)
+and not within a single quote, it toggles the `in_double_quote` flag.
 
- @param delimiter 	The original delimiter string, which may be surrounded
- 					by quotes or empty.
- @return 	A newly allocated string with the surrounding quotes removed.
- 			If the original delimiter is empty, an empty string is returned.
-			Returns `NULL` if memory allocation fails.
+ @param ch 					The current character being processed.
+ @param in_single_quote 	Flag indicating if single quotes are active.
+ @param in_double_quote 	Flag indicating if double quotes are active.
+
+ @return 					`true` if the character is a quote that is paired;
+ 							`false` otherwise.
 */
-char	*trim_delimiter(const char *delimiter)
+static bool	handle_quote(char ch, bool *in_single_quote, bool *in_double_quote)
 {
-	size_t	len;
-	char	*trimmed_delim;
-
-	len = ft_strlen(delimiter); // length of untrimmed delimiter
-	trimmed_delim = NULL;
-	trimmed_delim = malloc(len * sizeof(char) - 1); // len - 2 (remove beginning and end quote) + 1  (for null terminator)
-	if (!trimmed_delim)
-		return (NULL);
-	ft_strlcpy(trimmed_delim, delimiter + 1, len - 1); // Copy the substring excluding the first and last characters
-	trimmed_delim[len - 2] = '\0'; // Null-terminate
-	return (trimmed_delim);
+	if (ch == '\'' && !*in_double_quote) // char is ' and not in double quote
+	{
+		*in_single_quote = !*in_single_quote;
+		return (true);
+	}
+	if (ch == '"' && !*in_single_quote) // char is " and not in single quote
+	{
+		*in_double_quote = !*in_double_quote;
+		return (true);
+	}
+	return (false);
 }
 
+/**
+Processes a heredoc delimiter string by removing paired single and double
+quotation characters. Nested quote characters are preserved.
 
-// Helper function to determine if a character is a quote
-// bool is_quote(char c) {
-//     return c == '"' || c == '\'';
-// }
+ @param str 	The original delimiter string, which may include paired quotes.
 
-// char *trim_delimiter(const char *delimiter)
-// {
-//     if (!delimiter)
-//         return NULL;
+ @return 	A newly allocated string with all paired quotes removed.
+			Returns `NULL` if memory allocation fails.
+*/
+char	*trim_delimiter(const char *str)
+{
+	char	*trimmed_str;
+	int		i;
+	int		trimmed_i;
+	bool	in_single_quote;
+	bool	in_double_quote;
 
-//     size_t len = strlen(delimiter);
-//     size_t start = 0;
-//     size_t end = len - 1;
-
-//     // Flags to keep track of whether we're inside a quote
-//     bool in_single_quote = false;
-//     bool in_double_quote = false;
-
-//     // Skip leading quotes
-//     while (start < len && is_quote(delimiter[start]))
-//     {
-//         if (delimiter[start] == '\'') {
-//             if (!in_double_quote)
-//                 in_single_quote = !in_single_quote;
-//         }
-//         else if (delimiter[start] == '"') {
-//             if (!in_single_quote)
-//                 in_double_quote = !in_double_quote;
-//         }
-//         start++;
-//     }
-
-//     // Skip trailing quotes
-//     while (end > start && is_quote(delimiter[end]))
-//     {
-//         if (delimiter[end] == '\'') {
-//             if (!in_double_quote)
-//                 in_single_quote = !in_single_quote;
-//         }
-//         else if (delimiter[end] == '"') {
-//             if (!in_single_quote)
-//                 in_double_quote = !in_double_quote;
-//         }
-//         end--;
-//     }
-
-//     // If end is less than start, it means there are no characters left
-//     if (end < start)
-//         return strdup(""); // Return an empty string
-
-//     // Allocate memory for the new string
-//     size_t new_len = end - start + 1;
-//     char *result = malloc(new_len + 1);
-//     if (!result)
-//         return NULL; // Memory allocation failed
-
-//     // Copy the trimmed content
-//     strncpy(result, delimiter + start, new_len);
-//     result[new_len] = '\0'; // Null-terminate
-
-//     return result;
-// }
+	trimmed_str = malloc(sizeof(char)*(ft_strlen(str) + 1)); // trimmed_str cannot be larger than the original str
+	if (!trimmed_str)
+		return (NULL);
+	i = 0;
+	trimmed_i = 0;
+	in_single_quote = false;
+	in_double_quote = false;
+	while (str[i])
+	{
+		if (handle_quote(str[i], &in_single_quote, &in_double_quote))
+			i++; // skip the paired quotation char
+		else
+			trimmed_str[trimmed_i++] = str[i++]; // copy all but paired quotation chars
+	}
+	trimmed_str[trimmed_i] = '\0'; // null-terminate the trimmed string
+	return (trimmed_str);
+}
