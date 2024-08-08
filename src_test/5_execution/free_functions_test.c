@@ -6,7 +6,7 @@
 /*   By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/30 12:31:04 by nholbroo          #+#    #+#             */
-/*   Updated: 2024/08/06 16:55:23 by nholbroo         ###   ########.fr       */
+/*   Updated: 2024/08/08 14:20:15 by nholbroo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,9 +15,6 @@
 /*Frees all the pid-values of the array in the child-struct.*/
 void	free_children(t_child *child)
 {
-	// int	i;
-
-	// i = 0;
 	if (child)
 	{
 		if (child->nbr)
