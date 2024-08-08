@@ -6,7 +6,7 @@
 /*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/03 17:57:57 by aschenk           #+#    #+#             */
-/*   Updated: 2024/08/07 19:47:56 by aschenk          ###   ########.fr       */
+/*   Updated: 2024/08/08 21:31:25 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,13 @@ by the shell.
 
 int		parse_tokens(t_data *data);
 
+// 2_parser/parser_utils.c
+
+bool	process_quote(char ch, bool *in_single_quote, bool *in_double_quote);
+char	*trim_paired_quotes(const char *str);
+int		is_variable(char *str, int i);
+void	count_pipes(t_data *data, t_token *node);
+
 // 2_parser/parser_heredoc.c
 
 int		process_heredocs(t_data *data);
@@ -39,12 +46,11 @@ int		process_heredocs(t_data *data);
 void	trim_newline(char *str);
 char	*get_heredoc(t_data *data);
 int		get_heredoc_fd(t_data *data);
-char	*trim_delimiter(const char *delimiter);
+int		convert_tokens(t_data *data, t_token *curr_token, t_token *next_token);
 
 // 2_parser/parser_var_expansion.c
 
-int		expand_variables(char **str, t_data *data);
-int		expand_variables_selective(char **str, t_data *data);
+int		expand_variables(char **str, t_data *data, int expand_in_single_quotes);
 
 // 2_parser/parser_var_expansion_utils.c
 

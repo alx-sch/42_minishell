@@ -6,42 +6,30 @@
 /*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/24 22:36:32 by aschenk           #+#    #+#             */
-/*   Updated: 2024/08/07 20:22:25 by aschenk          ###   ########.fr       */
+/*   Updated: 2024/08/08 19:26:18 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 /**
-This file contains utility functions for processing heredocs, namely the
-creation of heredoc files and processing  heredoc input.
+This file contains utility functions for processing heredocs, e.g. the
+creation of heredoc files and processing heredoc input.
 */
 
 #include "minishell.h"
 
 // IN FILE:
 
-void	trim_newline(char *str);
 char	*get_heredoc(t_data *data);
 int		get_heredoc_fd(t_data *data);
+void	trim_newline(char *str);
+void	count_pipes(t_data *data, t_token *node);
+int		convert_tokens(t_data *data, t_token *curr_token, t_token *next_token);
 
 /**
-Trims the trailing newline character from a heredoc string.
-This makes comparing the heredoc delimiter with the heredoc input
-more straightforward.
-*/
-void	trim_newline(char *str)
-{
-	size_t	len;
+Creates a heredoc filename.
 
-	if (!str)
-		return ;
-	len = ft_strlen(str);
-	if (len > 0 && str[len - 1] == '\n')
-		str[len - 1] = '\0';
-}
-
-/**
- @return	A heredoc filename based on the HEREDOC_PREFIX and the
- 			current pipe count or `NULL` on malloc failure.
+ @return	A heredoc filename based on the current pipe count or
+ 			`NULL` on malloc failure.
 */
 char	*get_heredoc(t_data *data)
 {
@@ -76,64 +64,49 @@ int	get_heredoc_fd(t_data *data)
 }
 
 /**
-Toggles the state of quote flags based on the current character.
-If the character is a single quote (`'`) and not within a double quote,
-it toggles the `in_single_quote` flag. If the character is a double quote (`"`)
-and not within a single quote, it toggles the `in_double_quote` flag.
-
- @param ch 					The current character being processed.
- @param in_single_quote 	Flag indicating if single quotes are active.
- @param in_double_quote 	Flag indicating if double quotes are active.
-
- @return 					`true` if the character is a quote that is paired;
- 							`false` otherwise.
+Trims the trailing newline character from a heredoc string.
+This makes comparing the heredoc delimiter with the heredoc input
+more straightforward.
 */
-static bool	handle_quote(char ch, bool *in_single_quote, bool *in_double_quote)
+void	trim_newline(char *str)
 {
-	if (ch == '\'' && !*in_double_quote) // char is ' and not in double quote
-	{
-		*in_single_quote = !*in_single_quote;
-		return (true);
-	}
-	if (ch == '"' && !*in_single_quote) // char is " and not in single quote
-	{
-		*in_double_quote = !*in_double_quote;
-		return (true);
-	}
-	return (false);
+	size_t	len;
+
+	if (!str)
+		return ;
+	len = ft_strlen(str);
+	if (len > 0 && str[len - 1] == '\n')
+		str[len - 1] = '\0';
+}
+
+// Increments the pipe counter when the passed token is of type PIPE.
+void	count_pipes(t_data *data, t_token *node)
+{
+	if (node->type == PIPE)
+		data->pipe_nr += 1;
 }
 
 /**
-Processes a heredoc delimiter string by removing paired single and double
-quotation characters. Nested quote characters are preserved.
+Converts HEREDOC tokens (`<< EOF`) into REDIR_IN tokens (`< heredoc-file`),
+where the delimiter is replaced by the actual filename created for the heredoc.
+This simplifies further processing by ensuring that HEREDOC tokens are processed
+in the same way as REDIR_IN tokens.
 
- @param str 	The original delimiter string, which may include paired quotes.
-
- @return 	A newly allocated string with all paired quotes removed.
-			Returns `NULL` if memory allocation fails.
+ @return	`1` if HEREDOC token conversion succeeded.
+			`0` if HEREDOC token conversion failed.
 */
-char	*trim_delimiter(const char *str)
+int	convert_tokens(t_data *data, t_token *curr_token, t_token *next_token)
 {
-	char	*trimmed_str;
-	int		i;
-	int		trimmed_i;
-	bool	in_single_quote;
-	bool	in_double_quote;
+	char	*heredoc;
 
-	trimmed_str = malloc(sizeof(char)*(ft_strlen(str) + 1)); // trimmed_str cannot be larger than the original str
-	if (!trimmed_str)
-		return (NULL);
-	i = 0;
-	trimmed_i = 0;
-	in_single_quote = false;
-	in_double_quote = false;
-	while (str[i])
-	{
-		if (handle_quote(str[i], &in_single_quote, &in_double_quote))
-			i++; // skip the paired quotation char
-		else
-			trimmed_str[trimmed_i++] = str[i++]; // copy all but paired quotation chars
-	}
-	trimmed_str[trimmed_i] = '\0'; // null-terminate the trimmed string
-	return (trimmed_str);
+	heredoc = get_heredoc(data);
+	if (!heredoc)
+		return (0);
+	curr_token->type = REDIR_IN;
+	free(next_token->lexeme);
+	next_token->lexeme = ft_strdup(heredoc);
+	free(heredoc);
+	if (!next_token->lexeme)
+		return (0);
+	return (1);
 }

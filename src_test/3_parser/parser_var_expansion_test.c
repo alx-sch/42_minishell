@@ -6,7 +6,7 @@
 /*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 22:40:57 by aschenk           #+#    #+#             */
-/*   Updated: 2024/08/07 17:36:27 by aschenk          ###   ########.fr       */
+/*   Updated: 2024/08/08 20:01:25 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,25 +20,7 @@ them with corresponding values from the environment.
 
 // IN FILE:
 
-int	expand_variables(char **str, t_data *data);
-
-/**
-Used in expand_variables().
-
-Checks if a valid variable is encountered at position `i` in the string `str`.
-A valid variable is identified by a '$' character that is followed by at least
-one alphanumerical character.
-
- @return	`1` if a valid variable is encountered.
-			`0` if no valid variable is encountered.
-*/
-static int	is_variable(char *str, int i)
-{
-	if (str[i] == '$' && (ft_isalnum(str[i + 1]) || str[i + 1] == '?'))
-		return (1);
-	else
-		return (0);
-}
+int	expand_variables(char **str, t_data *data, int expand_in_single_quotes);
 
 /**
 Used in expand_variables().
@@ -91,7 +73,7 @@ Also extracts the last exit status for '$?'.
 If an exit status string is returned, it is the user's responsibilty to
 free it when done using.
 */
-static char	*get_env_value(const char *var_name, t_data *data)
+static char	*get_var_value(const char *var_name, t_data *data)
 {
 	t_env	*current_node;
 	char	*exit_status;
@@ -147,7 +129,7 @@ static int	replace_var_with_val(char **str, int i, char *var_name,
 
 	str_l = NULL;
 	str_r = NULL;
-	var_val = get_env_value(var_name, data);
+	var_val = get_var_value(var_name, data);
 	if (!var_val)
 		return (0); // memory allocation for empty string failed.
 	if (!get_str_l(str, i, &str_l) || !get_str_r(str, i, var_name, &str_r))
@@ -167,105 +149,85 @@ static int	replace_var_with_val(char **str, int i, char *var_name,
 }
 
 /**
-Expands all environment variables in the given string with their corresponding
-values from the environment list.
+Processes a variable in the string and replaces it with its corresponding value
+from the minishell environment list.
 
-This function traverses the input string, identifies variables starting with
-a '$' character, and replaces each variable with its corresponding value from the
-environment list. If a variable is encountered and successfully replaced, the
-function resets the traversal index to handle nested variables by re-traversing
-the newly modified string from the beginning. The function stops if a memory
-allocation error occurs.
+This function identifies if the current position in the string (`*str` at `*i`)
+starts a valid variable (indicated by a `$` character).
+If the variable is valid and either expansion within single quotes is allowed
+or the string is not within single quotes, the function replaces the
+variable name with its value from the environment list.
 
- @param str 		A pointer to the original string containing variables
- 					to be expanded.
- @param env_list 	The environment list containing variable names and their
- 					corresponding values.
+ @param str 	A pointer to the string where the variable expansion is to be
+ 				performed. The string may be modified by the function.
+ @param i 		A pointer to the current index in the string.
+ 				This index is used to locate the variable and will be adjusted to
+				accommodate changes in the string.
+ @param data 	A pointer to a data structure containing the environment variables.
+ @param expand_in_single_quotes 	A flag indicating whether variables should be
+ 									expanded within single quotes
+									(`0` for no expansion, otherwise: expansion).
 
- @return	`1` if all variables were successfully expanded.
-			`0` if an error occurred during memory allocation or if no string was passed.
+ @return	`1` if the variable was successfully processed and replaced;
+ 			`0` if there was an error during variable processing or
+			memory if allocation failed.
  */
-int	expand_variables(char **str, t_data *data)
+static int	process_variable(char **str, int *i, t_data *data,
+	int expand_in_single_quotes)
 {
 	char	*var_name;
-	int		i;
 
-	i = 0;
-	if (!str)
-		return (0);
-	while ((*str)[i]) // traverse the string
+	if (is_variable(*str, *i) && (expand_in_single_quotes
+			|| !data->quote.in_single)) // check if the current char starts a variable and check expansion rules
 	{
-		if (is_variable(*str, i)) // is str[i] start of valid variable? if so, continue.
+		var_name = get_var_name(*str, *i);
+		if (!var_name)
+			return (0);
+		if (!replace_var_with_val(str, *i, var_name, data))
 		{
-			var_name = get_var_name(*str, i); // get the variable name
-			if (!var_name || !replace_var_with_val(str, i, var_name, data))
-			{
-				free(var_name);
-				return (0); // malloc fail in get_var_name
-			}
 			free(var_name);
-			i = -1; // reset index to traverse the newly expanded string from start again (to also expand nested variables)
+			return (0);
 		}
-		i++;
+		free(var_name);
+		(*i)--; // decrement index to reprocess the position where the variable was replaced
 	}
 	return (1);
 }
 
-//////////////////////////////////////////////////
-//////////////////////////////////////////////////
-//////////////////////////////////////////////////
-//////////////////////////////////////////////////
-//////////////////////////////////////////////////
+/**
+Expands all environment variables (including nestes ones) in the given string
+with their corresponding values from the environment list.
 
-// static bool	is_double_quote(char c) {
-// 	return (c == '"');
-// }
+This function traverses the input string, identifies variables starting with
+a '$' character, and replaces each variable with its corresponding value from the
+environment list.
 
-// static bool	is_single_quote(char c) {
-// 	return (c == '\'');
-// }
+ @param str 	The original string containing variables to be expanded.
+ @param data 	Data structure which includes the local list of envp.
+ @param expand_in_single_quotes	Flag to indicate if variables are expanded within
+								single quotes (`0`: no expansion; otherwise: expansion).
 
+ @return	`1` if all variables were successfully expanded.
+			`0` if an error occurred during memory allocation or no string was passed.
+*/
+int	expand_variables(char **str, t_data *data, int expand_in_single_quotes)
+{
+	int		i;
 
-// /**
-//  @param str 		A pointer to the original string containing variables
-//  					to be expanded.
-//  @param env_list 	The environment list containing variable names and their
-//  					corresponding values.
-
-//  @return	`1` if all variables were successfully expanded.
-// 			`0` if an error occurred during memory allocation or if no string was passed.
-//  */
-// int	expand_variables_selective(char **str, t_data *data)
-// {
-// 	char	*var_name;
-// 	int		i;
-// 	bool	inside_single_quotes = false;
-//     bool	inside_double_quotes = false;
-
-// 	i = 0;
-// 	if (!str || !*str)
-// 		return (0);
-// 	while ((*str)[i]) // traverse the string
-// 	{
-// 		// Toggle quote states based on current_char
-//         if (is_double_quote((*str)[i]) && !inside_single_quotes) // when current char is double quote nut not within a single quotatiopn
-// 			inside_double_quotes = !inside_double_quotes; // change status
-//         else if (is_single_quote((*str)[i]) && !inside_double_quotes)
-// 			inside_single_quotes = !inside_single_quotes; // change status
-
-// 		// Only expand variables when inside double quotes
-// 		if (!inside_single_quotes && is_variable(*str, i)) // is str[i] start of valid variable? if so, continue.
-// 		{
-// 			var_name = get_var_name(*str, i); // get the variable name
-// 			if (!var_name || !replace_var_with_val(str, i, var_name, data))
-// 			{
-// 				free(var_name);
-// 				return (0); // malloc fail in get_var_name
-// 			}
-// 			free(var_name);
-// 			i = -1; // reset index to traverse the newly expanded string from start again (to also expand nested variables)
-// 		}
-// 		i++;
-// 	}
-// 	return (1);
-// }
+	i = 0;
+	if (!str || !*str)
+		return (0);
+	while ((*str)[i])
+	{
+		if (process_quote((*str)[i], &data->quote.in_single,
+			&data->quote.in_double)) // process quotes to check if in closed quotation
+		{
+			i++;
+			continue; // directly skip to next character in str
+		}
+		if (!process_variable(str, &i, data, expand_in_single_quotes)) // process variable expansion
+			return (0);
+		i++;
+	}
+	return (1);
+}

@@ -17,6 +17,8 @@
 
 NAME :=			minishell
 
+HISTORY_FILE = .minishell_history
+
 # SOURCE FILES
 SRCS_DIR :=		src
 SRCS_FILES :=	0_init/init_cd.c \
@@ -212,10 +214,12 @@ clean:
 	@rm -rf $(OBJS_DIR)
 	@echo "$(BOLD)$(L_RED)$(NAME) object files removed.$(RESET)"
 
-# Rule to remove all generated object files and the program executable.
+# Rule to remove all generated object files and the program executable and the command history file.
 fclean:	clean
 	@rm -f $(NAME) $(NAME_TEST)
 	@echo "$(BOLD)$(L_RED)$(NAME) removed.$(RESET)"
+	@rm -f $(HISTORY_FILE)
+	@echo "$(BOLD)$(L_RED)$(HISTORY_FILE) removed.$(RESET)"
 
 # Rule to remove all generated object files, the program executable,
 # and then rebuild the program.
@@ -246,6 +250,7 @@ TEST_FILES :=	0_init/init_cd_test.c \
 				2_tokenizer/tokenizer_pipe_test.c \
 				2_tokenizer/tokenizer_utils_test.c \
 				3_parser/parser_test.c \
+				3_parser/parser_utils_test.c \
 				3_parser/parser_var_expansion_test.c \
 				3_parser/parser_var_expansion_utils_test.c \
 				3_parser/parser_heredoc_test.c \
