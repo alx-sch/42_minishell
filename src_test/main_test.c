@@ -6,7 +6,7 @@
 /*   By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/06 12:05:14 by aschenk           #+#    #+#             */
-/*   Updated: 2024/08/08 14:24:33 by nholbroo         ###   ########.fr       */
+/*   Updated: 2024/08/08 16:38:17 by nholbroo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@ int	main(int argc, char **argv, char **envp)
 {
 	t_data	data;
 
+	init_history();
 	print_logo();
 	init_data_struct(&data, argc, argv, envp);
 	while (1)
@@ -37,7 +38,7 @@ int	main(int argc, char **argv, char **envp)
 		if (data.input && !is_input_empty(data.input))
 		{
 			if (!is_whitespace(data.input[0]))
-				add_history(data.input);
+				add_history_to_file(data.input);
 			if (is_quotation_closed(&data) && get_tokens(&data)
 				&& parse_tokens(&data))
 				{

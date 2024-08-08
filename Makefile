@@ -69,6 +69,7 @@ SRCS_FILES :=	0_init/init_cd.c \
 				7_utils/free.c \
 				7_utils/utils.c \
 				7_utils/logo.c \
+				8_history/minishell_history_test.c \
 				main.c
 
 SRCS :=			$(addprefix $(SRCS_DIR)/, $(SRCS_FILES))
@@ -284,6 +285,7 @@ TEST_FILES :=	0_init/init_cd_test.c \
 				7_utils/free_test.c \
 				7_utils/logo_test.c \
 				7_utils/utils_test.c \
+				8_history/minishell_history_test.c \
 				main_test.c
 
 TEST_SRCS :=	$(addprefix $(TEST_DIR)/, $(TEST_FILES))

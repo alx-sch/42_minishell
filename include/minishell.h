@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
+/*   By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/06 12:08:35 by aschenk           #+#    #+#             */
-/*   Updated: 2024/08/07 21:22:27 by aschenk          ###   ########.fr       */
+/*   Updated: 2024/08/08 16:15:16 by nholbroo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,10 @@ extern volatile __sig_atomic_t	g_signal;
 // 2: Tokenization of user input into distinct syntactic unit -> see tokenizer.h
 // 3: Parsing of tokens (handling of heredocs and var expansion) -> see parser.h
 // 4: Custoum built-in fcts for our minishell -> see builtins.h
+
+// 8_history
+void	add_history_to_file(char *input);
+void	init_history(void);
 
 // utils.c
 
