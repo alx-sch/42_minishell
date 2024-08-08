@@ -6,7 +6,7 @@
 /*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/16 17:26:08 by aschenk           #+#    #+#             */
-/*   Updated: 2024/08/01 06:23:09 by aschenk          ###   ########.fr       */
+/*   Updated: 2024/08/08 21:30:26 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@ e.g. consistency, easier management, clearer code structure and maintenance.
 # define ERR_TOKEN			"ERROR: Tokenization failed"
 # define ERR_PARSE_HEREDOC 	"ERROR: Heredoc parsing failed"
 # define ERR_DEL_HEREDOC	"ERROR: Failed to delete heredoc file"
-# define ERR_VAR_EXP 		"ERROR: Variable expansion failed"
+# define ERR_EXP_VAR		"ERROR: Variable expansion failed"
+# define ERR_TRIM_QUOTE		"ERROR: Removal of paired quotes failed"
 
 #endif
