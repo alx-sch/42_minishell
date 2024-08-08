@@ -1,29 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   init.h                                             :+:      :+:    :+:   */
+/*   init_cd.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/07/31 17:30:48 by aschenk           #+#    #+#             */
-/*   Updated: 2024/08/08 14:24:12 by nholbroo         ###   ########.fr       */
+/*   Created: 2024/06/24 12:47:06 by nholbroo          #+#    #+#             */
+/*   Updated: 2024/08/08 13:58:16 by nholbroo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-/**
-Contains declarations for functions that initialize various data structures
-used throughout the project, as defined in types.h.
-*/
+#include "minishell.h"
 
-#ifndef INIT_H
-# define INIT_H
+// IN FILE:
 
-# include "types.h"
-
-void	print_logo(void);
-void	init_data_struct(t_data *data, int argc, char **argv, char **envp);
 void	init_cd_struct(t_cd **cd);
-t_env	*init_env_tmp(char **envp);
-t_env	*init_export_list(t_data *data);
 
-#endif
+// Initializes the cd-struct (built-in).
+void	init_cd_struct(t_cd **cd)
+{
+	*cd = malloc(sizeof(t_cd));
+	if (!(*cd))
+		print_error_cd(1, cd);
+	(*cd)->home_user = NULL;
+	(*cd)->parentdirectory = NULL;
+	(*cd)->subdirectory = NULL;
+}

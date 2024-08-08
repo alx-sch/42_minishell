@@ -6,7 +6,7 @@
 /*   By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/06 12:05:14 by aschenk           #+#    #+#             */
-/*   Updated: 2024/08/08 13:14:31 by nholbroo         ###   ########.fr       */
+/*   Updated: 2024/08/08 14:24:33 by nholbroo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,34 +15,6 @@
 // Define the global variable:
 
 volatile __sig_atomic_t	g_signal = 0;
-
-// Prints a custom, color-coded logo for the minishell project.
-static void	print_logo(void)
-{
-	printf("%s%s _  _   ", BOLD, L_RED);
-	printf("%s__   %s__ _   ", ORANGE, YELLOW);
-	printf("%s__   %s____   ", GREEN, BLUE);
-	printf("%s_  _   %s____   ", VIOLET, L_RED);
-	printf("%s__     %s__   \n", ORANGE, YELLOW);
-	printf("%s( \\/ ) %s(  ) ", L_RED, ORANGE);
-	printf("%s(  ( \\ %s(  ) ", YELLOW, GREEN);
-	printf("%s/ ___) %s/ )( \\ ", BLUE, VIOLET);
-	printf("%s(  __) %s(  )   ", L_RED, ORANGE);
-	printf("%s(  )  \n", YELLOW);
-	printf("%s/ \\/ \\  %s)(  ", L_RED, ORANGE);
-	printf("%s/    /  %s)(  ", YELLOW, GREEN);
-	printf("%s\\___ \\ %s) __ (  ", BLUE, VIOLET);
-	printf("%s) _)  %s/ (_/\\ ", L_RED, ORANGE);
-	printf("%s/ (_/\\ \n", YELLOW);
-	printf("%s\\_)(_/ %s(__) ", L_RED, ORANGE);
-	printf("%s\\_)__) %s(__) ", YELLOW, GREEN);
-	printf("%s(____/ %s\\_)(_/ ", BLUE, VIOLET);
-	printf("%s(____) %s\\____/ ", L_RED, ORANGE);
-	printf("%s\\____/\n\n", YELLOW);
-	printf("%s%s", RESET, BOLD);
-	printf("by Natalie Holbrook & Alex Schenk @42 Berlin, August 2024\n\n");
-	printf("%s", RESET);
-}
 
 /*
 main is first of all a loop that runs the shell taking inputs from the user

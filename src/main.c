@@ -6,66 +6,15 @@
 /*   By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/06 12:05:14 by aschenk           #+#    #+#             */
-/*   Updated: 2024/07/23 14:57:04 by nholbroo         ###   ########.fr       */
+/*   Updated: 2024/08/08 14:23:19 by nholbroo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-/*
-Used in main().
+// Define the global variable:
 
-Prints a custom, color-coded logo for the minishell project.
-*/
-static void	print_logo(void)
-{
-	printf("%s%s _  _   ", BOLD, L_RED);
-	printf("%s__   %s__ _   ", ORANGE, YELLOW);
-	printf("%s__   %s____   ", GREEN, BLUE);
-	printf("%s_  _   %s____   ", VIOLET, L_RED);
-	printf("%s__     %s__   \n", ORANGE, YELLOW);
-	printf("%s( \\/ ) %s(  ) ", L_RED, ORANGE);
-	printf("%s(  ( \\ %s(  ) ", YELLOW, GREEN);
-	printf("%s/ ___) %s/ )( \\ ", BLUE, VIOLET);
-	printf("%s(  __) %s(  )   ", L_RED, ORANGE);
-	printf("%s(  )  \n", YELLOW);
-	printf("%s/ \\/ \\  %s)(  ", L_RED, ORANGE);
-	printf("%s/    /  %s)(  ", YELLOW, GREEN);
-	printf("%s\\___ \\ %s) __ (  ", BLUE, VIOLET);
-	printf("%s) _)  %s/ (_/\\ ", L_RED, ORANGE);
-	printf("%s/ (_/\\ \n", YELLOW);
-	printf("%s\\_)(_/ %s(__) ", L_RED, ORANGE);
-	printf("%s\\_)__) %s(__) ", YELLOW, GREEN);
-	printf("%s(____/ %s\\_)(_/ ", BLUE, VIOLET);
-	printf("%s(____) %s\\____/ ", L_RED, ORANGE);
-	printf("%s\\____/\n\n", YELLOW);
-	printf("%s%s", RESET, BOLD);
-	printf("by Natalie Holbrook & Alex Schenk @42 Berlin, July 2024\n\n");
-	printf("%s", RESET);
-}
-
-/*
-Checks if the user input is empty or consists only of whitespace.
-
-Returns:
-- 0 if the user input is not empty.
-- 1 if the user input is empty, consists only of whitespace or is NULL.
-*/
-static int	is_input_empty(char *input)
-{
-	int	i;
-
-	i = 0;
-	if (!input)
-		return (1);
-	while (input[i])
-	{
-		if (!is_whitespace(input[i]))
-			return (0);
-		i++;
-	}
-	return (1);
-}
+volatile __sig_atomic_t	g_signal = 0;
 
 /*
 main is first of all a loop that runs the shell taking inputs from the user
@@ -79,16 +28,19 @@ int	main(int argc, char **argv, char **envp)
 	init_data_struct(&data, argc, argv, envp);
 	while (1)
 	{
+		set_sig_handler(handle_sigint, handle_sigquit);
 		data.input = readline(PROMPT);
+		if (g_signal)
+			data.exit_status = EOWNERDEAD;
+		g_signal = 0;
+		set_sig_handler(handle_sigint_heredoc, handle_sigquit);
 		if (data.input && !is_input_empty(data.input))
 		{
 			if (!is_whitespace(data.input[0]))
 				add_history(data.input);
-			if (is_quotation_closed(&data))
-			{
-				parsing(&data);
-				get_tokens(&data);
-			}
+			if (is_quotation_closed(&data) && get_tokens(&data)
+				&& parse_tokens(&data))
+				init_exec(&data);
 		}
 		free_data(&data, 0);
 	}

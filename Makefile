@@ -19,36 +19,56 @@ NAME :=			minishell
 
 # SOURCE FILES
 SRCS_DIR :=		src
-SRCS_FILES :=	main.c \
-				free.c \
-				utils.c \
-				0_check_input/check_quotation.c \
-				1_tokenizer/tokenizer_get_tokens.c \
-				1_tokenizer/tokenizer_redirection.c \
-				1_tokenizer/tokenizer_pipe.c \
-				1_tokenizer/tokenizer_utils.c \
-				builtins/cd.c \
-				builtins/echo.c \
-				builtins/env.c \
-				builtins/exit.c \
-				builtins/export.c \
-				builtins/export_utils.c \
-				builtins/pwd.c \
-				builtins/unset.c \
-				errors/cd_errors.c \
-				errors/env_errors.c \
-				errors/exit_errors.c \
-				errors/export_errors.c \
-				errors/pwd_errors.c \
-				errors/unset_errors.c \
-				parsing/parsing.c \
-				standard_functions/count.c \
-				standard_functions/free_functions.c \
-				standard_functions/modified_standards.c \
-				struct_inits/init_cd.c \
-				struct_inits/init_data.c \
-				struct_inits/init_env.c \
-				struct_inits/init_export.c \
+SRCS_FILES :=	0_init/init_cd.c \
+				0_init/init_data.c \
+				0_init/init_env.c \
+				0_init/init_export.c \
+				1_check_input/check_input.c \
+				2_tokenizer/tokenizer_pipe.c \
+				2_tokenizer/tokenizer_redirection.c \
+				2_tokenizer/tokenizer_utils.c \
+				2_tokenizer/tokenizer.c \
+				3_parser/parser_heredoc_utils.c \
+				3_parser/parser_heredoc.c \
+				3_parser/parser_var_expansion_utils.c \
+				3_parser/parser_var_expansion.c \
+				3_parser/parser.c \
+				4_builtins/builtins/cd.c \
+				4_builtins/builtins/echo.c \
+				4_builtins/builtins/env.c \
+				4_builtins/builtins/exit.c \
+				4_builtins/builtins/export_utils.c \
+				4_builtins/builtins/export.c \
+				4_builtins/builtins/pwd.c \
+				4_builtins/builtins/unset.c \
+				4_builtins/errors/cd_errors.c \
+				4_builtins/errors/env_errors.c \
+				4_builtins/errors/exit_errors.c \
+				4_builtins/errors/export_errors.c \
+				4_builtins/errors/pwd_errors.c \
+				4_builtins/errors/unset_errors.c \
+				4_builtins/standard_functions/count.c \
+				4_builtins/standard_functions/free_functions.c \
+				4_builtins/standard_functions/modified_standards.c \
+				4_builtins/builtin_utils.c \
+				4_builtins/builtin.c \
+				5_execution/errors.c \
+				5_execution/execution_only_parent.c \
+				5_execution/execution_prep.c \
+				5_execution/execution_utils.c \
+				5_execution/execution.c \
+				5_execution/free_functions.c \
+				5_execution/get_flags_and_command.c \
+				5_execution/get_path.c \
+				5_execution/init_exec.c \
+				5_execution/pipes.c \
+				5_execution/redirections_check.c \
+				5_execution/redirections_do.c \
+				6_signals/signals.c \
+				7_utils/free.c \
+				7_utils/utils.c \
+				7_utils/logo.c \
+				main.c \
 
 SRCS :=			$(addprefix $(SRCS_DIR)/, $(SRCS_FILES))
 
@@ -214,10 +234,7 @@ re_all:	fclean_all all
 
 NAME_TEST :=	$(NAME)_test
 TEST_DIR :=		src_test
-TEST_FILES :=	main_test.c \
-				free_test.c \
-				utils_test.c \
-				0_init/init_cd_test.c \
+TEST_FILES :=	0_init/init_cd_test.c \
 				0_init/init_data_test.c \
 				0_init/init_env_test.c \
 				0_init/init_export_test.c \
@@ -232,14 +249,15 @@ TEST_FILES :=	main_test.c \
 				3_parser/parser_heredoc_test.c \
 				3_parser/parser_heredoc_utils_test.c \
 				4_builtins/builtin_test.c \
-				4_builtins/cd_test.c \
-				4_builtins/echo_test.c \
-				4_builtins/env_test.c \
-				4_builtins/exit_test.c \
-				4_builtins/export_test.c \
-				4_builtins/export_utils_test.c \
-				4_builtins/pwd_test.c \
-				4_builtins/unset_test.c \
+				4_builtins/builtin_utils_test.c \
+				4_builtins/builtins/cd_test.c \
+				4_builtins/builtins/echo_test.c \
+				4_builtins/builtins/env_test.c \
+				4_builtins/builtins/exit_test.c \
+				4_builtins/builtins/export_test.c \
+				4_builtins/builtins/export_utils_test.c \
+				4_builtins/builtins/pwd_test.c \
+				4_builtins/builtins/unset_test.c \
 				4_builtins/errors/cd_errors_test.c \
 				4_builtins/errors/env_errors_test.c \
 				4_builtins/errors/exit_errors_test.c \
@@ -261,7 +279,12 @@ TEST_FILES :=	main_test.c \
 				5_execution/pipes_test.c \
 				5_execution/redirections_check_test.c \
 				5_execution/redirections_do_test.c \
-				6_signals/signals_test.c
+				6_signals/signals_test.c \
+				6_signals/signals_utils_test.c \
+				7_utils/free_test.c \
+				7_utils/logo_test.c \
+				7_utils/utils_test.c \
+				main_test.c
 
 TEST_SRCS :=	$(addprefix $(TEST_DIR)/, $(TEST_FILES))
 TEST_OBJS :=	$(TEST_SRCS:$(TEST_DIR)/%.c=$(OBJS_DIR)/%.o)

@@ -1,1 +1,0 @@
-Remember to change parsing-function to have an int return value!!!

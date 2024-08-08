@@ -1,29 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   init.h                                             :+:      :+:    :+:   */
+/*   env_test.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/07/31 17:30:48 by aschenk           #+#    #+#             */
-/*   Updated: 2024/08/08 14:24:12 by nholbroo         ###   ########.fr       */
+/*   Created: 2024/05/25 09:38:05 by natalierh         #+#    #+#             */
+/*   Updated: 2024/08/07 18:35:52 by nholbroo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-/**
-Contains declarations for functions that initialize various data structures
-used throughout the project, as defined in types.h.
-*/
+#include "minishell.h"
 
-#ifndef INIT_H
-# define INIT_H
-
-# include "types.h"
-
-void	print_logo(void);
-void	init_data_struct(t_data *data, int argc, char **argv, char **envp);
-void	init_cd_struct(t_cd **cd);
-t_env	*init_env_tmp(char **envp);
-t_env	*init_export_list(t_data *data);
-
-#endif
+// Prints out a list of environment variables, sorted after "last modified".
+// Acts like the "env"-command in bash.
+int	env(t_exec *exec, t_env *envp_temp)
+{
+	if (exec->flags[1] != NULL)
+		return (env_error_messages(exec->flags[1], 0));
+	while (envp_temp)
+	{
+		printf("%s=%s\n", envp_temp->e_var, envp_temp->value);
+		envp_temp = envp_temp->next;
+	}
+	return (0);
+}
