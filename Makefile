@@ -47,9 +47,9 @@ SRCS_FILES :=	0_init/init_cd.c \
 				4_builtins/errors/export_errors.c \
 				4_builtins/errors/pwd_errors.c \
 				4_builtins/errors/unset_errors.c \
-				4_builtins/standard_functions/count.c \
-				4_builtins/standard_functions/free_functions.c \
-				4_builtins/standard_functions/modified_standards.c \
+				4_builtins/utils/count.c \
+				4_builtins/utils/free_functions.c \
+				4_builtins/utils/modified_standards.c \
 				4_builtins/builtin_utils.c \
 				4_builtins/builtin.c \
 				5_execution/errors.c \
@@ -65,10 +65,11 @@ SRCS_FILES :=	0_init/init_cd.c \
 				5_execution/redirections_check.c \
 				5_execution/redirections_do.c \
 				6_signals/signals.c \
+				6_signals/signals_utils.c \
 				7_utils/free.c \
 				7_utils/utils.c \
 				7_utils/logo.c \
-				main.c \
+				main.c
 
 SRCS :=			$(addprefix $(SRCS_DIR)/, $(SRCS_FILES))
 
@@ -264,9 +265,9 @@ TEST_FILES :=	0_init/init_cd_test.c \
 				4_builtins/errors/export_errors_test.c \
 				4_builtins/errors/pwd_errors_test.c \
 				4_builtins/errors/unset_errors_test.c \
-				4_builtins/standard_functions/count_test.c \
-				4_builtins/standard_functions/free_functions_test.c \
-				4_builtins/standard_functions/modified_standards_test.c \
+				4_builtins/utils/count_test.c \
+				4_builtins/utils/free_functions_test.c \
+				4_builtins/utils/modified_standards_test.c \
 				5_execution/errors_test.c \
 				5_execution/execution_only_parent_test.c \
 				5_execution/execution_prep_test.c \
@@ -280,7 +281,6 @@ TEST_FILES :=	0_init/init_cd_test.c \
 				5_execution/redirections_check_test.c \
 				5_execution/redirections_do_test.c \
 				6_signals/signals_test.c \
-				6_signals/signals_utils_test.c \
 				7_utils/free_test.c \
 				7_utils/logo_test.c \
 				7_utils/utils_test.c \

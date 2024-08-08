@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   errors_test.c                                      :+:      :+:    :+:   */
+/*   errors.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/30 12:32:25 by nholbroo          #+#    #+#             */
-/*   Updated: 2024/08/07 18:06:50 by nholbroo         ###   ########.fr       */
+/*   Updated: 2024/08/08 14:52:00 by nholbroo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,12 @@ void	conversion_errors(t_data *data, t_exec *exec, int i)
 	exec_errors(data, exec, 1);
 }
 
+static void	close_fds(t_exec *exec)
+{
+	close(exec->outfile_fd);
+	close(exec->infile_fd);
+}
+
 /*Error handling during execution, prints an error message, cleans up allocated 
 memory and exits the child process.*/
 void	exec_errors(t_data *data, t_exec *exec, int error_code)
@@ -72,6 +78,8 @@ void	exec_errors(t_data *data, t_exec *exec, int error_code)
 		ft_putstr_fd(": ", 2);
 		if (error_code == 2)
 			errno = ENOENT;
+		if (error_code == 4)
+			close_fds(exec);
 		perror("");
 	}
 	if (error_code == 3)
