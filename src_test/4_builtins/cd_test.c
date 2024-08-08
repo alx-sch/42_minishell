@@ -6,7 +6,7 @@
 /*   By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/13 13:51:10 by nholbroo          #+#    #+#             */
-/*   Updated: 2024/08/07 18:57:14 by nholbroo         ###   ########.fr       */
+/*   Updated: 2024/08/08 13:34:55 by nholbroo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,7 +121,7 @@ int	cd(t_data *data, t_exec *exec)
 	if (exec->flags[1] == NULL) // If "cd" is the only input, without any components.
 		exit_status = cd_to_home_user(&cd, data->envp_temp); // Changing directory to /home/user.
 	else if (!ft_strcmp(exec->flags[1], "~")) // If "cd ~" is the only input.
-		return (cd_to_home_user(&cd, data->envp_temp)); // Changing directory to /home/user.
+		exit_status = cd_to_home_user(&cd, data->envp_temp); // Changing directory to /home/user.
 	else if (is_only_duplicates(exec->flags[1], '/')) // If "cd /" is the only input.
 	{
 		if (chdir("/") == -1) // Changing directory to root.
