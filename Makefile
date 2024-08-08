@@ -227,6 +227,7 @@ TEST_FILES :=	main_test.c \
 				2_tokenizer/tokenizer_pipe_test.c \
 				2_tokenizer/tokenizer_utils_test.c \
 				3_parser/parser_test.c \
+				3_parser/parser_utils_test.c \
 				3_parser/parser_var_expansion_test.c \
 				3_parser/parser_var_expansion_utils_test.c \
 				3_parser/parser_heredoc_test.c \

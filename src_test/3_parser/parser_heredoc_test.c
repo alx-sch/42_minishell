@@ -6,7 +6,7 @@
 /*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/24 22:36:32 by aschenk           #+#    #+#             */
-/*   Updated: 2024/08/07 21:21:24 by aschenk          ###   ########.fr       */
+/*   Updated: 2024/08/08 13:07:14 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,7 +88,7 @@ static int	handle_heredoc_input(int fd, const char *delimiter, t_data *data,
 	input_line = get_next_line(STDIN_FILENO);
 	trim_newline(input_line);
 	while (!g_signal // no signal received
-		&& (!perform_expansion || expand_variables(&input_line, data) == 1) // when perform_expansion is not 0, !perform_expansion is not fulfilled and expand_variables() is executed;
+		&& (!perform_expansion || expand_variables(&input_line, data, 1) == 1) // when perform_expansion is not 0, !perform_expansion is not fulfilled and expand_variables() is executed;
 		&& ft_strcmp(input_line, delimiter) != 0) // input is not delimiter
 	{
 		bytes_written_1 = write(fd, input_line, ft_strlen(input_line));
@@ -169,7 +169,7 @@ int	process_heredocs(t_data *data)
 		if (current_tok->type == HEREDOC)
 		{
 			next_tok = (t_token *)current_node->next->content;  // delimiter is the token after the HEREDOC token
-			delim = trim_delimiter(next_tok->lexeme);
+			delim = trim_paired_quotes(next_tok->lexeme);
 			if (!delim)
 				return (0);
 			return_val = process_heredoc(data, current_tok, next_tok, delim);

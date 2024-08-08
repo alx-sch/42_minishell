@@ -6,7 +6,7 @@
 /*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/26 16:13:14 by aschenk           #+#    #+#             */
-/*   Updated: 2024/08/07 17:36:12 by aschenk          ###   ########.fr       */
+/*   Updated: 2024/08/08 12:48:34 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,12 @@ TBD
 
 int	parse_tokens(t_data *data);
 
+/////////////////////////////////////////////////
+/////////////////////////////////////////////////
+
+// Function prototypes
+
+
 
 int	process_var_expansion(t_data *data)
 {
@@ -31,7 +37,7 @@ int	process_var_expansion(t_data *data)
 	{
 		current_token = (t_token *)current_node->content;
 		if (current_token->type == OTHER)
-			expand_variables(&current_token->lexeme, data); // still need to check for return value
+			expand_variables(&current_token->lexeme, data, 0); // still need to check for return value
 		current_node = current_node->next;
 	}
 	return (1);
@@ -52,6 +58,7 @@ int	parse_tokens(t_data *data)
 	{
 		print_err_msg(ERR_VAR_EXP);
 		return (0);
+
 	}
 	return (1);
 }
