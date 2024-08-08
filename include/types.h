@@ -6,7 +6,7 @@
 /*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/31 17:40:14 by aschenk           #+#    #+#             */
-/*   Updated: 2024/08/08 15:38:54 by aschenk          ###   ########.fr       */
+/*   Updated: 2024/08/08 20:42:07 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,12 +96,23 @@ typedef struct s_tok
 //	++ PARSING ++
 //	+++++++++++++
 
+/**
+Holds information about whether the current parsing
+context is inside single or double quotes.
+
+Fields:
+- in_single [bool]:	Flag indicating if the parser is currently inside
+					single quotes (`true` if inside single quotes,
+					`false` otherwise)
+- in_double [bool]:	Flag indicating if the parser is currently inside
+					double quotes (`true` if inside single quotes,
+					`false` otherwise)
+*/
 typedef struct s_quote
 {
 	bool	in_single;
 	bool	in_double;
 }	t_quote;
-
 
 //	+++++++++++++++
 //	++ BUILT-INS ++
@@ -183,6 +194,7 @@ Fields:
 						export, including those without values, used for the
 						'export' command.
 - cd [t_cd]:			Used for the "cd" built-in command.
+- quote [t_quote]		Parsing context is inside single or double quotes.
 */
 typedef struct s_data
 {
