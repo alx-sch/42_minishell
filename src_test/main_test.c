@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main_test.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/06 12:05:14 by aschenk           #+#    #+#             */
-/*   Updated: 2024/08/07 19:01:45 by nholbroo         ###   ########.fr       */
+/*   Updated: 2024/08/08 17:17:10 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ int	main(int argc, char **argv, char **envp)
 				{
 					//printf("expanded input: %s\n", data.input);
 					//printf("before parsing -- exit status: %d\n", data.exit_status);
-				//	parsing(&data);
+					//parsing(&data);
 					//if (parsing(&data)) // Checking if the input matches any of the builtins.
 						init_exec(&data);
 						//printf("EXEC\n");

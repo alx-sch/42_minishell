@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   types.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/31 17:40:14 by aschenk           #+#    #+#             */
-/*   Updated: 2024/08/06 12:49:02 by nholbroo         ###   ########.fr       */
+/*   Updated: 2024/08/08 15:38:54 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,6 +91,17 @@ typedef struct s_tok
 	char	*tmp;
 	char	quote;
 }	t_tok;
+
+//	+++++++++++++
+//	++ PARSING ++
+//	+++++++++++++
+
+typedef struct s_quote
+{
+	bool	in_single;
+	bool	in_double;
+}	t_quote;
+
 
 //	+++++++++++++++
 //	++ BUILT-INS ++
@@ -185,6 +196,7 @@ typedef struct s_data
 	t_env			*envp_temp;
 	t_env			*export_list;
 	t_cd			cd;
+	t_quote			quote;
 }	t_data;
 
 #endif

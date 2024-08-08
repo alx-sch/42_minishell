@@ -6,7 +6,7 @@
 /*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/13 12:12:15 by aschenk           #+#    #+#             */
-/*   Updated: 2024/07/31 19:45:27 by aschenk          ###   ########.fr       */
+/*   Updated: 2024/08/08 20:32:47 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,6 +101,7 @@ void	free_data(t_data *data, bool exit)
 	data->pipe_nr = 0; // Reset number of pipes to default.
 	if (exit)
 	{
+		get_next_line(-1); // free static stash to avoid 'still reachables'
 		if (data->envp_temp)
 			free_env_struct(&data->envp_temp);
 		if (data->export_list)

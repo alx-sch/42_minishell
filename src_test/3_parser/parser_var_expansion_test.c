@@ -6,7 +6,7 @@
 /*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 22:40:57 by aschenk           #+#    #+#             */
-/*   Updated: 2024/08/08 15:11:10 by aschenk          ###   ########.fr       */
+/*   Updated: 2024/08/08 20:01:25 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -149,6 +149,52 @@ static int	replace_var_with_val(char **str, int i, char *var_name,
 }
 
 /**
+Processes a variable in the string and replaces it with its corresponding value
+from the minishell environment list.
+
+This function identifies if the current position in the string (`*str` at `*i`)
+starts a valid variable (indicated by a `$` character).
+If the variable is valid and either expansion within single quotes is allowed
+or the string is not within single quotes, the function replaces the
+variable name with its value from the environment list.
+
+ @param str 	A pointer to the string where the variable expansion is to be
+ 				performed. The string may be modified by the function.
+ @param i 		A pointer to the current index in the string.
+ 				This index is used to locate the variable and will be adjusted to
+				accommodate changes in the string.
+ @param data 	A pointer to a data structure containing the environment variables.
+ @param expand_in_single_quotes 	A flag indicating whether variables should be
+ 									expanded within single quotes
+									(`0` for no expansion, otherwise: expansion).
+
+ @return	`1` if the variable was successfully processed and replaced;
+ 			`0` if there was an error during variable processing or
+			memory if allocation failed.
+ */
+static int	process_variable(char **str, int *i, t_data *data,
+	int expand_in_single_quotes)
+{
+	char	*var_name;
+
+	if (is_variable(*str, *i) && (expand_in_single_quotes
+			|| !data->quote.in_single)) // check if the current char starts a variable and check expansion rules
+	{
+		var_name = get_var_name(*str, *i);
+		if (!var_name)
+			return (0);
+		if (!replace_var_with_val(str, *i, var_name, data))
+		{
+			free(var_name);
+			return (0);
+		}
+		free(var_name);
+		(*i)--; // decrement index to reprocess the position where the variable was replaced
+	}
+	return (1);
+}
+
+/**
 Expands all environment variables (including nestes ones) in the given string
 with their corresponding values from the environment list.
 
@@ -162,40 +208,26 @@ environment list.
 								single quotes (`0`: no expansion; otherwise: expansion).
 
  @return	`1` if all variables were successfully expanded.
-			`0` if an error occurred during memory allocation or if no string was passed.
- */
+			`0` if an error occurred during memory allocation or no string was passed.
+*/
 int	expand_variables(char **str, t_data *data, int expand_in_single_quotes)
 {
-	bool	in_single_quote;
-	bool	in_double_quote;
 	int		i;
-	char	*var_name;
 
-	in_single_quote = false;
-	in_double_quote = false;
 	i = 0;
-	var_name = NULL;
+	if (!str || !*str)
+		return (0);
 	while ((*str)[i])
 	{
-		if (process_quote((*str)[i], &in_single_quote, &in_double_quote)) // handle quote toggling
+		if (process_quote((*str)[i], &data->quote.in_single,
+			&data->quote.in_double)) // process quotes to check if in closed quotation
 		{
 			i++;
-			continue; // directly skip to next iteration of while loop
+			continue; // directly skip to next character in str
 		}
-		if (is_variable(*str, i) && (expand_in_single_quotes || !in_single_quote)) // Expand variable based on the flag
-        {
-            var_name = get_var_name(*str, i);
-            if (!var_name)
-                return 0; // Allocation error
-            if (!replace_var_with_val(str, i, var_name, data))
-            {
-                free(var_name);
-                return 0; // Allocation error
-            }
-            free(var_name);
-            i--; // Adjustenv index since the string may have changed
-        }
-        i++;
-    }
-    return 1;
+		if (!process_variable(str, &i, data, expand_in_single_quotes)) // process variable expansion
+			return (0);
+		i++;
+	}
+	return (1);
 }
