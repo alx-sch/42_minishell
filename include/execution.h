@@ -6,7 +6,7 @@
 /*   By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/31 19:12:38 by aschenk           #+#    #+#             */
-/*   Updated: 2024/08/07 19:04:32 by nholbroo         ###   ########.fr       */
+/*   Updated: 2024/08/08 13:26:32 by nholbroo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ void	close_pipe_in_parent(t_data *data, t_exec *exec);
 void	check_file_exist_child(t_data *data, t_exec *exec);
 void	check_file_exist_parent(t_data *data, t_exec *exec);
 void	check_redirections(t_data *data, t_exec *exec, int position);
-void	redirections(t_data *data, t_exec *exec);
+void	do_redirections(t_data *data, t_exec *exec);
 
 // 3_Execution_freeing_functions:
 void	free_children(t_child *child);

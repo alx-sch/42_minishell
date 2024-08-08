@@ -6,7 +6,7 @@
 /*   By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/30 18:09:36 by nholbroo          #+#    #+#             */
-/*   Updated: 2024/08/06 16:52:03 by nholbroo         ###   ########.fr       */
+/*   Updated: 2024/08/08 13:24:56 by nholbroo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ t_token *token)
 	exec->outfile = ft_strdup(token->lexeme);
 	if (!exec->outfile)
 		exec_errors(data, exec, 1);
+	check_file_exist_child(data, exec);
 	return (current);
 }
 
@@ -41,6 +42,7 @@ t_token *token)
 	exec->infile = ft_strdup(token->lexeme);
 	if (!exec->infile)
 		exec_errors(data, exec, 1);
+	check_file_exist_child(data, exec);
 	return (current);
 }
 

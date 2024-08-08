@@ -6,7 +6,7 @@
 /*   By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/31 11:19:43 by nholbroo          #+#    #+#             */
-/*   Updated: 2024/08/06 16:34:31 by nholbroo         ###   ########.fr       */
+/*   Updated: 2024/08/08 13:26:14 by nholbroo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,10 +76,4 @@ void	do_redirections(t_data *data, t_exec *exec)
 		close(exec->pipe_fd[0]);
 		close(exec->pipe_fd[1]);
 	}
-}
-
-void	redirections(t_data *data, t_exec *exec)
-{
-	check_file_exist_child(data, exec);
-	do_redirections(data, exec);
 }

@@ -6,7 +6,7 @@
 /*   By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/30 14:06:04 by nholbroo          #+#    #+#             */
-/*   Updated: 2024/08/06 16:29:04 by nholbroo         ###   ########.fr       */
+/*   Updated: 2024/08/08 13:26:06 by nholbroo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ void	prep_execution(t_data *data, t_exec *exec, int position)
 	conv_env_tmp_to_arr(data, exec);
 	check_redirections(data, exec, position);
 	get_flags_and_command(data, exec, position);
-	redirections(data, exec);
+	do_redirections(data, exec);
 	if (!cmd_is_path(data, exec) && !is_builtin(exec))
 	{
 		get_all_paths(data, exec);
