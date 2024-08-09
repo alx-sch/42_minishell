@@ -6,7 +6,7 @@
 /*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/24 22:36:32 by aschenk           #+#    #+#             */
-/*   Updated: 2024/08/08 20:29:21 by aschenk          ###   ########.fr       */
+/*   Updated: 2024/08/09 20:49:06 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,7 @@ static int	read_and_process_line(char **input_line, t_data *data,
 	int	expansion_result;
 
 	ft_printf(HEREDOC_P);
+	//*input_line = readline(HEREDOC_P);
 	*input_line = get_next_line(STDIN_FILENO);
 	if (!*input_line)
 		return (0);

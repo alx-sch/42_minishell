@@ -20,6 +20,7 @@
 		"stdbool.h": "c",
 		"builtins.h": "c",
 		"tokenizer.h": "c",
-		"*.tcc": "c"
+		"*.tcc": "c",
+		"signal.h": "c"
 	}
 }

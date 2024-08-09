@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/06 12:08:35 by aschenk           #+#    #+#             */
-/*   Updated: 2024/08/08 16:15:16 by nholbroo         ###   ########.fr       */
+/*   Updated: 2024/08/09 16:52:40 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,7 @@ functionality without redundant includes.
 # include <stdio.h> // perror, printf
 # include <errno.h> // errno
 # include <sys/wait.h> // waitpid
+# include <sys/ioctl.h> // ioctl(), TIOCSTI
 # include <readline/readline.h> // reading/editing input lines
 # include <readline/history.h> // tracking/accessing previous command lines
 # include <signal.h> // signal/sig fcts, kill
