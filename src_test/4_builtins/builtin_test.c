@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_test.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/13 14:51:02 by nholbroo          #+#    #+#             */
-/*   Updated: 2024/08/08 13:51:34 by nholbroo         ###   ########.fr       */
+/*   Updated: 2024/08/09 14:03:23 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,10 +23,7 @@ int	builtin(t_data *data, t_exec *exec)
 	else if (!ft_strcmp(exec->cmd, "env"))
 		return (env(exec, data->envp_temp));
 	else if (!ft_strcmp(exec->cmd, "exit"))
-	{
-		get_next_line(-1);
 		exit(exit_with_code(data, exec));
-	}
 	else if (!ft_strcmp(exec->cmd, "unset"))
 	{
 		if (exec->flags[1] && unset_err_invalid_option(exec->flags[1], 0))
