@@ -6,7 +6,7 @@
 /*   By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/07 19:03:20 by nholbroo          #+#    #+#             */
-/*   Updated: 2024/08/07 19:06:12 by nholbroo         ###   ########.fr       */
+/*   Updated: 2024/08/12 19:04:50 by nholbroo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,8 +40,11 @@ void	check_file_exist_parent(t_data *data, t_exec *exec)
 	{
 		if (access(exec->outfile, F_OK == -1))
 		{
-			if (open(exec->outfile, O_CREAT) == -1)
+			exec->outfile_fd = open(exec->outfile, O_CREAT);
+			if (exec->outfile_fd == -1)
 				redirections_errors(data, exec, 1, 1);
+			close(exec->outfile_fd);
+			exec->outfile_fd = 0;
 		}
 	}
 }
