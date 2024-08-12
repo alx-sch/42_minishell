@@ -6,7 +6,7 @@
 /*   By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/30 12:32:25 by nholbroo          #+#    #+#             */
-/*   Updated: 2024/08/08 14:51:12 by nholbroo         ###   ########.fr       */
+/*   Updated: 2024/08/12 17:43:39 by nholbroo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,10 +56,14 @@ void	conversion_errors(t_data *data, t_exec *exec, int i)
 	exec_errors(data, exec, 1);
 }
 
-static void	close_fds(t_exec *exec)
+static void	execve_failure(t_data *data, t_exec *exec)
 {
+	perror("");
 	close(exec->outfile_fd);
 	close(exec->infile_fd);
+	free_exec(exec);
+	free_data(data, 1);
+	exit(127);
 }
 
 /*Error handling during execution, prints an error message, cleans up allocated 
@@ -79,7 +83,7 @@ void	exec_errors(t_data *data, t_exec *exec, int error_code)
 		if (error_code == 2)
 			errno = ENOENT;
 		if (error_code == 4)
-			close_fds(exec);
+			execve_failure(data, exec);
 		perror("");
 	}
 	if (error_code == 3)
