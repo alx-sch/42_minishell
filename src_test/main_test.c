@@ -6,7 +6,7 @@
 /*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/06 12:05:14 by aschenk           #+#    #+#             */
-/*   Updated: 2024/08/09 21:46:49 by aschenk          ###   ########.fr       */
+/*   Updated: 2024/08/12 09:02:29 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,6 @@ int	main(int argc, char **argv, char **envp)
 	init_data_struct(&data, argc, argv, envp);
 	while (1)
 	{
-		//ft_suppress_output();
 		handle_signals();
 		data.input = readline(PROMPT);
 		if (g_signal)
@@ -44,16 +43,11 @@ int	main(int argc, char **argv, char **envp)
 				&& parse_tokens(&data))
 			{
 				handle_signals_exec();
+				set_terminal_mode(1);
 				init_exec(&data);
+				set_terminal_mode(0);
 			}
-			//ft_restore_output();
 		}
-		// Maybe as a check completely in the end, if nothing else worked, we can mimic the "Command <some_command> not found"?
-		//print_token_list(data.tok.tok_lst); // TESTING ONLY
-		//data.exit_status = errno; // update exit status
-		//printf("after parsing -- exit status: %d\n", data.exit_status);
-		//printf("TEST\n");
-		ft_restore_output();
 		free_data(&data, 0); // why exit status hardcoded here? In what instances are
 	}
 }
