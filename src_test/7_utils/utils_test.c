@@ -6,7 +6,7 @@
 /*   By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/10 16:51:05 by aschenk           #+#    #+#             */
-/*   Updated: 2024/08/12 17:15:41 by nholbroo         ###   ########.fr       */
+/*   Updated: 2024/08/12 17:18:05 by nholbroo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@ including functions for character classification and error message printing.
 
 int		is_whitespace(int c);
 int		contains_quotes(const char *str);
+void	exit_ctrl_d(t_data *data, char *str);
 void	print_err_msg(char *msg);
 void	print_err_msg_prefix(char *msg);
 void	print_err_msg_custom(char *msg, unsigned int print_newline);

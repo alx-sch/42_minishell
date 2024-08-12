@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/06 12:08:35 by aschenk           #+#    #+#             */
-/*   Updated: 2024/08/12 15:23:27 by nholbroo         ###   ########.fr       */
+/*   Updated: 2024/08/12 16:31:43 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,9 +39,11 @@ functionality without redundant includes.
 # include <stdio.h> // perror, printf
 # include <errno.h> // errno
 # include <sys/wait.h> // waitpid
+# include <sys/ioctl.h> // ioctl(), TIOCSTI
 # include <readline/readline.h> // reading/editing input lines
 # include <readline/history.h> // tracking/accessing previous command lines
 # include <signal.h> // signal/sig fcts, kill
+# include <termio.h> // provides struct termios used for terminal control
 
 /**
 Global variable used to indicate if and which signal was received.
