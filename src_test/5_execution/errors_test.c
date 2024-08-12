@@ -6,7 +6,7 @@
 /*   By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/30 12:32:25 by nholbroo          #+#    #+#             */
-/*   Updated: 2024/08/12 17:53:20 by nholbroo         ###   ########.fr       */
+/*   Updated: 2024/08/12 17:56:26 by nholbroo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ static void	execve_failure(t_data *data, t_exec *exec)
 	exit_code = 0;
 	if (errno == 2)
 		exit_code = 127;
-	else if (errno == 20)
+	else if (errno == 20 || errno == 13)
 		exit_code = 126;
 	perror("");
 	close(exec->outfile_fd);
