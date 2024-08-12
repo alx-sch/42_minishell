@@ -6,7 +6,7 @@
 /*   By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/08 16:14:07 by nholbroo          #+#    #+#             */
-/*   Updated: 2024/08/12 15:26:02 by nholbroo         ###   ########.fr       */
+/*   Updated: 2024/08/12 15:31:54 by nholbroo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,20 +64,6 @@ void	init_add_history_from_file(char *tmp, char *input, int fd)
 		if (!input)
 			history_errors(tmp, 2, fd);
 		add_history(input);
-	}
-}
-
-void	set_path_to_file(t_data *data, char *file)
-{
-	char	init_wd[4096];
-
-	getcwd(init_wd, sizeof(init_wd));
-	data->path_to_hist_file = ft_strjoin(init_wd, file);
-	if (!data->path_to_hist_file)
-	{
-		free_data(data, 1);
-		perror("");
-		exit(1);
 	}
 }
 

@@ -6,7 +6,7 @@
 /*   By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/10 16:51:05 by aschenk           #+#    #+#             */
-/*   Updated: 2024/08/07 20:23:32 by aschenk          ###   ########.fr       */
+/*   Updated: 2024/08/12 17:15:41 by nholbroo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,6 +111,20 @@ void	print_err_msg_custom(char *msg, unsigned int print_newline)
 	if (print_newline)
 		ft_putstr_fd("\n", STDERR_FILENO);
 	ft_putstr_fd(RESET, STDERR_FILENO); // Reset the output style to default
+}
+
+void	set_path_to_file(t_data *data, char *file)
+{
+	char	init_wd[4096];
+
+	getcwd(init_wd, sizeof(init_wd));
+	data->path_to_hist_file = ft_strjoin(init_wd, file);
+	if (!data->path_to_hist_file)
+	{
+		free_data(data, 1);
+		perror("");
+		exit(1);
+	}
 }
 
 // Function to print the list of tokens
