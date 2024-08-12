@@ -6,7 +6,7 @@
 /*   By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/31 11:19:43 by nholbroo          #+#    #+#             */
-/*   Updated: 2024/08/08 15:14:17 by nholbroo         ###   ########.fr       */
+/*   Updated: 2024/08/12 15:02:43 by nholbroo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,7 @@ static void	redir_in(t_data *data, t_exec *exec)
 		redirections_errors(data, exec, 0, 0);
 	if (dup2(exec->infile_fd, STDIN_FILENO) == -1)
 		redirections_errors(data, exec, 0, 0);
+	close(exec->infile_fd);
 }
 
 static void	redir_out(t_data *data, t_exec *exec)
@@ -48,6 +49,7 @@ static void	redir_out(t_data *data, t_exec *exec)
 		redirections_errors(data, exec, 1, 0);
 	if (dup2(exec->outfile_fd, STDOUT_FILENO) == -1)
 		redirections_errors(data, exec, 1, 0);
+	close (exec->outfile_fd);
 }
 
 void	do_redirections(t_data *data, t_exec *exec)
