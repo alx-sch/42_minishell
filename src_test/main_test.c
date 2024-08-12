@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   main_test.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/06 12:05:14 by aschenk           #+#    #+#             */
 /*   Updated: 2024/08/12 15:25:31 by nholbroo         ###   ########.fr       */
@@ -28,31 +28,27 @@ int	main(int argc, char **argv, char **envp)
 	print_logo();
 	while (1)
 	{
-		set_sig_handler(handle_sigint, handle_sigquit);
+		handle_signals();
 		data.input = readline(PROMPT);
+		if (!data.input)
+			process_exit_signal(&data, NULL);
 		if (g_signal)
 			data.exit_status = EOWNERDEAD;
 		g_signal = 0; // reset signal variable for heredoc prompt
-		set_sig_handler(handle_sigint_heredoc, handle_sigquit);
+		handle_signals_heredoc();
 		if (data.input && !is_input_empty(data.input))
 		{
 			if (!is_whitespace(data.input[0]))
 				add_history_to_file(data.input, data.path_to_hist_file);
 			if (is_quotation_closed(&data) && get_tokens(&data)
 				&& parse_tokens(&data))
-				{
-					//printf("expanded input: %s\n", data.input);
-					//printf("before parsing -- exit status: %d\n", data.exit_status);
-				//	parsing(&data);
-					//if (parsing(&data)) // Checking if the input matches any of the builtins.
-						init_exec(&data);
-						//printf("EXEC\n");
-				}
+			{
+				handle_signals_exec();
+				//set_terminal_mode(1);
+				init_exec(&data);
+				//set_terminal_mode(0);
+			}
 		}
-		// Maybe as a check completely in the end, if nothing else worked, we can mimic the "Command <some_command> not found"?
-		//print_token_list(data.tok.tok_lst); // TESTING ONLY
-		//data.exit_status = errno; // update exit status
-		//printf("after parsing -- exit status: %d\n", data.exit_status);
 		free_data(&data, 0); // why exit status hardcoded here? In what instances are
 	}
 }

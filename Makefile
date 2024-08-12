@@ -286,7 +286,10 @@ TEST_FILES :=	0_init/init_cd_test.c \
 				5_execution/pipes_test.c \
 				5_execution/redirections_check_test.c \
 				5_execution/redirections_do_test.c \
-				6_signals/signals_test.c \
+				6_signals/signals_prompts_test.c \
+				6_signals/signals_execution_test.c \
+				6_signals/signals_exit_test.c \
+				6_signals/signals_terminal_test.c \
 				7_utils/free_test.c \
 				7_utils/logo_test.c \
 				7_utils/utils_test.c \
