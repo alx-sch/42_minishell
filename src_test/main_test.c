@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main_test.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/06 12:05:14 by aschenk           #+#    #+#             */
-/*   Updated: 2024/08/12 17:25:51 by nholbroo         ###   ########.fr       */
+/*   Updated: 2024/08/12 19:20:45 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ int	main(int argc, char **argv, char **envp)
 		data.input = readline(PROMPT);
 		if (!data.input)
 			process_exit_signal(&data, NULL);
-		if (g_signal)
+		if (g_signal) // CTRL+C was received in minishell or heredoc prompt
 			data.exit_status = EOWNERDEAD;
 		g_signal = 0; // reset signal variable for heredoc prompt
 		handle_signals_heredoc();
