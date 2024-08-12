@@ -6,7 +6,7 @@
 /*   By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/24 11:48:26 by nholbroo          #+#    #+#             */
-/*   Updated: 2024/08/07 18:53:57 by nholbroo         ###   ########.fr       */
+/*   Updated: 2024/08/12 18:17:05 by nholbroo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,5 +50,5 @@ int	print_error_cd(int error_code, t_cd **cd)
 		mem_alloc_fail_cd(cd); // In the case of a malloc error the process terminates.
 	print_err_msg(error_msg);
 	free(error_msg); // Frees the error_msg - string.
-	return (2);
+	return (1);
 }
