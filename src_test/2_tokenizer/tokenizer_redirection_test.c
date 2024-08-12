@@ -6,7 +6,7 @@
 /*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/17 13:00:24 by aschenk           #+#    #+#             */
-/*   Updated: 2024/08/05 19:13:08 by aschenk          ###   ########.fr       */
+/*   Updated: 2024/08/12 17:36:36 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,27 +81,27 @@ and updates the `errno` accordingly.
  @param str_j 		The string representation of int j.
  @param j 			Position index of the failed redirection in the input string.
 */
-static void	print_redir_err_msg(char *invalid_op, const char *input,
+static void	print_redir_err_msg(char *invalid_op, t_data *data,
 	char *str_j, int j)
 {
 	ft_putstr_fd(ERR_COLOR, STDERR_FILENO); // Set error color for the output
 	ft_putstr_fd(ERR_PREFIX, STDERR_FILENO);
 	ft_putstr_fd(ERR_SYNTAX, STDERR_FILENO);
 	// Print the specific redirection operator encountered
-	if (input[j] == '>' && input[j + 1] == '>')
+	if (data->input[j] == '>' && data->input[j + 1] == '>')
 		ft_putstr_fd("'>>': '", STDERR_FILENO);
-	else if (input[j] == '>')
+	else if (data->input[j] == '>')
 		ft_putstr_fd("'>': '", STDERR_FILENO);
-	else if (input[j] == '<' && input[j + 1] == '<')
+	else if (data->input[j] == '<' && data->input[j + 1] == '<')
 		ft_putstr_fd("'<<': '", STDERR_FILENO);
-	else if (input[j] == '<')
+	else if (data->input[j] == '<')
 		ft_putstr_fd("'<': '", STDERR_FILENO);
 	ft_putstr_fd(invalid_op, STDERR_FILENO); // Print the invalid operand
 	ft_putstr_fd("' (position: ", STDERR_FILENO);
 	ft_putstr_fd(str_j, STDERR_FILENO); // Print the position of failed redirection
 	ft_putstr_fd(")\n", STDERR_FILENO);
 	ft_putstr_fd(RESET, STDERR_FILENO); // Reset the output style to default
-	errno = ENOENT;
+	data->exit_status = ENOENT;
 }
 
 /**
@@ -120,12 +120,12 @@ in these cases).
  @return	`0` if an invalid operand is found and an error message is printed.
 			`1` if the operand is valid.
 */
-static int	check_operand(const char *input, int *i, int j)
+static int	check_operand(t_data *data, int *i, int j)
 {
 	char	*invalid_op; // String for the invalid operand
 	char	*str_j; // String to hold the position of failed redirection
 
-	invalid_op = is_valid_operand(input, i); // Check if the operand is valid
+	invalid_op = is_valid_operand(data->input, i); // Check if the operand is valid
 	if (invalid_op) // If an invalid operand is found
 	{
 		str_j = ft_itoa(j);
@@ -133,12 +133,12 @@ static int	check_operand(const char *input, int *i, int j)
 			print_err_msg(ERR_MALLOC);
 		if (!str_j)
 		{
-			print_redir_err_msg(invalid_op, input, "-1", j);
+			print_redir_err_msg(invalid_op, data, "-1", j);
 			if (ft_strcmp(invalid_op, "ERR") != 0) // check if invalid_op was dynamically allocated
 				free(invalid_op);
 			return (0); // Invalid syntax was found, pos: -1
 		}
-		print_redir_err_msg(invalid_op, input, str_j, j);
+		print_redir_err_msg(invalid_op, data, str_j, j);
 		if (ft_strcmp(invalid_op, "ERR") != 0) // check if invalid_op was dynamically allocated
 			free(invalid_op);
 		free(str_j);
@@ -205,7 +205,7 @@ int	is_redirection(t_data *data, int *i)
 	// Check if a redirection was found and validate its operand
 	if (j != *i) // If *i has been incremented, it means a redirection was found
 	{
-		if (!check_operand(data->input, i, j))
+		if (!check_operand(data, i, j))
 			return (-1); // The operand is invalid or token creation failed
 		if (token_created == 0)
 			return (0); // Malloc fail during token creation

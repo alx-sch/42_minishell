@@ -6,7 +6,7 @@
 /*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/01 16:34:21 by aschenk           #+#    #+#             */
-/*   Updated: 2024/08/05 19:11:30 by aschenk          ###   ########.fr       */
+/*   Updated: 2024/08/12 17:40:38 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,7 @@ and updates the `errno` accordingly.
  @param invalid_syn The invalid operand encountered in the input.
  @param str_j 		The string representation of int j (position of failed piping).
 */
-static void	print_pipe_err_msg(char *invalid_syn, char *str_j)
+static void	print_pipe_err_msg(char *invalid_syn, char *str_j, t_data *data)
 {
 	ft_putstr_fd(ERR_COLOR, STDERR_FILENO); // Set error color for the output
 	ft_putstr_fd(ERR_PREFIX, STDERR_FILENO);
@@ -89,7 +89,7 @@ static void	print_pipe_err_msg(char *invalid_syn, char *str_j)
 	ft_putstr_fd(str_j, STDERR_FILENO); // Print the position of failed redirection
 	ft_putstr_fd(")\n", STDERR_FILENO);
 	ft_putstr_fd(RESET, STDERR_FILENO); // Reset the output style to default
-	errno = ENOENT;
+	data->exit_status = ENOENT;
 }
 
 /**
@@ -100,7 +100,7 @@ and updates the `errno` accordingly.
 
  @param str_j The string representation of int j (position of failed piping).
 */
-static void	print_empty_pipe_err_msg(char *str_j)
+static void	print_empty_pipe_err_msg(char *str_j, t_data *data)
 {
 	ft_putstr_fd(ERR_COLOR, STDERR_FILENO); // Set error color for the output
 	ft_putstr_fd(ERR_PREFIX, STDERR_FILENO);
@@ -109,7 +109,7 @@ static void	print_empty_pipe_err_msg(char *str_j)
 	ft_putstr_fd(str_j, STDERR_FILENO); // Print the position of failed redirection
 	ft_putstr_fd(")\n", STDERR_FILENO);
 	ft_putstr_fd(RESET, STDERR_FILENO); // Reset the output style to default
-	errno = ENOENT;
+	data->exit_status = ENOENT;
 }
 
 /**
@@ -142,9 +142,9 @@ static int	check_syntax(t_data *data, int j)
 		if (ft_strcmp(str_j, "-1") == 0 || ft_strcmp(invalid_syn, "ERR") == 0) // print ERR_MALLOC if fallback values are used
 			print_err_msg(ERR_MALLOC);
 		if (data->tok.tok_lst == NULL)
-			print_empty_pipe_err_msg(str_j);
+			print_empty_pipe_err_msg(str_j, data);
 		else
-			print_pipe_err_msg(invalid_syn, str_j);
+			print_pipe_err_msg(invalid_syn, str_j, data);
 		if (invalid_syn && ft_strcmp(invalid_syn, "ERR") != 0)
 			free(invalid_syn);
 		if (ft_strcmp(str_j, "-1") != 0)
