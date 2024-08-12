@@ -6,7 +6,7 @@
 /*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/16 17:26:08 by aschenk           #+#    #+#             */
-/*   Updated: 2024/08/08 21:30:26 by aschenk          ###   ########.fr       */
+/*   Updated: 2024/08/12 13:31:48 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,5 +31,7 @@ e.g. consistency, easier management, clearer code structure and maintenance.
 # define ERR_DEL_HEREDOC	"ERROR: Failed to delete heredoc file"
 # define ERR_EXP_VAR		"ERROR: Variable expansion failed"
 # define ERR_TRIM_QUOTE		"ERROR: Removal of paired quotes failed"
+# define ERR_GET_T_ATT		"ERROR: Failed to retrieve terminal attributes"
+# define ERR_SET_T_ATT		"ERROR: Failed to set new terminal attributes"
 
 #endif

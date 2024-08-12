@@ -6,7 +6,7 @@
 /*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/24 22:36:32 by aschenk           #+#    #+#             */
-/*   Updated: 2024/08/12 08:39:31 by aschenk          ###   ########.fr       */
+/*   Updated: 2024/08/12 16:34:41 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,9 +73,9 @@ static int	read_and_process_line(char **input_line, t_data *data,
 	//ft_printf(HEREDOC_P);
 	*input_line = readline(HEREDOC_P);
 	//*input_line = get_next_line(STDIN_FILENO);
-	if (!*input_line)
-		return (0);
-	trim_newline(*input_line);
+	if (!*input_line) // readline() returns NULL if EOF is encountered (handling of CTRL+D)
+		return(-2); /////////////////////////////
+	//trim_newline(*input_line);
 	if (expansion)
 	{
 		expansion_result = expand_variables(input_line, data, 1);
@@ -106,21 +106,24 @@ expansion on input lines. The function also handles interruptions by CTRL+C.
  			`0` if input handling failed due to a write operation error.
  			`-1` if the heredoc input was interrupted by CTRL+C.
 */
-static int	handle_heredoc_input(int fd, const char *delimiter, t_data *data,
+static int	handle_heredoc_input(int fd, char *delimiter, t_data *data,
 	int expansion)
 {
 	char	*input_line;
+	int		return_val;
 
-	if (!read_and_process_line(&input_line, data, expansion)) // initial read and process
-		return (0);
+	return_val = read_and_process_line(&input_line, data, expansion); // initial read and process
+	if (return_val <= 0)
+		return (return_val);
 	while (!g_signal && ft_strcmp(input_line, delimiter) != 0) // no signal received & input is not delimiter
 	{
 		if (!write_to_fd(fd, &input_line))
 			return (0);
-		if (!read_and_process_line(&input_line, data, expansion))
-			return (0);
+		return_val = read_and_process_line(&input_line, data, expansion);
+		if (return_val <= 0)
+			return (return_val);
 	}
-	if (input_line)
+	if (input_line) // not needed if readline() is used instead of get_next_line()
 		free(input_line);
 	if (g_signal)
 		return (-1);
@@ -155,6 +158,8 @@ static int	process_heredoc(t_data *data, t_token *current_token,
 	if (return_val <= 0)
 	{
 		close(fd);
+		if (return_val == -2)
+			process_exit_signal(data, delimiter);
 		return (return_val);
 	}
 	close(fd);

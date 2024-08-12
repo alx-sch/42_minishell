@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_test.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/10 16:51:05 by aschenk           #+#    #+#             */
-/*   Updated: 2024/08/07 20:23:32 by aschenk          ###   ########.fr       */
+/*   Updated: 2024/08/12 16:31:04 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@ including functions for character classification and error message printing.
 
 int		is_whitespace(int c);
 int		contains_quotes(const char *str);
+void	exit_ctrl_d(t_data *data, char *str);
 void	print_err_msg(char *msg);
 void	print_err_msg_prefix(char *msg);
 void	print_err_msg_custom(char *msg, unsigned int print_newline);

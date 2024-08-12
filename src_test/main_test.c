@@ -6,7 +6,7 @@
 /*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/06 12:05:14 by aschenk           #+#    #+#             */
-/*   Updated: 2024/08/12 09:02:29 by aschenk          ###   ########.fr       */
+/*   Updated: 2024/08/12 16:34:09 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,8 @@ int	main(int argc, char **argv, char **envp)
 	{
 		handle_signals();
 		data.input = readline(PROMPT);
+		if (!data.input)
+			process_exit_signal(&data, NULL);
 		if (g_signal)
 			data.exit_status = EOWNERDEAD;
 		g_signal = 0; // reset signal variable for heredoc prompt
@@ -43,9 +45,9 @@ int	main(int argc, char **argv, char **envp)
 				&& parse_tokens(&data))
 			{
 				handle_signals_exec();
-				set_terminal_mode(1);
+				//set_terminal_mode(1);
 				init_exec(&data);
-				set_terminal_mode(0);
+				//set_terminal_mode(0);
 			}
 		}
 		free_data(&data, 0); // why exit status hardcoded here? In what instances are
