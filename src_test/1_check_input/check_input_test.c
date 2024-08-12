@@ -6,7 +6,7 @@
 /*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/24 22:36:32 by aschenk           #+#    #+#             */
-/*   Updated: 2024/08/05 19:10:00 by aschenk          ###   ########.fr       */
+/*   Updated: 2024/08/12 17:30:00 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ ft_itoa fails). Also updates the `errno` to a custom `errno`.
  @param str_j 	Quotation symbol (' or ").
  @param i_str 	The string representation of position of piping syntax error.
 */
-static void	print_open_quotation_err_msg(char *char_str, char *i_str)
+static void	print_open_quotation_err_msg(char *char_str, char *i_str, t_data *data)
 {
 	ft_putstr_fd(ERR_COLOR, STDERR_FILENO); // Set error color for the output
 	ft_putstr_fd(ERR_PREFIX, STDERR_FILENO);
@@ -67,7 +67,7 @@ static void	print_open_quotation_err_msg(char *char_str, char *i_str)
 	ft_putstr_fd(i_str, STDERR_FILENO);
 	ft_putstr_fd(")\n", STDERR_FILENO);
 	ft_putstr_fd(RESET, STDERR_FILENO); // Reset the output style to default
-	errno = 420; // custom minishell exit status, bash would not return an error for unclosed quotations
+	data->exit_status = 420; // custom minishell exit status, bash would not return an error for unclosed quotations
 }
 
 /**
@@ -97,10 +97,10 @@ static int	is_closed(t_data *data, int i, const char c)
 	if (!i_str)
 	{
 		print_err_msg(ERR_MALLOC);
-		print_open_quotation_err_msg(char_str, "-1");
+		print_open_quotation_err_msg(char_str, "-1", data);
 		return (0); // Quotation mark is not closed, pos: -1
 	}
-	print_open_quotation_err_msg(char_str, i_str);
+	print_open_quotation_err_msg(char_str, i_str, data);
 	free(i_str);
 	return (0); // Quotation mark is not closed
 }
