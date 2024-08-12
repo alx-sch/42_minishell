@@ -6,7 +6,7 @@
 /*   By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/12 18:59:35 by nholbroo          #+#    #+#             */
-/*   Updated: 2024/08/12 19:00:31 by nholbroo         ###   ########.fr       */
+/*   Updated: 2024/08/12 19:19:29 by nholbroo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,9 @@
 
 static void	error_child_processes(t_data *data, t_exec *exec)
 {
+	ft_putstr_fd(ERR_COLOR, 2);
 	perror("");
+	ft_putstr_fd(RESET, 2);
 	free_exec(exec);
 	free_data(data, 1);
 	exit(errno);
