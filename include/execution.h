@@ -6,7 +6,7 @@
 /*   By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/31 19:12:38 by aschenk           #+#    #+#             */
-/*   Updated: 2024/08/08 13:26:32 by nholbroo         ###   ########.fr       */
+/*   Updated: 2024/08/12 19:00:43 by nholbroo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@ int		execution_only_in_parent(t_data *data, t_exec *exec);
 
 int		init_exec(t_data *data);
 void	reset_exec(t_exec *exec);
+void	create_child_processes(t_data *data, t_exec *exec);
 int		count_env_list(t_data *data);
 void	conv_env_tmp_to_arr(t_data *data, t_exec *exec);
 void	move_current_and_update_token(t_list **current, t_token **token);

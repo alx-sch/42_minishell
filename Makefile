@@ -274,6 +274,7 @@ TEST_FILES :=	0_init/init_cd_test.c \
 				4_builtins/utils/count_test.c \
 				4_builtins/utils/free_functions_test.c \
 				4_builtins/utils/modified_standards_test.c \
+				5_execution/child_processes_test.c \
 				5_execution/errors_test.c \
 				5_execution/execution_only_parent_test.c \
 				5_execution/execution_prep_test.c \
