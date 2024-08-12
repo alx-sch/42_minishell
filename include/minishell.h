@@ -6,7 +6,7 @@
 /*   By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/06 12:08:35 by aschenk           #+#    #+#             */
-/*   Updated: 2024/08/08 16:15:16 by nholbroo         ###   ########.fr       */
+/*   Updated: 2024/08/12 15:23:27 by nholbroo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,8 +70,8 @@ extern volatile __sig_atomic_t	g_signal;
 // 4: Custoum built-in fcts for our minishell -> see builtins.h
 
 // 8_history
-void	add_history_to_file(char *input);
-void	init_history(void);
+void	add_history_to_file(char *input, char *path_to_hist_file);
+char	*init_history(t_data *data);
 
 // utils.c
 
@@ -81,6 +81,7 @@ void	print_err_msg(char *msg);
 void	print_err_msg_prefix(char *msg);
 void	print_err_msg_custom(char *msg, unsigned int print_newline);
 void	print_token_list(t_list *lst); // TESTING ONLY
+void	set_path_to_file(t_data *data, char *file);
 
 // free.c
 
