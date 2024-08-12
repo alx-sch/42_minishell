@@ -6,7 +6,7 @@
 /*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/12 13:41:55 by aschenk           #+#    #+#             */
-/*   Updated: 2024/08/12 17:04:09 by aschenk          ###   ########.fr       */
+/*   Updated: 2024/08/12 17:51:56 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,12 +33,15 @@ Signal handler for SIGINT (CTRL+C) during heredoc prompt.
  @param signum 	The signal number received (expected to be SIGINT).
 
 It sets the global variable `g_signal` to 1 (which will set the correct exit
-status).
+status)and prints a new line (to which the following prompt is displayed on).
 */
 static void	sig_handler_exec(int signum)
 {
 	if (signum == SIGINT)
+	{
 		g_signal = 1;
+		printf("\n");
+	}
 }
 
 /**

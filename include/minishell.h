@@ -6,7 +6,7 @@
 /*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/06 12:08:35 by aschenk           #+#    #+#             */
-/*   Updated: 2024/08/12 16:31:43 by aschenk          ###   ########.fr       */
+/*   Updated: 2024/08/12 17:48:24 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ functionality without redundant includes.
 # include <termio.h> // provides struct termios used for terminal control
 
 /**
-Global variable used to indicate if and which signal was received.
+Global variable used to indicate if the CTRL+C signal was received.
  - `0`: No signal received
  - `1`: CTRL+C (SIGINT) signal received
 
