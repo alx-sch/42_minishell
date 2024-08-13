@@ -6,12 +6,15 @@
 /*   By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/12 18:59:35 by nholbroo          #+#    #+#             */
-/*   Updated: 2024/08/12 19:19:29 by nholbroo         ###   ########.fr       */
+/*   Updated: 2024/08/13 15:29:08 by nholbroo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+/*Error handling in the case of forking failed or one child process fails,
+returning -1 from waitpid. Prints out an error message, frees all allocated
+memory and exits the main process.*/
 static void	error_child_processes(t_data *data, t_exec *exec)
 {
 	ft_putstr_fd(ERR_COLOR, 2);
@@ -22,6 +25,8 @@ static void	error_child_processes(t_data *data, t_exec *exec)
 	exit(errno);
 }
 
+/*Stores the exit status from the last child process in the data struct,
+so when echo $? is used, it prints out the correct exit code.*/
 static void	set_exit_code(t_data *data, int stat_loc)
 {
 	int	exit_code;
@@ -34,6 +39,8 @@ static void	set_exit_code(t_data *data, int stat_loc)
 	}
 }
 
+/*Closes the pipe in the parent, waits for all children to finish, and sets
+the correct exit status.*/
 static void	finish_children(pid_t pid, int stat_loc, t_data *data, t_exec *exec)
 {
 	close_pipe_in_parent(data, exec);
@@ -42,9 +49,9 @@ static void	finish_children(pid_t pid, int stat_loc, t_data *data, t_exec *exec)
 	set_exit_code(data, stat_loc);
 }
 
-/*Creates the necessary child processes, one per command. Creates one common
-pipe for all the processes, while always saving a pointer to each side of the
-pipe in a different variable. */
+/*Creates the necessary child processes, one per command. Creates a pipe for 
+each process, and always closing the previous pipe (if it exists). For each 
+round it saves the current pipe, so the data gets stored for the next round.*/
 void	create_child_processes(t_data *data, t_exec *exec)
 {
 	pid_t	pid;

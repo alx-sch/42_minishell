@@ -6,14 +6,17 @@
 /*   By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/30 12:32:53 by nholbroo          #+#    #+#             */
-/*   Updated: 2024/08/12 19:18:20 by nholbroo         ###   ########.fr       */
+/*   Updated: 2024/08/13 15:40:53 by nholbroo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 /*The main function of the execution. Prepares for execution, executes the
-program and exits.*/
+program and exits. If the commmand is a builtin, instead of going into execve,
+it rather executes the builtin-function. If it is not a builtin, execve 
+takes over to execute the command. If anything fails, it prints out an error
+message and returns the right exit code.*/
 void	execution(t_data *data, t_exec *exec, int position)
 {
 	int	builtin_exit_code;

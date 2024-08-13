@@ -6,12 +6,15 @@
 /*   By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/07 19:03:20 by nholbroo          #+#    #+#             */
-/*   Updated: 2024/08/12 19:04:50 by nholbroo         ###   ########.fr       */
+/*   Updated: 2024/08/13 15:37:19 by nholbroo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+/*If the command turns out to be a non-builtin command, or a builtin that
+can get handled in a child process, the exec struct gets freed and properly
+reset. In this way, it goes "freshly" into a child process.*/
 void	reset_exec(t_exec *exec)
 {
 	exec->count_flags = 0;
@@ -29,6 +32,9 @@ void	reset_exec(t_exec *exec)
 	}
 }
 
+/*Checking for the existence of an infile or outfile, and handles this
+the same way as bash. If an infile doesn't exist, it throws out an error
+message. If an outfile doesn't exist, the outfile is created.*/
 void	check_file_exist_parent(t_data *data, t_exec *exec)
 {
 	if (exec->redir_in)
@@ -49,6 +55,12 @@ void	check_file_exist_parent(t_data *data, t_exec *exec)
 	}
 }
 
+/*This function gets called if there are no pipes, and only one builtin -
+either unset, export with arguments, cd or exit. These builtins need to happen
+in the parent process to actually have any effect, as they're modifying the
+environment. The function checks for redirections (which are not handled in 
+parent, but child, but still makes the check). It executes the builtin, frees 
+the allocated memory, and returns.*/
 int	execution_only_in_parent(t_data *data, t_exec *exec)
 {
 	check_redirections(data, exec, 0);

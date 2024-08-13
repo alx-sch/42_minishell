@@ -6,12 +6,14 @@
 /*   By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/30 12:32:25 by nholbroo          #+#    #+#             */
-/*   Updated: 2024/08/12 19:18:28 by nholbroo         ###   ########.fr       */
+/*   Updated: 2024/08/13 15:30:31 by nholbroo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+/*Prints an error message if a file doesn't exist, or something goes 
+wrong in the redirection.*/
 void	redirections_errors(t_data *data, t_exec *exec, int std, int parent)
 {
 	ft_putstr_fd(ERR_COLOR, 2);
@@ -60,6 +62,8 @@ void	conversion_errors(t_data *data, t_exec *exec, int i)
 	exec_errors(data, exec, 1);
 }
 
+/*Hardsets exit codes if execve fails, and prints an error-message based
+on the errno value. Frees all allocated memory and exits the child process.*/
 static void	execve_failure(t_data *data, t_exec *exec)
 {
 	int	exit_code;
