@@ -3,15 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   history_test.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
+/*   By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/08 16:14:07 by nholbroo          #+#    #+#             */
-/*   Updated: 2024/08/13 14:53:00 by aschenk          ###   ########.fr       */
+/*   Updated: 2024/08/13 17:45:34 by nholbroo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+/*Error handling for the minishell_history file.*/
 static void	history_errors(char *str, int error_code, int fd)
 {
 	if (error_code == 1)
@@ -32,6 +33,8 @@ static void	history_errors(char *str, int error_code, int fd)
 	}
 }
 
+/*Adds whatever input is there into the file '.minishell_history', to save
+it for later.*/
 void	add_history_to_file(char *input, char *path_to_hist_file)
 {
 	int	i;
@@ -52,6 +55,9 @@ void	add_history_to_file(char *input, char *path_to_hist_file)
 	add_history(input);
 }
 
+/*Adds command history from the file '.minishell_history' into the minishell
+history (arrow keys up and down). This ensures that commands from previous
+minishell sessions are saved, the same way as in bash.*/
 void	init_add_history_from_file(char *tmp, char *input, int fd)
 {
 	while (1)
@@ -68,6 +74,11 @@ void	init_add_history_from_file(char *tmp, char *input, int fd)
 	}
 }
 
+/*Initializes the path_to_hist_file, meaning the absolute path to a file
+called .minishell_history. 
+If it doesn't exist, it gets created.
+If it does exist, it gets opened, and the data from the file is getting stored
+in the history current minishell session.*/
 char	*init_history(t_data *data)
 {
 	int		fd;
