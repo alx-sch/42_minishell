@@ -6,7 +6,7 @@
 /*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/24 22:36:32 by aschenk           #+#    #+#             */
-/*   Updated: 2024/08/08 19:26:18 by aschenk          ###   ########.fr       */
+/*   Updated: 2024/08/13 15:35:26 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,13 +35,17 @@ char	*get_heredoc(t_data *data)
 {
 	char	*index;
 	char	*heredoc;
+	char	*heredoc_path;
 
 	index = ft_itoa(data->pipe_nr);
 	if (!index)
 		return (NULL);
 	heredoc = ft_strjoin(HEREDOC_PREFIX, index);
 	free(index);
-	return (heredoc);
+	heredoc_path = ft_strjoin(data->working_dir, heredoc);
+	if (heredoc)
+		free(heredoc);
+	return (heredoc_path);
 }
 
 /**

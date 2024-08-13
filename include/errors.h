@@ -6,7 +6,7 @@
 /*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/16 17:26:08 by aschenk           #+#    #+#             */
-/*   Updated: 2024/08/13 12:17:19 by aschenk          ###   ########.fr       */
+/*   Updated: 2024/08/13 15:09:43 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@ e.g. consistency, easier management, clearer code structure and maintenance.
 # define ERR_COLOR			"\033[91m\033[1m"
 # define ERR_MALLOC			"ERROR: malloc() failed"
 # define ERR_GET_CWD		"ERROR: Failed to retrieve the working directory"
+# define ERR_HIST_FILE		"ERROR: Unable to set the path to the history file"
 # define ERR_PREFIX			"minishell: "
 # define ERR_SYNTAX			"syntax error after "
 # define ERR_EMPTY_PIPE		"syntax error before '|': 'missing input"
