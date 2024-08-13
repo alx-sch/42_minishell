@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free_test.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/13 12:12:15 by aschenk           #+#    #+#             */
-/*   Updated: 2024/08/12 17:25:51 by nholbroo         ###   ########.fr       */
+/*   Updated: 2024/08/13 12:29:43 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,6 +102,8 @@ void	free_data(t_data *data, bool exit)
 	if (exit)
 	{
 		get_next_line(-1); // free static stash to avoid 'still reachables'
+		if (data->working_dir)
+			free(data->working_dir);
 		if (data->path_to_hist_file)
 			free(data->path_to_hist_file);
 		if (data->envp_temp)

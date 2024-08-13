@@ -6,7 +6,7 @@
 /*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/06 12:05:14 by aschenk           #+#    #+#             */
-/*   Updated: 2024/08/12 19:20:45 by aschenk          ###   ########.fr       */
+/*   Updated: 2024/08/13 12:00:20 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,8 +24,8 @@ int	main(int argc, char **argv, char **envp)
 {
 	t_data	data;
 
-	init_data_struct(&data, argc, argv, envp);
 	print_logo();
+	init_data_struct(&data, argc, argv, envp);
 	while (1)
 	{
 		handle_signals();

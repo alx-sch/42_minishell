@@ -6,7 +6,7 @@
 /*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/07 16:54:03 by aschenk           #+#    #+#             */
-/*   Updated: 2024/08/01 06:22:13 by aschenk          ###   ########.fr       */
+/*   Updated: 2024/08/13 12:09:49 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,6 @@ used for terminal formatting, prompt definitions, history configurations etc.
 
 # define HEREDOC_PREFIX	".heredoc_"
 
-# define MAX_VAR_NAME	1024
+# define MAX_BUFFER		1024
 
 #endif

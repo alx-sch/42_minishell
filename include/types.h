@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   types.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/31 17:40:14 by aschenk           #+#    #+#             */
-/*   Updated: 2024/08/12 15:20:31 by nholbroo         ###   ########.fr       */
+/*   Updated: 2024/08/13 11:55:54 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -204,6 +204,7 @@ typedef struct s_data
 	char			*input;
 	int				pipe_nr;
 	unsigned int	exit_status;
+	char			*working_dir;
 	char			*path_to_hist_file;
 	t_tok			tok;
 	t_env			*envp_temp;
