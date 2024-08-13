@@ -6,7 +6,7 @@
 /*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 16:59:48 by aschenk           #+#    #+#             */
-/*   Updated: 2024/08/12 17:58:50 by aschenk          ###   ########.fr       */
+/*   Updated: 2024/08/13 17:42:46 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -130,6 +130,38 @@ static int	add_other_token(t_data *data, int *i)
 }
 
 /**
+Updates the position of each token in the token list to reflect its position
+within the list.
+
+This function traverses the token list and assigns the `position` member of each
+token to its index in the list.
+
+ @param data 	Pointer to the data structure containing the token list.
+
+ @return 		`1` if all positions were successfully updated, `0` otherwise.
+*/
+static int	update_token_positions(t_data *data)
+{
+	t_list	*current;
+	int		position;
+
+	if (!data || !data->tok.tok_lst)
+		return (0);
+	current = data->tok.tok_lst;
+	position = 0;
+	while (current)
+	{
+		t_token *token = (t_token *)current->content;
+		if (!token)
+			return (0);
+		token->position = position;
+		position++;
+		current = current->next;
+	}
+	return (1);
+}
+
+/**
 Parses the input string to extract tokens and builds a token list (t_list type).
 
 This function iterates over the input string and extracts tokens based on
@@ -149,7 +181,7 @@ stops processing further tokens.
 int	get_tokens(t_data *data)
 {
 	int	i;
-	int return_redir;
+	int	return_redir;
 	int	return_pipe;
 	int	return_other;
 
@@ -167,6 +199,11 @@ int	get_tokens(t_data *data)
 				print_err_msg(ERR_TOKEN); // no ERR_TOK err message printed when syntax error (return '-1')
 			return (0); // token creation failed (invalid syntax or malloc fail during token creation)
 		}
+	}
+	if (!update_token_positions(data))
+	{
+		print_err_msg(ERR_TOKEN);
+		return (0);
 	}
 	return (1);
 }
