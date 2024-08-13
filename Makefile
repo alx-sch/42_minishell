@@ -293,8 +293,9 @@ TEST_FILES :=	0_init/init_cd_test.c \
 				6_signals/signals_terminal_test.c \
 				7_utils/free_test.c \
 				7_utils/logo_test.c \
+				7_utils/error_test.c \
 				7_utils/utils_test.c \
-				8_history/minishell_history_test.c \
+				8_history/history_test.c \
 				main_test.c
 
 TEST_SRCS :=	$(addprefix $(TEST_DIR)/, $(TEST_FILES))

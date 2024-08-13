@@ -6,7 +6,7 @@
 /*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/06 12:08:35 by aschenk           #+#    #+#             */
-/*   Updated: 2024/08/12 17:48:24 by aschenk          ###   ########.fr       */
+/*   Updated: 2024/08/13 11:48:33 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,25 +70,30 @@ extern volatile __sig_atomic_t	g_signal;
 // 2: Tokenization of user input into distinct syntactic unit -> see tokenizer.h
 // 3: Parsing of tokens (handling of heredocs and var expansion) -> see parser.h
 // 4: Custoum built-in fcts for our minishell -> see builtins.h
+// 5: Command exectuion (incl. forking / piping) -> see execution.h
+// 6: Signal handling -> see singals.h
 
-// 8_history
-void	add_history_to_file(char *input, char *path_to_hist_file);
-char	*init_history(t_data *data);
-
-// utils.c
+// 7_utils/utils.c
 
 int		is_whitespace(int c);
 int		contains_quotes(const char *str);
+void	set_path_to_file(t_data *data, char *file);
+
+// 7_utils/errors.c
+
 void	print_err_msg(char *msg);
 void	print_err_msg_prefix(char *msg);
 void	print_err_msg_custom(char *msg, unsigned int print_newline);
-void	print_token_list(t_list *lst); // TESTING ONLY
-void	set_path_to_file(t_data *data, char *file);
 
-// free.c
+// 7_utils/free.c
 
 void	del_token(void *content);
 void	free_unlinked_token(t_data *data);
 void	free_data(t_data *data, bool exit);
+
+// 8_history/history.c
+
+void	add_history_to_file(char *input, char *path_to_hist_file);
+char	*init_history(t_data *data);
 
 #endif
