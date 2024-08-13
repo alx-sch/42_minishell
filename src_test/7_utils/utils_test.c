@@ -6,7 +6,7 @@
 /*   By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/10 16:51:05 by aschenk           #+#    #+#             */
-/*   Updated: 2024/08/13 15:42:11 by nholbroo         ###   ########.fr       */
+/*   Updated: 2024/08/13 17:18:53 by nholbroo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ such as character classification.
 int		is_whitespace(int c);
 int		contains_quotes(const char *str);
 void	set_path_to_file(t_data *data, char **str, char *file, char *err_msg);
-//void	set_path_to_file(t_data *data, char *file);
+void	minishell_prompt(t_data *data);
 
 /**
 Checks if a character is a whitespace character:
@@ -84,14 +84,21 @@ void	set_path_to_file(t_data *data, char **path, char *file, char *err_msg)
 	}
 }
 
+void	minishell_prompt(t_data *data)
+{
+	data->input = readline(PROMPT);
+	if (!data->input)
+		process_exit_signal(data, NULL);
+}
+
 // // Function to print the list of tokens
 // // FOR TESTING ONLY; use `print_token_list(data.tok.tok_lst)` in main().
-// void	print_token_list(t_list *lst)
-// {
-// 	while (lst)
-// 	{
-// 		t_token *token = lst->content;
-// 		printf("Position[%d]: '%s' (token type: %d)\n", token->position, token->lexeme, token->type);
-// 		lst = lst->next;
-// 	}
-// }
+void	print_token_list(t_list *lst)
+{
+	while (lst)
+	{
+		t_token *token = lst->content;
+		printf("Position[%d]: '%s' (token type: %d)\n", token->position, token->lexeme, token->type);
+		lst = lst->next;
+	}
+}

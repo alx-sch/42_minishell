@@ -6,7 +6,7 @@
 /*   By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/01 16:34:21 by aschenk           #+#    #+#             */
-/*   Updated: 2024/08/08 14:27:34 by nholbroo         ###   ########.fr       */
+/*   Updated: 2024/08/13 16:16:57 by nholbroo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,8 @@ static char	*is_valid_syntax(t_data *data, int j)
 	invalid_syn = NULL;
 	while (is_whitespace(data->input[j]))
 		j++;
-	if (data->input[j] == '|' || data->input[j] == '\0')
+	if (data->input[j] == '|' || data->input[j] == '&'
+		|| data->input[j] == '!' || data->input[j] == '\0')
 	{
 		invalid_syn = malloc(sizeof(char) * (ft_strlen("newline") + 1));
 		if (!invalid_syn)
@@ -74,39 +75,37 @@ and updates the `errno` accordingly.
 
  @param invalid_syn The invalid operand encountered in the input.
  @param str_j 		The string representation of int j (position of failed piping).
+ @param data 		Pointer to the data structure including the exit status member.
+ @param empty 		Flag to indicate if 'empty pipe' msg should be printed
+ 					(other than zero) or not (`0`).
 */
-static void	print_pipe_err_msg(char *invalid_syn, char *str_j)
+static void	print_pipe_err_msg(char *invalid_syn, char *str_j, t_data *data,
+	int empty)
 {
 	ft_putstr_fd(ERR_COLOR, STDERR_FILENO);
 	ft_putstr_fd(ERR_PREFIX, STDERR_FILENO);
-	ft_putstr_fd(ERR_SYNTAX, STDERR_FILENO);
-	ft_putstr_fd("'|': '", STDERR_FILENO);
-	ft_putstr_fd(invalid_syn, STDERR_FILENO);
+	if (empty)
+		ft_putstr_fd(ERR_EMPTY_PIPE, STDERR_FILENO);
+	else
+	{
+		ft_putstr_fd(ERR_SYNTAX, STDERR_FILENO);
+		ft_putstr_fd("'|': '", STDERR_FILENO);
+		ft_putstr_fd(invalid_syn, STDERR_FILENO);
+	}
 	ft_putstr_fd("' (position: ", STDERR_FILENO);
 	ft_putstr_fd(str_j, STDERR_FILENO);
 	ft_putstr_fd(")\n", STDERR_FILENO);
 	ft_putstr_fd(RESET, STDERR_FILENO);
-	errno = ENOENT;
+	data->exit_status = ENOENT;
 }
 
-/**
-Used in check_syntax().
-
-Prints an error message for missing input before the first pipe ('|')
-and updates the `errno` accordingly.
-
- @param str_j The string representation of int j (position of failed piping).
-*/
-static void	print_empty_pipe_err_msg(char *str_j)
+// Frees the allocated memory if it was allocated before.
+static void	free_syntax_vars(char *invalid_syn, char *str_j)
 {
-	ft_putstr_fd(ERR_COLOR, STDERR_FILENO);
-	ft_putstr_fd(ERR_PREFIX, STDERR_FILENO);
-	ft_putstr_fd(ERR_EMPTY_PIPE, STDERR_FILENO);
-	ft_putstr_fd(" (position: ", STDERR_FILENO);
-	ft_putstr_fd(str_j, STDERR_FILENO);
-	ft_putstr_fd(")\n", STDERR_FILENO);
-	ft_putstr_fd(RESET, STDERR_FILENO);
-	errno = ENOENT;
+	if (invalid_syn && ft_strcmp(invalid_syn, "ERR") != 0)
+		free(invalid_syn);
+	if (str_j && ft_strcmp(str_j, "-1") != 0)
+		free(str_j);
 }
 
 /**
@@ -136,16 +135,18 @@ static int	check_syntax(t_data *data, int j)
 		str_j = ft_itoa(j);
 		if (!str_j)
 			str_j = "-1";
-		if (ft_strcmp(str_j, "-1") == 0 || ft_strcmp(invalid_syn, "ERR") == 0)
+		if (ft_strcmp(str_j, "-1") == 0)
 			print_err_msg(ERR_MALLOC);
 		if (data->tok.tok_lst == NULL)
-			print_empty_pipe_err_msg(str_j);
+			print_pipe_err_msg(invalid_syn, str_j, data, 1);
 		else
-			print_pipe_err_msg(invalid_syn, str_j);
-		if (invalid_syn && ft_strcmp(invalid_syn, "ERR") != 0)
-			free(invalid_syn);
-		if (ft_strcmp(str_j, "-1") != 0)
-			free(str_j);
+		{
+			if (ft_strcmp(str_j, "-1") != 0
+				&& ft_strcmp(invalid_syn, "ERR") == 0)
+				print_err_msg(ERR_MALLOC);
+			print_pipe_err_msg(invalid_syn, str_j, data, 0);
+		}
+		free_syntax_vars(invalid_syn, str_j);
 		return (0);
 	}
 	return (1);

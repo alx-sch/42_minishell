@@ -26,21 +26,24 @@ SRCS_FILES :=	0_init/init_cd.c \
 				0_init/init_env.c \
 				0_init/init_export.c \
 				1_check_input/check_input.c \
-				2_tokenizer/tokenizer_pipe.c \
-				2_tokenizer/tokenizer_redirection.c \
-				2_tokenizer/tokenizer_utils.c \
 				2_tokenizer/tokenizer.c \
-				3_parser/parser_heredoc_utils.c \
-				3_parser/parser_heredoc.c \
-				3_parser/parser_var_expansion_utils.c \
-				3_parser/parser_var_expansion.c \
+				2_tokenizer/tokenizer_redirection.c \
+				2_tokenizer/tokenizer_pipe.c \
+				2_tokenizer/tokenizer_utils.c \
 				3_parser/parser.c \
+				3_parser/parser_utils.c \
+				3_parser/parser_var_expansion.c \
+				3_parser/parser_var_expansion_utils.c \
+				3_parser/parser_heredoc.c \
+				3_parser/parser_heredoc_utils.c \
+				4_builtins/builtin.c \
+				4_builtins/builtin_utils.c \
 				4_builtins/builtins/cd.c \
 				4_builtins/builtins/echo.c \
 				4_builtins/builtins/env.c \
 				4_builtins/builtins/exit.c \
-				4_builtins/builtins/export_utils.c \
 				4_builtins/builtins/export.c \
+				4_builtins/builtins/export_utils.c \
 				4_builtins/builtins/pwd.c \
 				4_builtins/builtins/unset.c \
 				4_builtins/errors/cd_errors.c \
@@ -49,29 +52,30 @@ SRCS_FILES :=	0_init/init_cd.c \
 				4_builtins/errors/export_errors.c \
 				4_builtins/errors/pwd_errors.c \
 				4_builtins/errors/unset_errors.c \
-				4_builtins/utils/count.c \
+				4_builtins/utils/count_array_length.c \
 				4_builtins/utils/free_functions.c \
 				4_builtins/utils/modified_standards.c \
-				4_builtins/builtin_utils.c \
-				4_builtins/builtin.c \
-				5_execution/errors.c \
-				5_execution/execution_only_parent.c \
-				5_execution/execution_prep.c \
-				5_execution/execution_utils.c \
-				5_execution/execution.c \
-				5_execution/free_functions.c \
-				5_execution/get_flags_and_command.c \
-				5_execution/get_path.c \
+				5_execution/execution/execution_only_parent.c \
+				5_execution/execution/execution.c \
+				5_execution/execution_prep/child_processes.c \
+				5_execution/execution_prep/execution_prep.c \
+				5_execution/execution_prep/execution_utils.c \
+				5_execution/execution_prep/get_flags_and_command.c \
+				5_execution/execution_prep/get_path.c \
+				5_execution/execution_prep/pipes.c \
+				5_execution/execution_prep/redirections_check.c \
+				5_execution/execution_prep/redirections_do.c \
+				5_execution/utils/errors.c \
+				5_execution/utils/free_functions.c \
 				5_execution/init_exec.c \
-				5_execution/pipes.c \
-				5_execution/redirections_check.c \
-				5_execution/redirections_do.c \
-				6_signals/signals.c \
-				6_signals/signals_utils.c \
+				6_signals/signals_prompts.c \
+				6_signals/signals_execution.c \
+				6_signals/signals_exit.c \
 				7_utils/free.c \
-				7_utils/utils.c \
 				7_utils/logo.c \
-				8_history/minishell_history_test.c \
+				7_utils/errors.c \
+				7_utils/utils.c \
+				8_history/history.c \
 				main.c
 
 SRCS :=			$(addprefix $(SRCS_DIR)/, $(SRCS_FILES))
@@ -82,10 +86,18 @@ OBJS :=			$(SRCS:$(SRCS_DIR)/%.c=$(OBJS_DIR)/%.o)
 
 # HEADER FILES
 HDRS_DIR :=		include
-HDRS_FILES := 	minishell.h \
+HDRS_FILES := 	builtins.h \
 				config.h \
+				errors.h \
+				execution.h \
+				init.h \
+				input_check.h \
+				minishell.h \
+				parser.h \
+				signals.h \
 				tokenizer.h \
-				errors.h
+				types.h 
+
 
 HDRS :=			$(addprefix $(HDRS_DIR)/, $(HDRS_FILES))
 
@@ -152,8 +164,8 @@ LIB_FLAGS  :=	-L$(LIBFT_DIR) -lft -lreadline -lhistory
 CC :=			cc
 CFLAGS := 		-I$(HDRS_DIR) -I$(LIBFT_DIR)
 CFLAGS :=		-Werror -Wextra -Wall -I$(HDRS_DIR) -I$(LIBFT_DIR)
-CFLAGS +=		-Wpedantic -g
-#CFLAGS +=		-fsanitize=address
+# CFLAGS +=		-Wpedantic -g
+# CFLAGS +=		-fsanitize=address
 
 # Used for progress bar
 TOTAL_SRCS :=	$(words $(SRCS))
@@ -271,29 +283,28 @@ TEST_FILES :=	0_init/init_cd_test.c \
 				4_builtins/errors/export_errors_test.c \
 				4_builtins/errors/pwd_errors_test.c \
 				4_builtins/errors/unset_errors_test.c \
-				4_builtins/utils/count_test.c \
+				4_builtins/utils/count_array_length_test.c \
 				4_builtins/utils/free_functions_test.c \
 				4_builtins/utils/modified_standards_test.c \
-				5_execution/child_processes_test.c \
-				5_execution/errors_test.c \
-				5_execution/execution_only_parent_test.c \
-				5_execution/execution_prep_test.c \
-				5_execution/execution_test.c \
-				5_execution/execution_utils_test.c \
-				5_execution/free_functions_test.c \
-				5_execution/get_flags_and_command_test.c \
-				5_execution/get_path_test.c \
+				5_execution/execution/execution_only_parent_test.c \
+				5_execution/execution/execution_test.c \
+				5_execution/execution_prep/child_processes_test.c \
+				5_execution/execution_prep/execution_prep_test.c \
+				5_execution/execution_prep/execution_utils_test.c \
+				5_execution/execution_prep/get_flags_and_command_test.c \
+				5_execution/execution_prep/get_path_test.c \
+				5_execution/execution_prep/pipes_test.c \
+				5_execution/execution_prep/redirections_check_test.c \
+				5_execution/execution_prep/redirections_do_test.c \
+				5_execution/utils/errors_test.c \
+				5_execution/utils/free_functions_test.c \
 				5_execution/init_exec_test.c \
-				5_execution/pipes_test.c \
-				5_execution/redirections_check_test.c \
-				5_execution/redirections_do_test.c \
 				6_signals/signals_prompts_test.c \
 				6_signals/signals_execution_test.c \
 				6_signals/signals_exit_test.c \
-				6_signals/signals_terminal_test.c \
 				7_utils/free_test.c \
 				7_utils/logo_test.c \
-				7_utils/error_test.c \
+				7_utils/errors_test.c \
 				7_utils/utils_test.c \
 				8_history/history_test.c \
 				main_test.c

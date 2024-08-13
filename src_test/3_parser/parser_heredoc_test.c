@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser_heredoc_test.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
+/*   By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/24 22:36:32 by aschenk           #+#    #+#             */
-/*   Updated: 2024/08/12 16:34:41 by aschenk          ###   ########.fr       */
+/*   Updated: 2024/08/13 16:22:52 by nholbroo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,7 @@ variable expansion, and trims the newline character.
 
  @return			`1` if the line was successfully read and processed;
  					`0` if reading or processing failed.
+					`-2` if readline() returns `NULL` (EOT char is encountered).
  */
 static int	read_and_process_line(char **input_line, t_data *data,
 	int expansion)
@@ -105,6 +106,7 @@ expansion on input lines. The function also handles interruptions by CTRL+C.
  @return	`1` if input handling succeeded and the delimiter was encountered.
  			`0` if input handling failed due to a write operation error.
  			`-1` if the heredoc input was interrupted by CTRL+C.
+			`-2` if EOT char is encountered in readline().
 */
 static int	handle_heredoc_input(int fd, char *delimiter, t_data *data,
 	int expansion)
@@ -141,6 +143,7 @@ untrimmed delimiter (`next_token->lexeme`)does not contain any quotation symbols
  @return	`1` if the HEREDOC processing succeeded.
 			`0` if the HEREDOC processing failed.
 			`-1` if heredoc prompt was interrupted by CTRL+C.
+			`-2` if EOT char is encountered in readline() via CTRL+D.
 */
 static int	process_heredoc(t_data *data, t_token *current_token,
 	t_token *next_token, char *delimiter)
@@ -177,6 +180,7 @@ Also counts the number of PIPE tokens and sets counter accordingly.
  			none were encountered.
 			`0` if any HEREDOC processing or delimiter trimming failed.
 			`-1` if heredoc prompt was interrupted by CTRL+C.
+			`-2` if EOT char is encountered in readline() via CTRL+D.
 */
 int	process_heredocs(t_data *data)
 {

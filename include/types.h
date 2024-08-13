@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   types.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
+/*   By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/31 17:40:14 by aschenk           #+#    #+#             */
-/*   Updated: 2024/08/13 14:27:35 by aschenk          ###   ########.fr       */
+/*   Updated: 2024/08/13 15:58:02 by nholbroo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,12 +33,12 @@ including user input, token and built-in management, and environment variables.
 Data type `enum` defines a set of constants via integers (starting with 0).
 Categorizes tokens:
 
-- PIPE:			'|' ; pipeline between two commands.
+- PIPE :		'|' ; pipeline between two commands.
 - REDIR_IN:		'<'	; redirects input of a command from a file instead of STDIN.
 - REDIR_OUT:	'>' ; redirects output of a command into file instead of STDOUT.
 - REDIR_APPEND:	'>>'; appends cmd output to a file without truncating it.
-- HEREDOC:		'<<'; creates a here-document, directly input via CL.
-- OTHER:		All other types.
+- HEREDOC :		'<<'; creates a here-document, directly input via CL.
+- OTHER :		All other types.
 */
 typedef enum e_token_type
 {
@@ -186,6 +186,7 @@ Fields:
 - input [char*]:		User input entered into the prompt.
 - pipe_nr [int]:		The number of pipes in the current command.
 - exit_status [unsigned int]:	The exit status of the last executed command.
+- working_dir [char *]:	The project's working directory.
 - tok [t_tok]:			Manages token status and holds the linked list of tokens.
 - envp_temp [t_env*]:	A linked list containing the continuously modified state
 						of the environment variables, used for the "env" command.

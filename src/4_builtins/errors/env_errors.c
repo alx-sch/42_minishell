@@ -6,7 +6,7 @@
 /*   By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/24 12:09:25 by nholbroo          #+#    #+#             */
-/*   Updated: 2024/08/08 14:17:28 by nholbroo         ###   ########.fr       */
+/*   Updated: 2024/08/13 16:34:03 by nholbroo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ void	mem_alloc_fail_env(t_env **head)
 {
 	free_env_struct(head);
 	print_err_msg_prefix("env");
-	exit(errno);
+	exit(EXIT_FAILURE);
 }
 
 static int	print_env_err_unrecognzied(char *input, int i)

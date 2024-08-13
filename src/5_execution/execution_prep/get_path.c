@@ -1,17 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_path_test.c                                    :+:      :+:    :+:   */
+/*   get_path.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/30 18:58:47 by nholbroo          #+#    #+#             */
-/*   Updated: 2024/08/05 19:05:09 by nholbroo         ###   ########.fr       */
+/*   Updated: 2024/08/13 16:42:20 by nholbroo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+/*Checks for the '/'-sign in the command string, to check if it's
+a path.
+Returns 1 if it is a path.
+Returns 0 if it is NOT a path.*/
 int	cmd_is_path(t_data *data, t_exec *exec)
 {
 	if (ft_strchr(exec->cmd, '/'))

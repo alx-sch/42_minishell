@@ -6,7 +6,7 @@
 /*   By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/13 12:12:15 by aschenk           #+#    #+#             */
-/*   Updated: 2024/08/08 14:21:41 by nholbroo         ###   ########.fr       */
+/*   Updated: 2024/08/13 16:50:53 by nholbroo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,11 +57,14 @@ void	free_unlinked_token(t_data *data)
 /**
 Deletes any temporary heredoc files created during shell operation.
 It iterates through potential heredoc files and removes them if they exist.
+Changes made by access() do not  affect the subsequent error handling or
+reporting, as errno updated by this function are skipped.
 */
 static void	delete_heredocs(t_data *data)
 {
 	int		pipe_nr_max;
 	char	*heredoc;
+	int		tmp_errno;
 
 	pipe_nr_max = data->pipe_nr;
 	data->pipe_nr = 0;
@@ -70,9 +73,13 @@ static void	delete_heredocs(t_data *data)
 		heredoc = get_heredoc(data);
 		if (heredoc)
 		{
+			tmp_errno = errno;
 			if (access(heredoc, F_OK) != -1)
+			{
 				if (unlink(heredoc) != 0)
 					print_err_msg(ERR_DEL_HEREDOC);
+			}
+			errno = tmp_errno;
 			free(heredoc);
 		}
 		data->pipe_nr++;
@@ -101,6 +108,11 @@ void	free_data(t_data *data, bool exit)
 	data->pipe_nr = 0;
 	if (exit)
 	{
+		get_next_line(-1);
+		if (data->working_dir)
+			free(data->working_dir);
+		if (data->path_to_hist_file)
+			free(data->path_to_hist_file);
 		if (data->envp_temp)
 			free_env_struct(&data->envp_temp);
 		if (data->export_list)

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_data_test.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
+/*   By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/24 12:46:41 by nholbroo          #+#    #+#             */
-/*   Updated: 2024/08/13 15:27:07 by aschenk          ###   ########.fr       */
+/*   Updated: 2024/08/13 16:05:00 by nholbroo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ static void	get_cwd(t_data *data)
 	data->working_dir = ft_strjoin(tmp, "/");
 	if (tmp)
 		free(tmp);
-	if (!data->working_dir )
+	if (!data->working_dir)
 	{
 		print_err_msg(ERR_GET_CWD);
 		free_data(data, 1);

@@ -6,13 +6,13 @@
 /*   By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/10 16:51:05 by aschenk           #+#    #+#             */
-/*   Updated: 2024/08/08 14:22:15 by nholbroo         ###   ########.fr       */
+/*   Updated: 2024/08/13 16:51:36 by nholbroo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 /*
 This file contains utility functions used throughout the minishell project,
-including functions for character classification and error message printing.
+such as character classification.
 */
 
 #include "minishell.h"
@@ -21,9 +21,8 @@ including functions for character classification and error message printing.
 
 int		is_whitespace(int c);
 int		contains_quotes(const char *str);
-void	print_err_msg(char *msg);
-void	print_err_msg_prefix(char *msg);
-void	print_err_msg_custom(char *msg, unsigned int print_newline);
+void	set_path_to_file(t_data *data, char **str, char *file, char *err_msg);
+void	minishell_prompt(t_data *data);
 
 /**
 Checks if a character is a whitespace character:
@@ -62,53 +61,32 @@ int	contains_quotes(const char *str)
 }
 
 /**
-Prints an error message to the standard error stream (stderr),
-with additional formatting applied.
-The actual error description is obtained using `perror`, which
-appends a system-generated message based on the current `errno`.
+Creates a full file path by combining the working directory stored in the `data`
+structure with the specified `file` name. It dynamically allocates memory for the
+resulting path and assigns it to the `path` pointer. If memory allocation fails,
+or if any error occurs, it will print an error message and terminate the program.
 
- @param msg 	The error message to be printed. This should be a
-				descriptive string about the error that occurred.
+ @param data 		Pointer to a t_data structure containing the working directory.
+ @param path 		Pointer to a char* where the constructed file path will be stored.
+					The function updates this pointer to point to the newly
+					allocated path.
+ @param file 		The name of the file to be appended to the working directory.
+ @param err_msg 	A custom error message to be printed if memory allocation fails.
 */
-void	print_err_msg(char *msg)
+void	set_path_to_file(t_data *data, char **path, char *file, char *err_msg)
 {
-	ft_putstr_fd(ERR_COLOR, STDERR_FILENO);
-	perror(msg);
-	ft_putstr_fd(RESET, STDERR_FILENO);
+	*path = ft_strjoin(data->working_dir, file);
+	if (!*path)
+	{
+		free_data(data, 1);
+		print_err_msg(err_msg);
+		exit(EXIT_FAILURE);
+	}
 }
 
-/**
-Prints formatted error message with leading ERR_PREFIX.
-The actual error description is obtained using `perror`, which
-appends a system-generated message based on the current `errno`.
-
- @param msg 	The error message to be printed. This should be a
-				descriptive string about the error that occurred.
-*/
-void	print_err_msg_prefix(char *msg)
+void	minishell_prompt(t_data *data)
 {
-	ft_putstr_fd(ERR_COLOR, STDERR_FILENO);
-	ft_putstr_fd(ERR_PREFIX, STDERR_FILENO);
-	perror(msg);
-	ft_putstr_fd(RESET, STDERR_FILENO);
-}
-
-/**
-Prints an error message to the standard error stream (stderr),
-with additional formatting applied. Prints custom error messages
-not covered by an errno, thus does not use perror().
-
- @param msg 			The error message to be printed. This should be a
-						descriptive string about the error that occurred.
- @param print_newline 	Flag to print the newline character after
-						the error message (`0` does not, otherwise does).
-*/
-void	print_err_msg_custom(char *msg, unsigned int print_newline)
-{
-	ft_putstr_fd(ERR_COLOR, STDERR_FILENO);
-	ft_putstr_fd(ERR_PREFIX, STDERR_FILENO);
-	ft_putstr_fd(msg, STDERR_FILENO);
-	if (print_newline)
-		ft_putstr_fd("\n", STDERR_FILENO);
-	ft_putstr_fd(RESET, STDERR_FILENO);
+	data->input = readline(PROMPT);
+	if (!data->input)
+		process_exit_signal(data, NULL);
 }

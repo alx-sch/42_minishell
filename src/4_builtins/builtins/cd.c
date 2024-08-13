@@ -6,7 +6,7 @@
 /*   By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/13 13:51:10 by nholbroo          #+#    #+#             */
-/*   Updated: 2024/08/08 14:14:47 by nholbroo         ###   ########.fr       */
+/*   Updated: 2024/08/13 16:30:20 by nholbroo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 // Changes current working directory to parent directory ("cd ..").
 // Throws an error if memory allocation fails or something goes wrong with
 // changing the directory.
+// @param eol "End of line"
 static int	cd_one_up(t_cd **cd, char *cwd)
 {
 	int		eol;

@@ -6,7 +6,7 @@
 /*   By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/31 11:19:43 by nholbroo          #+#    #+#             */
-/*   Updated: 2024/08/08 13:26:14 by nholbroo         ###   ########.fr       */
+/*   Updated: 2024/08/12 19:07:35 by nholbroo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,11 @@ void	check_file_exist_child(t_data *data, t_exec *exec)
 	{
 		if (access(exec->outfile, F_OK == -1))
 		{
-			if (open(exec->outfile, O_CREAT) == -1)
+			exec->outfile_fd = open(exec->outfile, O_CREAT);
+			if (exec->outfile_fd == -1)
 				redirections_errors(data, exec, 1, 0);
+			close(exec->outfile_fd);
+			exec->outfile_fd = 0;
 		}
 	}
 }
@@ -36,6 +39,7 @@ static void	redir_in(t_data *data, t_exec *exec)
 		redirections_errors(data, exec, 0, 0);
 	if (dup2(exec->infile_fd, STDIN_FILENO) == -1)
 		redirections_errors(data, exec, 0, 0);
+	close(exec->infile_fd);
 }
 
 static void	redir_out(t_data *data, t_exec *exec)
@@ -48,6 +52,7 @@ static void	redir_out(t_data *data, t_exec *exec)
 		redirections_errors(data, exec, 1, 0);
 	if (dup2(exec->outfile_fd, STDOUT_FILENO) == -1)
 		redirections_errors(data, exec, 1, 0);
+	close (exec->outfile_fd);
 }
 
 void	do_redirections(t_data *data, t_exec *exec)

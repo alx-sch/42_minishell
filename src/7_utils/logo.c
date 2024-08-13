@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   logo.c                                             :+:      :+:    :+:   */
+/*   logo_test.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/08/08 14:23:34 by nholbroo          #+#    #+#             */
-/*   Updated: 2024/08/08 14:23:58 by nholbroo         ###   ########.fr       */
+/*   Created: 2024/08/08 14:25:03 by nholbroo          #+#    #+#             */
+/*   Updated: 2024/08/08 14:25:14 by nholbroo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,6 @@ void	print_logo(void)
 	printf("%s(____) %s\\____/ ", L_RED, ORANGE);
 	printf("%s\\____/\n\n", YELLOW);
 	printf("%s%s", RESET, BOLD);
-	printf("by Natalie R. Holbrook & Alex Schenk @42 Berlin, August 2024\n\n");
+	printf("by Natalie Holbrook & Alex Schenk @42 Berlin, August 2024\n\n");
 	printf("%s", RESET);
 }

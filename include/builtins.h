@@ -6,19 +6,18 @@
 /*   By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/31 17:09:56 by aschenk           #+#    #+#             */
-/*   Updated: 2024/08/07 18:51:26 by nholbroo         ###   ########.fr       */
+/*   Updated: 2024/08/13 15:44:41 by nholbroo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 /**
 Declarations for built-in minishell commands and their utility functions:
-`cd`, `pwd`, `env`, `unset`, `export`, and `echo`.
+`cd`, `pwd`, `exit`, `env`, `unset`, `export`, and `echo`.
 */
 
 #ifndef BUILTINS_H
 # define BUILTINS_H
 
-# include <stdbool.h> // bool
 # include "types.h"
 
 // Builtins:

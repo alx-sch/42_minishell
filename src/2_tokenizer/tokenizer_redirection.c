@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   tokenizer_redirection.c                            :+:      :+:    :+:   */
+/*   tokenizer_redirection_test.c                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/17 13:00:24 by aschenk           #+#    #+#             */
-/*   Updated: 2024/08/08 14:02:04 by nholbroo         ###   ########.fr       */
+/*   Updated: 2024/08/13 16:13:56 by nholbroo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,26 +78,26 @@ and updates the `errno` accordingly.
  @param str_j 		The string representation of int j.
  @param j 			Position index of the failed redirection in the input string.
 */
-static void	print_redir_err_msg(char *invalid_op, const char *input,
+static void	print_redir_err_msg(char *invalid_op, t_data *data,
 	char *str_j, int j)
 {
 	ft_putstr_fd(ERR_COLOR, STDERR_FILENO);
 	ft_putstr_fd(ERR_PREFIX, STDERR_FILENO);
 	ft_putstr_fd(ERR_SYNTAX, STDERR_FILENO);
-	if (input[j] == '>' && input[j + 1] == '>')
+	if (data->input[j] == '>' && data->input[j + 1] == '>')
 		ft_putstr_fd("'>>': '", STDERR_FILENO);
-	else if (input[j] == '>')
+	else if (data->input[j] == '>')
 		ft_putstr_fd("'>': '", STDERR_FILENO);
-	else if (input[j] == '<' && input[j + 1] == '<')
+	else if (data->input[j] == '<' && data->input[j + 1] == '<')
 		ft_putstr_fd("'<<': '", STDERR_FILENO);
-	else if (input[j] == '<')
+	else if (data->input[j] == '<')
 		ft_putstr_fd("'<': '", STDERR_FILENO);
 	ft_putstr_fd(invalid_op, STDERR_FILENO);
 	ft_putstr_fd("' (position: ", STDERR_FILENO);
 	ft_putstr_fd(str_j, STDERR_FILENO);
 	ft_putstr_fd(")\n", STDERR_FILENO);
 	ft_putstr_fd(RESET, STDERR_FILENO);
-	errno = ENOENT;
+	data->exit_status = ENOENT;
 }
 
 /**
@@ -116,12 +116,12 @@ in these cases).
  @return	`0` if an invalid operand is found and an error message is printed.
 			`1` if the operand is valid.
 */
-static int	check_operand(const char *input, int *i, int j)
+static int	check_operand(t_data *data, int *i, int j)
 {
 	char	*invalid_op;
 	char	*str_j;
 
-	invalid_op = is_valid_operand(input, i);
+	invalid_op = is_valid_operand(data->input, i);
 	if (invalid_op)
 	{
 		str_j = ft_itoa(j);
@@ -129,12 +129,12 @@ static int	check_operand(const char *input, int *i, int j)
 			print_err_msg(ERR_MALLOC);
 		if (!str_j)
 		{
-			print_redir_err_msg(invalid_op, input, "-1", j);
+			print_redir_err_msg(invalid_op, data, "-1", j);
 			if (ft_strcmp(invalid_op, "ERR") != 0)
 				free(invalid_op);
 			return (0);
 		}
-		print_redir_err_msg(invalid_op, input, str_j, j);
+		print_redir_err_msg(invalid_op, data, str_j, j);
 		if (ft_strcmp(invalid_op, "ERR") != 0)
 			free(invalid_op);
 		free(str_j);
@@ -199,7 +199,7 @@ int	is_redirection(t_data *data, int *i)
 		token_created = create_redirection_token(data, i, REDIR_IN, "<");
 	if (j != *i)
 	{
-		if (!check_operand(data->input, i, j))
+		if (!check_operand(data, i, j))
 			return (-1);
 		if (token_created == 0)
 			return (0);

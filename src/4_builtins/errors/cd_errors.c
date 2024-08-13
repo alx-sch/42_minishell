@@ -6,7 +6,7 @@
 /*   By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/24 11:48:26 by nholbroo          #+#    #+#             */
-/*   Updated: 2024/08/08 14:17:19 by nholbroo         ###   ########.fr       */
+/*   Updated: 2024/08/13 16:33:31 by nholbroo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ static void	mem_alloc_fail_cd(t_cd **cd)
 {
 	free_cd_struct(cd, 0);
 	print_err_msg_prefix("cd");
-	exit(errno);
+	exit(EXIT_FAILURE);
 }
 
 // Prints an error message for cd command, like memory allocation failure or
@@ -50,5 +50,5 @@ int	print_error_cd(int error_code, t_cd **cd)
 		mem_alloc_fail_cd(cd);
 	print_err_msg(error_msg);
 	free(error_msg);
-	return (2);
+	return (1);
 }

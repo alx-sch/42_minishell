@@ -6,11 +6,13 @@
 /*   By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/25 10:35:04 by natalierh         #+#    #+#             */
-/*   Updated: 2024/08/08 14:16:07 by nholbroo         ###   ########.fr       */
+/*   Updated: 2024/08/13 16:30:58 by nholbroo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+// Fun fact: *data->input is equivalent to *(data->input), not (*data)->input.
 
 // Checks if there are multiple '+' or '-' signs in the argument of the "exit"-
 //command, e.g. "exit --123".

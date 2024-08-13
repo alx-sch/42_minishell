@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   signals.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
+/*   By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/02 14:51:04 by aschenk           #+#    #+#             */
-/*   Updated: 2024/08/12 17:10:41 by aschenk          ###   ########.fr       */
+/*   Updated: 2024/08/13 17:05:32 by nholbroo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,9 +34,5 @@ void	handle_signals_exec(void);
 // 6_signals/signals_exit.c
 
 void	process_exit_signal(t_data *data, char *str);
-
-// 6_signals/signals_terminal.c
-
-void	set_terminal_mode(int suppress);
 
 #endif

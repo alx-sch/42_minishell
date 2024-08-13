@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   input_check.h                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
+/*   By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/31 18:59:53 by aschenk           #+#    #+#             */
-/*   Updated: 2024/08/01 06:23:35 by aschenk          ###   ########.fr       */
+/*   Updated: 2024/08/13 15:48:18 by nholbroo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ input is well-formed and can be processed further by the shell.
 
 # include "types.h"
 
-// 1_check_input/check
+// 1_check_input/check_input.c
 
 int	is_input_empty(char *input);
 int	is_quotation_closed(t_data *data);

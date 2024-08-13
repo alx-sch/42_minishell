@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   check_input.c                                      :+:      :+:    :+:   */
+/*   check_input_test.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/24 22:36:32 by aschenk           #+#    #+#             */
-/*   Updated: 2024/08/08 13:59:31 by nholbroo         ###   ########.fr       */
+/*   Updated: 2024/08/13 16:09:07 by nholbroo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,8 @@ ft_itoa fails). Also updates the `errno` to a custom `errno`.
  @param str_j 	Quotation symbol (' or ").
  @param i_str 	The string representation of position of piping syntax error.
 */
-static void	print_open_quotation_err_msg(char *char_str, char *i_str)
+static void	print_open_quotation_err_msg(char *char_str, char *i_str,
+	t_data *data)
 {
 	ft_putstr_fd(ERR_COLOR, STDERR_FILENO);
 	ft_putstr_fd(ERR_PREFIX, STDERR_FILENO);
@@ -67,7 +68,7 @@ static void	print_open_quotation_err_msg(char *char_str, char *i_str)
 	ft_putstr_fd(i_str, STDERR_FILENO);
 	ft_putstr_fd(")\n", STDERR_FILENO);
 	ft_putstr_fd(RESET, STDERR_FILENO);
-	errno = 420;
+	data->exit_status = 420;
 }
 
 /**
@@ -96,10 +97,10 @@ static int	is_closed(t_data *data, int i, const char c)
 	if (!i_str)
 	{
 		print_err_msg(ERR_MALLOC);
-		print_open_quotation_err_msg(char_str, "-1");
+		print_open_quotation_err_msg(char_str, "-1", data);
 		return (0);
 	}
-	print_open_quotation_err_msg(char_str, i_str);
+	print_open_quotation_err_msg(char_str, i_str, data);
 	free(i_str);
 	return (0);
 }
