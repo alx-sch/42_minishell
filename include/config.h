@@ -6,7 +6,7 @@
 /*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/07 16:54:03 by aschenk           #+#    #+#             */
-/*   Updated: 2024/08/01 06:22:13 by aschenk          ###   ########.fr       */
+/*   Updated: 2024/08/13 14:40:39 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,11 +34,10 @@ used for terminal formatting, prompt definitions, history configurations etc.
 
 // History: Override macros when invoking 'make':
 // 'make CFLAGS+="-DHIST_FILE='new_path' -DHIST_SIZE=42"
-# define HIST_FILE		"/.minishell_history"
-# define HIST_SIZE		1000
+# define HIST_FILE		".minishell_history"
 
 # define HEREDOC_PREFIX	".heredoc_"
 
-# define MAX_VAR_NAME	1024
+# define MAX_BUFFER		1024
 
 #endif

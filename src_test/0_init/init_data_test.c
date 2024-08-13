@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_data_test.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/24 12:46:41 by nholbroo          #+#    #+#             */
-/*   Updated: 2024/08/12 15:25:31 by nholbroo         ###   ########.fr       */
+/*   Updated: 2024/08/13 15:27:07 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,36 @@
 // IN FILE:
 
 void	init_data_struct(t_data *data, int argc, char **argv, char **envp);
+
+/**
+This function obtains the current working directory using the `getcwd` function,
+and stores it in the `working_dir` member of the data structure.
+
+ @param data 	Pointer to the `data` structure where the current working
+ 				directory will be stored in the `working_dir` member.
+*/
+static void	get_cwd(t_data *data)
+{
+	char	cwd[MAX_BUFFER];
+	char	*tmp;
+
+	if (getcwd(cwd, sizeof(cwd)) == NULL)
+	{
+		print_err_msg(ERR_GET_CWD);
+		free_data(data, 1);
+		exit(EXIT_FAILURE);
+	}
+	tmp = ft_strdup(cwd);
+	data->working_dir = ft_strjoin(tmp, "/");
+	if (tmp)
+		free(tmp);
+	if (!data->working_dir )
+	{
+		print_err_msg(ERR_GET_CWD);
+		free_data(data, 1);
+		exit(EXIT_FAILURE);
+	}
+}
 
 /**
 Used in main().
@@ -30,6 +60,8 @@ void	init_data_struct(t_data *data, int argc, char **argv, char **envp)
 	data->input = NULL;
 	data->pipe_nr = 0;
 	data->exit_status = 0;
+	data->working_dir = NULL;
+	data->path_to_hist_file = NULL;
 	data->tok.tok = NULL;
 	data->tok.tmp = NULL;
 	data->tok.quote = '\0';
@@ -41,6 +73,6 @@ void	init_data_struct(t_data *data, int argc, char **argv, char **envp)
 	data->export_list = init_export_list(data);
 	data->quote.in_single = false;
 	data->quote.in_double = false;
-	data->path_to_hist_file = NULL;
+	get_cwd(data);
 	data->path_to_hist_file = init_history(data);
 }

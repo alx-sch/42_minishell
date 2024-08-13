@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell_history_test.c                           :+:      :+:    :+:   */
+/*   history_test.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/08 16:14:07 by nholbroo          #+#    #+#             */
-/*   Updated: 2024/08/12 17:27:04 by nholbroo         ###   ########.fr       */
+/*   Updated: 2024/08/13 14:53:00 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,9 @@ static void	history_errors(char *str, int error_code, int fd)
 	if (error_code == 1)
 	{
 		ft_putstr_fd(ERR_PREFIX, 2);
-		ft_putstr_fd("'.minishell_history'", 2);
-		ft_putstr_fd(": ", 2);
+		ft_putstr_fd("'", 2);
+		ft_putstr_fd(HIST_FILE, 2);
+		ft_putstr_fd("': ", 2);
 		perror("");
 	}
 	if (errno == ENOMEM)
@@ -56,7 +57,7 @@ void	init_add_history_from_file(char *tmp, char *input, int fd)
 	while (1)
 	{
 		free(input);
-		free(tmp); 
+		free(tmp);
 		tmp = get_next_line(fd);
 		if (!tmp)
 			break ;
@@ -74,7 +75,7 @@ char	*init_history(t_data *data)
 	char	*tmp;
 
 	fd = 0;
-	set_path_to_file(data, "/.minishell_history");
+	set_path_to_file(data, &data->path_to_hist_file, HIST_FILE, ERR_HIST_FILE);
 	if (access(data->path_to_hist_file, F_OK) == -1)
 		fd = open(data->path_to_hist_file, O_CREAT | O_APPEND | O_WRONLY, 0644);
 	else
