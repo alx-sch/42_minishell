@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   types.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/31 17:40:14 by aschenk           #+#    #+#             */
-/*   Updated: 2024/08/13 15:58:02 by nholbroo         ###   ########.fr       */
+/*   Updated: 2024/08/13 19:10:48 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,11 @@ Fields:
 - tok_lst [t_list*]:	Pointer to the head of the linked list of tokens, which
 						stores all tokens parsed from the input.
 - tmp [char*]:			Substring to extract content for OTHER tokens.
-- quote [char]:			Saves encountered quotation symbols.
+- r_redir [int]:		Holds the return value of `is_redirection()` in
+						`get_tokens()`.
+- r_pipe [int]:			Holds the return value of `is_pipe()` in `get_tokens()`.
+- r_other [int]:		Holds the return value of `add_other_token` in
+						`get_tokens()`.
 */
 typedef struct s_tok
 {
@@ -90,6 +94,9 @@ typedef struct s_tok
 	t_list	*tok_lst;
 	char	*tmp;
 	char	quote;
+	int		r_redir;
+	int		r_pipe;
+	int		r_other;
 }	t_tok;
 
 //	+++++++++++++

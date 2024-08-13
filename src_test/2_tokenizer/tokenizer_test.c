@@ -6,7 +6,7 @@
 /*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 16:59:48 by aschenk           #+#    #+#             */
-/*   Updated: 2024/08/13 17:42:46 by aschenk          ###   ########.fr       */
+/*   Updated: 2024/08/13 19:00:26 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -181,23 +181,22 @@ stops processing further tokens.
 int	get_tokens(t_data *data)
 {
 	int	i;
-	int	return_redir;
-	int	return_pipe;
-	int	return_other;
 
 	i = 0;
-	while (data->input[i]) // Iterate through the input string
+	while (data->input[i])
 	{
-		while (is_whitespace(data->input[i])) // Skip leading whitespace
+		while (is_whitespace(data->input[i]))
 			i++;
-		return_redir = is_redirection(data, &i);
-		return_pipe = is_pipe(data, &i);
-		return_other = add_other_token(data, &i);
-		if (return_redir <= 0 || return_pipe <= 0|| return_other == 0) // Check if redirection, pipe or OTHER type and if so, create respective token
+		data->tok.r_redir = is_redirection(data, &i);
+		data->tok.r_pipe = is_pipe(data, &i);
+		data->tok.r_other = add_other_token(data, &i);
+		if (data->tok.r_redir <= 0 || data->tok.r_pipe <= 0
+			|| data->tok.r_other == 0)
 		{
-			if (return_redir == 0 || return_pipe == 0 || return_other == 0)
-				print_err_msg(ERR_TOKEN); // no ERR_TOK err message printed when syntax error (return '-1')
-			return (0); // token creation failed (invalid syntax or malloc fail during token creation)
+			if (data->tok.r_redir == 0 || data->tok.r_pipe == 0
+				|| data->tok.r_other == 0)
+				print_err_msg(ERR_TOKEN);
+			return (0);
 		}
 	}
 	if (!update_token_positions(data))

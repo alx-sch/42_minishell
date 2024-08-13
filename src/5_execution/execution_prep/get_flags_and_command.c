@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_flags_and_command_test.c                       :+:      :+:    :+:   */
+/*   get_flags_and_command.c                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/30 19:03:40 by nholbroo          #+#    #+#             */
-/*   Updated: 2024/08/06 13:46:24 by nholbroo         ###   ########.fr       */
+/*   Updated: 2024/08/13 18:46:37 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,10 +45,10 @@ void	set_flags_and_cmd(t_data *data, t_exec *exec, int position, int count)
 }
 
 /*Finds the right position in the input string, depending on the position
-where current child process should start reading from - up until next pipe 
+where current child process should start reading from - up until next pipe
 or end of input. Stores the first encountered command (what is not redirection
 and not a filename following a redirection, and saves the position of that
-command. Keeps track of the count of command + flags. In the end calls the 
+command. Keeps track of the count of command + flags. In the end calls the
 function "set_flags_and_cmd".*/
 void	get_flags_and_command(t_data *data, t_exec *exec, int position)
 {
@@ -61,7 +61,7 @@ void	get_flags_and_command(t_data *data, t_exec *exec, int position)
 		move_current_and_update_token(&current, &token);
 	while (current && token->type != PIPE)
 	{
-		if (token->type == REDIR_IN || token->type == REDIR_OUT 
+		if (token->type == REDIR_IN || token->type == REDIR_OUT
 			|| token->type == APPEND_OUT)
 			move_current_and_update_token(&current, &token);
 		else

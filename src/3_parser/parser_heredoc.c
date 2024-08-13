@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser_heredoc.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/24 22:36:32 by aschenk           #+#    #+#             */
-/*   Updated: 2024/08/13 16:22:04 by nholbroo         ###   ########.fr       */
+/*   Updated: 2024/08/13 18:51:43 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,8 @@ Used in handle_heredoc_input().
 Writes a line of text followed by a newline character to a specified fd.
 
  @param fd 			The file descriptor to which the line will be written.
- 					This should be the file descriptor associated with the heredoc.
+ 					This should be the file descriptor associated with the
+					heredoc.
  @param input_line 	A string containing the line of text to be written.
  					The function will free this memory after writing.
 
@@ -97,8 +98,8 @@ expansion on input lines. The function also handles interruptions by CTRL+C.
  @param fd	 		The heredoc's fd.
  @param delimiter 	The delimiter that signals the end of input.
  @param data 		Pointer to data struct.
- @param expansion 	Flag indicating whether variable expansion should be performed
- 					(`0` no expansion, otherwise: expansion)
+ @param expansion 	Flag indicating whether variable expansion should be
+ 					performed (`0` no expansion, otherwise: expansion).
 
  @return	`1` if input handling succeeded and the delimiter was encountered.
  			`0` if input handling failed due to a write operation error.

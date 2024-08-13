@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   check_input_test.c                                 :+:      :+:    :+:   */
+/*   check_input.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/24 22:36:32 by aschenk           #+#    #+#             */
-/*   Updated: 2024/08/13 16:09:07 by nholbroo         ###   ########.fr       */
+/*   Updated: 2024/08/13 18:52:49 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,8 +75,9 @@ static void	print_open_quotation_err_msg(char *char_str, char *i_str,
 Checks if the quotation mark at a given position has a corresponding closing
 quotation mark and its position in the input string.
 
- @return	The position of the closing quotation mark if found (as string literal).
-			`0` if the closing quotation mark is not found; also prints an error message
+ @return	The position of the closing quotation mark if found
+ 			(as string literal). `0` if the closing quotation mark is not
+			found; also prints an error message
 */
 static int	is_closed(t_data *data, int i, const char c)
 {

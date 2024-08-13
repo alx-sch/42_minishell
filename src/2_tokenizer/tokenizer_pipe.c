@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tokenizer_pipe.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/01 16:34:21 by aschenk           #+#    #+#             */
-/*   Updated: 2024/08/13 16:16:57 by nholbroo         ###   ########.fr       */
+/*   Updated: 2024/08/13 18:54:11 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,8 @@ Valid syntax after a pipe: Anything but '|' and end of input ('\0').
 
  @return	The dynamically allocated string containing the invalid syntax symbol
   			('newline' for '\0' to mirror the behavior of invalid redirections).
-			`NULL` if the syntax is valid or no input before '|' (invalid syntax).
+			`NULL` if the syntax is valid or no input before '|'
+			(invalid syntax).
 			`"ERR"` string literal as fallback, if memory allocation fails while
 			attempting to allocate space for the invalid syntax.
 */
@@ -74,8 +75,10 @@ Prints an error message for invalid syntax encountered after a pipe symbol ('|')
 and updates the `errno` accordingly.
 
  @param invalid_syn The invalid operand encountered in the input.
- @param str_j 		The string representation of int j (position of failed piping).
- @param data 		Pointer to the data structure including the exit status member.
+ @param str_j 		The string representation of int j
+ 					(position of failed piping).
+ @param data 		Pointer to the data structure including the
+ 					exit status member.
  @param empty 		Flag to indicate if 'empty pipe' msg should be printed
  					(other than zero) or not (`0`).
 */

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/25 10:35:04 by natalierh         #+#    #+#             */
-/*   Updated: 2024/08/13 16:30:58 by nholbroo         ###   ########.fr       */
+/*   Updated: 2024/08/13 18:48:38 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@
 // Return 0 upon success.
 static int	check_multiple_signs_exit_code(char *exit_arg)
 {
-	if (*exit_arg == '-' || *exit_arg == '+') 
+	if (*exit_arg == '-' || *exit_arg == '+')
 	{
 		exit_arg++;
 		if (*exit_arg && (*exit_arg < '0' || *exit_arg > '9'))
@@ -33,12 +33,12 @@ static int	check_multiple_signs_exit_code(char *exit_arg)
 // Returns the correct exit code, indicated by the argument when "exit"-command
 // is used, e.g. "exit 5".
 // Using ft_atoi to convert the argument from ascii to an unsigned integer.
-// Converting the "exit"-command's argument to an unsigned int, as bash doesn't 
-// handle negative exit codes. 
+// Converting the "exit"-command's argument to an unsigned int, as bash doesn't
+// handle negative exit codes.
 //
 // Throws an error if: there are multiple signs like "exit --123". The process
 // still exits, but with a specific error code to indicate the cause of error.
-// 
+//
 // Returns the defined exit code upon success, (e.g. "exit 123" will return 123
 // as an unsigned int).
 unsigned int	exit_with_code(t_data *data, t_exec *exec)
@@ -87,8 +87,8 @@ int	is_exit(t_data *data, t_exec *exec)
 		free_data(data, 1);
 		exit(EPERM);
 	}
-	while ((exec->flags[1][i]) && (is_whitespace(exec->flags[1][i]) 
-		|| exec->flags[1][i] == '+' || exec->flags[1][i] == '-' 
+	while ((exec->flags[1][i]) && (is_whitespace(exec->flags[1][i])
+		|| exec->flags[1][i] == '+' || exec->flags[1][i] == '-'
 		|| (exec->flags[1][i] >= '0' && exec->flags[1][i] <= '9')))
 		i++;
 	if (exec->flags[1][i] != '\0')

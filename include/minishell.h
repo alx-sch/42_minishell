@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/06 12:08:35 by aschenk           #+#    #+#             */
-/*   Updated: 2024/08/13 17:19:03 by nholbroo         ###   ########.fr       */
+/*   Updated: 2024/08/13 19:13:40 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,8 +32,8 @@ functionality without redundant includes.
 # include "tokenizer.h" // procceses CL input into syntactic units (tokens)
 # include "parser.h" // proccesses tokens (handling of heredoc and variables)
 # include "builtins.h" // `cd`, `pwd`, `env`, `unset`, `export`, `echo` as fcts
-# include "execution.h" // TBD
-# include "signals.h" // TBD
+# include "execution.h" // exec commands and builtins, incl. piping and redir
+# include "signals.h" // signal handling in prompt, heredoc prompt, and exec
 
 # include <fcntl.h> // open, close, access, unlink
 # include <stdio.h> // perror, printf
@@ -79,7 +79,6 @@ int		is_whitespace(int c);
 int		contains_quotes(const char *str);
 void	set_path_to_file(t_data *data, char **str, char *file, char *err_msg);
 void	minishell_prompt(t_data *data);
-void	print_token_list(t_list *lst);
 
 // 7_utils/errors.c
 

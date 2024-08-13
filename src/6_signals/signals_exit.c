@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   signals_exit_test.c                                :+:      :+:    :+:   */
+/*   signals_exit.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/12 16:31:11 by aschenk           #+#    #+#             */
-/*   Updated: 2024/08/12 17:05:28 by aschenk          ###   ########.fr       */
+/*   Updated: 2024/08/13 18:52:17 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,9 +28,9 @@ void	process_exit_signal(t_data *data, char *str);
 /**
 Handles cleanup and program termination in response to the CTRL+D exit signal.
  @param data 	A pointer to a data structure, which will be cleaned up.
- @param str 	A pointer to a dynamically allocated string or buffer to be freed.
- 				This parameter can be `NULL` if there is no allocated memory
-				to free.
+ @param str 	A pointer to a dynamically allocated string or buffer to be
+ 				freed. This parameter can be `NULL` if there is no allocated
+				memory to free.
 */
 void	process_exit_signal(t_data *data, char *str)
 {

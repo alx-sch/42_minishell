@@ -3,15 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/26 16:13:14 by aschenk           #+#    #+#             */
-/*   Updated: 2024/08/13 16:25:18 by nholbroo         ###   ########.fr       */
+/*   Updated: 2024/08/13 19:16:42 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-/*
-TBD
+/**
+This file contains functions responsible for parsing and processing tokens
+obtained from the user's input. It handles various aspects of token management
+including environment variable expansion, quote trimming, and heredoc processing.
 */
 
 #include "minishell.h"

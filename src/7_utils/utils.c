@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/10 16:51:05 by aschenk           #+#    #+#             */
-/*   Updated: 2024/08/13 16:51:36 by nholbroo         ###   ########.fr       */
+/*   Updated: 2024/08/13 19:05:26 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,12 +66,15 @@ structure with the specified `file` name. It dynamically allocates memory for th
 resulting path and assigns it to the `path` pointer. If memory allocation fails,
 or if any error occurs, it will print an error message and terminate the program.
 
- @param data 		Pointer to a t_data structure containing the working directory.
- @param path 		Pointer to a char* where the constructed file path will be stored.
+ @param data 		Pointer to a t_data structure containing the working
+ 					directory.
+ @param path 		Pointer to a char* where the constructed file path will be
+ 					stored.
 					The function updates this pointer to point to the newly
 					allocated path.
  @param file 		The name of the file to be appended to the working directory.
- @param err_msg 	A custom error message to be printed if memory allocation fails.
+ @param err_msg 	A custom error message to be printed if memory allocation
+ 					fails.
 */
 void	set_path_to_file(t_data *data, char **path, char *file, char *err_msg)
 {
@@ -84,6 +87,17 @@ void	set_path_to_file(t_data *data, char **path, char *file, char *err_msg)
 	}
 }
 
+/**
+Displays a command prompt to the user and reads their input.
+
+This function uses the `readline` library to show a prompt (specified by
+the `PROMPT` macro) and captures the user's input. If the user signals an
+intention to exit (e.g., by pressing Ctrl+D), the function calls
+`process_exit_signal` to handle the termination gracefully.
+
+ @param data 	A pointer to the data structure. The user's input will be
+ 				stored in the `input` field of this structure.
+*/
 void	minishell_prompt(t_data *data)
 {
 	data->input = readline(PROMPT);

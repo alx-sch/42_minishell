@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit_errors.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/24 11:48:41 by nholbroo          #+#    #+#             */
-/*   Updated: 2024/08/13 16:34:34 by nholbroo         ###   ########.fr       */
+/*   Updated: 2024/08/13 18:53:32 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ void	print_error_exit(t_data *data, t_exec *exec)
 	full_error_msg = NULL;
 	exit_argument = NULL;
 	printf("exit\n");
-	exit_argument = ft_strchr(data->input, ' '); 
+	exit_argument = ft_strchr(data->input, ' ');
 	exit_argument++;
 	tmp_error_msg = ft_strjoin("exit: ", exit_argument);
 	if (!tmp_error_msg)

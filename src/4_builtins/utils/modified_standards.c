@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   modified_standards_test.c                          :+:      :+:    :+:   */
+/*   modified_standards.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 17:16:54 by nholbroo          #+#    #+#             */
-/*   Updated: 2024/08/07 16:45:49 by nholbroo         ###   ########.fr       */
+/*   Updated: 2024/08/13 18:49:58 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,7 @@ int	is_letter(char c)
 	return (0);
 }
 
-/*Checks if all the characters in an array of strings is an alphabetical 
+/*Checks if all the characters in an array of strings is an alphabetical
 character or a number. Checks each string separately, up until an '='-sign
 is found.
 Returns 1 if all the data is alphanumerical.
@@ -89,8 +89,8 @@ int	ft_is_alphanumerical(char **flags)
 	{
 		while (flags[str][i] && flags[str][i] != '=')
 		{
-			if ((flags[str][i] < '0' || flags[str][i] > '9') && 
-				!is_letter(flags[str][i]))
+			if ((flags[str][i] < '0' || flags[str][i] > '9')
+				&& !is_letter(flags[str][i]))
 				return (0);
 			i++;
 		}

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_test.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/10 16:51:05 by aschenk           #+#    #+#             */
-/*   Updated: 2024/08/13 17:18:53 by nholbroo         ###   ########.fr       */
+/*   Updated: 2024/08/13 19:05:11 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,6 +84,17 @@ void	set_path_to_file(t_data *data, char **path, char *file, char *err_msg)
 	}
 }
 
+/**
+Displays a command prompt to the user and reads their input.
+
+This function uses the `readline` library to show a prompt (specified by
+the `PROMPT` macro) and captures the user's input. If the user signals an
+intention to exit (e.g., by pressing Ctrl+D), the function calls
+`process_exit_signal` to handle the termination gracefully.
+
+ @param data 	A pointer to the data structure. The user's input will be
+ 				stored in the `input` field of this structure.
+*/
 void	minishell_prompt(t_data *data)
 {
 	data->input = readline(PROMPT);
@@ -91,14 +102,14 @@ void	minishell_prompt(t_data *data)
 		process_exit_signal(data, NULL);
 }
 
-// // Function to print the list of tokens
-// // FOR TESTING ONLY; use `print_token_list(data.tok.tok_lst)` in main().
-void	print_token_list(t_list *lst)
-{
-	while (lst)
-	{
-		t_token *token = lst->content;
-		printf("Position[%d]: '%s' (token type: %d)\n", token->position, token->lexeme, token->type);
-		lst = lst->next;
-	}
-}
+// // // Function to print the list of tokens
+// // // FOR TESTING ONLY; use `print_token_list(data.tok.tok_lst)` in main().
+// void	print_token_list(t_list *lst)
+// {
+// 	while (lst)
+// 	{
+// 		t_token *token = lst->content;
+// 		printf("Position[%d]: '%s' (token type: %d)\n", token->position, token->lexeme, token->type);
+// 		lst = lst->next;
+// 	}
+// }

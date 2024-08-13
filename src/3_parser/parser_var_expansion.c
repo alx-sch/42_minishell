@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser_var_expansion.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/22 22:40:57 by aschenk           #+#    #+#             */
-/*   Updated: 2024/08/13 16:25:54 by nholbroo         ###   ########.fr       */
+/*   Updated: 2024/08/13 18:51:06 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,8 @@ Also extracts the last exit status for '$?'.
 
  @return	The value the environment variable, if found.
 			An empty string, if the specified environment variable is not found.
-			`NULL` if memory allocation for the empty or exit status string failed.
+			`NULL` if memory allocation for the empty or exit status string
+			failed.
 
 If an exit status string is returned, it is the user's responsibilty to
 free it when done using.
@@ -110,8 +111,8 @@ the left part before the variable, the variable value, and the right part
 after the variable. These parts are then concatenated into a new string.
 
  @param str 		The original string containing the variable to be replaced.
- @param i 			The position in the string where the '$' character of the variable
- 					is located.
+ @param i 			The position in the string where the '$' character of the
+ 					variable is located.
  @param var_name 	The name of the variable to be replaced (excluding the '$').
  @param env_list 	The environment list containing variable names and their
  					corresponding values.
@@ -163,7 +164,8 @@ variable name with its value from the environment list.
  @param i 		A pointer to the current index in the string.
  				This index is used to locate the variable and will be adjusted to
 				accommodate changes in the string.
- @param data 	A pointer to a data structure containing the environment variables.
+ @param data 	A pointer to a data structure containing the environment
+ 				variables.
  @param expand_in_single_quotes 	A flag indicating whether variables should be
  									expanded within single quotes
 									(`0` for no expansion, otherwise: expansion).
@@ -205,10 +207,12 @@ environment list.
  @param str 	The original string containing variables to be expanded.
  @param data 	Data structure which includes the local list of envp.
  @param expand_in_single_quotes	Flag to indicate if variables are expanded within
-								single quotes (`0`: no expansion; otherwise: expansion).
+								single quotes (`0`: no expansion;
+								otherwise: expansion).
 
  @return	`1` if all variables were successfully expanded.
-			`0` if an error occurred during memory allocation or no string was passed.
+			`0` if an error occurred during memory allocation or no string was
+			passed.
 */
 int	expand_variables(char **str, t_data *data, int expand_in_single_quotes)
 {
