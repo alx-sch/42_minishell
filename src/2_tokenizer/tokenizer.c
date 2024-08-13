@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tokenizer.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
+/*   By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 16:59:48 by aschenk           #+#    #+#             */
-/*   Updated: 2024/08/13 17:38:51 by aschenk          ###   ########.fr       */
+/*   Updated: 2024/08/13 17:51:39 by nholbroo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -137,15 +137,17 @@ token to its index in the list.
 static int	update_token_positions(t_data *data)
 {
 	t_list	*current;
+	t_token	*token;
 	int		position;
 
 	if (!data || !data->tok.tok_lst)
 		return (0);
 	current = data->tok.tok_lst;
+	token = NULL;
 	position = 0;
 	while (current)
 	{
-		t_token *token = (t_token *)current->content;
+		token = (t_token *)current->content;
 		if (!token)
 			return (0);
 		token->position = position;
@@ -154,7 +156,6 @@ static int	update_token_positions(t_data *data)
 	}
 	return (1);
 }
-
 
 /**
 Parses the input string to extract tokens and builds a token list (t_list type).
