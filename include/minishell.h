@@ -6,7 +6,7 @@
 /*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/06 12:08:35 by aschenk           #+#    #+#             */
-/*   Updated: 2024/08/13 11:48:33 by aschenk          ###   ########.fr       */
+/*   Updated: 2024/08/13 15:36:38 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,7 @@ extern volatile __sig_atomic_t	g_signal;
 
 int		is_whitespace(int c);
 int		contains_quotes(const char *str);
-void	set_path_to_file(t_data *data, char *file);
+void	set_path_to_file(t_data *data, char **str, char *file, char *err_msg);
 
 // 7_utils/errors.c
 

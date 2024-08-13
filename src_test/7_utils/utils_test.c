@@ -6,7 +6,7 @@
 /*   By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/10 16:51:05 by aschenk           #+#    #+#             */
-/*   Updated: 2024/08/13 15:19:26 by nholbroo         ###   ########.fr       */
+/*   Updated: 2024/08/13 15:42:11 by nholbroo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,8 @@ such as character classification.
 
 int		is_whitespace(int c);
 int		contains_quotes(const char *str);
-
+void	set_path_to_file(t_data *data, char **str, char *file, char *err_msg);
+//void	set_path_to_file(t_data *data, char *file);
 
 /**
 Checks if a character is a whitespace character:
@@ -59,17 +60,27 @@ int	contains_quotes(const char *str)
 	return (0);
 }
 
-void	set_path_to_file(t_data *data, char *file)
-{
-	char	init_wd[4096];
+/**
+Creates a full file path by combining the working directory stored in the `data`
+structure with the specified `file` name. It dynamically allocates memory for the
+resulting path and assigns it to the `path` pointer. If memory allocation fails,
+or if any error occurs, it will print an error message and terminate the program.
 
-	getcwd(init_wd, sizeof(init_wd));
-	data->path_to_hist_file = ft_strjoin(init_wd, file);
-	if (!data->path_to_hist_file)
+ @param data 		Pointer to a t_data structure containing the working directory.
+ @param path 		Pointer to a char* where the constructed file path will be stored.
+					The function updates this pointer to point to the newly
+					allocated path.
+ @param file 		The name of the file to be appended to the working directory.
+ @param err_msg 	A custom error message to be printed if memory allocation fails.
+*/
+void	set_path_to_file(t_data *data, char **path, char *file, char *err_msg)
+{
+	*path = ft_strjoin(data->working_dir, file);
+	if (!*path)
 	{
 		free_data(data, 1);
-		perror("");
-		exit(1);
+		print_err_msg(err_msg);
+		exit(EXIT_FAILURE);
 	}
 }
 
