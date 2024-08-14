@@ -6,7 +6,7 @@
 /*   By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/13 13:51:10 by nholbroo          #+#    #+#             */
-/*   Updated: 2024/08/14 11:37:39 by nholbroo         ###   ########.fr       */
+/*   Updated: 2024/08/14 13:15:08 by nholbroo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,35 @@ static int	cd_one_up(t_cd **cd, char *cwd)
 		(*cd)->parentdirectory[i++] = '/';
 	(*cd)->parentdirectory[i] = '\0';
 	if (chdir((*cd)->parentdirectory) == -1)
+		print_err_msg_prefix("cd");
+	return (0);
+}
+
+// Changes current working directory to "home".
+// Iterates through the environment variables to find correct "home"-
+// directory.
+// Still works even though HOME is removed with unset.
+static int	cd_to_home_user_tilde(t_cd **cd, char **envp)
+{
+	int	i;
+
+	i = 0;
+	while (envp[i])
+	{
+		if (!ft_strncmp(envp[i], "HOME", 4))
+			break ;
+		i++;
+	}
+	if (!envp[i])
+	{
+		print_err_msg_custom("cd: HOME not set", 1);
+		errno = EPERM;
+		return (errno);
+	}
+	(*cd)->home_user = ft_substr(envp[i], 5, ft_strlen(envp[i]));
+	if (!(*cd)->home_user)
+		print_error_cd(1, cd);
+	if (chdir((*cd)->home_user) == -1)
 		print_err_msg_prefix("cd");
 	return (0);
 }
@@ -122,7 +151,7 @@ int	cd(t_data *data, t_exec *exec)
 	if (exec->flags[1] == NULL)
 		exit_status = cd_to_home_user(&cd, data->envp_temp);
 	else if (!ft_strcmp(exec->flags[1], "~"))
-		exit_status = cd_to_home_user(&cd, data->envp_temp);
+		exit_status = cd_to_home_user_tilde(&cd, data->envp);
 	else if (is_only_duplicates(exec->flags[1], '/'))
 	{
 		if (chdir("/") == -1)
