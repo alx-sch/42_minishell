@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   redirections_do_test.c                             :+:      :+:    :+:   */
+/*   redirections_do.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/31 11:19:43 by nholbroo          #+#    #+#             */
-/*   Updated: 2024/08/12 19:07:35 by nholbroo         ###   ########.fr       */
+/*   Updated: 2024/08/14 12:59:24 by nholbroo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,11 +19,11 @@ void	check_file_exist_child(t_data *data, t_exec *exec)
 		if (access(exec->infile, F_OK) == -1)
 			redirections_errors(data, exec, 0, 0);
 	}
-	if (exec->redir_out)
+	if (exec->redir_out || exec->append_out)
 	{
 		if (access(exec->outfile, F_OK == -1))
 		{
-			exec->outfile_fd = open(exec->outfile, O_CREAT);
+			exec->outfile_fd = open(exec->outfile, O_CREAT | O_WRONLY, 0644);
 			if (exec->outfile_fd == -1)
 				redirections_errors(data, exec, 1, 0);
 			close(exec->outfile_fd);
@@ -45,9 +45,9 @@ static void	redir_in(t_data *data, t_exec *exec)
 static void	redir_out(t_data *data, t_exec *exec)
 {
 	if (exec->append_out)
-		exec->outfile_fd = open(exec->outfile, O_WRONLY | O_APPEND);
+		exec->outfile_fd = open(exec->outfile, O_WRONLY | O_APPEND, 0644);
 	else
-		exec->outfile_fd = open(exec->outfile, O_WRONLY | O_TRUNC);
+		exec->outfile_fd = open(exec->outfile, O_WRONLY | O_TRUNC, 0644);
 	if (exec->outfile_fd == -1)
 		redirections_errors(data, exec, 1, 0);
 	if (dup2(exec->outfile_fd, STDOUT_FILENO) == -1)
@@ -64,7 +64,7 @@ void	do_redirections(t_data *data, t_exec *exec)
 		if (dup2(exec->prev_pipe_fd[0], STDIN_FILENO) == -1)
 			redirections_errors(data, exec, 0, 0);
 	}
-	if (exec->redir_out)
+	if (exec->redir_out | exec->append_out)
 		redir_out(data, exec);
 	else if (exec->curr_child < data->pipe_nr)
 	{

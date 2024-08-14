@@ -1,16 +1,35 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   redirections_check_test.c                          :+:      :+:    :+:   */
+/*   redirections_check.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/30 18:09:36 by nholbroo          #+#    #+#             */
-/*   Updated: 2024/08/12 15:09:51 by nholbroo         ###   ########.fr       */
+/*   Updated: 2024/08/14 12:55:42 by nholbroo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+/*In the case of several redirections, and a mix of append and redir_out,
+this function ensures that not both "append" and "redir_out" are set to true,
+but only the last redirection type.*/
+static void	reset_redir_or_append_out(t_exec *exec, bool redir_type)
+{
+	if (redir_type == 0)
+	{
+		exec->redir_out = 1;
+		if (exec->append_out == 1)
+			exec->append_out = 0;
+	}
+	if (redir_type == 1)
+	{
+		exec->append_out = 1;
+		if (exec->redir_out == 1)
+			exec->redir_out = 0;
+	}
+}
 
 /*If a redirection symbol '>' meaning the output should be redirected, 
 it saves the information in the bool exec->redir_out and stores the filename 
@@ -18,7 +37,6 @@ of the new output source in exec->outfile.*/
 static t_list	*redirect_out(t_data *data, t_exec *exec, t_list *current, \
 t_token *token)
 {
-	exec->redir_out = 1;
 	move_current_and_update_token(&current, &token);
 	if (exec->outfile)
 		free(exec->outfile);
@@ -61,11 +79,14 @@ void	check_redirections(t_data *data, t_exec *exec, int position)
 		if (token->type == REDIR_IN)
 			current = redirect_in(data, exec, current, token);
 		else if (token->type == REDIR_OUT)
+		{
+			reset_redir_or_append_out(exec, 0);
 			current = redirect_out(data, exec, current, token);
+		}
 		else if (token->type == APPEND_OUT)
 		{
+			reset_redir_or_append_out(exec, 1);
 			current = redirect_out(data, exec, current, token);
-			exec->append_out = 1;
 		}
 		move_current_and_update_token(&current, &token);
 	}

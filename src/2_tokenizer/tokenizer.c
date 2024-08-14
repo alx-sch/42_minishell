@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tokenizer.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
+/*   By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 16:59:48 by aschenk           #+#    #+#             */
-/*   Updated: 2024/08/13 18:58:51 by aschenk          ###   ########.fr       */
+/*   Updated: 2024/08/14 10:40:35 by nholbroo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -171,7 +171,7 @@ For each token, it creates a new token node and adds it to the token list.
 If a token cannot be created due to a memory allocation failure, the function
 stops processing further tokens.
 
- @return	`0` if tokenization failed.
+ @return	`0` if tokenization failed or if input is whitespace only.
 			`1` if tokenization was sucessful.
 */
 int	get_tokens(t_data *data)
@@ -179,6 +179,8 @@ int	get_tokens(t_data *data)
 	int	i;
 
 	i = 0;
+	if (is_input_only_whitespace(data->input))
+		return (0);
 	while (data->input[i])
 	{
 		while (is_whitespace(data->input[i]))

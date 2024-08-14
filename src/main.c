@@ -6,7 +6,7 @@
 /*   By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/06 12:05:14 by aschenk           #+#    #+#             */
-/*   Updated: 2024/08/14 10:13:49 by nholbroo         ###   ########.fr       */
+/*   Updated: 2024/08/14 10:24:51 by nholbroo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,8 +36,7 @@ int	main(int argc, char **argv, char **envp)
 		handle_signals_heredoc();
 		if (data.input && !is_input_empty(data.input))
 		{
-			if (!is_whitespace(data.input[0]))
-				add_history_to_file(data.input, data.path_to_hist_file);
+			add_history_to_file(data.input, data.path_to_hist_file);
 			if (is_quotation_closed(&data) && get_tokens(&data)
 				&& parse_tokens(&data))
 			{

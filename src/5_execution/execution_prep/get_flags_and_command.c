@@ -3,14 +3,24 @@
 /*                                                        :::      ::::::::   */
 /*   get_flags_and_command.c                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
+/*   By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/30 19:03:40 by nholbroo          #+#    #+#             */
-/*   Updated: 2024/08/13 18:46:37 by aschenk          ###   ########.fr       */
+/*   Updated: 2024/08/14 12:44:59 by nholbroo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+/*Sets the command or one flag in the exec->flags array, which is later
+being passed to execve.*/
+static int	set_flag(t_data *data, t_exec **exec, t_token *token, int i)
+{
+	(*exec)->flags[i] = ft_strdup(token->lexeme);
+	if (!(*exec)->flags[i])
+		exec_errors(data, *exec, 1);
+	return (1);
+}
 
 /*Allocates memory for exec->flags depending on count (cmd + flags). Moves until
 the position of where the command starts (which has been updated to start
@@ -33,13 +43,14 @@ void	set_flags_and_cmd(t_data *data, t_exec *exec, int position, int count)
 	exec->cmd = ft_strdup(token->lexeme);
 	if (!exec->cmd)
 		exec_errors(data, exec, 1);
-	while (i < count && token->type != REDIR_IN && token->type != REDIR_OUT)
+	while (i < count)
 	{
-		exec->flags[i] = ft_strdup(token->lexeme);
-		if (!exec->flags[i])
-			exec_errors(data, exec, 1);
+		if (token->type != REDIR_IN && token->type != REDIR_OUT 
+			&& token->type != APPEND_OUT)
+			i += set_flag(data, &exec, token, i);
+		else
+			move_current_and_update_token(&current, &token);
 		move_current_and_update_token(&current, &token);
-		i++;
 	}
 	exec->flags[i] = NULL;
 }
