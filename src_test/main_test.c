@@ -6,7 +6,7 @@
 /*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/06 12:05:14 by aschenk           #+#    #+#             */
-/*   Updated: 2024/08/14 02:29:59 by aschenk          ###   ########.fr       */
+/*   Updated: 2024/08/14 13:38:37 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,16 +30,15 @@ int	main(int argc, char **argv, char **envp)
 	{
 		handle_signals();
 		minishell_prompt(&data);
-		if (g_signal) // CTRL+C was received in minishell or heredoc prompt
+		if (g_signal)
 			data.exit_status = EOWNERDEAD;
-		g_signal = 0; // reset signal variable for heredoc prompt
+		g_signal = 0;
 		handle_signals_heredoc();
-		if (data.input && !is_input_empty(data.input))
+		if (data.input && !is_empty(data.input))
 		{
-			if (!is_whitespace(data.input[0]))
-				add_history_to_file(data.input, data.path_to_hist_file);
-			if (is_quotation_closed(&data) && get_tokens(&data)
-				&& parse_tokens(&data))
+			add_history_to_file(data.input, data.path_to_hist_file);
+			if (!is_only_whitespace(data.input) && is_quotation_closed(&data)
+				&& get_tokens(&data) && parse_tokens(&data))
 			{
 				//print_token_list(data.tok.tok_lst);
 				handle_signals_exec();

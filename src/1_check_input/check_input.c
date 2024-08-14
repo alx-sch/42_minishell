@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   check_input.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/24 22:36:32 by aschenk           #+#    #+#             */
-/*   Updated: 2024/08/14 10:39:43 by nholbroo         ###   ########.fr       */
+/*   Updated: 2024/08/14 13:20:21 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,18 +21,17 @@ This file contains a functions to initially check the user's input:
 
 // IN FILE:
 
-int	is_input_empty(char *input);
-int	is_input_only_whitespace(char *input);
+int	is_empty(char *input);
+int	is_only_whitespace(char *input);
 int	is_quotation_closed(t_data *data);
 
 /**
 Checks if the user input is consists only of whitespace.
 
  @return	`0` if the user input does not consist only of whitespace.
-			`1` if the user input consists only of whitespace
-			or is NULL.
+			`1` if the user input consists only of whitespace.
 */
-int	is_input_only_whitespace(char *input)
+int	is_only_whitespace(char *input)
 {
 	int	i;
 
@@ -50,11 +49,10 @@ int	is_input_only_whitespace(char *input)
 /**
 Checks if the user input is consists only of whitespace.
 
- @return	`0` if the user input does not consist only of whitespace.
-			`1` if the user input consists only of whitespace
-			or is NULL.
+ @return	`0` if the user input is not empty.
+			`1` if the user input is empty.
 */
-int	is_input_empty(char *input)
+int	is_empty(char *input)
 {
 	if (input[0] == '\0')
 		return (1);

@@ -6,7 +6,7 @@
 /*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/24 22:36:32 by aschenk           #+#    #+#             */
-/*   Updated: 2024/08/12 17:30:00 by aschenk          ###   ########.fr       */
+/*   Updated: 2024/08/14 13:39:41 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,29 +22,41 @@ This file contains a functions to initially check the user's input:
 // IN FILE:
 
 int	is_input_empty(char *input);
+int	is_only_whitespace(char *input);
 int	is_quotation_closed(t_data *data);
 
 /**
-Checks if the user input is empty or consists only of whitespace.
+Checks if the user input is consists only of whitespace.
 
- @return	`0` if the user input is not empty.
-			`1` if the user input is empty, consists only of whitespace
-			or is NULL.
+ @return	`0` if the user input does not consist only of whitespace.
+			`1` if the user input consists only of whitespace.
 */
-int	is_input_empty(char *input)
+int	is_only_whitespace(char *input)
 {
 	int	i;
 
 	i = 0;
-	if (!input)
-		return (1);
 	while (input[i])
 	{
-		if (!is_whitespace(input[i]))
+		if (is_whitespace(input[i]))
+			i++;
+		else
 			return (0);
-		i++;
 	}
 	return (1);
+}
+
+/**
+Checks if the user input is consists only of whitespace.
+
+ @return	`0` if the user input is not empty.
+			`1` if the user input is empty.
+*/
+int	is_empty(char *input)
+{
+	if (input[0] == '\0')
+		return (1);
+	return (0);
 }
 
 /**

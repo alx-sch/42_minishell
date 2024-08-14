@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tokenizer.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 16:59:48 by aschenk           #+#    #+#             */
-/*   Updated: 2024/08/14 10:40:35 by nholbroo         ###   ########.fr       */
+/*   Updated: 2024/08/14 13:35:29 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -179,8 +179,6 @@ int	get_tokens(t_data *data)
 	int	i;
 
 	i = 0;
-	if (is_input_only_whitespace(data->input))
-		return (0);
 	while (data->input[i])
 	{
 		while (is_whitespace(data->input[i]))

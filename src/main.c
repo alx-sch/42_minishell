@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/06 12:05:14 by aschenk           #+#    #+#             */
-/*   Updated: 2024/08/14 10:24:51 by nholbroo         ###   ########.fr       */
+/*   Updated: 2024/08/14 13:37:28 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,11 +34,11 @@ int	main(int argc, char **argv, char **envp)
 			data.exit_status = EOWNERDEAD;
 		g_signal = 0;
 		handle_signals_heredoc();
-		if (data.input && !is_input_empty(data.input))
+		if (data.input && !is_empty(data.input))
 		{
 			add_history_to_file(data.input, data.path_to_hist_file);
-			if (is_quotation_closed(&data) && get_tokens(&data)
-				&& parse_tokens(&data))
+			if (!is_only_whitespace(data.input) && is_quotation_closed(&data)
+				&& get_tokens(&data) && parse_tokens(&data))
 			{
 				handle_signals_exec();
 				init_exec(&data);
