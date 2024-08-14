@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   child_processes_test.c                             :+:      :+:    :+:   */
+/*   child_processes.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/12 18:59:35 by nholbroo          #+#    #+#             */
-/*   Updated: 2024/08/13 15:29:08 by nholbroo         ###   ########.fr       */
+/*   Updated: 2024/08/14 10:12:40 by nholbroo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,9 +17,7 @@ returning -1 from waitpid. Prints out an error message, frees all allocated
 memory and exits the main process.*/
 static void	error_child_processes(t_data *data, t_exec *exec)
 {
-	ft_putstr_fd(ERR_COLOR, 2);
 	perror("");
-	ft_putstr_fd(RESET, 2);
 	free_exec(exec);
 	free_data(data, 1);
 	exit(errno);

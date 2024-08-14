@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   errors_test.c                                      :+:      :+:    :+:   */
+/*   errors.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/30 12:32:25 by nholbroo          #+#    #+#             */
-/*   Updated: 2024/08/13 15:30:31 by nholbroo         ###   ########.fr       */
+/*   Updated: 2024/08/14 09:56:43 by nholbroo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,6 @@
 wrong in the redirection.*/
 void	redirections_errors(t_data *data, t_exec *exec, int std, int parent)
 {
-	ft_putstr_fd(ERR_COLOR, 2);
 	ft_putstr_fd(ERR_PREFIX, 2);
 	if (!std)
 		ft_putstr_fd(exec->infile, 2);
@@ -24,7 +23,6 @@ void	redirections_errors(t_data *data, t_exec *exec, int std, int parent)
 		ft_putstr_fd(exec->outfile, 2);
 	ft_putstr_fd(": ", 2);
 	perror("");
-	ft_putstr_fd(RESET, 2);
 	if (!parent)
 	{
 		free_exec(exec);
@@ -38,12 +36,10 @@ void	error_incorrect_path(t_data *data, t_exec *exec)
 {
 	if (exec->cmd_found)
 	{
-		ft_putstr_fd(ERR_COLOR, 2);
 		ft_putstr_fd(ERR_PREFIX, 2);
 		ft_putstr_fd("Command '", 2);
 		ft_putstr_fd(exec->cmd, 2);
 		ft_putstr_fd("' not found\n", 2);
-		ft_putstr_fd(RESET, 2);
 		free_exec(exec);
 		free_data(data, 1);
 		errno = EKEYEXPIRED;
@@ -73,9 +69,7 @@ static void	execve_failure(t_data *data, t_exec *exec)
 		exit_code = 127;
 	else if (errno == 20 || errno == 13)
 		exit_code = 126;
-	ft_putstr_fd(ERR_COLOR, 2);
 	perror("");
-	ft_putstr_fd(RESET, 2);
 	close(exec->outfile_fd);
 	close(exec->infile_fd);
 	free_exec(exec);
@@ -87,7 +81,6 @@ static void	execve_failure(t_data *data, t_exec *exec)
 memory and exits the child process.*/
 void	exec_errors(t_data *data, t_exec *exec, int error_code)
 {
-	ft_putstr_fd(ERR_COLOR, 2);
 	if (error_code == 1)
 		print_err_msg_prefix("minishell: exec: Cannot allocate memory\n");
 	if (error_code == 2 || error_code == 4)
@@ -107,7 +100,6 @@ void	exec_errors(t_data *data, t_exec *exec, int error_code)
 		ft_putstr_fd("Piping failed", 2);
 		perror("");
 	}
-	ft_putstr_fd(RESET, 2);
 	free_exec(exec);
 	free_data(data, 1);
 	exit(errno);
