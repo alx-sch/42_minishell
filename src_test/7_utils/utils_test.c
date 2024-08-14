@@ -6,7 +6,7 @@
 /*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/10 16:51:05 by aschenk           #+#    #+#             */
-/*   Updated: 2024/08/13 19:05:11 by aschenk          ###   ########.fr       */
+/*   Updated: 2024/08/14 02:30:37 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ int		is_whitespace(int c);
 int		contains_quotes(const char *str);
 void	set_path_to_file(t_data *data, char **str, char *file, char *err_msg);
 void	minishell_prompt(t_data *data);
+void	cleanup(t_data *data, bool exit);
 
 /**
 Checks if a character is a whitespace character:
@@ -100,6 +101,26 @@ void	minishell_prompt(t_data *data)
 	data->input = readline(PROMPT);
 	if (!data->input)
 		process_exit_signal(data, NULL);
+}
+
+/**
+Cleans up resources and resets state for the next minishell prompt iteration.
+
+ This function performs the following tasks:
+ -	Deletes any temporary heredoc files created during the current loop
+ 	iteration to avoid leftover files and potential conflicts.
+ -	Frees and resets the memory associated with the `t_data` structure to
+ 	prepare for new input and ensure a clean state for the next iteration.
+
+ @param data 	A pointer to the `t_data` structure containing resources to
+ 				be cleaned up.
+ @param exit	Boolean flag indicating whether to free environment variables and
+ 				export lists, as well as allocated paths to wd and history file.
+*/
+void	cleanup(t_data *data, bool exit)
+{
+	delete_heredocs(data);
+	free_data(data, exit);
 }
 
 // // // Function to print the list of tokens

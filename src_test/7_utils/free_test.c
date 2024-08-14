@@ -6,7 +6,7 @@
 /*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/13 12:12:15 by aschenk           #+#    #+#             */
-/*   Updated: 2024/08/13 15:08:01 by aschenk          ###   ########.fr       */
+/*   Updated: 2024/08/14 02:20:50 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@ used in the minishell, including tokens, heredoc files, and data structures.
 
 void	del_token(void *content);
 void	free_unlinked_token(t_data *data);
+void	delete_heredocs(t_data *data);
 void	free_data(t_data *data, bool exit);
 
 /*
@@ -60,7 +61,7 @@ It iterates through potential heredoc files and removes them if they exist.
 Changes made by access() do not  affect the subsequent error handling or
 reporting, as errno updated by this function are skipped.
 */
-static void	delete_heredocs(t_data *data)
+void	delete_heredocs(t_data *data)
 {
 	int		pipe_nr_max;
 	char	*heredoc;
@@ -88,14 +89,14 @@ static void	delete_heredocs(t_data *data)
 
 /**
 Frees all resources allocated within the minishell program.
-This includes deallocating memory for tokens, input strings, and temporary
-files used for heredocs.
-
-Optionally, it also frees environment variables and export lists if exit is true.
+This includes deallocating memory for tokens, and input strings.
+If the function is called within an 'exit' context, also allocated memory
+for absolute paths (working directory, history file), and the export as well
+as environment variable list are freed.
 
  @param data Pointer to the t_data structure containing all allocated resources.
  @param exit Boolean flag indicating whether to free environment variables and
- 			 export lists.
+ 			 export lists, as well as allocated paths to wd and history file.
 */
 void	free_data(t_data *data, bool exit)
 {
@@ -104,11 +105,9 @@ void	free_data(t_data *data, bool exit)
 	ft_lstclear(&data->tok.tok_lst, del_token);
 	if (data->input)
 		free(data->input);
-	delete_heredocs(data);
 	data->pipe_nr = 0; // reset number of pipes to default.
 	if (exit)
 	{
-		get_next_line(-1); // free static stash to avoid 'still reachables'
 		if (data->working_dir)
 			free(data->working_dir);
 		if (data->path_to_hist_file)

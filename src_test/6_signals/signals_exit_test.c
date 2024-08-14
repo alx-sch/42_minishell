@@ -35,7 +35,7 @@ Handles cleanup and program termination in response to the CTRL+D exit signal.
 void	process_exit_signal(t_data *data, char *str)
 {
 	printf("exit\n");
-	free_data(data, 1);
+	cleanup(data, 1);
 	if (str)
 		free(str);
 	exit(0);

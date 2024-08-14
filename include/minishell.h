@@ -6,7 +6,7 @@
 /*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/06 12:08:35 by aschenk           #+#    #+#             */
-/*   Updated: 2024/08/13 19:13:40 by aschenk          ###   ########.fr       */
+/*   Updated: 2024/08/14 02:28:02 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,6 +79,7 @@ int		is_whitespace(int c);
 int		contains_quotes(const char *str);
 void	set_path_to_file(t_data *data, char **str, char *file, char *err_msg);
 void	minishell_prompt(t_data *data);
+void	cleanup(t_data *data, bool exit);
 
 // 7_utils/errors.c
 
@@ -90,6 +91,7 @@ void	print_err_msg_custom(char *msg, unsigned int print_newline);
 
 void	del_token(void *content);
 void	free_unlinked_token(t_data *data);
+void	delete_heredocs(t_data *data);
 void	free_data(t_data *data, bool exit);
 
 // 8_history/history.c

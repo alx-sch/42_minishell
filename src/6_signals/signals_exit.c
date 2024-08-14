@@ -6,7 +6,7 @@
 /*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/12 16:31:11 by aschenk           #+#    #+#             */
-/*   Updated: 2024/08/13 18:52:17 by aschenk          ###   ########.fr       */
+/*   Updated: 2024/08/14 02:29:39 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ Handles cleanup and program termination in response to the CTRL+D exit signal.
 void	process_exit_signal(t_data *data, char *str)
 {
 	printf("exit\n");
-	free_data(data, 1);
+	cleanup(data, 1);
 	if (str)
 		free(str);
 	exit(0);
