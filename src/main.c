@@ -6,7 +6,7 @@
 /*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/06 12:05:14 by aschenk           #+#    #+#             */
-/*   Updated: 2024/08/14 13:37:28 by aschenk          ###   ########.fr       */
+/*   Updated: 2024/08/16 16:18:03 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,21 @@
 // Define the global variable:
 
 volatile __sig_atomic_t	g_signal = 0;
+
+
+// static void	print_token_list(t_list *lst)
+// {
+// 	t_token	*token;
+
+// 	while (lst)
+// 	{
+// 		token = lst->content;
+// 		printf("Position[%d]: '%s' (token type: %d)\n", token->position,
+// 			token->lexeme, token->type);
+// 		lst = lst->next;
+// 	}
+// }
+
 
 /*
 main is first of all a loop that runs the shell taking inputs from the user
@@ -40,6 +55,7 @@ int	main(int argc, char **argv, char **envp)
 			if (!is_only_whitespace(data.input) && is_quotation_closed(&data)
 				&& get_tokens(&data) && parse_tokens(&data))
 			{
+				//print_token_list(data.tok.tok_lst);
 				handle_signals_exec();
 				init_exec(&data);
 			}

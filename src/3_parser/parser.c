@@ -6,7 +6,7 @@
 /*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/26 16:13:14 by aschenk           #+#    #+#             */
-/*   Updated: 2024/08/13 19:16:42 by aschenk          ###   ########.fr       */
+/*   Updated: 2024/08/16 16:16:46 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,37 @@ including environment variable expansion, quote trimming, and heredoc processing
 // FUNCTION IN FILE
 
 int	parse_tokens(t_data *data);
+
+static int	is_empty_before_expansion(char *lexeme)
+{
+	char	*trimmed_lexeme;
+	int		is_empty_before_var_exp;
+
+	trimmed_lexeme = trim_paired_quotes(lexeme);
+	if (!trimmed_lexeme)
+		return (-1);
+	if (is_empty(trimmed_lexeme) || is_only_whitespace(trimmed_lexeme))
+		is_empty_before_var_exp = 1;
+	else
+		is_empty_before_var_exp = 0;
+	free(trimmed_lexeme);
+	return (is_empty_before_var_exp);
+}
+
+static int	handle_post_exp_checks(t_token *token, int was_empty_before)
+{
+	char	*trimmed_lexeme;
+
+	trimmed_lexeme = trim_paired_quotes(token->lexeme);
+	if (!trimmed_lexeme)
+		return (-1);
+	free(token->lexeme);
+	token->lexeme = trimmed_lexeme;
+	if (!was_empty_before && (is_empty(token->lexeme)
+			|| is_only_whitespace(token->lexeme)))
+		token->type = EMPTY_VAR;
+	return (1);
+}
 
 /**
 Expands environment variables in token lexemes and then removes paired quotes
@@ -44,7 +75,7 @@ static int	expand_vars_and_trim_quotes(t_data *data)
 {
 	t_list	*current_node;
 	t_token	*current_token;
-	char	*trimmed_lexeme;
+	int		empty_pre_exp;
 
 	current_node = data->tok.tok_lst;
 	while (current_node != NULL)
@@ -52,13 +83,13 @@ static int	expand_vars_and_trim_quotes(t_data *data)
 		current_token = (t_token *)current_node->content;
 		if (current_token->type == OTHER)
 		{
+			empty_pre_exp = is_empty_before_expansion(current_token->lexeme);
+			if (empty_pre_exp == -1)
+				return (-1);
 			if (!expand_variables(&current_token->lexeme, data, 0))
 				return (0);
-			trimmed_lexeme = trim_paired_quotes(current_token->lexeme);
-			if (!trimmed_lexeme)
+			if (handle_post_exp_checks(current_token, empty_pre_exp) == -1)
 				return (-1);
-			free(current_token->lexeme);
-			current_token->lexeme = trimmed_lexeme;
 		}
 		current_node = current_node->next;
 	}

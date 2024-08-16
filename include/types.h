@@ -6,7 +6,7 @@
 /*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/31 17:40:14 by aschenk           #+#    #+#             */
-/*   Updated: 2024/08/13 19:10:48 by aschenk          ###   ########.fr       */
+/*   Updated: 2024/08/16 16:19:59 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,7 @@ Categorizes tokens:
 - REDIR_APPEND:	'>>'; appends cmd output to a file without truncating it.
 - HEREDOC :		'<<'; creates a here-document, directly input via CL.
 - OTHER :		All other types.
+- EMPTY_VAR:	Is variable and empty or only whitespace after expansion.
 */
 typedef enum e_token_type
 {
@@ -48,6 +49,7 @@ typedef enum e_token_type
 	APPEND_OUT,
 	HEREDOC,
 	OTHER,
+	EMPTY_VAR
 }	t_token_type;
 
 /**

@@ -6,7 +6,7 @@
 /*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/24 22:36:32 by aschenk           #+#    #+#             */
-/*   Updated: 2024/08/14 13:20:21 by aschenk          ###   ########.fr       */
+/*   Updated: 2024/08/16 12:48:57 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ int	is_only_whitespace(char *input)
 }
 
 /**
-Checks if the user input is consists only of whitespace.
+Checks if the user input is empty (only '\0').
 
  @return	`0` if the user input is not empty.
 			`1` if the user input is empty.
