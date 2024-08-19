@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/13 13:51:10 by nholbroo          #+#    #+#             */
-/*   Updated: 2024/08/14 14:16:08 by nholbroo         ###   ########.fr       */
+/*   Updated: 2024/08/19 15:31:31 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ static int	cd_to_home_user_tilde(t_cd **cd, char **envp)
 	}
 	if (!envp[i])
 	{
-		print_err_msg_custom("cd: HOME not set", 1);
+		print_err_msg_custom("cd: HOME not set", 1, 1);
 		errno = EPERM;
 		return (errno);
 	}
@@ -84,7 +84,7 @@ static int	cd_to_home_user(t_cd **cd, t_env *envp_temp)
 	}
 	if (!envp_temp)
 	{
-		print_err_msg_custom("cd: HOME not set", 1);
+		print_err_msg_custom("cd: HOME not set", 1, 1);
 		errno = EPERM;
 		return (errno);
 	}

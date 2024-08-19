@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   signals_prompts_test.c                             :+:      :+:    :+:   */
+/*   signals_prompts.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/02 18:33:19 by aschenk           #+#    #+#             */
-/*   Updated: 2024/08/12 17:19:56 by nholbroo         ###   ########.fr       */
+/*   Updated: 2024/08/19 20:28:51 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ void	handle_signals_heredoc(void);
 /**
 Used in handle_signals().
 
-Signal handler for SIGINT (CTRL+C) during minishell prompt.
+Signal handler for SIGINT (CTRL + C) during minishell prompt.
 
  @param signum 	The signal number received (expected to be SIGINT).
 
@@ -33,7 +33,7 @@ status) prints a newline to the console, and then uses readline library function
 to replace the current input line with an empty string, move to a new line, and
 edisplay the updated input.
 */
-static void	sig_handler_int(int signum)
+static void	sig_int_handler(int signum)
 {
 	if (signum == SIGINT)
 	{
@@ -49,19 +49,19 @@ static void	sig_handler_int(int signum)
 Configures signal handling during the minishell prompt.
 
 Sets up custom signal handlers for:
- - SIGINT (CTRL+C) is handled by the `sig_handler_int` function.
- - SIGQUIT (CTRL+\) is ignored.
+ - SIGINT (CTRL + C) is handled by the `sig_handler_int` function.
+ - SIGQUIT (CTRL + \) is ignored.
 */
 void	handle_signals(void)
 {
-	signal(SIGINT, sig_handler_int);
+	signal(SIGINT, sig_int_handler);
 	signal(SIGQUIT, SIG_IGN);
 }
 
 /**
 Used in handle_signals().
 
-Signal handler for SIGINT (CTRL+C) during heredoc prompt.
+Signal handler for SIGINT (CTRL + C) during the heredoc prompt.
 
  @param signum 	The signal number received (expected to be SIGINT).
 
@@ -70,7 +70,7 @@ status) and simulates a pressing of `ENTER` by injecting a newline character
 into the terminal's input buffer. This effectively terminates the heredoc input
 by providing an end-of-input signal to the program.
 */
-static void	sig_handler_int_heredoc(int signum)
+static void	sig_int_handler_heredoc(int signum)
 {
 	if (signum == SIGINT)
 	{
@@ -83,11 +83,11 @@ static void	sig_handler_int_heredoc(int signum)
 Configures signal handling during the heredoc prompt.
 
 Sets up custom signal handlers for:
- - SIGINT (CTRL+C) is handled by the `sig_handler_int_heredoc` function.
- - SIGQUIT (CTRL+\) is ignored.
+ - SIGINT (CTRL + C) is handled by the `sig_handler_int_heredoc` function.
+ - SIGQUIT (CTRL + \) is ignored.
 */
 void	handle_signals_heredoc(void)
 {
-	signal(SIGINT, sig_handler_int_heredoc);
+	signal(SIGINT, sig_int_handler_heredoc);
 	signal(SIGQUIT, SIG_IGN);
 }

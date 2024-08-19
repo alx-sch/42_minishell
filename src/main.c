@@ -6,7 +6,7 @@
 /*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/06 12:05:14 by aschenk           #+#    #+#             */
-/*   Updated: 2024/08/14 13:37:28 by aschenk          ###   ########.fr       */
+/*   Updated: 2024/08/19 20:42:22 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,9 +30,7 @@ int	main(int argc, char **argv, char **envp)
 	{
 		handle_signals();
 		minishell_prompt(&data);
-		if (g_signal)
-			data.exit_status = EOWNERDEAD;
-		g_signal = 0;
+		handle_g_signal(&data);
 		handle_signals_heredoc();
 		if (data.input && !is_empty(data.input))
 		{

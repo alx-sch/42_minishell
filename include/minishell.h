@@ -6,7 +6,7 @@
 /*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/06 12:08:35 by aschenk           #+#    #+#             */
-/*   Updated: 2024/08/14 02:28:02 by aschenk          ###   ########.fr       */
+/*   Updated: 2024/08/19 20:51:23 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,8 +47,11 @@ functionality without redundant includes.
 
 /**
 Global variable used to indicate if the CTRL+C signal was received.
- - `0`: No signal received
- - `1`: CTRL+C (SIGINT) signal received
+ - `0`:	No signal received
+ - `1`:	CTRL + C (SIGINT) signal received during input prompt, heredoc prompt,
+		or execution -> will set exit status to 130.
+ - `2`:	CTRL + C (SIGQUIT) signal received during execution
+		-> will set exit status to 131.
 
 Declared as `volatile` so that the compiler always reads the latest value
 directly from memory, as the variable may be changed by different parts
@@ -79,13 +82,13 @@ int		is_whitespace(int c);
 int		contains_quotes(const char *str);
 void	set_path_to_file(t_data *data, char **str, char *file, char *err_msg);
 void	minishell_prompt(t_data *data);
-void	cleanup(t_data *data, bool exit);
+void	handle_g_signal(t_data *data);
 
 // 7_utils/errors.c
 
 void	print_err_msg(char *msg);
 void	print_err_msg_prefix(char *msg);
-void	print_err_msg_custom(char *msg, unsigned int print_newline);
+void	print_err_msg_custom(char *msg, int prefix, int print_newline);
 
 // 7_utils/free.c
 
@@ -93,6 +96,7 @@ void	del_token(void *content);
 void	free_unlinked_token(t_data *data);
 void	delete_heredocs(t_data *data);
 void	free_data(t_data *data, bool exit);
+void	cleanup(t_data *data, bool exit);
 
 // 8_history/history.c
 

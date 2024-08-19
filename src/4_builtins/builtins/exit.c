@@ -6,7 +6,7 @@
 /*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/25 10:35:04 by natalierh         #+#    #+#             */
-/*   Updated: 2024/08/13 18:48:38 by aschenk          ###   ########.fr       */
+/*   Updated: 2024/08/19 15:31:52 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,7 @@ int	is_exit(t_data *data, t_exec *exec)
 		return (1);
 	if (exec->flags[1] && exec->flags[2])
 	{
-		print_err_msg_custom("exit: too many arguments", 1);
+		print_err_msg_custom("exit: too many arguments", 1, 1);
 		free_exec(exec);
 		free_data(data, 1);
 		exit(EPERM);

@@ -6,7 +6,7 @@
 /*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/13 12:12:15 by aschenk           #+#    #+#             */
-/*   Updated: 2024/08/14 02:20:39 by aschenk          ###   ########.fr       */
+/*   Updated: 2024/08/19 20:51:49 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,4 +117,24 @@ void	free_data(t_data *data, bool exit)
 		if (data->export_list)
 			free_env_struct(&data->export_list);
 	}
+}
+
+/**
+Cleans up resources and resets state for the next minishell prompt iteration.
+
+ This function performs the following tasks:
+ -	Deletes any temporary heredoc files created during the current loop
+ 	iteration to avoid leftover files and potential conflicts.
+ -	Frees and resets the memory associated with the `t_data` structure to
+ 	prepare for new input and ensure a clean state for the next iteration.
+
+ @param data 	A pointer to the `t_data` structure containing resources to
+ 				be cleaned up.
+ @param exit	Boolean flag indicating whether to free environment variables and
+ 				export lists, as well as allocated paths to wd and history file.
+*/
+void	cleanup(t_data *data, bool exit)
+{
+	delete_heredocs(data);
+	free_data(data, exit);
 }

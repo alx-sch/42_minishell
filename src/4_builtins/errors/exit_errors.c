@@ -6,7 +6,7 @@
 /*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/24 11:48:41 by nholbroo          #+#    #+#             */
-/*   Updated: 2024/08/13 18:53:32 by aschenk          ###   ########.fr       */
+/*   Updated: 2024/08/19 15:32:52 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ void	exit_check_argc(t_data *data)
 		mem_alloc_fail_exit(data, NULL);
 	if (count_array_length(arguments) > 2)
 	{
-		print_err_msg_custom("exit: too many arguments", 1);
+		print_err_msg_custom("exit: too many arguments", 1, 1);
 		ft_freearray(arguments);
 		free_data(data, 1);
 		exit(EPERM);
@@ -64,7 +64,7 @@ void	print_error_exit(t_data *data, t_exec *exec)
 	full_error_msg = ft_strjoin(tmp_error_msg, ": numeric argument required\n");
 	if (!full_error_msg)
 		mem_alloc_fail_exit(data, tmp_error_msg);
-	print_err_msg_custom(full_error_msg, 0);
+	print_err_msg_custom(full_error_msg, 1, 0);
 	free(tmp_error_msg);
 	free(full_error_msg);
 	free_exec(exec);
