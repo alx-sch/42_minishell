@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   signals.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/02 14:51:04 by aschenk           #+#    #+#             */
-/*   Updated: 2024/08/13 17:05:32 by nholbroo         ###   ########.fr       */
+/*   Updated: 2024/08/19 20:54:18 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,8 +31,9 @@ void	handle_signals_heredoc(void);
 
 void	handle_signals_exec(void);
 
-// 6_signals/signals_exit.c
+// 6_signals/signals_EOT.c
 
-void	process_exit_signal(t_data *data, char *str);
+void	handle_eot(t_data *data);
+void	handle_eot_heredoc(char *str);
 
 #endif

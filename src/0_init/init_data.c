@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   init_data_test.c                                   :+:      :+:    :+:   */
+/*   init_data.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/24 12:46:41 by nholbroo          #+#    #+#             */
-/*   Updated: 2024/08/13 16:04:52 by nholbroo         ###   ########.fr       */
+/*   Updated: 2024/08/19 20:05:47 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,9 @@ void	init_data_struct(t_data *data, int argc, char **argv, char **envp)
 	data->tok.quote = '\0';
 	data->tok.new_node = NULL;
 	data->tok.tok_lst = NULL;
+	data->tok.curr_node = NULL;
+	data->tok.curr_tok = NULL;
+	data->tok.next_tok = NULL;
 	data->envp_temp = NULL;
 	data->envp_temp = init_env_tmp(envp);
 	data->export_list = NULL;

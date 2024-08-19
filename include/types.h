@@ -6,7 +6,7 @@
 /*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/31 17:40:14 by aschenk           #+#    #+#             */
-/*   Updated: 2024/08/13 19:10:48 by aschenk          ###   ########.fr       */
+/*   Updated: 2024/08/19 20:19:55 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,6 +80,10 @@ Fields:
 						created from the current token.
 - tok_lst [t_list*]:	Pointer to the head of the linked list of tokens, which
 						stores all tokens parsed from the input.
+- curr_node [t_list*]:	Initialized with 'data->tok.tok_lst' and then updated to
+						iterate the linked list (curr_node = curr_node->next).
+- curr_tok [t_tok*]:	The content of the current node, contains lexem and type.
+- next_tok [t_tok*]:	Content of the next node (curr_node->next->content).
 - tmp [char*]:			Substring to extract content for OTHER tokens.
 - r_redir [int]:		Holds the return value of `is_redirection()` in
 						`get_tokens()`.
@@ -92,6 +96,9 @@ typedef struct s_tok
 	t_token	*tok;
 	t_list	*new_node;
 	t_list	*tok_lst;
+	t_list	*curr_node;
+	t_token	*curr_tok;
+	t_token	*next_tok;
 	char	*tmp;
 	char	quote;
 	int		r_redir;

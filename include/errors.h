@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   errors.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/16 17:26:08 by aschenk           #+#    #+#             */
-/*   Updated: 2024/08/13 17:02:26 by nholbroo         ###   ########.fr       */
+/*   Updated: 2024/08/19 15:42:36 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,5 +35,7 @@ e.g. consistency, easier management, clearer code structure and maintenance.
 # define ERR_TRIM_QUOTE		"ERROR: Removal of paired quotes failed"
 # define ERR_GET_T_ATT		"ERROR: Failed to retrieve terminal attributes"
 # define ERR_SET_T_ATT		"ERROR: Failed to set new terminal attributes"
-
+# define WARN_EOT_HERE_1	"warning: here-document delimited by end-of-file "
+# define WARN_EOT_HERE_2	"(wanted `"
+# define WARN_EOT_HERE_3	"')"
 #endif

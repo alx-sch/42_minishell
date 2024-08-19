@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd_errors.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/24 11:48:26 by nholbroo          #+#    #+#             */
-/*   Updated: 2024/08/13 16:33:31 by nholbroo         ###   ########.fr       */
+/*   Updated: 2024/08/19 15:32:18 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 // Prints an error message if there are too many arguments to cd command.
 int	too_many_args_cd(t_cd **cd)
 {
-	print_err_msg_custom("cd: too many arguments", 1);
+	print_err_msg_custom("cd: too many arguments", 1, 1);
 	free_cd_struct(cd, 0);
 	errno = EPERM;
 	return (errno);

@@ -6,7 +6,7 @@
 /*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/12 16:31:11 by aschenk           #+#    #+#             */
-/*   Updated: 2024/08/12 17:05:28 by aschenk          ###   ########.fr       */
+/*   Updated: 2024/08/19 15:19:22 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,24 @@ Handles cleanup and program termination in response to the CTRL+D exit signal.
 void	process_exit_signal(t_data *data, char *str)
 {
 	printf("exit\n");
+	cleanup(data, 1);
+	if (str)
+		free(str);
+	exit(0);
+}
+
+/**
+Handles cleanup and program termination in response to the CTRL+D exit signal.
+ @param data 	A pointer to a data structure, which will be cleaned up.
+ @param str 	A pointer to a dynamically allocated string or buffer to be freed.
+ 				This parameter can be `NULL` if there is no allocated memory
+				to free.
+*/
+void	process_exit_signal_heredoc(t_data *data, char *str)
+{
+	print_err_msg_prefix(WAR_SIGQUIT_HERE_1);
+	print_err_msg(WAR_SIGQUIT_HERE_2);
+	ft_putstr_fd("\n", STDERR_FILENO);
 	cleanup(data, 1);
 	if (str)
 		free(str);

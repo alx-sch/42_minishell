@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_flags_and_command.c                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/30 19:03:40 by nholbroo          #+#    #+#             */
-/*   Updated: 2024/08/14 12:44:59 by nholbroo         ###   ########.fr       */
+/*   Updated: 2024/08/19 20:15:19 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ void	set_flags_and_cmd(t_data *data, t_exec *exec, int position, int count)
 		exec_errors(data, exec, 1);
 	while (i < count)
 	{
-		if (token->type != REDIR_IN && token->type != REDIR_OUT 
+		if (token->type != REDIR_IN && token->type != REDIR_OUT
 			&& token->type != APPEND_OUT)
 			i += set_flag(data, &exec, token, i);
 		else

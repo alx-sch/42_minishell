@@ -70,7 +70,7 @@ SRCS_FILES :=	0_init/init_cd.c \
 				5_execution/init_exec.c \
 				6_signals/signals_prompts.c \
 				6_signals/signals_execution.c \
-				6_signals/signals_exit.c \
+				6_signals/signals_eot.c \
 				7_utils/free.c \
 				7_utils/logo.c \
 				7_utils/errors.c \
@@ -96,7 +96,7 @@ HDRS_FILES := 	builtins.h \
 				parser.h \
 				signals.h \
 				tokenizer.h \
-				types.h 
+				types.h
 
 
 HDRS :=			$(addprefix $(HDRS_DIR)/, $(HDRS_FILES))
@@ -164,7 +164,7 @@ LIB_FLAGS  :=	-L$(LIBFT_DIR) -lft -lreadline -lhistory
 CC :=			cc
 CFLAGS := 		-I$(HDRS_DIR) -I$(LIBFT_DIR)
 CFLAGS :=		-Werror -Wextra -Wall -I$(HDRS_DIR) -I$(LIBFT_DIR)
-# CFLAGS +=		-Wpedantic -g
+CFLAGS +=		-Wpedantic -g
 # CFLAGS +=		-fsanitize=address
 
 # Used for progress bar
