@@ -6,16 +6,19 @@
 /*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/13 13:51:10 by nholbroo          #+#    #+#             */
-/*   Updated: 2024/08/19 15:31:31 by aschenk          ###   ########.fr       */
+/*   Updated: 2024/08/27 19:38:57 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-// Changes current working directory to parent directory ("cd ..").
-// Throws an error if memory allocation fails or something goes wrong with
-// changing the directory.
-// @param eol "End of line"
+/**
+Changes current working directory to parent directory ("cd ..").
+Throws an error if memory allocation fails or something goes wrong with
+changing the directory.
+
+ @param eol "End of line"
+*/
 static int	cd_one_up(t_cd **cd, char *cwd)
 {
 	int		eol;

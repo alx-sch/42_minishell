@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   signals_exit_test.c                                :+:      :+:    :+:   */
+/*   signals_eot_test.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/12 16:31:11 by aschenk           #+#    #+#             */
-/*   Updated: 2024/08/19 15:19:22 by aschenk          ###   ########.fr       */
+/*   Updated: 2024/08/27 19:51:10 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,38 +23,37 @@ and will return NULL.
 
 // IN FILE:
 
-void	process_exit_signal(t_data *data, char *str);
+void	handle_eot(t_data *data);
+void	handle_eot_heredoc(char *delim);
 
 /**
-Handles cleanup and program termination in response to the CTRL+D exit signal.
+Handles cleanup and program termination in response to the CTRL + D exit signal.
+
  @param data 	A pointer to a data structure, which will be cleaned up.
- @param str 	A pointer to a dynamically allocated string or buffer to be freed.
- 				This parameter can be `NULL` if there is no allocated memory
-				to free.
+ @param str 	A pointer to a dynamically allocated string or buffer to be
+ 				freed. This parameter can be `NULL` if there is no allocated
+				memory to free.
 */
-void	process_exit_signal(t_data *data, char *str)
+void	handle_eot(t_data *data)
 {
 	printf("exit\n");
 	cleanup(data, 1);
-	if (str)
-		free(str);
 	exit(0);
 }
 
 /**
-Handles cleanup and program termination in response to the CTRL+D exit signal.
+Handles the EOT signal (CTRL + D) during the heredoc prompt.
+The EOT signal closes the heredoc in lieu of the expected delimiter, and a
+warning message is printed to inform the user.
+
  @param data 	A pointer to a data structure, which will be cleaned up.
- @param str 	A pointer to a dynamically allocated string or buffer to be freed.
- 				This parameter can be `NULL` if there is no allocated memory
-				to free.
+ @param delim	The trimmed delimiter of the heredoc.
 */
-void	process_exit_signal_heredoc(t_data *data, char *str)
+void	handle_eot_heredoc(char *delim)
 {
-	print_err_msg_prefix(WAR_SIGQUIT_HERE_1);
-	print_err_msg(WAR_SIGQUIT_HERE_2);
+	print_err_msg_custom(WARN_EOT_HERE_1, 1, 0);
+	print_err_msg_custom(WARN_EOT_HERE_2, 0, 0);
+	print_err_msg_custom(delim, 0, 0);
+	print_err_msg_custom(WARN_EOT_HERE_3, 0, 0);
 	ft_putstr_fd("\n", STDERR_FILENO);
-	cleanup(data, 1);
-	if (str)
-		free(str);
-	exit(0);
 }

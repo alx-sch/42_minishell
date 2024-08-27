@@ -6,7 +6,7 @@
 /*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/13 12:12:15 by aschenk           #+#    #+#             */
-/*   Updated: 2024/08/19 20:51:49 by aschenk          ###   ########.fr       */
+/*   Updated: 2024/08/27 19:58:54 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ void	del_token(void *content);
 void	free_unlinked_token(t_data *data);
 void	delete_heredocs(t_data *data);
 void	free_data(t_data *data, bool exit);
+void	cleanup(t_data *data, bool exit);
 
 /*
 Function used within the wrapper function ft_lstclear() to delete and

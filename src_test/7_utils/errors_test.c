@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   error_test.c                                       :+:      :+:    :+:   */
+/*   errors_test.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/13 11:15:20 by aschenk           #+#    #+#             */
-/*   Updated: 2024/08/13 11:41:29 by aschenk          ###   ########.fr       */
+/*   Updated: 2024/08/27 19:56:34 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ customizable styles and prefixes.
 
 void	print_err_msg(char *msg);
 void	print_err_msg_prefix(char *msg);
-void	print_err_msg_custom(char *msg, unsigned int print_newline);
+void	print_err_msg_custom(char *msg, int prefix, int print_newline);
 
 /**
 Prints an error message to the standard error stream (stderr),
@@ -63,12 +63,16 @@ not covered by an errno, thus does not use perror().
 
  @param msg 			The error message to be printed. This should be a
 						descriptive string about the error that occurred.
+ @param prefix		 	Flag to print a prefix (shell name; `0` does not,
+ 						otherwise does).
  @param print_newline 	Flag to print the newline character after
 						the error message (`0` does not, otherwise does).
 */
-void	print_err_msg_custom(char *msg, unsigned int print_newline)
+void	print_err_msg_custom(char *msg, int prefix, int print_newline)
 {
 	ft_putstr_fd(ERR_COLOR, STDERR_FILENO);
+	if (prefix)
+		ft_putstr_fd(ERR_PREFIX, STDERR_FILENO);
 	ft_putstr_fd(ERR_PREFIX, STDERR_FILENO);
 	ft_putstr_fd(msg, STDERR_FILENO);
 	if (print_newline)

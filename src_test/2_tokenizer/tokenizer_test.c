@@ -6,7 +6,7 @@
 /*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/14 16:59:48 by aschenk           #+#    #+#             */
-/*   Updated: 2024/08/13 19:00:26 by aschenk          ###   ########.fr       */
+/*   Updated: 2024/08/27 15:24:50 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -143,15 +143,17 @@ token to its index in the list.
 static int	update_token_positions(t_data *data)
 {
 	t_list	*current;
+	t_token	*token;
 	int		position;
 
 	if (!data || !data->tok.tok_lst)
 		return (0);
 	current = data->tok.tok_lst;
+	token = NULL;
 	position = 0;
 	while (current)
 	{
-		t_token *token = (t_token *)current->content;
+		token = (t_token *)current->content;
 		if (!token)
 			return (0);
 		token->position = position;
@@ -175,7 +177,7 @@ For each token, it creates a new token node and adds it to the token list.
 If a token cannot be created due to a memory allocation failure, the function
 stops processing further tokens.
 
- @return	`0` if tokenization failed.
+ @return	`0` if tokenization failed or if input is whitespace only.
 			`1` if tokenization was sucessful.
 */
 int	get_tokens(t_data *data)

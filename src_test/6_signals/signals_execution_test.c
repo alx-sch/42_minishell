@@ -6,7 +6,7 @@
 /*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/12 13:41:55 by aschenk           #+#    #+#             */
-/*   Updated: 2024/08/12 17:51:56 by aschenk          ###   ########.fr       */
+/*   Updated: 2024/08/27 19:53:38 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ Signal handler for SIGINT (CTRL+C) during heredoc prompt.
 It sets the global variable `g_signal` to 1 (which will set the correct exit
 status)and prints a new line (to which the following prompt is displayed on).
 */
-static void	sig_handler_exec(int signum)
+static void	sig_int_handler_exec(int signum)
 {
 	if (signum == SIGINT)
 	{
@@ -45,14 +45,33 @@ static void	sig_handler_exec(int signum)
 }
 
 /**
+Used in handle_signals().
+
+Signal handler for SIGQUIT (CTRL + \) during execution.
+
+ @param signum 	The signal number received (expected to be SIGQUIT).
+
+It sets the global variable `g_signal` to 1 (which will set the correct exit
+status)and prints a new line (to which the following prompt is displayed on).
+*/
+static void	sig_quit_handler_exec(int signum)
+{
+	if (signum == SIGQUIT)
+	{
+		g_signal = 2;
+		printf("Quit (core dumped)\n");
+	}
+}
+
+/**
 Configures signal handling during command execution.
 
 Sets up custom signal handlers for:
- - SIGINT (CTRL+C) is handled by the `sig_handler_exec` function.
- - SIGQUIT (CTRL+\) is ignored.
+ - SIGINT (CTRL+C) is handled by the `sig_int_handler_exec` function.
+ - SIGQUIT (CTRL+\) is handled by the `sig_quit_handler_exec` function.
 */
 void	handle_signals_exec(void)
 {
-	signal(SIGINT, sig_handler_exec);
-	signal(SIGQUIT, SIG_IGN); // Ignore SIGQUIT signals
+	signal(SIGINT, sig_int_handler_exec);
+	signal(SIGQUIT, sig_quit_handler_exec);
 }
