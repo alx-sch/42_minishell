@@ -6,7 +6,7 @@
 /*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/24 22:36:32 by aschenk           #+#    #+#             */
-/*   Updated: 2024/08/14 13:39:41 by aschenk          ###   ########.fr       */
+/*   Updated: 2024/08/27 15:14:45 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ This file contains a functions to initially check the user's input:
 
 // IN FILE:
 
-int	is_input_empty(char *input);
+int	is_empty(char *input);
 int	is_only_whitespace(char *input);
 int	is_quotation_closed(t_data *data);
 

@@ -299,9 +299,9 @@ TEST_FILES :=	0_init/init_cd_test.c \
 				5_execution/utils/errors_test.c \
 				5_execution/utils/free_functions_test.c \
 				5_execution/init_exec_test.c \
-				6_signals/signals_prompts_test.c \
+				6_signals/signals_eot_test.c \
 				6_signals/signals_execution_test.c \
-				6_signals/signals_exit_test.c \
+				6_signals/signals_prompts_test.c \
 				7_utils/free_test.c \
 				7_utils/logo_test.c \
 				7_utils/errors_test.c \

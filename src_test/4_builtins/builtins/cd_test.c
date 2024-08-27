@@ -3,18 +3,22 @@
 /*                                                        :::      ::::::::   */
 /*   cd_test.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/13 13:51:10 by nholbroo          #+#    #+#             */
-/*   Updated: 2024/08/12 18:17:05 by nholbroo         ###   ########.fr       */
+/*   Updated: 2024/08/27 19:43:27 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-// Changes current working directory to parent directory ("cd ..").
-// Throws an error if memory allocation fails or something goes wrong with
-// changing the directory.
+/**
+Changes current working directory to parent directory ("cd ..").
+Throws an error if memory allocation fails or something goes wrong with
+changing the directory.
+
+ @param eol "End of line"
+*/
 static int	cd_one_up(t_cd **cd, char *cwd)
 {
 	int		eol; // Stands for "end of line".
@@ -54,7 +58,7 @@ static int	cd_to_home_user(t_cd **cd, t_env *envp_temp)
 	}
 	if (!envp_temp)
 	{
-		print_err_msg_custom("cd: HOME not set", 1);
+		print_err_msg_custom("cd: HOME not set", 1, 1);
 		errno = EPERM;
 		return (errno);
 	}

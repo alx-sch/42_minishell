@@ -6,7 +6,7 @@
 /*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/12 13:41:55 by aschenk           #+#    #+#             */
-/*   Updated: 2024/08/19 20:33:47 by aschenk          ###   ########.fr       */
+/*   Updated: 2024/08/27 19:53:15 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,8 +67,8 @@ static void	sig_quit_handler_exec(int signum)
 Configures signal handling during command execution.
 
 Sets up custom signal handlers for:
- - SIGINT (CTRL+C) is handled by the `sig_handler_exec` function.
- - SIGQUIT (CTRL+\) is ignored.
+ - SIGINT (CTRL+C) is handled by the `sig_int_handler_exec` function.
+ - SIGQUIT (CTRL+\) is handled by the `sig_quit_handler_exec` function.
 */
 void	handle_signals_exec(void)
 {

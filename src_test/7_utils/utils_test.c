@@ -6,7 +6,7 @@
 /*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/10 16:51:05 by aschenk           #+#    #+#             */
-/*   Updated: 2024/08/14 02:30:37 by aschenk          ###   ########.fr       */
+/*   Updated: 2024/08/27 19:58:12 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ int		is_whitespace(int c);
 int		contains_quotes(const char *str);
 void	set_path_to_file(t_data *data, char **str, char *file, char *err_msg);
 void	minishell_prompt(t_data *data);
-void	cleanup(t_data *data, bool exit);
+void	handle_g_signal(t_data *data);
 
 /**
 Checks if a character is a whitespace character:
@@ -100,27 +100,25 @@ void	minishell_prompt(t_data *data)
 {
 	data->input = readline(PROMPT);
 	if (!data->input)
-		process_exit_signal(data, NULL);
+		handle_eot(data);
 }
 
 /**
-Cleans up resources and resets state for the next minishell prompt iteration.
+Sets the exit status based on the received signal.
+This function handles signals in different contexts: `SIGINT` during prompt
+input, heredoc prompt, and execution; `SIGQUIT` during execution (but ignored
+during prompt and heredoc prompt).
 
- This function performs the following tasks:
- -	Deletes any temporary heredoc files created during the current loop
- 	iteration to avoid leftover files and potential conflicts.
- -	Frees and resets the memory associated with the `t_data` structure to
- 	prepare for new input and ensure a clean state for the next iteration.
-
- @param data 	A pointer to the `t_data` structure containing resources to
- 				be cleaned up.
- @param exit	Boolean flag indicating whether to free environment variables and
- 				export lists, as well as allocated paths to wd and history file.
+ @param data 	A pointer to the data structure where the exit status will
+ 				be updated based on the signal received.
 */
-void	cleanup(t_data *data, bool exit)
+void	handle_g_signal(t_data *data)
 {
-	delete_heredocs(data);
-	free_data(data, exit);
+	if (g_signal == 1)
+		data->exit_status = (EKEYREVOKED + SIGINT);
+	else if (g_signal == 2)
+		data->exit_status = (EKEYREVOKED + SIGQUIT);
+	g_signal = 0;
 }
 
 // // // Function to print the list of tokens
