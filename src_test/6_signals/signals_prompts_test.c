@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   signals_prompts_test.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/02 18:33:19 by aschenk           #+#    #+#             */
-/*   Updated: 2024/08/12 17:19:56 by nholbroo         ###   ########.fr       */
+/*   Updated: 2024/09/05 17:08:19 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,13 @@ static void	sig_handler_int_heredoc(int signum)
 	if (signum == SIGINT)
 	{
 		g_signal = 1;
-		ioctl(STDOUT_FILENO, TIOCSTI, "\n");
+		write(1, "\n", 1); // Print a newline to move the cursor to the next line, simulating Ctrl+C output behavior.
+		// Set the readline library's done flag to 1, indicating that input should be terminated.
+		// This is used to signal that readline should stop waiting for more input.
+		rl_done = 1;
+		// Use the ioctl system call to simulate input on the terminal, effectively stopping the readline loop.
+		// TIOCSTI injects a null input into the terminal's input stream, simulating the end of input.
+		ioctl(STDOUT_FILENO, TIOCSTI, "");
 	}
 }
 

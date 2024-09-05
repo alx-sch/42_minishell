@@ -6,7 +6,7 @@
 /*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/02 18:33:19 by aschenk           #+#    #+#             */
-/*   Updated: 2024/08/19 20:28:51 by aschenk          ###   ########.fr       */
+/*   Updated: 2024/09/05 17:06:09 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,9 @@ static void	sig_int_handler_heredoc(int signum)
 	if (signum == SIGINT)
 	{
 		g_signal = 1;
-		ioctl(STDOUT_FILENO, TIOCSTI, "\n");
+		write(1, "\n", 1);
+		rl_done = 1;
+		ioctl(STDOUT_FILENO, TIOCSTI, "");
 	}
 }
 
