@@ -35,3 +35,6 @@ Tutorial - Write a Shell in C - Stephen Brennan
 https://brennan.io/2015/01/16/write-a-shell-in-c/  
 https://medium.com/@winfrednginakilonzo/guide-to-code-a-simple-shell-in-c-bd4a3a4c41cd   
 https://www.peroxide.dk/download/tutorials/pxdscript/chapter1.html  
+
+## Acknowledgements
+The project badge used is retrieved from [this repo](https://github.com/ayogun/42-project-badges) by Ali Ogun.
