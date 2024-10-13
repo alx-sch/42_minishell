@@ -1,5 +1,10 @@
 # 42_minishell
 
+<p align="center">
+    <img src="https://github.com/alx-sch/42_minishell/blob/main/.assets/minishell-badge.png" alt="minishell_badge.png" />
+</p>
+
+
 TBD
 
 ## links
