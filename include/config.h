@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   config.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+        */
+/*   By: aschenk <aschenk@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/07 16:54:03 by aschenk           #+#    #+#             */
-/*   Updated: 2024/08/14 10:12:16 by nholbroo         ###   ########.fr       */
+/*   Updated: 2024/11/29 13:24:42 by aschenk          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,8 +28,10 @@ used for terminal formatting, prompt definitions, history configurations etc.
 # define ORANGE			"\033[38;5;208m"
 # define BLUE 			"\033[34m"
 # define VIOLET 		"\033[35;1m"
+# define ESC1			"\001"
+# define ESC2			"\002"
 
-# define PROMPT			"🌈 minishell$ "
+# define PROMPT			ESC1 BOLD ORANGE ESC2 "🌈 minishell$ " ESC1 RESET ESC2
 # define HEREDOC_P		"> "
 
 // History: Override macros when invoking 'make':
