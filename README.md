@@ -37,4 +37,4 @@ https://medium.com/@winfrednginakilonzo/guide-to-code-a-simple-shell-in-c-bd4a3a
 https://www.peroxide.dk/download/tutorials/pxdscript/chapter1.html  
 
 ## Acknowledgements
-The project badge used is retrieved from [this repo](https://github.com/ayogun/42-project-badges) by Ali Ogun.
+The project badge is from [this repository](https://github.com/ayogun/42-project-badges) by Ali Ogun.
