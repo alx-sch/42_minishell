@@ -1,4 +1,4 @@
-# 42_minishell
+# minishell
 
 Code: READY AND FINAL!   
 Known Issues: see [here](https://github.com/alx-sch/42_minishell/issues)   
