@@ -1,15 +1,3 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   tokenizer_redirection_test.c                       :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/05/17 13:00:24 by aschenk           #+#    #+#             */
-/*   Updated: 2024/08/13 16:13:56 by nholbroo         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 /**
 This file contains a function to check the input string for redirections
 and creates the corresponding token if the redirection points to valid operand.

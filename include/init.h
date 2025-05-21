@@ -1,15 +1,3 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   init.h                                             :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/07/31 17:30:48 by aschenk           #+#    #+#             */
-/*   Updated: 2024/08/08 14:24:12 by nholbroo         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 /**
 Contains declarations for functions that initialize various data structures
 used throughout the project, as defined in types.h.

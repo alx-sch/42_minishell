@@ -1,15 +1,3 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   parser_var_expansion_utils.c                       :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/07/27 19:58:01 by aschenk           #+#    #+#             */
-/*   Updated: 2024/08/13 16:23:50 by nholbroo         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 /**
 This file contains utility functions for parsing and expanding variables
 directly within the passed string, effectively replacing the old 'unexpanded'

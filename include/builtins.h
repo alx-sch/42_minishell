@@ -1,15 +1,3 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   builtins.h                                         :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: nholbroo <nholbroo@student.42.fr>          +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/07/31 17:09:56 by aschenk           #+#    #+#             */
-/*   Updated: 2024/08/13 15:44:41 by nholbroo         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 /**
 Declarations for built-in minishell commands and their utility functions:
 `cd`, `pwd`, `exit`, `env`, `unset`, `export`, and `echo`.
