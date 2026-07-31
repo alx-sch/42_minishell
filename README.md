@@ -24,7 +24,7 @@ A simplified bash-like shell written in C, built from scratch as part of the 42 
 
 ## Overview
 
-- [How to Use](#-how-to-use)
+- [How to Use](#how-to-use)
 - [Architecture](#architecture)
   - [The Main Loop](#the-main-loop)
   - [Data Structures](#data-structures)
@@ -48,7 +48,7 @@ A simplified bash-like shell written in C, built from scratch as part of the 42 
 
 ---
 
-## 🚀 How to Use
+## How to Use
 
 1. **Clone the repository:**
    ```bash
@@ -96,21 +96,21 @@ A simplified bash-like shell written in C, built from scratch as part of the 42 
 At its core, a shell is a REPL — Read, Evaluate, Print, Loop. Minishell's main loop orchestrates a linear pipeline of stages, each transforming the user's raw input one step closer to execution:
 
 ```
-┌─────────────────────────────────────────────────────────────┐
-│                        MAIN LOOP                            │
-│                                                             │
-│   ┌───────────┐    ┌───────────┐    ┌─────────┐            │
-│   │  Prompt   │───>│  Validate │───>│Tokenize │            │
-│   │ (readline)│    │  (quotes) │    │ (lexer) │            │
-│   └───────────┘    └───────────┘    └────┬────┘            │
-│                                          │                  │
-│   ┌───────────┐    ┌───────────┐    ┌────▼────┐            │
-│   │  Cleanup  │<───│  Execute  │<───│  Parse  │            │
-│   │  (free)   │    │(fork/exec)│    │(expand) │            │
-│   └───────────┘    └───────────┘    └─────────┘            │
-│         │                                                   │
-│         └──────────────── loop ─────────────────────────────│
-└─────────────────────────────────────────────────────────────┘
+┌───────────────────────────────────────────────────┐
+│                        MAIN LOOP                  │
+│                                                   │
+│   ┌───────────┐    ┌───────────┐    ┌─────────┐   │
+│   │  Prompt   │───>│  Validate │───>│Tokenize │   │
+│   │ (readline)│    │  (quotes) │    │ (lexer) │   │
+│   └───────────┘    └───────────┘    └────┬────┘   │
+│                                          │        │
+│   ┌───────────┐    ┌───────────┐    ┌────▼────┐   │
+│   │  Cleanup  │<───│  Execute  │<───│  Parse  │   │
+│   │  (free)   │    │(fork/exec)│    │(expand) │   │
+│   └───────────┘    └───────────┘    └─────────┘   │
+│         │                                         │
+│         └──────────────── loop ───────────────────│
+└───────────────────────────────────────────────────┘
 ```
 
 Each iteration:
@@ -317,14 +317,14 @@ ls -la | grep ".c" | wc -l
 
         pipe[0]         pipe[1]
     ┌──────────────┐ ┌──────────────┐
-    │  fd[0] fd[1] │ │  fd[0] fd[1] │
+    │  fd[1] fd[0] │ │  fd[1] fd[0] │
     └──────────────┘ └──────────────┘
-         ▲    │           ▲    │
-         │    ▼           │    ▼
-   ┌─────┴──┐  ┌────────┴─┐  ┌───────┐
-   │  ls -la │  │ grep ".c" │  │ wc -l │
+         ▲      │        ▲      │
+         │      ▼        │      ▼
+   ┌─────┴───┐  ┌────────┴──┐  ┌────────┐
+   │  ls -la │  │ grep ".c" │  │ wc -l  │
    │ (child0)│  │  (child1) │  │(child2)│
-   └─────────┘  └──────────┘  └───────┘
+   └─────────┘  └───────────┘  └────────┘
    stdout→fd[1]  stdin←fd[0]   stdin←fd[0]
                  stdout→fd[1]
 ```
@@ -407,7 +407,6 @@ Builtins are commands implemented directly in the shell rather than as external 
 
 ## Acknowledgements
 
-- Built by [Alexander Schenk](https://github.com/alx-sch) and [Natalie Holbrook](https://github.com/busedame) at 42 Berlin, August 2024.
 - The project badge is from [this repository](https://github.com/ayogun/42-project-badges) by Ali Ogun.
 - The wonderful *Crafting Interpreters*<sup><a href="#footnote1">[1]</a></sup> by Robert Nystrom provided conceptual grounding on tokenization and parsing.
 
